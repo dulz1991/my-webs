@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>   
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="com.demo.my.base.mybatis.mapper.ds1mapper.BlogLogMapper">
+
+<resultMap type="com.demo.my.base.bean.BlogLog" id="BlogLogBaseMapper">
+	<id property="id" column="ID" />
+	<result property="blogId" column="BLOG_ID" />
+	<result property="remark" column="REMARK" />
+	<result property="userId" column="USER_ID" />
+	<result property="createTime" column="CREATE_TIME" />
+	<result property="updateContent" column="UPDATE_CONTENT" />
+</resultMap>  
+
+<insert id="insert">
+	<selectKey resultType="long" keyProperty="id">  
+   		select LAST_INSERT_ID()
+   	</selectKey>  
+	insert into blog_log(BLOG_ID,USER_ID,CREATE_TIME,REMARK,UPDATE_CONTENT)
+	values(#{blogId},#{userId},now(),#{remark},#{updateContent})
+</insert>
+
+<select id="countByParm" resultType="integer">
+	SELECT count(*) FROM blog_log  
+	WHERE 1=1 
+   	<if test="parm.blogId != null">
+     	and BLOG_ID = #{parm.blogId}
+   	</if>
+   	<if test="parm.userId != null">
+     	and USER_ID = #{parm.userId}
+   	</if>
+</select>
+
+<select id="getMapListByParm" parameterType="HashMap" resultType="HashMap">
+	SELECT bl.ID as id, bl.BLOG_ID as blogId, bl.CREATE_TIME as createTime, 
+		bl.REMARK as remark,bl.USER_ID as userId, u.USERNAME as username
+	FROM blog_log bl 
+	LEFT JOIN `user` u on u.ID = bl.USER_ID	
+	WHERE 1=1 
+	<if test="parm.blogId != null">
+     	and bl.BLOG_ID = #{parm.blogId}
+   	</if>
+   	<if test="parm.userId != null">
+     	and bl.USER_ID = #{parm.userId}
+   	</if>
+	ORDER BY bl.ID DESC 
+	LIMIT #{page.pageNum}, #{page.pageSize}
+</select>
+
+</mapper>

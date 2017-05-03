@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>   
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="com.demo.my.base.mybatis.mapper.ds3mapper.DemoMenuMapper">
+
+<resultMap type="com.demo.my.base.bean.DemoMenu" id="DemoMenuBaseMapper">
+	<id property="id" column="ID" />
+	<result property="name" column="NAME" />
+</resultMap>  
+
+<insert id="insert">
+	insert into demo_menu(ID, NAME) values(#{id}, #{name})
+</insert>
+
+<update id="update">
+	update demo_menu set NAME=#{name} where ID=#{id}
+</update>
+
+<select id="getBeanListByParm" resultMap="DemoMenuBaseMapper">
+	SELECT * FROM demo_menu ORDER BY ID ASC
+</select>
+
+<select id="getById">
+	SELECT * FROM demo_menu where ID=#{id}
+</select>
+
+</mapper>

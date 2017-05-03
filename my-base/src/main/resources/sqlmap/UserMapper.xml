@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>   
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="com.demo.my.base.mybatis.mapper.ds1mapper.UserMapper">
+
+<resultMap type="com.demo.my.base.bean.User" id="UserBaseMapper">
+	<id property="id" column="ID" />
+	<result property="username" column="USERNAME" />
+	<result property="password" column="PASSWORD" />
+	<result property="phone" column="PHONE" />
+	<result property="email" column="EMAIL" />
+	<result property="avatar" column="AVATAR" />
+	<result property="role" column="ROLE" />
+	<result property="createTime" column="CREATE_TIME" />
+	<result property="updateTime" column="UPDATE_TIME" />
+	<result property="status" column="STATUS" />
+</resultMap>  
+
+<insert id="insert">
+	<selectKey resultType="long" keyProperty="id">  
+   		select LAST_INSERT_ID()
+   	</selectKey>
+   	insert into user(USERNAME,PASSWORD,EMAIL,PHONE,ROLE,AVATAR,CREATE_TIME,UPDATE_TIME,STATUS) 
+   	values(#{username},#{password},#{email},#{phone},#{role},#{avatar},now(),now(),#{status})  
+</insert>
+
+<update id="update">
+	update user set 
+	<if test="username != null and username != ''">
+     	USERNAME = #{username},
+   	</if>
+   	<if test="password != null and password != ''">
+      	PASSWORD = #{password},
+   	</if>
+   	<if test="email != null and email != ''">
+      	EMAIL = #{email},
+   	</if>
+   	<if test="role != null and role != ''">
+      	ROLE = #{role},
+   	</if>
+   	UPDATE_TIME = now()
+   	where ID = #{id}
+</update>
+
+<select id="getByParm_count" resultType="Integer">
+	select count(*) from user where 1=1 
+	<if test="user.username != null and user.username != ''">
+     	and USERNAME like '%${user.username}%' 
+   	</if>
+   	<if test="user.password != null and user.password != ''">
+      	and PASSWORD = #{user.password},
+   	</if>
+   	<if test="user.email != null and user.email != ''">
+      	and EMAIL = #{user.email},
+   	</if>
+   	<if test="user.role != null and user.role != ''">
+      	and ROLE = #{user.role},
+   	</if>
+</select>
+<select id="getByParm" resultMap="UserBaseMapper">
+	select * from user where 1=1 
+	<if test="user.username != null and user.username != ''">
+     	and USERNAME like '%${user.username}%' 
+   	</if>
+   	<if test="user.password != null and user.password != ''">
+      	and PASSWORD = #{user.password},
+   	</if>
+   	<if test="user.email != null and user.email != ''">
+      	and EMAIL = #{user.email},
+   	</if>
+   	<if test="user.role != null and user.role != ''">
+      	and ROLE = #{user.role},
+   	</if>
+   	order by ID desc
+   	limit #{page.pageNum},#{page.pageSize}
+</select>
+
+<select id="getById" resultMap="UserBaseMapper">
+	select * from user where ID = #{userId}
+</select>
+
+<select id="findUserByUsernameAndPassword" resultMap="UserBaseMapper">
+	select * from user where USERNAME=#{user.username} and PASSWORD=#{user.password}
+</select>
+
+<select id="getByUsername" resultMap="UserBaseMapper">
+	select * from user where USERNAME = #{username}
+</select>
+
+
+</mapper>

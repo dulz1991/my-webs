@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>   
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="com.demo.my.base.mybatis.mapper.ds1mapper.BlogMapper">
+
+<resultMap type="com.demo.my.base.bean.Blog" id="BlogBaseMapper">
+	<id property="id" column="ID" />
+	<result property="title" column="TITLE" />
+	<result property="content" column="CONTENT" />
+	<result property="menuId" column="MENU_ID" />
+	<result property="img" column="IMG" />
+	<result property="tag" column="TAG" />
+	<result property="userId" column="USER_ID" />
+	<result property="status" column="STATUS" />
+	<result property="createTime" column="CREATE_TIME" />
+	<result property="updateTime" column="UPDATE_TIME" />
+	<result property="click" column="CLICK" />
+	<result property="preContent" column="PRE_CONTENT" />
+</resultMap>  
+
+<insert id="insert">
+	<selectKey resultType="long" keyProperty="id">  
+   		select LAST_INSERT_ID()
+   	</selectKey>
+	insert into blog(TITLE,CONTENT,USER_ID,MENU_ID,IMG,TAG,STATUS,CREATE_TIME,UPDATE_TIME,CLICK,PRE_CONTENT)
+	values(#{title},#{content},#{userId},#{menuId},#{img},#{tag},0,now(),now(),#{click},#{preContent})
+</insert>
+
+<update id="update">
+	UPDATE blog SET UPDATE_TIME=now()
+	<if test="menuId != null and menuId != ''">  
+        ,MENU_ID=#{menuId}  
+    </if>
+    <if test="content != null and content != ''">  
+        ,CONTENT=#{content}  
+    </if> 
+	<if test="title != null and title != ''">  
+        ,TITLE=#{title}  
+    </if>
+    <if test="tag != null and tag != ''">  
+        ,TAG=#{tag}  
+    </if> 
+	<if test="img != null and img != ''">  
+        ,IMG=#{img}  
+    </if>
+    <if test="status != null">  
+        ,STATUS=#{status}  
+    </if>
+    <if test="click != null">  
+        ,CLICK=#{click}  
+    </if>
+    <if test="preContent != null and preContent != ''">  
+        ,PRE_CONTENT=#{preContent}  
+    </if>
+    WHERE ID=#{id}
+</update>
+
+<select id="getMapListByParm" parameterType="HashMap" resultType="HashMap">
+	select b.ID as id, b.TITLE as title, b.USER_ID as userId, b.MENU_ID as menuId,b.CREATE_TIME as `createTime`,
+	b.UPDATE_TIME as `updateTime`, b.IMG as img, b.TAG as tag, b.`STATUS` as status,u.USERNAME as username, bm.NAME as menuName,
+	b.CLICK as click, b.PRE_CONTENT as preContent
+ 	from blog b 
+ 	LEFT JOIN `user` u on b.USER_ID = u.ID
+ 	LEFT JOIN blog_menu bm on bm.ID=b.MENU_ID 
+ 	where 1=1
+	<if test="parm.userId != null">  
+        AND b.USER_ID=#{parm.userId}  
+    </if> 
+	<if test="parm.menuId != null">  
+        AND b.MENU_ID=#{parm.menuId}  
+    </if>  
+    <if test="parm.title != null and parm.title != ''">  
+        AND b.TITLE like '%${parm.title}%'
+    </if>
+    <if test="parm.status != null">  
+        AND b.STATUS=#{parm.status}  
+    </if>
+    <if test="parm.username != null and parm.username != ''">  
+        AND u.USERNAME like '%${parm.username}%'  
+    </if>
+	ORDER BY b.ID DESC
+	LIMIT #{page.pageNum},#{page.pageSize}
+</select>
+
+<select id="getBeanListByParm" parameterType="HashMap" resultMap="BlogBaseMapper">
+	select * from blog b
+ 	where 1=1
+	<if test="parm.userId != null">  
+        AND b.USER_ID=#{parm.userId}  
+    </if> 
+	<if test="parm.menuId != null">  
+        AND b.MENU_ID=#{parm.menuId}  
+    </if>  
+    <if test="parm.title != null and parm.title != ''">  
+        AND b.TITLE like '%${parm.title}%'
+    </if>
+    <if test="parm.status != null">  
+        AND b.STATUS=#{parm.status}  
+    </if>
+    <if test="parm.username != null and parm.username != ''">  
+        AND u.USERNAME like '%${parm.username}%'  
+    </if>
+	ORDER BY b.ID DESC
+	LIMIT #{page.pageNum},#{page.pageSize}
+</select>
+
+<select id="countByParm" resultType="integer">
+	SELECT count(*) FROM blog b 
+ 	LEFT JOIN `user` u on b.USER_ID = u.ID
+ 	LEFT JOIN blog_menu bm on bm.ID=b.MENU_ID 
+ 	where 1=1
+	<if test="parm.userId != null">  
+        AND b.USER_ID=#{parm.userId}  
+    </if> 
+	<if test="parm.menuId != null">  
+        AND b.MENU_ID=#{parm.menuId}  
+    </if>  
+    <if test="parm.title != null and parm.title != ''">  
+        AND b.TITLE like '%${parm.title}%'
+    </if>
+    <if test="parm.status != null">  
+        AND b.STATUS=#{parm.status}  
+    </if>
+    <if test="parm.username != null and parm.username != ''">  
+        AND u.USERNAME like '%${parm.username}%'  
+    </if>
+</select>
+<select id="getById" resultMap="BlogBaseMapper">
+	SELECT * FROM blog WHERE ID=#{id} 
+</select>
+<delete id="delete">
+	delete from blog where ID=#{id}
+</delete>
+
+
+</mapper>

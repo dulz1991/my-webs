@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>   
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="com.demo.my.base.mybatis.mapper.ds3mapper.DemoMapper">
+
+<resultMap type="com.demo.my.base.bean.Demo" id="DemoBaseMapper">
+	<id property="id" column="id" />
+	<result property="title" column="title" />
+	<result property="description" column="description" />
+	<result property="menuId" column="menuId" />
+	<result property="picPath" column="picPath" />
+	<result property="resourcePath" column="resourcePath" />
+	<result property="url" column="url" />
+	<result property="createTime" column="CREATE_TIME" />
+	<result property="updateTime" column="UPDATE_TIME" />
+	<result property="downloadTimes" column="downloadTimes" />
+</resultMap>  
+
+<insert id="insert">
+	<selectKey resultType="long" keyProperty="id">  
+   		select LAST_INSERT_ID()
+   	</selectKey>
+	insert into demo(title,description,menuId,picPath,resourcePath,url,downloadTimes,createTime,updateTime)
+	values(#{title},#{description},#{menuId},#{picPath},#{resourcePath},#{url},#{downloadTimes},now(),now())
+</insert>
+
+<update id="update">
+	UPDATE demo SET UPDATETIME=now()
+	<if test="menuId != null and menuId != ''">  
+        ,MENUID=#{menuId}  
+    </if>
+    <if test="description != null and description != ''">  
+        ,description=#{description}  
+    </if> 
+	<if test="title != null and title != ''">  
+        ,title=#{title}  
+    </if>
+    <if test="picPath != null and picPath != ''">  
+        ,picPath=#{picPath}  
+    </if> 
+	<if test="resourcePath != null and resourcePath != ''">  
+        ,resourcePath=#{resourcePath}  
+    </if>
+    <if test="url != null and url != ''">  
+        ,url=#{url}  
+    </if>
+    <if test="downloadTimes != null">  
+        ,downloadTimes=#{downloadTimes}  
+    </if>
+    WHERE id=#{id}
+</update>
+<select id="getBeanListByParm" parameterType="HashMap" resultMap="DemoBaseMapper">
+	select * from demo b 
+ 	where 1=1
+	<if test="parm.menuId != null">  
+        AND b.MENUID=#{parm.menuId}  
+    </if>  
+    <if test="parm.title != null and parm.title != ''">  
+        AND b.TITLE like '%${parm.title}%'
+    </if>
+	ORDER BY b.ID DESC
+	LIMIT #{page.pageNum},#{page.pageSize}
+</select>
+<select id="countByParm" resultType="integer">
+	select count(1) from demo b 
+ 	where 1=1
+	<if test="parm.menuId != null">  
+        AND b.MENUID=#{parm.menuId}  
+    </if>  
+    <if test="parm.title != null and parm.title != ''">  
+        AND b.TITLE like '%${parm.title}%'
+    </if>
+</select>
+<select id="getById" resultMap="DemoBaseMapper">
+	SELECT * FROM demo WHERE ID=#{id} 
+</select>
+<delete id="delete">
+	delete from demo where ID=#{id}
+</delete>
+
+
+</mapper>

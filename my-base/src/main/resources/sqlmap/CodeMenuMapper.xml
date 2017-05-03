@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>   
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="com.demo.my.base.mybatis.mapper.ds1mapper.CodeMenuMapper">
+
+<resultMap type="com.demo.my.base.bean.CodeMenu" id="CodeMenuBaseMapper">
+	<id property="id" column="ID" />
+	<result property="name" column="NAME" />
+	<result property="orderBy" column="ORDER_BY" />
+</resultMap>  
+
+<insert id="insert">
+	<selectKey resultType="long" keyProperty="id">  
+   		select LAST_INSERT_ID()
+   	</selectKey>  
+	insert into code_menu(NAME,ORDER_BY) values(#{name},#{orderBy})
+</insert>
+
+<update id="update">
+	update code_menu set NAME = #{name}, ORDER_BY=#{orderBy} where ID = #{id}
+</update>
+
+<select id="countByParm" resultType="integer">
+	SELECT count(*) FROM code_menu
+</select>
+<select id="getBeanListByParm" parameterType="HashMap" resultMap="CodeMenuBaseMapper">
+	SELECT * FROM code_menu ORDER BY ORDER_BY ASC 
+</select>
+
+<select id="getById" resultMap="CodeMenuBaseMapper">
+	SELECT * FROM code_menu WHERE ID = #{id}
+</select>
+
+</mapper>
