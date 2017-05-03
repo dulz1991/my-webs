@@ -1,0 +1,193 @@
+package com.demo.my.blog.controller;
+
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.annotation.Resource;
+
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.demo.my.base.bean.Blog;
+import com.demo.my.base.bean.BlogMenu;
+import com.demo.my.base.bean.User;
+import com.demo.my.base.common.ErrorConstant;
+import com.demo.my.base.servicebean.BlogServiceBean;
+import com.demo.my.base.servicebean.UserServiceBean;
+import com.demo.my.base.util.PageUtil;
+import com.demo.my.base.util.RegularUtil;
+import com.demo.my.base.converter.MapConverter;
+/*import com.demo.my.blog.jms.ProducerService;*/
+
+@Controller
+@RequestMapping("/auth/userCenter")
+public class UserCenterController extends BaseController {
+	
+	@Resource(name = "blogServiceBean")
+	private BlogServiceBean blogService;
+	@Resource(name = "userServiceBean")
+	private UserServiceBean userServiceBean;
+	//队列消息生产者
+    /*@Resource(name="producerService")
+    private ProducerService producer;*/
+	
+	@RequestMapping(value = "/index", method=RequestMethod.GET)
+	public ModelAndView index() {
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("user/index");
+		
+		User user = getCurrentUser();
+		modelAndView.addObject("username", user.getUsername());
+		modelAndView.addObject("phone", user.getPhone());
+		modelAndView.addObject("email", user.getEmail());
+		modelAndView.addObject("avatar", user.getAvatar());
+		
+		HashMap<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("userId", user.getId());
+		Integer myBlogCount = blogService.countByParm(paramMap, "blogMapper");
+		modelAndView.addObject("myBlogCount", myBlogCount);
+		modelAndView.addObject("followBlogCount", 0);
+		
+		return modelAndView;
+	}
+	
+	@RequestMapping(value = "/pwd", method=RequestMethod.GET)
+	public ModelAndView pwd() {
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("user/pwd");
+		modelAndView.addObject("username", this.getCurrentUser().getUsername());
+		return modelAndView;
+	}
+	@ResponseBody
+	@RequestMapping(value = "/modifyPwd", method=RequestMethod.POST)
+	public HashMap<String, Object> modifyPwd(String newpwd, String oldpwd, String cfmpwd) {
+		if(StringUtils.isBlank(newpwd)||StringUtils.isBlank(oldpwd)||StringUtils.isBlank(cfmpwd)){
+			return responseError(ErrorConstant.ERROR_500, ErrorConstant.ERROR_EMPTY_PWD);
+		}
+		if(!oldpwd.equals(cfmpwd)){
+			return responseError(ErrorConstant.ERROR_500, ErrorConstant.ERROR_NEW_CFM_PWD_NOT_SAME);
+		}
+		Long userId = this.getCurrentUserId();
+		User user = new User();
+		user.setPassword(newpwd);
+		user.setId(userId);
+		userServiceBean.update(user);
+		return responseOK(ErrorConstant.ERROR_PWD_MODIFY_SUCCESS);
+	}
+	
+	@RequestMapping(value = "/myBlogList", method=RequestMethod.GET)
+	public ModelAndView myBlogList() {
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("user/blog/myBlogList");
+		
+		List<BlogMenu> menuList = blogService.getBeanListByParm(null, null, "blogMenuMapper");
+		modelAndView.addObject("menuList", menuList);
+		User user = this.getCurrentUser();
+		modelAndView.addObject("username", user.getUsername());
+		modelAndView.addObject("avatar", user.getAvatar());
+		
+		return modelAndView;
+	}
+	@ResponseBody
+	@RequestMapping(value = "/getMyBlogList", method=RequestMethod.GET)
+	public HashMap<String, Object> list(Blog blog, PageUtil pageUtil) throws UnsupportedEncodingException {
+		HashMap<String, Object> paramMap = new HashMap<String, Object>();
+		pageUtil = new PageUtil(pageUtil.getPageNum(), pageUtil.getPageSize());
+		if (StringUtils.isNotBlank(blog.getTitle())) {
+			String title = URLDecoder.decode(blog.getTitle(), "utf-8");
+			paramMap.put("title", title);
+		}
+		User user = this.getCurrentUser();
+		if(user!=null){
+			paramMap.put("userId", user.getId());	
+		}
+		if (blog.getMenuId() != null && blog.getMenuId() != -1) {
+			paramMap.put("menuId", blog.getMenuId());
+		}
+		List<Map<String, Object>> list = blogService.getMapListByParm(pageUtil, paramMap, "blogMapper");
+		list = new MapConverter().map2Map(list, null);
+		Integer count = blogService.countByParm(paramMap, "blogMapper");
+
+		HashMap<String, Object> resMap = new HashMap<String, Object>();
+		pageUtil = new PageUtil(pageUtil.getCurrentPage(), pageUtil.getPageSize(), count);
+		resMap.put("list", list);
+		resMap.put("page", pageUtil);
+
+		return resMap;
+	}
+	
+	@RequestMapping(value = "/followBlogList", method=RequestMethod.GET)
+	public ModelAndView followBlogList() {
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("user/blog/followBlogList");
+		return modelAndView;
+	}
+	
+	@RequestMapping(value = "/editBlog", method=RequestMethod.GET)
+	public ModelAndView editBlog(Long id) {
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("user/blog/editBlog");
+		
+		if(id!=null){
+			Blog blog = blogService.getById(id, "blogMapper");
+			modelAndView.addObject("blog", blog);
+			modelAndView.addObject("title", "编辑："+blog.getTitle());
+		} else {
+			modelAndView.addObject("title", "创建新的博客");
+		}
+		
+		List<BlogMenu> menuList = blogService.getBeanListByParm(null, null, "blogMenuMapper");
+		modelAndView.addObject("menuList", menuList);
+		modelAndView.addObject("username", this.getCurrentUser().getUsername());
+		
+		return modelAndView;
+	}
+	@ResponseBody
+	@RequestMapping(value = "/saveBlog", method = RequestMethod.POST)
+	public Map<String, Object> saveBlog(Blog blog) {
+		if(StringUtils.isBlank(blog.getTitle())){
+			return responseError(ErrorConstant.ERROR_500, ErrorConstant.ERROR_EMPTY_TITLE);
+		}
+		if(StringUtils.isBlank(blog.getContent())){
+			return responseError(ErrorConstant.ERROR_500, ErrorConstant.ERROR_EMPTY_CONTENT);
+		}
+		if(blog.getMenuId() == null){
+			return responseError(ErrorConstant.ERROR_500, ErrorConstant.ERROR_EMPTY_MENU);
+		}
+		
+		blog.setUserId(this.getCurrentUserId());
+		String reg = "(?<=src=(\"|\'))[\\S\\s]+?(?=(\"|\'))"; // 截取img的src
+		String img = RegularUtil.cutContent(reg, blog.getContent());
+		blog.setImg(img);
+		String preContent = RegularUtil.Html2Text(blog.getContent());
+		if (preContent.length() > 140) {
+			blog.setPreContent(preContent.substring(0, 140));
+		} else {
+			blog.setPreContent(preContent);
+		}
+
+		blogService.editBlog(blog);
+		/*producer.sendMessage("cmd1");*/
+		Map<String, Object> resMap = responseOK("");
+		resMap.put("id", blog.getId());
+		return resMap;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/deleteBlog", method = RequestMethod.POST)
+	public Map<String, Object> delete(Long id) {
+		if(id==null){
+			return responseError(ErrorConstant.ERROR_500, ErrorConstant.ERROR_EMPTY_ID);
+		}
+		blogService.delete(id, "blogMapper");
+		return responseOK("");
+	}
+	
+}
