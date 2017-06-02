@@ -1,7 +1,5 @@
 package com.demo.my.base.aop;
 
-import javax.annotation.Resource;
-
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
@@ -10,20 +8,21 @@ import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.demo.my.base.bean.User;
+import com.demo.my.base.model.User;
 import com.demo.my.base.common.KeyConstant;
-import com.demo.my.base.servicebean.UserServiceBean;
+import com.demo.my.base.service.UserService;
 
 @Aspect
 @Component
 public class AutoLoginAop {
 
-	@Resource(name = "userServiceBean")
-	private UserServiceBean userService;
+	@Autowired
+	private UserService userService;
 
-	@Pointcut("execution (* com.demo.my.*.controller.AccountController.login(..))")
+	@Pointcut("execution (* com.demo.my.*.controller.*Controller.login(..))")
 	public void autoLoginAop() { }
 
 	/**

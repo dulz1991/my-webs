@@ -10,6 +10,7 @@ public class ErrorConstant {
 	public static Integer ERROR_400 = 400; //错误，需要登录
 	public static Integer ERROR_401 = 401; //错误，没有权限
 	public static Integer ERROR_404 = 404; //错误，资源未找到
+	public static Integer ERROR_GENERAL = -1; //同用错误
 
 	//异常
 	public static String ERROR_SYS_EXCEPTION = "系统异常，请稍后再试或联系管理员";
@@ -17,7 +18,9 @@ public class ErrorConstant {
 	//登陆
 	public static String ERROR_EMPTY_USERNAME = "请输入用户名";
 	public static String ERROR_EMPTY_PWD = "请输入密码";
+	public static String ERROR_FORMATE_PWD = "密码格式错误,只支持大小写,数字和下划线";
 	public static String ERROR_USERNAME_OR_PASSWORD_WRONG = "用户名或密码错误";
+	public static String ERROR_USER_EXIST = "用户名已存在";
 	//修改密码
 	public static String ERROR_NEW_CFM_PWD_NOT_SAME = "修改的新密码和确认密码不匹配";
 	public static String ERROR_PWD_MODIFY_SUCCESS = "密码修改成功";

@@ -5,23 +5,25 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
-import com.demo.my.base.model.CodeMenu;
+import com.demo.my.base.model.Discovery;
 import com.demo.my.base.mybatis.mapper.base.BaseMapper;
 
-public interface CodeMenuMapper extends BaseMapper {
+public interface DiscoveryMapper extends BaseMapper {
 
-	int insert(CodeMenu CodeMenu);
+	int insert(Discovery Discovery);
 	
 	int delete(@Param("id") Long id);
 	
-	int update(CodeMenu CodeMenu);
+	int update(Discovery Discovery);
 	
-	CodeMenu getById(@Param("id") Long id);
+	Discovery getById(@Param("id") Long id);
 	
 	int countByParm(@Param("parm") Map<String, Object> paramMap);
 	
-	List<CodeMenu> getBeanListByParm(@Param("parm") Map<String, Object> paramMap);
+	List<Discovery> getBeanListByParm(@Param("parm") Map<String, Object> paramMap);
 
 	List<Map<String, Object>> getMapListByParm( @Param("parm") Map<String, Object> paramMap);
+
+	Map<String, Object> getMapById(@Param("id") Long id);
 
 }

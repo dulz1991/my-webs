@@ -1,25 +1,29 @@
 package com.demo.my.base.mybatis.mapper.ds1mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
-import com.demo.my.base.bean.User;
+import com.demo.my.base.model.User;
 import com.demo.my.base.mybatis.mapper.base.BaseMapper;
-import com.demo.my.base.util.PageUtil;
 
-public interface UserMapper extends BaseMapper{
+public interface UserMapper extends BaseMapper {
 
-	void insert(User user);
+	int insert(User User);
 	
-	void update(User user);
+	int delete(@Param("id") Long id);
 	
-	User getById(@Param("userId") Long id);
+	int update(User User);
 	
-	List<User> getByParm(@Param("page") PageUtil page, @Param("user") User user);
+	User getById(@Param("id") Long id);
 	
-	int getByParm_count(@Param("user") User user);
+	int countByParm(@Param("parm") Map<String, Object> paramMap);
+	
+	List<User> getBeanListByParm(@Param("parm") Map<String, Object> paramMap);
 
+	List<Map<String, Object>> getMapListByParm( @Param("parm") Map<String, Object> paramMap);
+	
 	User findUserByUsernameAndPassword(@Param("user") User user);
 
 	User getByUsername(@Param("username") String username);

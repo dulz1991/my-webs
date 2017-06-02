@@ -1,4 +1,4 @@
-package com.demo.my.base.redis;
+/*package com.demo.my.base.redis;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -14,11 +14,11 @@ public class RedisClient {
 	@Qualifier("jedisConnectionFactory")
 	public JedisConnectionFactory jedisConnectionFactory;
 
-	/**
+	*//**
 	 * 获取一个jedis 客户端
 	 * 
 	 * @return
-	 */
+	 *//*
 	public Jedis getJedis() {
 		if (jedis == null) {
 			return jedisConnectionFactory.getShardInfo().createResource();
@@ -27,3 +27,4 @@ public class RedisClient {
 	}
 
 }
+*/

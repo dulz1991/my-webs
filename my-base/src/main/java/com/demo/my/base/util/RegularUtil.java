@@ -5,6 +5,14 @@ import java.util.regex.Pattern;
 
 public class RegularUtil {
 	
+	public final static String REG_PASSWORD = "^\\w*$";
+	
+	public static boolean isMatch(String reg, String value) {
+		Pattern p = Pattern.compile(reg);
+		Matcher m = p.matcher(value);
+		return  m.matches();
+	}
+	
 	/**
 	 * ½ØÈ¡×Ö·û´®
 	 * @return

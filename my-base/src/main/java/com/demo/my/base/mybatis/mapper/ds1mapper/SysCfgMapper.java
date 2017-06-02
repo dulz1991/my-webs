@@ -5,7 +5,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
-import com.demo.my.base.bean.SysCfg;
+import com.demo.my.base.model.SysCfg;
 import com.demo.my.base.mybatis.mapper.base.BaseMapper;
 import com.demo.my.base.util.PageUtil;
 

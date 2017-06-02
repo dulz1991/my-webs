@@ -7,14 +7,19 @@ import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.util.SavedRequest;
 
-import com.demo.my.base.bean.User;
+import com.demo.my.base.model.User;
 
 public class BaseCommon {
 	
 	public User getCurrentUser() {
-		Subject subject = SecurityUtils.getSubject();
-		User user = (User) subject.getSession().getAttribute(KeyConstant.USER_INFO);
-		return user;
+		try {
+			Subject subject = SecurityUtils.getSubject();
+			User user = (User) subject.getSession().getAttribute(KeyConstant.USER_INFO);
+			return user;	
+		} catch (Exception e) {
+			return null;
+		}
+		
 	}
 	
 	public Long getCurrentUserId() {

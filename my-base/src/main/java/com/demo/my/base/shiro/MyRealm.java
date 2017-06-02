@@ -17,8 +17,8 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.SimplePrincipalCollection;
 import org.apache.shiro.subject.Subject;
 
-import com.demo.my.base.bean.User;
 import com.demo.my.base.common.KeyConstant;
+import com.demo.my.base.model.User;
 
 public class MyRealm extends AuthorizingRealm {
 	

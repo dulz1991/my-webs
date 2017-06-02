@@ -5,9 +5,7 @@ import java.io.InputStream;
 import java.util.Properties;
 
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.stereotype.Component;
 
-@Component
 public class PropertiesUtil {
 	
 	public static Properties props = new Properties();
