@@ -9,8 +9,8 @@
   
   <modules>
     <module>my-base</module>
-    <module>my-blog</module>
-    <module>my-user</module>
+    <!-- <module>my-blog</module> -->
+    <!-- <module>my-user</module> -->
     <!-- <module>my-pic</module> -->
     <!-- <module>my-springboot</module> -->
     <module>my-backend</module>
@@ -18,8 +18,8 @@
   
   	<properties>
   		<!-- <spring.version>3.0.5.RELEASE</spring.version> -->
-  		<spring.version>3.1.2.RELEASE</spring.version>
-  		<!-- <spring.version>4.3.4.RELEASE</spring.version> -->
+  		<!-- <spring.version>3.1.2.RELEASE</spring.version> -->
+  		<spring.version>4.3.6.RELEASE</spring.version>
   	</properties>
   
   <dependencyManagement>
@@ -35,7 +35,8 @@
 			<artifactId>jstl</artifactId>
 			<version>1.2</version>
 		</dependency>
-  		 <!-- start spring -->
+		
+  		<!-- start spring -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-web</artifactId>
@@ -60,12 +61,12 @@
 			<version>${spring.version}</version>
 			<scope>compile</scope>
 		</dependency>
-		<dependency>
+		<!-- <dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-asm</artifactId>
 			<version>${spring.version}</version>
 			<scope>compile</scope>
-		</dependency>
+		</dependency> -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-aspects</artifactId>
@@ -122,6 +123,7 @@
 			<version>2.5</version>
 		</dependency>
 		<!-- end servlet -->
+		
 		<!-- shiro start -->
 		<dependency>
 			<groupId>org.apache.shiro</groupId>
@@ -151,12 +153,15 @@
 			<artifactId>mysql-connector-java</artifactId>
 			<version>5.1.33</version>
 		</dependency>
+		<!-- mysql end -->
+		
+		<!-- c3p0连接池 -->
 		<dependency>
 			<groupId>c3p0</groupId>
 			<artifactId>c3p0</artifactId>
 			<version>0.9.1.2</version>
 		</dependency>
-		<!-- mysql end -->
+		
 		
 		<!-- redis -->
 		<dependency>
@@ -199,7 +204,6 @@
 		</dependency>
 		<!-- common end -->
 		
-		<!-- AOP -->
 		<dependency>
 			<groupId>org.aspectj</groupId>
 			<artifactId>aspectjrt</artifactId>
@@ -215,6 +219,8 @@
 			<artifactId>aopalliance</artifactId>
 			<version>1.0</version>
 		</dependency>
+		
+		<!-- 动态代理 -->
 		<dependency>
 			<groupId>cglib</groupId>
 			<artifactId>cglib-nodep</artifactId>
@@ -225,7 +231,6 @@
 			<artifactId>cglib</artifactId>
 			<version>2.2.2</version>
 		</dependency>
-		<!-- End AOP -->
 		
 		<!-- mybatis start -->
 		<dependency>
@@ -253,6 +258,21 @@
 			<groupId>org.codehaus.jackson</groupId>
 			<artifactId>jackson-mapper-asl</artifactId>
 			<version>1.9.10</version>
+		</dependency>
+		<dependency>
+		    <groupId>com.fasterxml.jackson.core</groupId>
+		    <artifactId>jackson-databind</artifactId>
+		    <version>2.7.4</version>
+		</dependency>
+		<dependency>
+		    <groupId>com.fasterxml.jackson.core</groupId>
+		    <artifactId>jackson-core</artifactId>
+		    <version>2.7.4</version>
+		</dependency>
+		<dependency>
+		    <groupId>com.fasterxml.jackson.core</groupId>
+		    <artifactId>jackson-annotations</artifactId>
+		    <version>2.7.4</version>
 		</dependency>
 		<!-- json end -->
 		
@@ -288,6 +308,7 @@
 		    <version>9.4.1208.jre7</version>
 		</dependency>
 		<!-- jta end -->
+		
 		<dependency>
 		    <groupId>org.apache.tomcat</groupId>
 		    <artifactId>tomcat-coyote</artifactId>
@@ -298,6 +319,7 @@
 		    <artifactId>ant</artifactId>
 		    <version>1.10.1</version>
 		</dependency>
+		
 		<!-- activeMQ -->
 		<dependency>
 		    <groupId>org.apache.activemq</groupId>
@@ -314,13 +336,13 @@
 	        <artifactId>spring-jms</artifactId>  
 	        <version>${spring.version}</version>  
 	    </dependency>
-	    <!-- xbean �??<amq:connectionFactory /> -->
 	    <dependency>
 	        <groupId>org.apache.xbean</groupId>
 	        <artifactId>xbean-spring</artifactId>
 	        <version>3.16</version>
 	    </dependency>
 		<!-- activeMQ end -->
+		
 		<!-- mina -->
 		<dependency>
 	        <groupId>org.apache.mina</groupId>
@@ -338,6 +360,7 @@
 	        <version>1.1.7</version>
 	    </dependency>
 		<!-- mina end -->
+		
 		<!-- 新加入的spring整合mongodb的包  -->
         <dependency>
             <groupId>org.mongodb</groupId>
@@ -366,6 +389,13 @@
 		    <groupId>org.quartz-scheduler</groupId>
 		    <artifactId>quartz</artifactId>
 		    <version>1.8.6</version>
+		</dependency>
+		
+		<!-- ueditor -->
+		<dependency>
+		    <groupId>cn.songxinqiang</groupId>
+		    <artifactId>com.baidu.ueditor</artifactId>
+		    <version>1.1.2-offical</version>
 		</dependency>
         
   	</dependencies>

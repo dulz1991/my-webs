@@ -6,21 +6,20 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.Resource;
-
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.demo.my.base.bean.Blog;
-import com.demo.my.base.bean.BlogMenu;
-import com.demo.my.base.bean.User;
 import com.demo.my.base.common.ErrorConstant;
-import com.demo.my.base.servicebean.BlogServiceBean;
-import com.demo.my.base.servicebean.UserServiceBean;
+import com.demo.my.base.model.Blog;
+import com.demo.my.base.model.BlogMenu;
+import com.demo.my.base.model.User;
+import com.demo.my.base.service.BlogService;
+import com.demo.my.base.service.UserService;
 import com.demo.my.base.util.PageUtil;
 import com.demo.my.base.util.RegularUtil;
 import com.demo.my.base.converter.MapConverter;
@@ -30,10 +29,10 @@ import com.demo.my.base.converter.MapConverter;
 @RequestMapping("/auth/userCenter")
 public class UserCenterController extends BaseController {
 	
-	@Resource(name = "blogServiceBean")
-	private BlogServiceBean blogService;
-	@Resource(name = "userServiceBean")
-	private UserServiceBean userServiceBean;
+	@Autowired
+	private BlogService blogService;
+	@Autowired
+	private UserService userService;
 	//队列消息生产者
     /*@Resource(name="producerService")
     private ProducerService producer;*/
@@ -51,7 +50,7 @@ public class UserCenterController extends BaseController {
 		
 		HashMap<String, Object> paramMap = new HashMap<String, Object>();
 		paramMap.put("userId", user.getId());
-		Integer myBlogCount = blogService.countByParm(paramMap, "blogMapper");
+		Integer myBlogCount = blogService.excute("BlogMapper.countByParm", paramMap);
 		modelAndView.addObject("myBlogCount", myBlogCount);
 		modelAndView.addObject("followBlogCount", 0);
 		
@@ -78,7 +77,7 @@ public class UserCenterController extends BaseController {
 		User user = new User();
 		user.setPassword(newpwd);
 		user.setId(userId);
-		userServiceBean.update(user);
+		userService.update(user);
 		return responseOK(ErrorConstant.ERROR_PWD_MODIFY_SUCCESS);
 	}
 	
@@ -87,7 +86,7 @@ public class UserCenterController extends BaseController {
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("user/blog/myBlogList");
 		
-		List<BlogMenu> menuList = blogService.getBeanListByParm(null, null, "blogMenuMapper");
+		List<BlogMenu> menuList = blogService.excute("BlogMapper.getBeanListByParm", null);
 		modelAndView.addObject("menuList", menuList);
 		User user = this.getCurrentUser();
 		modelAndView.addObject("username", user.getUsername());
@@ -111,9 +110,11 @@ public class UserCenterController extends BaseController {
 		if (blog.getMenuId() != null && blog.getMenuId() != -1) {
 			paramMap.put("menuId", blog.getMenuId());
 		}
-		List<Map<String, Object>> list = blogService.getMapListByParm(pageUtil, paramMap, "blogMapper");
+		paramMap.put("start", pageUtil.getPageNum());
+		paramMap.put("limit", pageUtil.getPageSize());
+		List<Map<String, Object>> list = blogService.excute("BlogMapper.getMapListByParm", paramMap);
 		list = new MapConverter().map2Map(list, null);
-		Integer count = blogService.countByParm(paramMap, "blogMapper");
+		Integer count = blogService.excute("BLogMapper.countByParm", paramMap);
 
 		HashMap<String, Object> resMap = new HashMap<String, Object>();
 		pageUtil = new PageUtil(pageUtil.getCurrentPage(), pageUtil.getPageSize(), count);
@@ -136,14 +137,14 @@ public class UserCenterController extends BaseController {
 		modelAndView.setViewName("user/blog/editBlog");
 		
 		if(id!=null){
-			Blog blog = blogService.getById(id, "blogMapper");
+			Blog blog = blogService.getById(id);
 			modelAndView.addObject("blog", blog);
 			modelAndView.addObject("title", "编辑："+blog.getTitle());
 		} else {
 			modelAndView.addObject("title", "创建新的博客");
 		}
 		
-		List<BlogMenu> menuList = blogService.getBeanListByParm(null, null, "blogMenuMapper");
+		List<BlogMenu> menuList = blogService.excute("BlogMenuMapper.getBeanListByParm", null);
 		modelAndView.addObject("menuList", menuList);
 		modelAndView.addObject("username", this.getCurrentUser().getUsername());
 		
@@ -173,7 +174,7 @@ public class UserCenterController extends BaseController {
 			blog.setPreContent(preContent);
 		}
 
-		blogService.editBlog(blog);
+		blogService.save(blog);
 		/*producer.sendMessage("cmd1");*/
 		Map<String, Object> resMap = responseOK("");
 		resMap.put("id", blog.getId());
@@ -186,7 +187,7 @@ public class UserCenterController extends BaseController {
 		if(id==null){
 			return responseError(ErrorConstant.ERROR_500, ErrorConstant.ERROR_EMPTY_ID);
 		}
-		blogService.delete(id, "blogMapper");
+		blogService.delete(id);
 		return responseOK("");
 	}
 	

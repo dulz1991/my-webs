@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.demo.my.base.file.service.ImgUploadService;
+import com.demo.my.base.service.file.ImgUploadService;
 import com.demo.my.base.util.PropertiesUtil;
 
 @Controller

@@ -6,40 +6,40 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.Resource;
-
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.demo.my.base.bean.Code;
-import com.demo.my.base.bean.CodeMenu;
-import com.demo.my.base.bean.CodeSubMenu;
-import com.demo.my.base.bean.User;
-import com.demo.my.base.common.KeyConstant;
-import com.demo.my.base.servicebean.CodeServiceBean;
+import com.demo.my.base.model.Code;
+import com.demo.my.base.model.CodeMenu;
+import com.demo.my.base.model.CodeSubMenu;
+import com.demo.my.base.model.User;
+import com.demo.my.base.service.CodeMenuService;
+import com.demo.my.base.service.CodeService;
+import com.demo.my.base.service.CodeSubMenuService;
 
 @Controller
 @RequestMapping("/code")
 public class CodeController extends BaseController {
-	
-	@Resource(name = "codeServiceBean")
-	private CodeServiceBean codeService;
-	
-	@Value("#{configProperties['pic.blog']}")
-	public static String picBlogPath;
+
+	@Autowired
+	private CodeService codeService;
+	@Autowired
+	private CodeSubMenuService codeSubMenuService;
+	@Autowired
+	private CodeMenuService codeMenuService;
 	
 	@RequestMapping(value = "/index", method=RequestMethod.GET)
 	public ModelAndView index() {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("code/index");
-		List<CodeMenu> codeMenuList = codeService.getBeanListByParm(null, null, KeyConstant.MAPPER_CODE_MENU);
+		List<CodeMenu> codeMenuList = codeService.excute("CodeMenuMapper.getBeanListByParm", null);
 		mv.addObject("codeMenuList", codeMenuList);
 		Map<String, Object> subMenuList = new HashMap<String, Object>();
 		for(CodeMenu menu : codeMenuList){
@@ -65,20 +65,20 @@ public class CodeController extends BaseController {
 		List<Code> codeList = new ArrayList<Code>();
 		Map<String, Object> parmMap = new HashMap<String, Object>();
 		if (codeId != null) {
-			code = codeService.getById(codeId, KeyConstant.MAPPER_CODE);
+			code = codeService.getById(codeId);
 			subMenuId = code.getFatherId();
 			parmMap.put("fatherId", subMenuId);
-			codeList = codeService.getBeanListByParm(null, parmMap, KeyConstant.MAPPER_CODE);
+			codeList = codeService.excute("CodeMapper.getBeanListByParm", parmMap);
 		} else {
 			parmMap.put("fatherId", subMenuId);
-			codeList = codeService.getBeanListByParm(null, parmMap, KeyConstant.MAPPER_CODE);
+			codeList = codeService.excute("CodeMapper.getBeanListByParm", parmMap);
 			if (codeList.size() != 0) {
-				code = codeService.getById(codeList.get(0).getId(), KeyConstant.MAPPER_CODE);
+				code = codeService.getById(codeList.get(0).getId());
 			}
 		}
 		
 		CodeSubMenu subMenu = new CodeSubMenu();
-		subMenu = codeService.getById(subMenuId, KeyConstant.MAPPER_CODE_SUB_MENU);
+		subMenu = codeSubMenuService.getById(subMenuId);
 		
 		modelAndView.addObject("code", code);
 		modelAndView.addObject("codeList", codeList);
@@ -96,7 +96,7 @@ public class CodeController extends BaseController {
 	@RequestMapping(value = "/getMenuList", method=RequestMethod.GET)
 	public Map<String, Object> getMenuList() {
 		Map<String, Object> resMap = new HashMap<String, Object>();
-		List<CodeMenu> codeMenuList = codeService.getBeanListByParm(null, null, KeyConstant.MAPPER_CODE_MENU);
+		List<CodeMenu> codeMenuList = codeMenuService.excute("CodeMenuMapper.getBeanListByParm", null);
 		resMap.put("list", codeMenuList);
 		resMap.put("length", codeMenuList.size());
 		return resMap;
@@ -105,7 +105,7 @@ public class CodeController extends BaseController {
 	public List<CodeSubMenu> getSubMenuList(Long fatherId) {
 		Map<String, Object> parmMap = new HashMap<String, Object>();
 		parmMap.put("fatherId", fatherId);
-		List<CodeSubMenu> codeMenuList = codeService.getBeanListByParm(null, parmMap, KeyConstant.MAPPER_CODE_SUB_MENU);
+		List<CodeSubMenu> codeMenuList = codeSubMenuService.excute("CodeSubMenuMapper.getBeanListByParm", parmMap);
 		return codeMenuList;
 	}
 	
@@ -114,7 +114,7 @@ public class CodeController extends BaseController {
 	public Map<String, Object> getCodeById(Long codeId) {
 		Map<String, Object> resMap = new HashMap<String, Object>();
 		
-		Code code = codeService.getById(codeId, KeyConstant.MAPPER_CODE);
+		Code code = codeService.getById(codeId);
 		resMap.put("code", code);
 		
 		return resMap;
@@ -129,15 +129,15 @@ public class CodeController extends BaseController {
 		List<Code> codeList = new ArrayList<Code>();
 		Map<String, Object> parmMap = new HashMap<String, Object>();
 		if (codeId != null) {
-			code = codeService.getById(codeId, KeyConstant.MAPPER_CODE);
+			code = codeService.getById(codeId);
 			subMenuId = code.getFatherId();
 			parmMap.put("fatherId", subMenuId);
-			codeList = codeService.getBeanListByParm(null, parmMap, KeyConstant.MAPPER_CODE);
+			codeList = codeService.excute("CodeMapper.getBeanListByParm", parmMap);
 		} else {
 			parmMap.put("fatherId", subMenuId);
-			codeList = codeService.getBeanListByParm(null, parmMap, KeyConstant.MAPPER_CODE);
+			codeList = codeService.excute("CodeMapper.getBeanListByParm", parmMap);
 			if (codeList.size() != 0) {
-				code = codeService.getById(codeList.get(0).getId(), KeyConstant.MAPPER_CODE);
+				code = codeService.getById(codeList.get(0).getId());
 			}
 		}
 		
@@ -149,7 +149,7 @@ public class CodeController extends BaseController {
 		}
 		
 		CodeSubMenu subMenu = new CodeSubMenu();
-		subMenu = codeService.getById(subMenuId, KeyConstant.MAPPER_CODE_SUB_MENU);
+		subMenu = codeSubMenuService.getById(subMenuId);
 		
 		modelAndView.addObject("code", code);
 		/*modelAndView.addObject("codeList", codeList);*/
@@ -172,7 +172,7 @@ public class CodeController extends BaseController {
 			if(c.getCodeId()==null){
 				Map<String, Object> parmMap = new HashMap<String, Object>();
 				parmMap.put("codeId", c.getId());
-				List<Code> codes = codeService.getBeanListByParm(null, parmMap, KeyConstant.MAPPER_CODE);
+				List<Code> codes = codeService.excute("CodeMapper.getBeanListByParm", parmMap);
 				if(!codes.isEmpty()){
 					List<Map<String, Object>> subMenuTreeData = getMenuTreeData(codes);
 					menuTree.put("children", subMenuTreeData);	

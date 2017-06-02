@@ -42,7 +42,7 @@
 	
 	<bean id="SpringContextUtil" class="com.demo.my.base.util.SpringContextUtil" lazy-init="false"/>
 	
-	<import resource="redis-config.xml"/>
+	<!-- <import resource="redis-config.xml"/> -->
 	<import resource="data-sources.xml"/>
 	<!-- <import resource="activemq-config.xml"/> -->
 	

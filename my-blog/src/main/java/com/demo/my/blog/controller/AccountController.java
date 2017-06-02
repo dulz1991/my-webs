@@ -13,15 +13,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.demo.my.base.bean.User;
-import com.demo.my.base.service.AccountService;
+import com.demo.my.base.model.User;
+import com.demo.my.base.service.LoginService;
+
 
 @Controller
 @RequestMapping("/account")
 public class AccountController extends BaseController {
 	
 	@Autowired
-	private AccountService accountService;
+	private LoginService loginService;
 	
 	Logger logger = Logger.getLogger(this.getClass());
 
@@ -49,14 +50,14 @@ public class AccountController extends BaseController {
 	@ResponseBody
 	@RequestMapping(value = "/doLogin", method=RequestMethod.GET)
 	public Map<String, Object> doLogin(HttpServletRequest request, User user) {
-		Map<String, Object> resMap = accountService.login(user);
+		Map<String, Object> resMap = loginService.login(user);
 		return resMap;
 	}
 	
 	@RequestMapping(value = "/logout", method=RequestMethod.GET)
 	public ModelAndView logout(HttpServletRequest request, User user) {
 		ModelAndView modelAndView = new ModelAndView();
-		accountService.logout();
+		loginService.logout();
 		modelAndView.setViewName("redirect:/");
 		return modelAndView;
 	}

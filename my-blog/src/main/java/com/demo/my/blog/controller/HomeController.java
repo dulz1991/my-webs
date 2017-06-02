@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.demo.my.base.bean.User;
+import com.demo.my.base.model.User;
 
 @Controller
 @RequestMapping("/home")

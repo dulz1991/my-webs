@@ -6,32 +6,31 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.demo.my.base.bean.Blog;
-import com.demo.my.base.bean.BlogMenu;
-import com.demo.my.base.bean.User;
-import com.demo.my.base.common.KeyConstant;
-import com.demo.my.base.servicebean.BlogServiceBean;
-import com.demo.my.base.servicebean.UserServiceBean;
+import com.demo.my.base.model.Blog;
+import com.demo.my.base.model.BlogMenu;
+import com.demo.my.base.model.User;
+import com.demo.my.base.service.BlogService;
+import com.demo.my.base.service.UserService;
 import com.demo.my.base.util.PageUtil;
 
 @Controller
 public class BlogController extends BaseController {
 	
-	@Resource(name = "blogServiceBean")
-	private BlogServiceBean blogService;
-	@Resource(name = "userServiceBean")
-	private UserServiceBean userService;
+	@Autowired
+	private BlogService blogService;
+	@Autowired
+	private UserService userService;
 	
 	@RequestMapping(value = "/auth/blog/index", method=RequestMethod.GET)
 	public ModelAndView index(Blog blog) throws UnsupportedEncodingException {
@@ -40,7 +39,7 @@ public class BlogController extends BaseController {
 		
 		User user = getCurrentUser();
 		
-		List<BlogMenu> menuList = blogService.getBeanListByParm(null, null, KeyConstant.MAPPER_BLOG_MENU);
+		List<BlogMenu> menuList = blogService.excute("BlogMapper.getBeanListByParm", null);
 		blog.setMenuId(-1L);
 		Map<Long, Integer> menuMap = new HashMap<Long, Integer>();
 		HashMap<String, Object> parmMap = new HashMap<String, Object>();
@@ -48,7 +47,7 @@ public class BlogController extends BaseController {
 			parmMap.put("menuId", menu.getId());
 			parmMap.put("status", 0);
 			parmMap.put("userId", user.getId());
-			Integer count = blogService.countByParm(parmMap, KeyConstant.MAPPER_BLOG);
+			Integer count = blogService.excute("BlogMapper.countByParm", parmMap);
 			menuMap.put(menu.getId(), count);
 		}
 		
@@ -83,8 +82,8 @@ public class BlogController extends BaseController {
 		User user = getCurrentUser();
 		paramMap.put("userId", user.getId());
 		
-		List<Map<String, Object>> list = blogService.getMapListByParm(pageUtil, paramMap, KeyConstant.MAPPER_BLOG);
-		Integer count = blogService.countByParm(paramMap, KeyConstant.MAPPER_BLOG);
+		List<Map<String, Object>> list = blogService.excute("BlogMapper.getMapListByParm", paramMap);
+		Integer count = blogService.excute("BlogMapper.countByParm", paramMap);
 		
 		HashMap<String, Object> resMap = new HashMap<String, Object>();
 		pageUtil = new PageUtil(pageUtil.getPageNum(), pageUtil.getPageSize(), count);
@@ -98,7 +97,7 @@ public class BlogController extends BaseController {
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("blog/blogDetail");
 		
-		Blog blog = blogService.getById(id, KeyConstant.MAPPER_BLOG);
+		Blog blog = blogService.getById(id);
 		if (blog == null) {
 			modelAndView.addObject("blog", new Blog());	
 		} else {
@@ -125,7 +124,7 @@ public class BlogController extends BaseController {
 		Blog entity = new Blog();
 		entity.setId(id);
 		entity.setClick(blog.getClick());
-		blogService.update(entity, KeyConstant.MAPPER_BLOG);
+		blogService.update(entity);
 		return modelAndView;
 	}
 

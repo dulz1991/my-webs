@@ -41,7 +41,7 @@
 		<property name="maxPoolSize" value="${jdbc.maxPoolSize}" />	
   </bean>
   <!-- 数据源2 --> 
-  <bean id="dataSourceTwo" class="com.atomikos.jdbc.AtomikosDataSourceBean" init-method="init" destroy-method="close">
+  <!-- <bean id="dataSourceTwo" class="com.atomikos.jdbc.AtomikosDataSourceBean" init-method="init" destroy-method="close">
     <property name="uniqueResourceName" value="mysql_dataSourceTwo" />
     <property name="xaDataSourceClassName" value="com.mysql.jdbc.jdbc2.optional.MysqlXADataSource"/>
     <property name="xaProperties">
@@ -55,7 +55,7 @@
    	<property name="reapTimeout" value="20000" />
    	<property name="minPoolSize" value="${jdbc.minPoolSize}" />
 	<property name="maxPoolSize" value="${jdbc.maxPoolSize}" />
-  </bean>
+  </bean> -->
 	<!-- 数据源1 -->
 	<!-- <bean id="dataSourceOne" class="com.mchange.v2.c3p0.ComboPooledDataSource"  destroy-method="close">  
 		<property name="minPoolSize" value="${jdbc.minPoolSize}" />
@@ -98,7 +98,7 @@
 	    <property name="targetDataSources">  
 	        <map key-type="java.lang.String">  
 	            <entry value-ref="dataSourceOne" key="dataSourceOne"></entry>  
-	            <entry value-ref="dataSourceTwo" key="dataSourceTwo"></entry>  
+	            <!-- <entry value-ref="dataSourceTwo" key="dataSourceTwo"></entry>   -->
 	        </map>  
 	    </property>  
 	    <property name="defaultTargetDataSource" ref="dataSourceOne"></property>      
