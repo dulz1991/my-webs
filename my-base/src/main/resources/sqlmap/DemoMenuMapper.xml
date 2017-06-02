@@ -1,26 +1,70 @@
 <?xml version="1.0" encoding="UTF-8" ?>   
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
-<mapper namespace="com.demo.my.base.mybatis.mapper.ds3mapper.DemoMenuMapper">
+<mapper namespace="com.demo.my.base.mybatis.mapper.ds1mapper.DemoMenuMapper">
 
-<resultMap type="com.demo.my.base.bean.DemoMenu" id="DemoMenuBaseMapper">
-	<id property="id" column="ID" />
-	<result property="name" column="NAME" />
+<resultMap type="com.demo.my.base.model.DemoMenu" id="DemoMenuBaseMapper">
+	<id property="name" column="name" />
+	<id property="id" column="id" />
 </resultMap>  
 
 <insert id="insert">
-	insert into demo_menu(ID, NAME) values(#{id}, #{name})
+	<selectKey resultType="long" keyProperty="id">  
+   		select LAST_INSERT_ID()
+   	</selectKey>
+	insert into demo_menu
+	(name)
+	values
+	(#{name})
 </insert>
 
 <update id="update">
-	update demo_menu set NAME=#{name} where ID=#{id}
+	UPDATE demo_menu 
+	<set>
+			<if test="name != null">  
+	        	name=#{name},
+	    	</if>
+	</set>   
+    WHERE id=#{id}
 </update>
 
-<select id="getBeanListByParm" resultMap="DemoMenuBaseMapper">
-	SELECT * FROM demo_menu ORDER BY ID ASC
+<delete id="delete">
+	delete from demo_menu where id=#{id}
+</delete>
+
+<select id="getById" resultMap="DemoMenuBaseMapper">
+	SELECT * FROM demo_menu WHERE id=#{id} 
 </select>
 
-<select id="getById">
-	SELECT * FROM demo_menu where ID=#{id}
+<select id="countByParm" resultType="integer">
+	select count(*) from demo_menu  where 1=1 
+			<if test="parm.name != null">
+		     	and name = #{parm.name}
+		   	</if>
 </select>
+
+<select id="getBeanListByParm" resultMap="DemoMenuBaseMapper">
+	select * from demo_menu where 1=1 
+			<if test="parm.name != null">
+		     	and name = #{parm.name}
+		   	</if>
+		<if test="parm.orderby != null">
+	   		order by ${parm.orderby}
+	   	</if>
+		<if test="parm.start != null">
+			limit #{parm.start},#{parm.limit}
+		</if>
+</select>
+
+
+<select id="getMapListByParm" parameterType="HashMap" resultType="HashMap">
+	select * from demo_menu where 1=1
+		<if test="parm.orderby != null">
+	   		order by ${parm.orderby}
+	   	</if>
+		<if test="parm.start != null">
+			limit #{parm.start},#{parm.limit}
+		</if>
+</select>
+
 
 </mapper>

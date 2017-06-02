@@ -2,74 +2,185 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
 <mapper namespace="com.demo.my.base.mybatis.mapper.ds1mapper.CodeMapper">
 
-<resultMap type="com.demo.my.base.bean.Code" id="CodeBaseMapper">
+<resultMap type="com.demo.my.base.model.Code" id="CodeBaseMapper">
+	<id property="item" column="ITEM" />
+	<id property="codeId" column="CODE_ID" />
+	<id property="itemOrder" column="ITEM_ORDER" />
+	<id property="createTime" column="CREATE_TIME" />
+	<id property="codeLevel" column="CODE_LEVEL" />
+	<id property="fatherId" column="FATHER_ID" />
+	<id property="updateTime" column="UPDATE_TIME" />
 	<id property="id" column="ID" />
-	<result property="fatherId" column="FATHER_ID" />
-	<result property="content" column="CONTENT" />
-	<result property="item" column="ITEM" />
-	<result property="createTime" column="CREATE_TIME" />
-	<result property="updateTime" column="UPDATE_TIME" />
-	<result property="itemOrder" column="ITEM_ORDER" />
-	<result property="status" column="STATUS" />
-	<result property="codeId" column="CODE_ID" />
+	<id property="content" column="CONTENT" />
+	<id property="status" column="STATUS" />
 </resultMap>  
 
 <insert id="insert">
 	<selectKey resultType="long" keyProperty="id">  
    		select LAST_INSERT_ID()
-   	</selectKey>  
-	insert into code(ITEM,CONTENT,FATHER_ID,CREATE_TIME,UPDATE_TIME,ITEM_ORDER,STATUS,CODE_ID)
-	values(#{item},#{content},#{fatherId},now(),now(),#{itemOrder},0,#{codeId})
+   	</selectKey>
+	insert into code
+	(ITEM,CODE_ID,ITEM_ORDER,CREATE_TIME,CODE_LEVEL,FATHER_ID,UPDATE_TIME,CONTENT,STATUS)
+	values
+	(#{item},#{codeId},#{itemOrder},#{createTime},#{codeLevel},#{fatherId},#{updateTime},#{content},#{status})
 </insert>
 
 <update id="update">
-	update code set 
-	<if test="item != null and item != ''">
-     	ITEM = #{item},
-   	</if>
-   	<if test="itemOrder != null">
-     	ITEM_ORDER = #{itemOrder},
-   	</if>
-   	<if test="content != null and content != ''">
-      	CONTENT = #{content},
-   	</if>
-   	<if test="status != null">
-      	STATUS = #{status},
-   	</if>
-    FATHER_ID = #{fatherId},
-    CODE_ID = #{codeId},
-   	UPDATE_TIME = now()
-   	where ID =#{id}
+	UPDATE code 
+	<set>
+			<if test="item != null">  
+	        	ITEM=#{item},
+	    	</if>
+			<if test="codeId != null">  
+	        	CODE_ID=#{codeId},
+	    	</if>
+			<if test="itemOrder != null">  
+	        	ITEM_ORDER=#{itemOrder},
+	    	</if>
+			<if test="createTime != null">  
+	        	CREATE_TIME=#{createTime},
+	    	</if>
+			<if test="codeLevel != null">  
+	        	CODE_LEVEL=#{codeLevel},
+	    	</if>
+			<if test="fatherId != null">  
+	        	FATHER_ID=#{fatherId},
+	    	</if>
+			<if test="updateTime != null">  
+	        	UPDATE_TIME=#{updateTime},
+	    	</if>
+			<if test="content != null">  
+	        	CONTENT=#{content},
+	    	</if>
+			<if test="status != null">  
+	        	STATUS=#{status},
+	    	</if>
+	</set>   
+    WHERE id=#{id}
 </update>
 
-<select id="countByParm" resultType="integer">
-	SELECT count(*) FROM code WHERE 1=1 
-   	<if test="parm.item != null and parm.item != ''">
-     	ITEM like '%${parm.item}%'
-   	</if>
-   	<if test="parm.fatherId != null">
-     	and FATHER_ID = #{parm.fatherId}
-   	</if>
-</select>
-<select id="getBeanListByParm" parameterType="HashMap" resultMap="CodeBaseMapper">
-	SELECT ID, FATHER_ID, ITEM, STATUS, ITEM_ORDER, CREATE_TIME, UPDATE_TIME,CODE_ID FROM code WHERE 1=1
-	<if test="parm.item != null and parm.item != ''">
-     	and ITEM like '%${parm.item}%'
-   	</if>
-   	<if test="parm.fatherId != null">
-     	and FATHER_ID = #{parm.fatherId}
-   	</if>
-   	<if test="parm.codeId != null">
-     	and CODE_ID = #{parm.codeId}
-   	</if>
-   	<if test="parm.codeId == null">
-     	and CODE_ID is null
-   	</if>
-	ORDER BY ITEM_ORDER ASC 
-</select>
+<delete id="delete">
+	delete from code where id=#{id}
+</delete>
 
 <select id="getById" resultMap="CodeBaseMapper">
-	SELECT * FROM code WHERE ID = #{id}
+	SELECT * FROM code WHERE id=#{id} 
+</select>
+
+<select id="countByParm" resultType="integer">
+	select count(*) from code  where 1=1 
+			<if test="parm.item != null">
+		     	and ITEM like "%"#{parm.item}"%"
+		   	</if>
+			<if test="parm.codeId != null">
+		     	and CODE_ID = #{parm.codeId}
+		   	</if>
+			<if test="parm.itemOrder != null">
+		     	and ITEM_ORDER = #{parm.itemOrder}
+		   	</if>
+			<if test="parm.createTime != null">
+		     	and CREATE_TIME = #{parm.createTime}
+		   	</if>
+			<if test="parm.fatherId != null">
+		     	and FATHER_ID = #{parm.fatherId}
+		   	</if>
+			<if test="parm.updateTime != null">
+		     	and UPDATE_TIME = #{parm.updateTime}
+		   	</if>
+			<if test="parm.content != null">
+		     	and CONTENT = #{parm.content}
+		   	</if>
+			<if test="parm.status != null">
+		     	and STATUS = #{parm.status}
+		   	</if>
+		   	<if test="parm.codeLevel != null">
+		     	and CODE_LEVEL = #{parm.codeLevel}
+		   	</if>
+</select>
+
+<select id="getBeanListByParm" resultMap="CodeBaseMapper">
+	select * from code where 1=1 
+			<if test="parm.item != null">
+		     	and ITEM like "%"#{parm.item}"%"
+		   	</if>
+			<if test="parm.codeId != null">
+		     	and CODE_ID = #{parm.codeId}
+		   	</if>
+			<if test="parm.itemOrder != null">
+		     	and ITEM_ORDER = #{parm.itemOrder}
+		   	</if>
+			<if test="parm.createTime != null">
+		     	and CREATE_TIME = #{parm.createTime}
+		   	</if>
+			<if test="parm.fatherId != null">
+		     	and FATHER_ID = #{parm.fatherId}
+		   	</if>
+			<if test="parm.updateTime != null">
+		     	and UPDATE_TIME = #{parm.updateTime}
+		   	</if>
+			<if test="parm.content != null">
+		     	and CONTENT = #{parm.content}
+		   	</if>
+			<if test="parm.status != null">
+		     	and STATUS = #{parm.status}
+		   	</if>
+		   	<if test="parm.codeLevel != null">
+		     	and CODE_LEVEL = #{parm.codeLevel}
+		   	</if>
+		<if test="parm.orderby != null">
+	   		order by ${parm.orderby}
+	   	</if>
+		<if test="parm.start != null">
+			limit #{parm.start},#{parm.limit}
+		</if>
+</select>
+
+
+<select id="getMapListByParm" parameterType="HashMap" resultType="HashMap">
+	select 
+	c.ID as id,
+	c.ITEM as item, 
+	c.CODE_LEVEL as codeLevel,
+	DATE_FORMAT(c.CREATE_TIME,'%Y-%m-%d %H:%m:%i') as createTimeStr,
+	DATE_FORMAT(c.UPDATE_TIME,'%Y-%m-%d %H:%m:%i') as updateTimeStr,
+	c.ITEM_ORDER as orderBy,
+	csm.`NAME` as codeSubType
+	from `code` c
+	LEFT JOIN code_sub_menu csm on c.FATHER_ID=csm.ID
+	where 1=1
+		<if test="parm.item != null">
+		     	and c.ITEM like "%"#{parm.item}"%"
+		   	</if>
+			<if test="parm.codeId != null">
+		     	and c.CODE_ID = #{parm.codeId}
+		   	</if>
+			<if test="parm.itemOrder != null">
+		     	and c.ITEM_ORDER = #{parm.itemOrder}
+		   	</if>
+			<if test="parm.createTime != null">
+		     	and c.CREATE_TIME = #{parm.createTime}
+		   	</if>
+			<if test="parm.fatherId != null">
+		     	and c.FATHER_ID = #{parm.fatherId}
+		   	</if>
+			<if test="parm.updateTime != null">
+		     	and c.UPDATE_TIME = #{parm.updateTime}
+		   	</if>
+			<if test="parm.content != null">
+		     	and c.CONTENT = #{parm.content}
+		   	</if>
+			<if test="parm.status != null">
+		     	and c.STATUS = #{parm.status}
+		   	</if>
+		   	<if test="parm.codeLevel != null">
+		     	and CODE_LEVEL = #{parm.codeLevel}
+		   	</if>
+		<if test="parm.orderby != null">
+	   		order by ${parm.orderby}
+	   	</if>
+		<if test="parm.start != null">
+			limit #{parm.start},#{parm.limit}
+		</if>
 </select>
 
 

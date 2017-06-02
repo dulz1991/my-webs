@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
 <mapper namespace="com.demo.my.base.mybatis.mapper.ds1mapper.SysCfgMapper">
 
-<resultMap type="com.demo.my.base.bean.SysCfg" id="SysCfgBaseMapper">
+<resultMap type="com.demo.my.base.model.SysCfg" id="SysCfgBaseMapper">
 	<id property="remark" column="REMARK" />
 	<id property="countJson" column="COUNT_JSON" />
 	<id property="id" column="ID" />
@@ -12,45 +12,69 @@
 	<selectKey resultType="long" keyProperty="id">  
    		select LAST_INSERT_ID()
    	</selectKey>
-	insert into sys_cfg (REMARK, COUNT_JSON)
-	values (#{remark}, #{countJson})
+	insert into sys_cfg
+	(REMARK,COUNT_JSON)
+	values
+	(#{remark},#{countJson})
 </insert>
 
 <update id="update">
-	UPDATE sys_cfg
-	<set>  
-		<if test="remark != null and remark != ''">  
-	        remark=#{remark},
-	    </if>
-	    <if test="countJson != null and countJson != ''">  
-	        count_json=#{countJson},  
-	    </if>
-    </set>
-    WHERE ID=#{id}
+	UPDATE sys_cfg 
+	<set>
+			<if test="remark != null">  
+	        	REMARK=#{remark},
+	    	</if>
+			<if test="countJson != null">  
+	        	COUNT_JSON=#{countJson},
+	    	</if>
+	</set>   
+    WHERE id=#{id}
 </update>
 
 <delete id="delete">
-	delete from sys_cfg where ID=#{id}
+	delete from sys_cfg where id=#{id}
 </delete>
 
 <select id="getById" resultMap="SysCfgBaseMapper">
-	SELECT * FROM sys_cfg WHERE ID=#{id}
-</select>
-
-<select id="getBeanListByParm" resultMap="SysCfgBaseMapper">
-	SELECT * FROM sys_cfg
-</select>
-
-<select id="getMapListByParm" parameterType="HashMap" resultType="HashMap">
-	
+	SELECT * FROM sys_cfg WHERE id=#{id} 
 </select>
 
 <select id="countByParm" resultType="integer">
-	
+	select count(*) from sys_cfg  where 1=1 
+			<if test="parm.remark != null">
+		     	and REMARK = #{parm.remark}
+		   	</if>
+			<if test="parm.countJson != null">
+		     	and COUNT_JSON = #{parm.countJson}
+		   	</if>
 </select>
 
-<select id="callProcCount" parameterType="java.util.Map" statementType="CALLABLE" >
-	{call proc_count(#{result,jdbcType=INTEGER,mode=OUT})}
+<select id="getBeanListByParm" resultMap="SysCfgBaseMapper">
+	select * from sys_cfg where 1=1 
+			<if test="parm.remark != null">
+		     	and REMARK = #{parm.remark}
+		   	</if>
+			<if test="parm.countJson != null">
+		     	and COUNT_JSON = #{parm.countJson}
+		   	</if>
+		<if test="parm.orderby != null">
+	   		order by ${parm.orderby}
+	   	</if>
+		<if test="parm.start != null">
+			limit #{parm.start},#{parm.limit}
+		</if>
 </select>
+
+
+<select id="getMapListByParm" parameterType="HashMap" resultType="HashMap">
+	select * from sys_cfg where 1=1
+		<if test="parm.orderby != null">
+	   		order by ${parm.orderby}
+	   	</if>
+		<if test="parm.start != null">
+			limit #{parm.start},#{parm.limit}
+		</if>
+</select>
+
 
 </mapper>

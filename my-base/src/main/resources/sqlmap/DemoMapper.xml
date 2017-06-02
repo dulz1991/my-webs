@@ -1,81 +1,183 @@
 <?xml version="1.0" encoding="UTF-8" ?>   
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
-<mapper namespace="com.demo.my.base.mybatis.mapper.ds3mapper.DemoMapper">
+<mapper namespace="com.demo.my.base.mybatis.mapper.ds1mapper.DemoMapper">
 
-<resultMap type="com.demo.my.base.bean.Demo" id="DemoBaseMapper">
+<resultMap type="com.demo.my.base.model.Demo" id="DemoBaseMapper">
+	<id property="resourcePath" column="resourcePath" />
+	<id property="picPath" column="picPath" />
+	<id property="createTime" column="createTime" />
+	<id property="downloadTimes" column="downloadTimes" />
+	<id property="description" column="description" />
+	<id property="menuId" column="menuId" />
 	<id property="id" column="id" />
-	<result property="title" column="title" />
-	<result property="description" column="description" />
-	<result property="menuId" column="menuId" />
-	<result property="picPath" column="picPath" />
-	<result property="resourcePath" column="resourcePath" />
-	<result property="url" column="url" />
-	<result property="createTime" column="CREATE_TIME" />
-	<result property="updateTime" column="UPDATE_TIME" />
-	<result property="downloadTimes" column="downloadTimes" />
+	<id property="updateTime" column="updateTime" />
+	<id property="title" column="title" />
+	<id property="url" column="url" />
 </resultMap>  
 
 <insert id="insert">
 	<selectKey resultType="long" keyProperty="id">  
    		select LAST_INSERT_ID()
    	</selectKey>
-	insert into demo(title,description,menuId,picPath,resourcePath,url,downloadTimes,createTime,updateTime)
-	values(#{title},#{description},#{menuId},#{picPath},#{resourcePath},#{url},#{downloadTimes},now(),now())
+	insert into demo
+	(resourcePath,picPath,createTime,downloadTimes,description,menuId,updateTime,title,url)
+	values
+	(#{resourcePath},#{picPath},#{createTime},#{downloadTimes},#{description},#{menuId},#{updateTime},#{title},#{url})
 </insert>
 
 <update id="update">
-	UPDATE demo SET UPDATETIME=now()
-	<if test="menuId != null and menuId != ''">  
-        ,MENUID=#{menuId}  
-    </if>
-    <if test="description != null and description != ''">  
-        ,description=#{description}  
-    </if> 
-	<if test="title != null and title != ''">  
-        ,title=#{title}  
-    </if>
-    <if test="picPath != null and picPath != ''">  
-        ,picPath=#{picPath}  
-    </if> 
-	<if test="resourcePath != null and resourcePath != ''">  
-        ,resourcePath=#{resourcePath}  
-    </if>
-    <if test="url != null and url != ''">  
-        ,url=#{url}  
-    </if>
-    <if test="downloadTimes != null">  
-        ,downloadTimes=#{downloadTimes}  
-    </if>
+	UPDATE demo 
+	<set>
+			<if test="resourcePath != null">  
+	        	resourcePath=#{resourcePath},
+	    	</if>
+			<if test="picPath != null">  
+	        	picPath=#{picPath},
+	    	</if>
+			<if test="createTime != null">  
+	        	createTime=#{createTime},
+	    	</if>
+			<if test="downloadTimes != null">  
+	        	downloadTimes=#{downloadTimes},
+	    	</if>
+			<if test="description != null">  
+	        	description=#{description},
+	    	</if>
+			<if test="menuId != null">  
+	        	menuId=#{menuId},
+	    	</if>
+			<if test="updateTime != null">  
+	        	updateTime=#{updateTime},
+	    	</if>
+			<if test="title != null">  
+	        	title=#{title},
+	    	</if>
+			<if test="url != null">  
+	        	url=#{url},
+	    	</if>
+	</set>   
     WHERE id=#{id}
 </update>
-<select id="getBeanListByParm" parameterType="HashMap" resultMap="DemoBaseMapper">
-	select * from demo b 
- 	where 1=1
-	<if test="parm.menuId != null">  
-        AND b.MENUID=#{parm.menuId}  
-    </if>  
-    <if test="parm.title != null and parm.title != ''">  
-        AND b.TITLE like '%${parm.title}%'
-    </if>
-	ORDER BY b.ID DESC
-	LIMIT #{page.pageNum},#{page.pageSize}
-</select>
-<select id="countByParm" resultType="integer">
-	select count(1) from demo b 
- 	where 1=1
-	<if test="parm.menuId != null">  
-        AND b.MENUID=#{parm.menuId}  
-    </if>  
-    <if test="parm.title != null and parm.title != ''">  
-        AND b.TITLE like '%${parm.title}%'
-    </if>
-</select>
-<select id="getById" resultMap="DemoBaseMapper">
-	SELECT * FROM demo WHERE ID=#{id} 
-</select>
+
 <delete id="delete">
-	delete from demo where ID=#{id}
+	delete from demo where id=#{id}
 </delete>
+
+<select id="getById" resultMap="DemoBaseMapper">
+	SELECT * FROM demo WHERE id=#{id} 
+</select>
+
+<select id="countByParm" resultType="integer">
+	select count(*) from demo  where 1=1 
+			<if test="parm.resourcePath != null">
+		     	and resourcePath = #{parm.resourcePath}
+		   	</if>
+			<if test="parm.picPath != null">
+		     	and picPath = #{parm.picPath}
+		   	</if>
+			<if test="parm.createTime != null">
+		     	and createTime = #{parm.createTime}
+		   	</if>
+			<if test="parm.downloadTimes != null">
+		     	and downloadTimes = #{parm.downloadTimes}
+		   	</if>
+			<if test="parm.description != null">
+		     	and description = #{parm.description}
+		   	</if>
+			<if test="parm.menuId != null">
+		     	and menuId = #{parm.menuId}
+		   	</if>
+			<if test="parm.updateTime != null">
+		     	and updateTime = #{parm.updateTime}
+		   	</if>
+			<if test="parm.title != null">
+		     	and title like  "%"#{parm.title}"%"
+		   	</if>
+			<if test="parm.url != null">
+		     	and url = #{parm.url}
+		   	</if>
+</select>
+
+<select id="getBeanListByParm" resultMap="DemoBaseMapper">
+	select * from demo where 1=1 
+			<if test="parm.resourcePath != null">
+		     	and resourcePath = #{parm.resourcePath}
+		   	</if>
+			<if test="parm.picPath != null">
+		     	and picPath = #{parm.picPath}
+		   	</if>
+			<if test="parm.createTime != null">
+		     	and createTime = #{parm.createTime}
+		   	</if>
+			<if test="parm.downloadTimes != null">
+		     	and downloadTimes = #{parm.downloadTimes}
+		   	</if>
+			<if test="parm.description != null">
+		     	and description = #{parm.description}
+		   	</if>
+			<if test="parm.menuId != null">
+		     	and menuId = #{parm.menuId}
+		   	</if>
+			<if test="parm.updateTime != null">
+		     	and updateTime = #{parm.updateTime}
+		   	</if>
+			<if test="parm.title != null">
+		     	and title like  "%"#{parm.title}"%" 
+		   	</if>
+			<if test="parm.url != null">
+		     	and url = #{parm.url}
+		   	</if>
+		<if test="parm.orderby != null">
+	   		order by ${parm.orderby}
+	   	</if>
+		<if test="parm.start != null">
+			limit #{parm.start},#{parm.limit}
+		</if>
+</select>
+
+
+<select id="getMapListByParm" parameterType="HashMap" resultType="HashMap">
+	select d.*,dm.`name`,
+	DATE_FORMAT(d.createTime,'%Y-%m-%d %H:%m:%s') as createTimeStr,
+	DATE_FORMAT(d.updateTime,'%Y-%m-%d %H:%m:%s') as updateTimeStr
+	from demo d
+	LEFT JOIN demo_menu dm on d.menuId = dm.id
+	where 1=1
+		<if test="parm.resourcePath != null">
+		     	and d.resourcePath = #{parm.resourcePath}
+		   	</if>
+			<if test="parm.picPath != null">
+		     	and d.picPath = #{parm.picPath}
+		   	</if>
+			<if test="parm.createTime != null">
+		     	and d.createTime = #{parm.createTime}
+		   	</if>
+			<if test="parm.downloadTimes != null">
+		     	and d.downloadTimes = #{parm.downloadTimes}
+		   	</if>
+			<if test="parm.description != null">
+		     	and d.description = #{parm.description}
+		   	</if>
+			<if test="parm.menuId != null">
+		     	and d.menuId = #{parm.menuId}
+		   	</if>
+			<if test="parm.updateTime != null">
+		     	and d.updateTime = #{parm.updateTime}
+		   	</if>
+			<if test="parm.title != null">
+		     	and d.title like  "%"#{parm.title}"%" 
+		   	</if>
+			<if test="parm.url != null">
+		     	and url = #{parm.url}
+		   	</if>
+		   	
+		<if test="parm.orderby != null">
+	   		order by ${parm.orderby}
+	   	</if>
+		<if test="parm.start != null">
+			limit #{parm.start},#{parm.limit}
+		</if>
+</select>
 
 
 </mapper>

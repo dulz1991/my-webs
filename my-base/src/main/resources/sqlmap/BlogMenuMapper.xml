@@ -2,31 +2,69 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
 <mapper namespace="com.demo.my.base.mybatis.mapper.ds1mapper.BlogMenuMapper">
 
-<resultMap type="com.demo.my.base.bean.BlogMenu" id="BlogMenuBaseMapper">
+<resultMap type="com.demo.my.base.model.BlogMenu" id="BlogMenuBaseMapper">
+	<id property="name" column="NAME" />
 	<id property="id" column="ID" />
-	<result property="name" column="NAME" />
 </resultMap>  
 
 <insert id="insert">
-	insert into blog_menu(NAME) values(#{name})
+	<selectKey resultType="long" keyProperty="id">  
+   		select LAST_INSERT_ID()
+   	</selectKey>
+	insert into blog_menu
+	(NAME)
+	values
+	(#{name})
 </insert>
 
 <update id="update">
-	update blog_menu
+	UPDATE blog_menu 
 	<set>
-		<if test="name != null and name != ''">  
-	        NAME=#{name},
-	    </if>
-	</set>
-	 where ID=#{id}
+			<if test="name != null">  
+	        	NAME=#{name},
+	    	</if>
+	</set>   
+    WHERE id=#{id}
 </update>
 
-<select id="getBeanListByParm" resultMap="BlogMenuBaseMapper">
-	SELECT * FROM blog_menu ORDER BY ID ASC
+<delete id="delete">
+	delete from blog_menu where id=#{id}
+</delete>
+
+<select id="getById" resultMap="BlogMenuBaseMapper">
+	SELECT * FROM blog_menu WHERE id=#{id} 
 </select>
 
-<select id="getById">
-	SELECT * FROM blog_menu where ID=#{id}
+<select id="countByParm" resultType="integer">
+	select count(*) from blog_menu  where 1=1 
+			<if test="parm.name != null">
+		     	and NAME = #{parm.name}
+		   	</if>
 </select>
+
+<select id="getBeanListByParm" resultMap="BlogMenuBaseMapper">
+	select * from blog_menu where 1=1 
+			<if test="parm.name != null">
+		     	and NAME = #{parm.name}
+		   	</if>
+		<if test="parm.orderby != null">
+	   		order by ${parm.orderby}
+	   	</if>
+		<if test="parm.start != null">
+			limit #{parm.start},#{parm.limit}
+		</if>
+</select>
+
+
+<select id="getMapListByParm" parameterType="HashMap" resultType="HashMap">
+	select * from blog_menu where 1=1
+		<if test="parm.orderby != null">
+	   		order by ${parm.orderby}
+	   	</if>
+		<if test="parm.start != null">
+			limit #{parm.start},#{parm.limit}
+		</if>
+</select>
+
 
 </mapper>

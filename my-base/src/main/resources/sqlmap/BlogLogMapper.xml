@@ -2,48 +2,109 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
 <mapper namespace="com.demo.my.base.mybatis.mapper.ds1mapper.BlogLogMapper">
 
-<resultMap type="com.demo.my.base.bean.BlogLog" id="BlogLogBaseMapper">
+<resultMap type="com.demo.my.base.model.BlogLog" id="BlogLogBaseMapper">
+	<id property="createTime" column="CREATE_TIME" />
+	<id property="remark" column="REMARK" />
 	<id property="id" column="ID" />
-	<result property="blogId" column="BLOG_ID" />
-	<result property="remark" column="REMARK" />
-	<result property="userId" column="USER_ID" />
-	<result property="createTime" column="CREATE_TIME" />
-	<result property="updateContent" column="UPDATE_CONTENT" />
+	<id property="updateContent" column="UPDATE_CONTENT" />
+	<id property="userId" column="USER_ID" />
+	<id property="blogId" column="BLOG_ID" />
 </resultMap>  
 
 <insert id="insert">
 	<selectKey resultType="long" keyProperty="id">  
    		select LAST_INSERT_ID()
-   	</selectKey>  
-	insert into blog_log(BLOG_ID,USER_ID,CREATE_TIME,REMARK,UPDATE_CONTENT)
-	values(#{blogId},#{userId},now(),#{remark},#{updateContent})
+   	</selectKey>
+	insert into blog_log
+	(CREATE_TIME,REMARK,UPDATE_CONTENT,USER_ID,BLOG_ID)
+	values
+	(#{createTime},#{remark},#{updateContent},#{userId},#{blogId})
 </insert>
 
-<select id="countByParm" resultType="integer">
-	SELECT count(*) FROM blog_log  
-	WHERE 1=1 
-   	<if test="parm.blogId != null">
-     	and BLOG_ID = #{parm.blogId}
-   	</if>
-   	<if test="parm.userId != null">
-     	and USER_ID = #{parm.userId}
-   	</if>
+<update id="update">
+	UPDATE blog_log 
+	<set>
+			<if test="createTime != null">  
+	        	CREATE_TIME=#{createTime},
+	    	</if>
+			<if test="remark != null">  
+	        	REMARK=#{remark},
+	    	</if>
+			<if test="updateContent != null">  
+	        	UPDATE_CONTENT=#{updateContent},
+	    	</if>
+			<if test="userId != null">  
+	        	USER_ID=#{userId},
+	    	</if>
+			<if test="blogId != null">  
+	        	BLOG_ID=#{blogId},
+	    	</if>
+	</set>   
+    WHERE id=#{id}
+</update>
+
+<delete id="delete">
+	delete from blog_log where id=#{id}
+</delete>
+
+<select id="getById" resultMap="BlogLogBaseMapper">
+	SELECT * FROM blog_log WHERE id=#{id} 
 </select>
 
-<select id="getMapListByParm" parameterType="HashMap" resultType="HashMap">
-	SELECT bl.ID as id, bl.BLOG_ID as blogId, bl.CREATE_TIME as createTime, 
-		bl.REMARK as remark,bl.USER_ID as userId, u.USERNAME as username
-	FROM blog_log bl 
-	LEFT JOIN `user` u on u.ID = bl.USER_ID	
-	WHERE 1=1 
-	<if test="parm.blogId != null">
-     	and bl.BLOG_ID = #{parm.blogId}
-   	</if>
-   	<if test="parm.userId != null">
-     	and bl.USER_ID = #{parm.userId}
-   	</if>
-	ORDER BY bl.ID DESC 
-	LIMIT #{page.pageNum}, #{page.pageSize}
+<select id="countByParm" resultType="integer">
+	select count(*) from blog_log  where 1=1 
+			<if test="parm.createTime != null">
+		     	and CREATE_TIME = #{parm.createTime}
+		   	</if>
+			<if test="parm.remark != null">
+		     	and REMARK = #{parm.remark}
+		   	</if>
+			<if test="parm.updateContent != null">
+		     	and UPDATE_CONTENT = #{parm.updateContent}
+		   	</if>
+			<if test="parm.userId != null">
+		     	and USER_ID = #{parm.userId}
+		   	</if>
+			<if test="parm.blogId != null">
+		     	and BLOG_ID = #{parm.blogId}
+		   	</if>
 </select>
+
+<select id="getBeanListByParm" resultMap="BlogLogBaseMapper">
+	select * from blog_log where 1=1 
+			<if test="parm.createTime != null">
+		     	and CREATE_TIME = #{parm.createTime}
+		   	</if>
+			<if test="parm.remark != null">
+		     	and REMARK = #{parm.remark}
+		   	</if>
+			<if test="parm.updateContent != null">
+		     	and UPDATE_CONTENT = #{parm.updateContent}
+		   	</if>
+			<if test="parm.userId != null">
+		     	and USER_ID = #{parm.userId}
+		   	</if>
+			<if test="parm.blogId != null">
+		     	and BLOG_ID = #{parm.blogId}
+		   	</if>
+		<if test="parm.orderby != null">
+	   		order by ${parm.orderby}
+	   	</if>
+		<if test="parm.start != null">
+			limit #{parm.start},#{parm.limit}
+		</if>
+</select>
+
+
+<select id="getMapListByParm" parameterType="HashMap" resultType="HashMap">
+	select * from blog_log where 1=1
+		<if test="parm.orderby != null">
+	   		order by ${parm.orderby}
+	   	</if>
+		<if test="parm.start != null">
+			limit #{parm.start},#{parm.limit}
+		</if>
+</select>
+
 
 </mapper>

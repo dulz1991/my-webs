@@ -2,89 +2,207 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
 <mapper namespace="com.demo.my.base.mybatis.mapper.ds1mapper.UserMapper">
 
-<resultMap type="com.demo.my.base.bean.User" id="UserBaseMapper">
+<resultMap type="com.demo.my.base.model.User" id="UserBaseMapper">
+	<id property="password" column="PASSWORD" />
+	<id property="role" column="ROLE" />
+	<id property="phone" column="PHONE" />
+	<id property="createTime" column="CREATE_TIME" />
+	<id property="description" column="DESCRIPTION" />
+	<id property="updateTime" column="UPDATE_TIME" />
 	<id property="id" column="ID" />
-	<result property="username" column="USERNAME" />
-	<result property="password" column="PASSWORD" />
-	<result property="phone" column="PHONE" />
-	<result property="email" column="EMAIL" />
-	<result property="avatar" column="AVATAR" />
-	<result property="role" column="ROLE" />
-	<result property="createTime" column="CREATE_TIME" />
-	<result property="updateTime" column="UPDATE_TIME" />
-	<result property="status" column="STATUS" />
+	<id property="avatar" column="AVATAR" />
+	<id property="email" column="EMAIL" />
+	<id property="status" column="STATUS" />
+	<id property="username" column="USERNAME" />
 </resultMap>  
 
 <insert id="insert">
 	<selectKey resultType="long" keyProperty="id">  
    		select LAST_INSERT_ID()
    	</selectKey>
-   	insert into user(USERNAME,PASSWORD,EMAIL,PHONE,ROLE,AVATAR,CREATE_TIME,UPDATE_TIME,STATUS) 
-   	values(#{username},#{password},#{email},#{phone},#{role},#{avatar},now(),now(),#{status})  
+	insert into user
+	(PASSWORD,ROLE,PHONE,CREATE_TIME,DESCRIPTION,UPDATE_TIME,AVATAR,EMAIL,STATUS,USERNAME)
+	values
+	(#{password},#{role},#{phone},#{createTime},#{description},#{updateTime},#{avatar},#{email},#{status},#{username})
 </insert>
 
 <update id="update">
-	update user set 
-	<if test="username != null and username != ''">
-     	USERNAME = #{username},
-   	</if>
-   	<if test="password != null and password != ''">
-      	PASSWORD = #{password},
-   	</if>
-   	<if test="email != null and email != ''">
-      	EMAIL = #{email},
-   	</if>
-   	<if test="role != null and role != ''">
-      	ROLE = #{role},
-   	</if>
-   	UPDATE_TIME = now()
-   	where ID = #{id}
+	UPDATE user 
+	<set>
+			<if test="password != null">  
+	        	PASSWORD=#{password},
+	    	</if>
+			<if test="role != null">  
+	        	ROLE=#{role},
+	    	</if>
+			<if test="phone != null">  
+	        	PHONE=#{phone},
+	    	</if>
+			<if test="createTime != null">  
+	        	CREATE_TIME=#{createTime},
+	    	</if>
+			<if test="description != null">  
+	        	DESCRIPTION=#{description},
+	    	</if>
+			<if test="updateTime != null">  
+	        	UPDATE_TIME=#{updateTime},
+	    	</if>
+			<if test="avatar != null">  
+	        	AVATAR=#{avatar},
+	    	</if>
+			<if test="email != null">  
+	        	EMAIL=#{email},
+	    	</if>
+			<if test="status != null">  
+	        	STATUS=#{status},
+	    	</if>
+			<if test="username != null">  
+	        	USERNAME=#{username},
+	    	</if>
+	</set>   
+    WHERE id=#{id}
 </update>
 
-<select id="getByParm_count" resultType="Integer">
-	select count(*) from user where 1=1 
-	<if test="user.username != null and user.username != ''">
-     	and USERNAME like '%${user.username}%' 
-   	</if>
-   	<if test="user.password != null and user.password != ''">
-      	and PASSWORD = #{user.password},
-   	</if>
-   	<if test="user.email != null and user.email != ''">
-      	and EMAIL = #{user.email},
-   	</if>
-   	<if test="user.role != null and user.role != ''">
-      	and ROLE = #{user.role},
-   	</if>
-</select>
-<select id="getByParm" resultMap="UserBaseMapper">
-	select * from user where 1=1 
-	<if test="user.username != null and user.username != ''">
-     	and USERNAME like '%${user.username}%' 
-   	</if>
-   	<if test="user.password != null and user.password != ''">
-      	and PASSWORD = #{user.password},
-   	</if>
-   	<if test="user.email != null and user.email != ''">
-      	and EMAIL = #{user.email},
-   	</if>
-   	<if test="user.role != null and user.role != ''">
-      	and ROLE = #{user.role},
-   	</if>
-   	order by ID desc
-   	limit #{page.pageNum},#{page.pageSize}
-</select>
+<delete id="delete">
+	delete from user where id=#{id}
+</delete>
 
 <select id="getById" resultMap="UserBaseMapper">
-	select * from user where ID = #{userId}
+	SELECT * FROM user WHERE id=#{id} 
+</select>
+
+<select id="countByParm" resultType="integer">
+	select count(*) from user  where 1=1 
+			<if test="parm.password != null">
+		     	and PASSWORD = #{parm.password}
+		   	</if>
+			<if test="parm.role != null">
+		     	and ROLE = #{parm.role}
+		   	</if>
+			<if test="parm.phone != null">
+		     	and PHONE = #{parm.phone}
+		   	</if>
+			<if test="parm.createTime != null">
+		     	and CREATE_TIME = #{parm.createTime}
+		   	</if>
+			<if test="parm.description != null">
+		     	and DESCRIPTION = #{parm.description}
+		   	</if>
+			<if test="parm.updateTime != null">
+		     	and UPDATE_TIME = #{parm.updateTime}
+		   	</if>
+			<if test="parm.avatar != null">
+		     	and AVATAR = #{parm.avatar}
+		   	</if>
+			<if test="parm.email != null">
+		     	and EMAIL = #{parm.email}
+		   	</if>
+			<if test="parm.status != null">
+		     	and STATUS = #{parm.status}
+		   	</if>
+			<if test="parm.username != null">
+		     	and username like "%"#{parm.username}"%"
+		   	</if>
+</select>
+
+<select id="getBeanListByParm" resultMap="UserBaseMapper">
+	select * from user where 1=1 
+			<if test="parm.password != null">
+		     	and PASSWORD = #{parm.password}
+		   	</if>
+			<if test="parm.role != null">
+		     	and ROLE = #{parm.role}
+		   	</if>
+			<if test="parm.phone != null">
+		     	and PHONE = #{parm.phone}
+		   	</if>
+			<if test="parm.createTime != null">
+		     	and CREATE_TIME = #{parm.createTime}
+		   	</if>
+			<if test="parm.description != null">
+		     	and DESCRIPTION = #{parm.description}
+		   	</if>
+			<if test="parm.updateTime != null">
+		     	and UPDATE_TIME = #{parm.updateTime}
+		   	</if>
+			<if test="parm.avatar != null">
+		     	and AVATAR = #{parm.avatar}
+		   	</if>
+			<if test="parm.email != null">
+		     	and EMAIL = #{parm.email}
+		   	</if>
+			<if test="parm.status != null">
+		     	and STATUS = #{parm.status}
+		   	</if>
+			<if test="parm.username != null">
+		     	and username like "%"#{parm.username}"%"
+		   	</if>
+		<if test="parm.orderby != null">
+	   		order by ${parm.orderby}
+	   	</if>
+		<if test="parm.start != null">
+			limit #{parm.start},#{parm.limit}
+		</if>
+</select>
+
+
+<select id="getMapListByParm" parameterType="HashMap" resultType="HashMap">
+	select  
+	u.id as id,
+	u.USERNAME as username, 
+	u.PHONE as phone, 
+	u.`STATUS` as `status`,
+	u.EMAIL as email,
+	DATE_FORMAT(u.CREATE_TIME,'%Y-%m-%d %H:%m:%i') as createTimeStr,
+	DATE_FORMAT(u.UPDATE_TIME,'%Y-%m-%d %H:%m:%i') as updateTimeStr,
+	r.ROLE_NAME as roleName
+	from  `user` u 
+	LEFT JOIN user_role r on u.ROLE = r.ID
+	where 1=1
+		<if test="parm.password != null">
+	     	and PASSWORD = #{parm.password}
+	   	</if>
+		<if test="parm.role != null">
+	     	and ROLE = #{parm.role}
+	   	</if>
+		<if test="parm.phone != null">
+	     	and PHONE = #{parm.phone}
+	   	</if>
+		<if test="parm.createTime != null">
+	     	and CREATE_TIME = #{parm.createTime}
+	   	</if>
+		<if test="parm.description != null">
+	     	and DESCRIPTION = #{parm.description}
+	   	</if>
+		<if test="parm.updateTime != null">
+	     	and UPDATE_TIME = #{parm.updateTime}
+	   	</if>
+		<if test="parm.avatar != null">
+	     	and AVATAR = #{parm.avatar}
+	   	</if>
+		<if test="parm.email != null">
+	     	and EMAIL = #{parm.email}
+	   	</if>
+		<if test="parm.status != null">
+	     	and STATUS = #{parm.status}
+	   	</if>
+		<if test="parm.username != null">
+	     	and username like "%"#{parm.username}"%"
+	   	</if>
+		<if test="parm.orderby != null">
+	   		order by ${parm.orderby}
+	   	</if>
+		<if test="parm.start != null">
+			limit #{parm.start},#{parm.limit}
+		</if>
 </select>
 
 <select id="findUserByUsernameAndPassword" resultMap="UserBaseMapper">
-	select * from user where USERNAME=#{user.username} and PASSWORD=#{user.password}
+	select * from user where USERNAME=#{user.username} and PASSWORD=#{user.password} and STATUS=1
 </select>
 
 <select id="getByUsername" resultMap="UserBaseMapper">
-	select * from user where USERNAME = #{username}
+	select * from user where USERNAME = #{username} and STATUS=1
 </select>
-
 
 </mapper>

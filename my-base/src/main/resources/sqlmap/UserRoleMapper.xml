@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>   
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="com.demo.my.base.mybatis.mapper.ds1mapper.UserRoleMapper">
+
+<resultMap type="com.demo.my.base.model.UserRole" id="UserRoleBaseMapper">
+	<id property="roleName" column="ROLE_NAME" />
+	<id property="id" column="ID" />
+	<id property="roleDescription" column="ROLE_DESCRIPTION" />
+</resultMap>  
+
+<insert id="insert">
+	<selectKey resultType="long" keyProperty="id">  
+   		select LAST_INSERT_ID()
+   	</selectKey>
+	insert into user_role
+	(ROLE_NAME,ROLE_DESCRIPTION)
+	values
+	(#{roleName},#{roleDescription})
+</insert>
+
+<update id="update">
+	UPDATE user_role 
+	<set>
+			<if test="roleName != null">  
+	        	ROLE_NAME=#{roleName},
+	    	</if>
+			<if test="roleDescription != null">  
+	        	ROLE_DESCRIPTION=#{roleDescription},
+	    	</if>
+	</set>   
+    WHERE id=#{id}
+</update>
+
+<delete id="delete">
+	delete from user_role where id=#{id}
+</delete>
+
+<select id="getById" resultMap="UserRoleBaseMapper">
+	SELECT * FROM user_role WHERE id=#{id} 
+</select>
+
+<select id="countByParm" resultType="integer">
+	select count(*) from user_role  where 1=1 
+			<if test="parm.roleName != null">
+		     	and ROLE_NAME = #{parm.roleName}
+		   	</if>
+			<if test="parm.roleDescription != null">
+		     	and ROLE_DESCRIPTION = #{parm.roleDescription}
+		   	</if>
+</select>
+
+<select id="getBeanListByParm" resultMap="UserRoleBaseMapper">
+	select * from user_role where 1=1 
+			<if test="parm.roleName != null">
+		     	and ROLE_NAME = #{parm.roleName}
+		   	</if>
+			<if test="parm.roleDescription != null">
+		     	and ROLE_DESCRIPTION = #{parm.roleDescription}
+		   	</if>
+		<if test="parm.orderby != null">
+	   		order by ${parm.orderby}
+	   	</if>
+		<if test="parm.start != null">
+			limit #{parm.start},#{parm.limit}
+		</if>
+</select>
+
+
+<select id="getMapListByParm" parameterType="HashMap" resultType="HashMap">
+	select * from user_role where 1=1
+		<if test="parm.orderby != null">
+	   		order by ${parm.orderby}
+	   	</if>
+		<if test="parm.start != null">
+			limit #{parm.start},#{parm.limit}
+		</if>
+</select>
+
+
+</mapper>

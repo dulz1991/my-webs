@@ -2,51 +2,102 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
 <mapper namespace="com.demo.my.base.mybatis.mapper.ds1mapper.CodeSubMenuMapper">
 
-<resultMap type="com.demo.my.base.bean.CodeSubMenu" id="CodeSubMenuBaseMapper">
+<resultMap type="com.demo.my.base.model.CodeSubMenu" id="CodeSubMenuBaseMapper">
+	<id property="fatherId" column="FATHER_ID" />
+	<id property="name" column="NAME" />
 	<id property="id" column="ID" />
-	<result property="name" column="NAME" />
-	<result property="fatherId" column="FATHER_ID" />
-	<result property="status" column="STATUS" />
+	<id property="status" column="STATUS" />
 </resultMap>  
 
 <insert id="insert">
 	<selectKey resultType="long" keyProperty="id">  
    		select LAST_INSERT_ID()
-   	</selectKey>  
-	insert into code_sub_menu(NAME,FATHER_ID,STATUS) values(#{name},#{fatherId},#{status})
+   	</selectKey>
+	insert into code_sub_menu
+	(FATHER_ID,NAME,STATUS)
+	values
+	(#{fatherId},#{name},#{status})
 </insert>
 
 <update id="update">
-	update code_sub_menu set NAME = #{name}, FATHER_ID = #{fatherId}, STATUS=#{status} where ID = #{id}
+	UPDATE code_sub_menu 
+	<set>
+			<if test="fatherId != null">  
+	        	FATHER_ID=#{fatherId},
+	    	</if>
+			<if test="name != null">  
+	        	NAME=#{name},
+	    	</if>
+			<if test="status != null">  
+	        	STATUS=#{status},
+	    	</if>
+	</set>   
+    WHERE id=#{id}
 </update>
 
-<select id="countByParm" resultType="integer">
-	SELECT count(*) FROM code_sub_menu WHERE 1=1
-   <if test="parm.name != null and parm.name != ''">
-     	AND NAME like '%${parm.name}%'
-   	</if>
-   	<if test="parm.fatherId != null and parm.fatherId != ''">
-     	AND FATHER_ID = #{parm.fatherId}
-   	</if>
-   	<if test="parm.status != null and parm.status != ''">
-     	AND STATUS = #{parm.status}
-   	</if>
-</select>
-<select id="getBeanListByParm" parameterType="HashMap" resultMap="CodeSubMenuBaseMapper">
-	SELECT * FROM code_sub_menu WHERE 1=1
-   	<if test="parm.name != null and parm.name != ''">
-     	AND NAME like '%${parm.name}%'
-   	</if>
-   	<if test="parm.fatherId != null">
-     	AND FATHER_ID = #{parm.fatherId}
-   	</if>
-   	<if test="parm.status != null">
-     	AND STATUS = #{parm.status}
-   	</if>
-</select>
+<delete id="delete">
+	delete from code_sub_menu where id=#{id}
+</delete>
 
 <select id="getById" resultMap="CodeSubMenuBaseMapper">
-	SELECT * FROM code_sub_menu WHERE ID = #{id}
+	SELECT * FROM code_sub_menu WHERE id=#{id} 
 </select>
+
+<select id="countByParm" resultType="integer">
+	select count(*) from code_sub_menu  where 1=1 
+			<if test="parm.fatherId != null">
+		     	and FATHER_ID = #{parm.fatherId}
+		   	</if>
+			<if test="parm.name != null">
+		     	and NAME like "%"#{parm.name}"%"
+		   	</if>
+			<if test="parm.status != null">
+		     	and STATUS = #{parm.status}
+		   	</if>
+</select>
+
+<select id="getBeanListByParm" resultMap="CodeSubMenuBaseMapper">
+	select * from code_sub_menu where 1=1 
+			<if test="parm.fatherId != null">
+		     	and FATHER_ID = #{parm.fatherId}
+		   	</if>
+			<if test="parm.name != null">
+		     	and NAME like "%"#{parm.name}"%"
+		   	</if>
+			<if test="parm.status != null">
+		     	and STATUS = #{parm.status}
+		   	</if>
+		<if test="parm.orderby != null">
+	   		order by ${parm.orderby}
+	   	</if>
+		<if test="parm.start != null">
+			limit #{parm.start},#{parm.limit}
+		</if>
+</select>
+
+
+<select id="getMapListByParm" parameterType="HashMap" resultType="HashMap">
+	SELECT csm.ID as id, csm.`NAME` as menuName, csm.FATHER_ID as fatherId, csm.`STATUS` as menuStatus,
+	cm.`NAME` as fatherName
+	from code_sub_menu csm 
+	LEFT JOIN code_menu cm on csm.FATHER_ID=cm.ID
+	where 1=1
+		<if test="parm.fatherId != null">
+	     	and csm.FATHER_ID = #{parm.fatherId}
+	   	</if>
+		<if test="parm.name != null">
+	     	and csm.NAME like "%"#{parm.name}"%"
+	   	</if>
+		<if test="parm.status != null">
+	     	and csm.STATUS = #{parm.status}
+	   	</if>
+		<if test="parm.orderby != null">
+	   		order by ${parm.orderby}
+	   	</if>
+		<if test="parm.start != null">
+			limit #{parm.start},#{parm.limit}
+		</if>
+</select>
+
 
 </mapper>

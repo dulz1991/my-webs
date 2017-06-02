@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" ?>   
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="com.demo.my.base.mybatis.mapper.ds1mapper.CommentMapper">
+
+<resultMap type="com.demo.my.base.model.Comment" id="CommentBaseMapper">
+	<id property="discoveryId" column="DISCOVERY_ID" />
+	<id property="toId" column="TO_ID" />
+	<id property="createTime" column="CREATE_TIME" />
+	<id property="userIp" column="USER_IP" />
+	<id property="id" column="ID" />
+	<id property="blogId" column="BLOG_ID" />
+	<id property="fromId" column="FROM_ID" />
+	<id property="messageContent" column="MESSAGE_CONTENT" />
+</resultMap>  
+
+<insert id="insert">
+	<selectKey resultType="long" keyProperty="id">  
+   		select LAST_INSERT_ID()
+   	</selectKey>
+	insert into comment
+	(DISCOVERY_ID,TO_ID,CREATE_TIME,USER_IP,BLOG_ID,FROM_ID,MESSAGE_CONTENT)
+	values
+	(#{discoveryId},#{toId},#{createTime},#{userIp},#{blogId},#{fromId},#{messageContent})
+</insert>
+
+<update id="update">
+	UPDATE comment 
+	<set>
+			<if test="discoveryId != null">  
+	        	DISCOVERY_ID=#{discoveryId},
+	    	</if>
+			<if test="toId != null">  
+	        	TO_ID=#{toId},
+	    	</if>
+			<if test="createTime != null">  
+	        	CREATE_TIME=#{createTime},
+	    	</if>
+			<if test="userIp != null">  
+	        	USER_IP=#{userIp},
+	    	</if>
+			<if test="blogId != null">  
+	        	BLOG_ID=#{blogId},
+	    	</if>
+			<if test="fromId != null">  
+	        	FROM_ID=#{fromId},
+	    	</if>
+			<if test="messageContent != null">  
+	        	MESSAGE_CONTENT=#{messageContent},
+	    	</if>
+	</set>   
+    WHERE id=#{id}
+</update>
+
+<delete id="delete">
+	delete from comment where id=#{id}
+</delete>
+
+<select id="getById" resultMap="CommentBaseMapper">
+	SELECT * FROM comment WHERE id=#{id} 
+</select>
+
+<select id="countByParm" resultType="integer">
+	select count(*) from comment  where 1=1 
+			<if test="parm.discoveryId != null">
+		     	and DISCOVERY_ID = #{parm.discoveryId}
+		   	</if>
+			<if test="parm.toId != null">
+		     	and TO_ID = #{parm.toId}
+		   	</if>
+			<if test="parm.createTime != null">
+		     	and CREATE_TIME = #{parm.createTime}
+		   	</if>
+			<if test="parm.userIp != null">
+		     	and USER_IP = #{parm.userIp}
+		   	</if>
+			<if test="parm.blogId != null">
+		     	and BLOG_ID = #{parm.blogId}
+		   	</if>
+			<if test="parm.fromId != null">
+		     	and FROM_ID = #{parm.fromId}
+		   	</if>
+			<if test="parm.messageContent != null">
+		     	and MESSAGE_CONTENT = #{parm.messageContent}
+		   	</if>
+</select>
+
+<select id="getBeanListByParm" resultMap="CommentBaseMapper">
+	select * from comment where 1=1 
+			<if test="parm.discoveryId != null">
+		     	and DISCOVERY_ID = #{parm.discoveryId}
+		   	</if>
+			<if test="parm.toId != null">
+		     	and TO_ID = #{parm.toId}
+		   	</if>
+			<if test="parm.createTime != null">
+		     	and CREATE_TIME = #{parm.createTime}
+		   	</if>
+			<if test="parm.userIp != null">
+		     	and USER_IP = #{parm.userIp}
+		   	</if>
+			<if test="parm.blogId != null">
+		     	and BLOG_ID = #{parm.blogId}
+		   	</if>
+			<if test="parm.fromId != null">
+		     	and FROM_ID = #{parm.fromId}
+		   	</if>
+			<if test="parm.messageContent != null">
+		     	and MESSAGE_CONTENT = #{parm.messageContent}
+		   	</if>
+		<if test="parm.orderby != null">
+	   		order by ${parm.orderby}
+	   	</if>
+		<if test="parm.start != null">
+			limit #{parm.start},#{parm.limit}
+		</if>
+</select>
+
+
+<select id="getMapListByParm" parameterType="HashMap" resultType="HashMap">
+	select * from comment where 1=1
+		<if test="parm.orderby != null">
+	   		order by ${parm.orderby}
+	   	</if>
+		<if test="parm.start != null">
+			limit #{parm.start},#{parm.limit}
+		</if>
+</select>
+
+
+</mapper>
