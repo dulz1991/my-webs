@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:aop="http://www.springframework.org/schema/aop" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	  http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+	 
+	  http://www.springframework.org/schema/aop 
+	  http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+	 
+	  http://www.springframework.org/schema/tx   
+      http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+     
+     http://www.springframework.org/schema/context 
+     http://www.springframework.org/schema/context/spring-context-3.0.xsd"
+	default-lazy-init="true" default-autowire="byName">
+	
+	<!-- 单库事务 -->
+	<!-- <tx:annotation-driven transaction-manager="transactionManager" /> -->
+	<!-- Transaction manager for a single JDBC DataSource -->
+	<!-- <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager" /> -->
+	
+ 	<!-- 数据源1 -->
+	<bean id="dataSourceOne" class="com.atomikos.jdbc.AtomikosDataSourceBean" init-method="init" destroy-method="close">
+	   <property name="uniqueResourceName" value="mysql_dataSourceOne" />
+	   <property name="xaDataSourceClassName" value="com.mysql.jdbc.jdbc2.optional.MysqlXADataSource"/>
+	   <property name="xaProperties">
+	     <props>
+	       <prop key="user">${jdbc.username}</prop>
+	       <prop key="password">${jdbc.password}</prop>
+	       <prop key="url">${jdbc.url}</prop>
+	     </props>
+	   </property>
+	  	<property name="poolSize" value="10" />
+	  	<property name="reapTimeout" value="20000" />
+	  	<property name="minPoolSize" value="${jdbc.minPoolSize}" />
+		<property name="maxPoolSize" value="${jdbc.maxPoolSize}" />	
+  </bean>
+  <!-- 数据源2 --> 
+  <!-- <bean id="dataSourceTwo" class="com.atomikos.jdbc.AtomikosDataSourceBean" init-method="init" destroy-method="close">
+    <property name="uniqueResourceName" value="mysql_dataSourceTwo" />
+    <property name="xaDataSourceClassName" value="com.mysql.jdbc.jdbc2.optional.MysqlXADataSource"/>
+    <property name="xaProperties">
+      <props>
+        <prop key="user">${jdbc.username}</prop>
+        <prop key="password">${jdbc.password}</prop>
+        <prop key="url">${jdbc.url_pic}</prop>
+      </props>
+    </property>
+   	<property name="poolSize" value="10" />
+   	<property name="reapTimeout" value="20000" />
+   	<property name="minPoolSize" value="${jdbc.minPoolSize}" />
+	<property name="maxPoolSize" value="${jdbc.maxPoolSize}" />
+  </bean> -->
+	<!-- 数据源1 -->
+	<!-- <bean id="dataSourceOne" class="com.mchange.v2.c3p0.ComboPooledDataSource"  destroy-method="close">  
+		<property name="minPoolSize" value="${jdbc.minPoolSize}" />
+		<property name="maxPoolSize" value="${jdbc.maxPoolSize}" />
+		<property name="idleConnectionTestPeriod" value="18000" />
+		<property name="maxIdleTime" value="10000" />
+		<property name="maxStatementsPerConnection" value="10" />
+		<property name="maxStatements" value="400" />
+		<property name="numHelperThreads" value="5" />
+		<property name="preferredTestQuery" value="SELECT @@SQL_MODE" />
+		<property name="driverClass" value="${jdbc.driverClassName}" />
+		<property name="jdbcUrl" value="${jdbc.url}" />
+		<property name="user" value="${jdbc.username}" />
+		<property name="password">
+			<value><![CDATA[${jdbc.password}]]></value>
+		</property>
+	</bean> -->
+	<!-- 数据源2 -->
+	<!-- <bean id="dataSourceTwo" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">  
+		<property name="minPoolSize" value="${jdbc.minPoolSize}" />
+		<property name="maxPoolSize" value="${jdbc.maxPoolSize}" />
+		<property name="idleConnectionTestPeriod" value="18000" />
+		<property name="maxIdleTime" value="10000" />
+		<property name="maxStatementsPerConnection" value="10" />
+		<property name="maxStatements" value="400" />
+		<property name="numHelperThreads" value="5" />
+		<property name="preferredTestQuery" value="SELECT @@SQL_MODE" />
+		<property name="testConnectionOnCheckin" value="true" />
+		<property name="testConnectionOnCheckout" value="false" />
+		<property name="driverClass" value="${jdbc.driverClassName}" />
+		<property name="jdbcUrl" value="${jdbc.url_pic}" />
+		<property name="user" value="${jdbc.username}" />
+		<property name="password">
+			<value><![CDATA[${jdbc.password}]]></value>
+		</property>
+	</bean> -->
+	
+	<!-- 管理多个数据源 -->
+	<bean id="dataSource" class="com.demo.my.base.mybatis.config.DynamicDataSource">  
+	    <property name="targetDataSources">  
+	        <map key-type="java.lang.String">  
+	            <entry value-ref="dataSourceOne" key="dataSourceOne"></entry>  
+	            <!-- <entry value-ref="dataSourceTwo" key="dataSourceTwo"></entry>   -->
+	        </map>  
+	    </property>  
+	    <property name="defaultTargetDataSource" ref="dataSourceOne"></property>      
+	</bean>
+	
+	<!-- 动态切换数据源 -->
+  	<bean id="dataSourceInterceptor" class="com.demo.my.base.mybatis.config.DataSourceInterceptor"></bean>
+	<aop:config>  
+        <aop:aspect ref="dataSourceInterceptor">  
+            <aop:before method="setdataSourceOne" pointcut="execution(* com.demo.my.base.mybatis.mapper.ds1mapper.*.*(..))" />  
+			<aop:before method="setdataSourceTwo" pointcut="execution(* com.demo.my.base.mybatis.mapper.ds2mapper.*.*(..))" />
+        </aop:aspect>  
+    </aop:config>
+    
+    <!-- 扫描mybatis映射接口类 --> 
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">  
+	    <property name="basePackage" value="com.demo.my.base.mybatis.mapper"/>  
+	    <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory_"/>  
+	</bean>  
+	
+	<!-- 将数据源映射到sqlSessionFactory中 -->  
+    <bean id="sqlSessionFactory_" class="org.mybatis.spring.SqlSessionFactoryBean">  
+        <!-- <property name="configLocation" value="classpath*:mybatis/mybatis-config.xml" /> -->  
+        <property name="dataSource" ref="dataSource" />  
+        <property name="mapperLocations" value="classpath*:/sqlmap/*.xml" />  
+    </bean> 
+    
+    <!-- 分库事务 -->
+	<bean id="userTransactionService" class="com.atomikos.icatch.config.UserTransactionServiceImp" init-method="init" destroy-method="shutdownForce">
+        <constructor-arg>
+            <props>
+                <prop key="com.atomikos.icatch.service">com.atomikos.icatch.standalone.UserTransactionServiceFactory</prop>
+            </props>
+        </constructor-arg>
+    </bean>
+	<bean id="atomikosTransactionManager" class="com.atomikos.icatch.jta.UserTransactionManager" init-method="init" 
+		destroy-method="close" depends-on="userTransactionService">
+  		<property name="forceShutdown">
+   			<value>true</value>
+  		</property>
+ 	</bean>
+ 	<bean id="atomikosUserTransaction" class="com.atomikos.icatch.jta.UserTransactionImp" depends-on="userTransactionService">
+  		<property name="transactionTimeout">
+   			<value>60000</value>
+  		</property>
+ 	</bean>
+ 	<bean id="txManager" class="org.springframework.transaction.jta.JtaTransactionManager" depends-on="userTransactionService">
+  		<property name="userTransaction" ref="atomikosUserTransaction" />
+  		<property name="transactionManager" ref="atomikosTransactionManager"></property>
+ 	</bean>
+ 	<!-- 事务的切入点配置 -->
+ 	<!-- <tx:annotation-driven transaction-manager="txManager" /> --> 
+    <!-- <tx:advice id="advice" transaction-manager="txManager">
+  		<tx:attributes>
+   			<tx:method name="save*" propagation="REQUIRED" rollback-for="Exception" />
+   			<tx:method name="insert*" propagation="REQUIRED" rollback-for="Exception" />
+  			<tx:method name="delete*" propagation="REQUIRED" rollback-for="Exception" />
+  			<tx:method name="update*" propagation="REQUIRED" rollback-for="Exception" />
+   			<tx:method name="*" read-only="false" />
+  		</tx:attributes>
+ 	</tx:advice>
+    <aop:config>
+  		<aop:pointcut id="txpoint" expression=" execution(* com.demo.my.base.servicebean.*.*(..))" />
+  		<aop:advisor advice-ref="advice" pointcut-ref="txpoint" />
+ 	</aop:config> -->
+    
+</beans>

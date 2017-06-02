@@ -26,7 +26,7 @@
 			url_move_show : '', //查看
 			url_load : '', //加载
 			parm : {
-				pageNum : 1,
+				pageNo : 1,
 				pageSize : 10
 			},
 			cache : false,
@@ -46,25 +46,29 @@
 	}
 	
 	/* 翻页 */
-	$.fn.nextPage = function(_pageNum) {
-		_args.parm.pageNum = _pageNum;
+	$.fn.nextPage = function(_pageNo) {
+		_args.parm.pageNo = _pageNo;
 		action.load(_obj, _args);
 	}
 	
-	/* 搜索 */
+	/* 搜索 -- 手动拼接参数，再调用此方法 */
 	$.fn.doSearch = function(_parm) {
 		_args.parm = _parm;
 		action.load(_obj, _args);
 	}
 	
-	/* 搜索 */
+	/* 自动搜索  
+	 * onclick里直接传入表单的class或者id选择器即可
+	 *  */
 	$.fn.doAutoSearch = function() {
-		var _parm = $.fn.getFormJson('.form');
+		var _parm = $.fn.getFormJson(".form");
 		_args.parm = _parm;
 		action.load(_obj, _args);
 	}
 	
-	/* 进入编辑页  */
+	/* 进入编辑页  
+	 * 带id参数
+	 * */
 	$.fn.edit = function(obj){
 		var url= _args.url_edit + "?id=" + $(obj).attr("opid");
 		window.open(url);
@@ -92,7 +96,7 @@
 				id : _id
 			},
 			success: function(data) {
-				if (data.errorNo != 0) {
+				if (data.errorNo != 200) {
 					$.commonUtil.showTip(data.errorInfo);
 				} else {
 					$.commonUtil.showTip(data.errorInfo);
@@ -102,26 +106,29 @@
 		});
 	}
 	
-	/* 保存 */
-	$.fn.doSave = function(_parm, _submitUrl, _jumpUrl) {
+	/* 保存并跳转 */
+	$.fn.doSaveAndJump = function(_elem, _submitUrl, _jumpUrl) {
+		var _parm = $.fn.getFormJson(_elem);
 		$.ajax({
 			type: "POST",
 			url: _submitUrl,
 			dataType : "json",
 			data: _parm,
 			success: function(data) {
-				if (data.errorNo != 0) {
+				if (data.errorNo != 200) {
 					$.commonUtil.showTip(data.errorInfo);
 				} else {
-					$.commonUtil.showTip(data.errorInfo);
+					if(data.id!=undefined && data.id!=''){
+						_jumpUrl = _jumpUrl + '?id=' + data.id;
+					}
 					self.location= _jumpUrl;
 				}
 			}
 		});
 	}
-	
-	/* 保存并刷新  */
-	$.fn.doSaveAndReload = function(_parm, _url) {
+	/* 保存并提示  */
+	$.fn.doSaveAndTip = function(_elem, _url) {
+		var _parm = $.fn.getFormJson(_elem);
 		$.ajax({
 			type: "POST",
 			url: _url,
@@ -132,6 +139,22 @@
 					$.commonUtil.showTip(data.errorInfo);
 				} else {
 					$.commonUtil.showTip(data.errorInfo);
+				}
+			}
+		});
+	}
+	/* 保存并刷新  */
+	$.fn.doSaveAndReload = function(_elem, _url) {
+		var _parm = $.fn.getFormJson(_elem);
+		$.ajax({
+			type: "POST",
+			url: _url,
+			dataType : "json",
+			data: _parm,
+			success: function(data) {
+				if (data.errorNo != 200) {
+					$.commonUtil.showTip(data.errorInfo);
+				} else {
 					action.load(_obj, _args);
 				}
 			}
@@ -145,8 +168,8 @@
 	}
 	
 	/* 含文件的表单提交 */
-	$.fn.myAjaxSubmit = function(elem ,_submitUrl, _jumpUrl) {
-		$(elem).ajaxSubmit({  
+	$.fn.myAjaxSubmit = function(_elem ,_submitUrl, _jumpUrl) {
+		$(_elem).ajaxSubmit({  
             type:'post',  
             cache: false,  
             url: _submitUrl, 
@@ -164,9 +187,10 @@
         });
 	}
 	
-	 $.fn.getFormJson = function(elem) {
+	/* 表单数据序列化 */
+	 $.fn.getFormJson = function(_elem) {
         var o = {};
-        var a = $(elem).serializeArray();
+        var a = $(_elem).serializeArray();
         $.each(a, function () {
             if (o[this.name] !== undefined) {
                 if (!o[this.name].push) {
@@ -272,7 +296,7 @@
 				}
 			});
 		},
-		nextPage: function(pageNum) {
+		nextPage: function(pageNo) {
 			console.log(11);
 		}
 	}
