@@ -4,12 +4,11 @@ import javax.servlet.Filter;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.web.HttpMessageConverters;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.embedded.ConfigurableEmbeddedServletContainer;
 import org.springframework.boot.context.embedded.EmbeddedServletContainerCustomizer;
-import org.springframework.boot.context.web.SpringBootServletInitializer;
+import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -19,14 +18,14 @@ import org.springframework.web.filter.CharacterEncodingFilter;
 
 /*@SpringBootApplication*/
 @Configuration
-@ComponentScan(basePackages = "com.demo.springboot")  
-@EnableAutoConfiguration
 @ImportResource("classpath:spring-context.xml")
+@ComponentScan(basePackages = "com.demo")  
+@EnableAutoConfiguration
 public class Application extends SpringBootServletInitializer implements EmbeddedServletContainerCustomizer {
 	
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
-		System.out.println("Æô¶¯³É¹¦£¡¶Ë¿Ú£º7000");
+		System.out.println("å¯åŠ¨æˆåŠŸï¼šç«¯å£ï¼š9000");
 	}
 
 	@Override  
@@ -36,10 +35,10 @@ public class Application extends SpringBootServletInitializer implements Embedde
 	      
 	@Override
 	public void customize(ConfigurableEmbeddedServletContainer container) {
-		container.setPort(7000);  
+		container.setPort(9000);  
 	}
 	
-	 // ÓÃÓÚ´¦Àí±àÂëÎÊÌâ
+	 // ï¿½ï¿½ï¿½Ú´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     @Bean
     public Filter characterEncodingFilter() {
         CharacterEncodingFilter characterEncodingFilter = new CharacterEncodingFilter();
@@ -48,7 +47,7 @@ public class Application extends SpringBootServletInitializer implements Embedde
         return characterEncodingFilter;
     }
 
-    //ÎÄ¼şÏÂÔØ
+    //ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½
     @Bean
     public HttpMessageConverters restFileDownloadSupport() {
         ByteArrayHttpMessageConverter arrayHttpMessageConverter = new ByteArrayHttpMessageConverter();

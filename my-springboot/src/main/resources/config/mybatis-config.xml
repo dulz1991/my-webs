@@ -30,7 +30,7 @@
 	<bean id="dataSourceOne" class="com.mchange.v2.c3p0.ComboPooledDataSource"  destroy-method="close">  
 		<property name="minPoolSize" value="${jdbc.minPoolSize}" />
 		<property name="maxPoolSize" value="${jdbc.maxPoolSize}" />
-		<property name="idleConnectionTestPeriod" value="18000" />
+		<property name="idleConnectionTestPeriod" value="180" />
 		<property name="maxIdleTime" value="10000" />
 		<property name="maxStatementsPerConnection" value="10" />
 		<property name="maxStatements" value="400" />
@@ -44,19 +44,9 @@
 		</property>
 	</bean>
 	
-	<!-- 管理多个数据源 -->
-	<!-- <bean id="dataSource" class="com.demo.springboot.mybatis.config.DynamicDataSource">  
-	    <property name="targetDataSources">  
-	        <map key-type="java.lang.String">  
-	            <entry value-ref="dataSourceOne" key="dataSourceOne"></entry>
-	        </map>  
-	    </property>  
-	    <property name="defaultTargetDataSource" ref="dataSourceOne"></property>      
-	</bean> -->
-	
     <!-- 扫描mybatis映射接口类 --> 
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">  
-	    <property name="basePackage" value="com.demo.springboot.mybatis.mapper"/>  
+	    <property name="basePackage" value="com.demo.my.base.mybatis.mapper"/>  
 	    <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory_"/>  
 	</bean>  
 	
@@ -64,7 +54,7 @@
     <bean id="sqlSessionFactory_" class="org.mybatis.spring.SqlSessionFactoryBean">  
         <!-- <property name="configLocation" value="classpath*:mybatis/mybatis-config.xml" /> -->  
         <property name="dataSource" ref="dataSourceOne" />  
-        <property name="mapperLocations" value="classpath*:/sqlmap/*.xml" />  
+        <property name="mapperLocations" value="classpath*:sqlmap/*.xml" />  
     </bean> 
     
 </beans>

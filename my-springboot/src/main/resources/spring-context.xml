@@ -16,7 +16,10 @@
         http://www.springframework.org/schema/task  
 		http://www.springframework.org/schema/task/spring-task-3.0.xsd">
 
+	<bean id="SpringContextUtil" class="com.demo.my.base.util.SpringContextUtil" lazy-init="false"/>
+	
 	<import resource="classpath:config/mybatis-config.xml"/>
-	<import resource="classpath:config/mongo-config.xml"/>
+	<import resource="classpath:config/shiro-config.xml"/>
+
 
 </beans>  
