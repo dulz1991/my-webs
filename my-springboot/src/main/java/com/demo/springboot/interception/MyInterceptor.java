@@ -33,7 +33,7 @@ public class MyInterceptor extends HandlerInterceptorAdapter {
     		CookieUtil cookieUtil = new CookieUtil(request, response, Integer.MAX_VALUE);
     		String username = cookieUtil.getCookieValue(KeyConstant.COOKIE_USER);
     		if(StringUtils.isBlank(username)){
-    			return false;
+    			return true;
     		}
     	}
         return true;

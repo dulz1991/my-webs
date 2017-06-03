@@ -80,6 +80,21 @@ public class DiscoveryService extends AdapterService {
 		List<Map<String, Object>> list = new ArrayList<Map<String,Object>>();
 		if(count!=0){
 			list = discoveryMapper.getMapListByParm(parm);
+			String imagePath = "";
+			String content = "";
+			for(Map<String, Object> map : list){
+				imagePath = map.get("imagePath")==null?"":map.get("imagePath").toString();
+				if(StringUtils.isBlank(imagePath)){
+					map.put("hasImg", false);
+				} else {
+					map.put("hasImg", true);
+				}
+				
+				content = map.get("content")==null?"":map.get("content").toString();
+				if(content.length()>140){
+					map.put("content", content.substring(0, 140)+"...");
+				}
+			}
 		}
 		page.setList(list);
 		
@@ -98,12 +113,18 @@ public class DiscoveryService extends AdapterService {
 		if(count!=0){
 			list = discoveryMapper.getMapListByParm(parm);
 			String imagePath = "";
+			String content = "";
 			for(Map<String, Object> map : list){
-				imagePath = map.get("imgPath")==null?"":map.get("imgPath").toString();
+				imagePath = map.get("imagePath")==null?"":map.get("imagePath").toString();
 				if(StringUtils.isBlank(imagePath)){
 					map.put("hasImg", false);
 				} else {
 					map.put("hasImg", true);
+				}
+				
+				content = map.get("content")==null?"":map.get("content").toString();
+				if(content.length()>140){
+					map.put("content", content.substring(0, 140)+"...");
 				}
 			}
 		}
