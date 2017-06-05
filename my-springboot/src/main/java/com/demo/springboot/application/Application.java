@@ -25,7 +25,7 @@ public class Application extends SpringBootServletInitializer implements Embedde
 	
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
-		System.out.println("启动成功：端口：9000");
+		System.out.println("启动成功：端口：8084");
 	}
 
 	@Override  
@@ -35,7 +35,7 @@ public class Application extends SpringBootServletInitializer implements Embedde
 	      
 	@Override
 	public void customize(ConfigurableEmbeddedServletContainer container) {
-		container.setPort(9000);  
+		container.setPort(8084);  
 	}
 	
 	 // ���ڴ����������

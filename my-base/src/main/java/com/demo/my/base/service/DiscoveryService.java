@@ -175,5 +175,16 @@ public class DiscoveryService extends AdapterService {
 		parm.put("orderby", "id desc" );
 		return parm;
 	}
+	
+	public List<Map<String, Object>> getMapListForDrag(Long discoveryId, int pageSize, String type){
+		Map<String, Object> parmMap = new HashMap<String, Object>();
+		parmMap.put("id", discoveryId);
+		parmMap.put("pageSize", pageSize);
+		parmMap.put("type", type);
+		
+		List<Map<String, Object>> list = discoveryMapper.getMapListForDrag(parmMap);
+		
+		return list;
+	}
 
 }

@@ -106,7 +106,18 @@ public class CommentService extends AdapterService {
 		parm.put("limit", page.getPageSize());
 		
 		if(comment!=null){
-			
+			if(comment.getBlogId()!=null){
+				parm.put("blogId", comment.getBlogId());
+			}
+			if(comment.getDiscoveryId()!=null){
+				parm.put("discoveryId", comment.getDiscoveryId());
+			}
+			if(comment.getFromId()!=null){
+				parm.put("fromId", comment.getFromId());
+			}
+			if(comment.getToId()!=null){
+				parm.put("toId", comment.getToId());
+			}
 		}
 		
 		if(StringUtils.isNotBlank(orderby)){
@@ -121,10 +132,34 @@ public class CommentService extends AdapterService {
 	private Map<String, Object> queryParm(Comment comment) {
 		Map<String, Object> parm = new HashMap<String, Object>();
 		if(comment!=null){
-			
+			if(comment.getId()!=null){
+				parm.put("id", comment.getId());
+			}
+			if(comment.getBlogId()!=null){
+				parm.put("blogId", comment.getBlogId());
+			}
+			if(comment.getDiscoveryId()!=null){
+				parm.put("discoveryId", comment.getDiscoveryId());
+			}
+			if(comment.getFromId()!=null){
+				parm.put("fromId", comment.getFromId());
+			}
+			if(comment.getToId()!=null){
+				parm.put("toId", comment.getToId());
+			}
 		}
 		parm.put("orderby", "id desc" );
 		return parm;
+	}
+	
+	public List<Map<String, Object>> getMapListForDrag(Comment comment, Integer pageSize, String type) {
+		Map<String, Object> parm = queryParm(comment);
+		parm.put("pageSize", pageSize);
+		if(StringUtils.isNotBlank(type)){
+			parm.put("type", type);	
+		}
+		List<Map<String, Object>> list = commentMapper.getMapListForDrag(parm);
+		return list;
 	}
 
 }

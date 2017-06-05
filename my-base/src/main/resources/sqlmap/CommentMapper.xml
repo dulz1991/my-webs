@@ -126,5 +126,50 @@
 		</if>
 </select>
 
+<select id="getMapListForDrag" parameterType="HashMap" resultType="HashMap">
+		select 
+		c.ID as commentId,
+		c.MESSAGE_CONTENT as messageContent,
+		DATE_FORMAT(c.CREATE_TIME,'%Y-%m-%d %H:%m:%i') as createTimeStr,
+		uf.ID as fromId,
+		uf.USERNAME as fromName,
+		uf.AVATAR as fromAvatar,
+		ut.ID as toId,
+		ut.USERNAME as toName,
+		ut.AVATAR as toAvatar
+		from `comment` c
+		LEFT JOIN `user` uf on uf.ID = c.FROM_ID
+		LEFT JOIN `user` ut on ut.ID = c.TO_ID
+		where 1=1
+			<if test="parm.discoveryId != null">
+		     	and c.DISCOVERY_ID = #{parm.discoveryId}
+		   	</if>
+			<if test="parm.toId != null">
+		     	and c.TO_ID = #{parm.toId}
+		   	</if>
+			<if test="parm.blogId != null">
+		     	and c.BLOG_ID = #{parm.blogId}
+		   	</if>
+			<if test="parm.fromId != null">
+		     	and c.FROM_ID = #{parm.fromId}
+		   	</if>
+			
+			<if test="parm.type == 'up'">
+		     	and c.id &lt; #{parm.id}
+		     	order by c.id asc
+		   	</if>
+		   	<if test="parm.type == 'down'">
+		     	and c.id > #{parm.id}
+		     	order by c.id desc
+		   	</if>
+			<if test="parm.type == null || parm.type == ''">
+				order by c.id asc
+			</if>   	
+		   
+		<if test="parm.pageSize != null">
+			limit #{parm.pageSize}
+		</if>
+</select>
+
 
 </mapper>

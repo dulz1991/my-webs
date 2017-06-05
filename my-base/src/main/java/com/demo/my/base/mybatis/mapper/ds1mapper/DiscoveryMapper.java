@@ -26,4 +26,6 @@ public interface DiscoveryMapper extends BaseMapper {
 
 	Map<String, Object> getMapById(@Param("id") Long id);
 
+	List<Map<String, Object>> getMapListForDrag(@Param("parm") Map<String, Object> parmMap);
+
 }

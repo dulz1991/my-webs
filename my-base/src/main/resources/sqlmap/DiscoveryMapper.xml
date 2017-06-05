@@ -190,5 +190,36 @@
 		</if>
 </select>
 
+<select id="getMapListForDrag" parameterType="HashMap" resultType="HashMap">
+		select 
+		d.ID as id,
+		d.TITLE as title,
+		d.CONTENT as content,
+		d.IMG_PATH as imagePath,
+		d.CONTENT as content,
+		d.`STATUS` as `status`,
+		d.USER_ID as userId,
+		DATE_FORMAT(d.CREATE_TIME,'%Y-%m-%d %H:%m:%i') as createTimeStr,
+		u.USERNAME as username
+		from discovery d
+		LEFT JOIN `user` u on u.ID=d.USER_ID
+		 where 1=1
+	
+			<if test="parm.type == 'up'">
+		     	and d.id &lt; #{parm.id}
+		     	order by d.id desc
+		   	</if>
+		   	<if test="parm.type == 'down'">
+		     	and d.id > #{parm.id}
+		     	order by d.id asc
+		   	</if>
+			<if test="parm.type == null || parm.type == ''">
+				order by d.id desc
+			</if>   	
+		   
+		<if test="parm.pageSize != null">
+			limit #{parm.pageSize}
+		</if>
+</select>
 
 </mapper>
