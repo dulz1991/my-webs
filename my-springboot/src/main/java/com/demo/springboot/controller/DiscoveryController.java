@@ -42,7 +42,7 @@ public class DiscoveryController extends BaseController {
 	@ResponseBody
 	@RequestMapping(value = "/discoveryList", method=RequestMethod.GET)
 	public Map<String, Object> discoveryList(@RequestParam(name="pageNo", defaultValue="1") int pageNo, Long discoveryId, String type) {
-		int pageSize = 2;
+		int pageSize = 10;
 		Discovery discovery = new Discovery();
 		discovery.setStatus(1);
 		

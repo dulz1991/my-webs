@@ -36,7 +36,7 @@ public class CommentController extends BaseController {
 	@ResponseBody
 	@RequestMapping(value = "/getCommentList", method=RequestMethod.GET)
 	public Map<String, Object> getCommentList(Comment comment, String type) {
-		int pageSize = 2;
+		int pageSize = 10;
 		
 		List<Map<String, Object>> list = commentService.getMapListForDrag(comment, pageSize, type);
 		if(list.isEmpty()){
