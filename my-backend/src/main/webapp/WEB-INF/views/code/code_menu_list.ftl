@@ -1,5 +1,5 @@
 <#include "/base-lib/baseMacro.ftl"> 
-<@base base_title="代码笔记一级分类列表" openIndex=2 activeIndex=0>
+<@base base_title="代码笔记一级分类列表" openIndex=2 activeIndex=1>
 	
     	<!-- 搜索区 -->
 			<div class="row">
