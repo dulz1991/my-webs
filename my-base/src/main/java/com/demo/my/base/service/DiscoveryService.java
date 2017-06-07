@@ -183,6 +183,21 @@ public class DiscoveryService extends AdapterService {
 		parmMap.put("type", type);
 		
 		List<Map<String, Object>> list = discoveryMapper.getMapListForDrag(parmMap);
+		String imagePath = "";
+		String content = "";
+		for(Map<String, Object> map : list){
+			imagePath = map.get("imagePath")==null?"":map.get("imagePath").toString();
+			if(StringUtils.isBlank(imagePath)){
+				map.put("hasImg", false);
+			} else {
+				map.put("hasImg", true);
+			}
+			
+			content = map.get("content")==null?"":map.get("content").toString();
+			if(content.length()>140){
+				map.put("content", content.substring(0, 140)+"...");
+			}
+		}
 		
 		return list;
 	}
