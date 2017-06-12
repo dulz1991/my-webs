@@ -14,6 +14,7 @@ public class Comment implements Serializable {
 	private Long id;
 	private Long blogId;
 	private Long fromId;
+	private Long commentId;
 	private String messageContent;
 	
 	public Long getDiscoveryId() {
@@ -63,6 +64,12 @@ public class Comment implements Serializable {
 	}
 	public void setMessageContent(String messageContent) {
 		this.messageContent = messageContent;
+	}
+	public Long getCommentId() {
+		return commentId;
+	}
+	public void setCommentId(Long commentId) {
+		this.commentId = commentId;
 	}
 	
 	

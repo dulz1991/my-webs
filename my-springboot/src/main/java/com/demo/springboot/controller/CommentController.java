@@ -2,9 +2,12 @@ package com.demo.springboot.controller;
 
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -45,15 +48,41 @@ public class CommentController extends BaseController {
 		Collections.sort(list, new Comparator<Map<String, Object>>() {
 			@Override
 			public int compare(Map<String, Object> o1, Map<String, Object> o2) {
-				Long o1Id = Long.valueOf(o1.get("commentId").toString());
-				Long o2Id = Long.valueOf(o2.get("commentId").toString());
+				Long o1Id = Long.valueOf(o1.get("id").toString());
+				Long o2Id = Long.valueOf(o2.get("id").toString());
 				return (o1Id).compareTo(o2Id);
 			}
 		});
 		resMap.put("list", list);
 		
+		if(list!=null && !list.isEmpty()){
+			for(Map<String, Object> map : list){
+				Long id = Long.valueOf(map.get("id").toString());
+				Map<String, Object> parm = new HashMap<String, Object>();
+				parm.put("commentId", id);
+				parm.put("notEmptyCommentId", "true");
+				parm.put("orderBy", "c.id desc");
+				map.put("commentList", commentService.excute("CommentMapper.getMapListForDrag", parm));
+			}
+		}
+		
 		resMap.put("pageSize", pageSize);
 		return resMap;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/auth/doCommentForComment", method=RequestMethod.POST)
+	public Map<String, Object> doCommentForComment(Comment comment) {
+		if(StringUtils.isBlank(comment.getMessageContent())){
+			return responseError(ErrorConstant.ERROR_GENERAL, "请输入评论内容");
+		}
+		
+		Long userId = this.getCurrentUserId();
+		comment.setFromId(userId);
+		comment.setCreateTime(new Date());
+		commentService.insert(comment);
+		
+		return responseOK("");
 	}
 	
 }

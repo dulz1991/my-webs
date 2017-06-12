@@ -154,6 +154,7 @@ public class CommentService extends AdapterService {
 	
 	public List<Map<String, Object>> getMapListForDrag(Comment comment, Integer pageSize, String type) {
 		Map<String, Object> parm = queryParm(comment);
+		parm.put("emptyCommentId", "true");
 		parm.put("pageSize", pageSize);
 		if(StringUtils.isNotBlank(type)){
 			parm.put("type", type);	

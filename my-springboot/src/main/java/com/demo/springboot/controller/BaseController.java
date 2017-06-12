@@ -20,6 +20,7 @@ public class BaseController extends BaseCommon {
 	protected HttpServletRequest request;  
     protected HttpServletResponse response;
     protected Map<String, Object> resMap;
+    protected String cookieName;
     
     @Autowired
     private UserService userService;
@@ -29,6 +30,7 @@ public class BaseController extends BaseCommon {
         this.request = request;
         this.response = response;
         this.resMap = responseOK("");
+        this.cookieName = this.request.getParameter(KeyConstant.COOKIE_USER);
         
         //isLogin
         boolean isLogin = this.isLogin();
@@ -45,7 +47,8 @@ public class BaseController extends BaseCommon {
     }
 	
     public User getUserFromCookie(){
-    	String username = request.getParameter(KeyConstant.COOKIE_USER);
+    	/*String username = request.getParameter(cookieName);*/
+    	String username = this.cookieName;
     	username = Base64Util.decodeBase64(username);
     	User user = userService.getByUsername(username);
     	if(user==null){
@@ -61,4 +64,5 @@ public class BaseController extends BaseCommon {
     	}
     	return user.getId();
     }
+    
 }
