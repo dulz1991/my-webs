@@ -86,6 +86,12 @@ public class DiscoveryController extends BaseController {
 		}
 		resMap.put("detail", discovery);
 		
+		Discovery entity = new Discovery();
+		entity.setId(id);
+		String clickNum = discovery.get("clickNum")==null?"0":discovery.get("clickNum").toString();
+		entity.setClickNum(Integer.valueOf(clickNum)+1);
+		discoveryService.update(entity);
+		
 		return resMap;
 	}
 	

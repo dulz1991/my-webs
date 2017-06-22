@@ -49,7 +49,7 @@ public class BaseController extends BaseCommon {
     public User getUserFromCookie(){
     	/*String username = request.getParameter(cookieName);*/
     	String username = this.cookieName;
-    	username = Base64Util.decodeBase64(username);
+    	//username = Base64Util.decodeBase64(username);
     	User user = userService.getByUsername(username);
     	if(user==null){
     		return null;

@@ -72,8 +72,10 @@
 	d.CONTENT as content,
 	d.`STATUS` as `status`,
 	d.USER_ID as userId,
+	d.CLICK_NUM as clickNum,
 	DATE_FORMAT(d.CREATE_TIME,'%Y-%m-%d %H:%m:%i') as createTimeStr,
-	u.USERNAME as username
+	u.USERNAME as username,
+	u.AVATAR as avatar
 	from discovery d
 	LEFT JOIN `user` u on u.ID=d.USER_ID
 	WHERE d.id=#{id} 
