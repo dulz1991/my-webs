@@ -28,4 +28,7 @@ public interface DiscoveryMapper extends BaseMapper {
 
 	List<Map<String, Object>> getMapListForDrag(@Param("parm") Map<String, Object> parmMap);
 
+	List<Map<String, Object>> getMyCommentDiscovery(@Param("parm") Map<String, Object> parm);
+	int getMyCommentDiscoveryCount(@Param("parm") Map<String, Object> parm);
+
 }

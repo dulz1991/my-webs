@@ -16,8 +16,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.demo.my.base.common.ErrorConstant;
+import com.demo.my.base.model.Collection;
 import com.demo.my.base.model.Comment;
 import com.demo.my.base.model.Discovery;
+import com.demo.my.base.service.CollectionService;
 import com.demo.my.base.service.CommentService;
 import com.demo.my.base.service.DiscoveryService;
 import com.demo.my.base.service.UserService;
@@ -35,6 +37,8 @@ public class DiscoveryController extends BaseController {
 	private ImageFileService imageFileService;
 	@Autowired
 	private CommentService commentService;
+	@Autowired
+	private CollectionService collectionService;
 	
 	/**
 	 * 列表
@@ -91,6 +95,18 @@ public class DiscoveryController extends BaseController {
 		String clickNum = discovery.get("clickNum")==null?"0":discovery.get("clickNum").toString();
 		entity.setClickNum(Integer.valueOf(clickNum)+1);
 		discoveryService.update(entity);
+		
+		//是否登录 如果登陆 判断是否已关注
+		Long userId = this.getUserIdFromCookie();
+		if(userId!=null){
+			Collection collection = new Collection();
+			collection.setUserId(userId);
+			collection.setDiscoveryId(id);
+			int count = collectionService.countByParm(collection);
+			if (count>0) {
+				resMap.put("hasCollected", true);
+			}
+		}
 		
 		return resMap;
 	}

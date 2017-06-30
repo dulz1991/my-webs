@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>   
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="com.demo.my.base.mybatis.mapper.ds1mapper.CollectionMapper">
+
+<resultMap type="com.demo.my.base.model.Collection" id="CollectionBaseMapper">
+	<id property="discoveryId" column="DISCOVERY_ID" />
+	<id property="id" column="ID" />
+	<id property="createTime" column="CREATE_TIME" />
+	<id property="userId" column="USER_ID" />
+</resultMap>  
+
+<insert id="insert">
+	<selectKey resultType="long" keyProperty="id">  
+   		select LAST_INSERT_ID()
+   	</selectKey>
+	insert into collection
+	(DISCOVERY_ID,CREATE_TIME,USER_ID,BLOG_ID)
+	values
+	(#{discoveryId},#{createTime},#{userId},#{blogId})
+</insert>
+
+<update id="update">
+	UPDATE collection 
+	<set>
+			<if test="discoveryId != null">  
+	        	DISCOVERY_ID=#{discoveryId},
+	    	</if>
+			<if test="createTime != null">  
+	        	CREATE_TIME=#{createTime},
+	    	</if>
+			<if test="userId != null">  
+	        	USER_ID=#{userId},
+	    	</if>
+	    	<if test="blogId != null">  
+	        	BLOG_ID=#{blogId},
+	    	</if>
+	</set>   
+    WHERE id=#{id}
+</update>
+
+<delete id="delete">
+	delete from collection where id=#{id}
+</delete>
+
+<select id="getById" resultMap="CollectionBaseMapper">
+	SELECT * FROM collection WHERE id=#{id} 
+</select>
+
+<select id="countByParm" resultType="integer">
+	select count(*) from collection  where 1=1 
+			<if test="parm.discoveryId != null">
+		     	and DISCOVERY_ID = #{parm.discoveryId}
+		   	</if>
+			<if test="parm.createTime != null">
+		     	and CREATE_TIME = #{parm.createTime}
+		   	</if>
+			<if test="parm.userId != null">
+		     	and USER_ID = #{parm.userId}
+		   	</if>
+		   	<if test="parm.blogId != null">
+		     	and BLOG_ID = #{parm.blogId}
+		   	</if>
+</select>
+
+<select id="getBeanListByParm" resultMap="CollectionBaseMapper">
+	select * from collection where 1=1 
+			<if test="parm.discoveryId != null">
+		     	and DISCOVERY_ID = #{parm.discoveryId}
+		   	</if>
+			<if test="parm.createTime != null">
+		     	and CREATE_TIME = #{parm.createTime}
+		   	</if>
+			<if test="parm.userId != null">
+		     	and USER_ID = #{parm.userId}
+		   	</if>
+		   	<if test="parm.blogId != null">
+		     	and BLOG_ID = #{parm.blogId}
+		   	</if>
+		<if test="parm.orderby != null">
+	   		order by ${parm.orderby}
+	   	</if>
+		<if test="parm.start != null">
+			limit #{parm.start},#{parm.limit}
+		</if>
+</select>
+
+
+<select id="getMapListByParm" parameterType="HashMap" resultType="HashMap">
+	select * from collection where 1=1
+		<if test="parm.orderby != null">
+	   		order by ${parm.orderby}
+	   	</if>
+		<if test="parm.start != null">
+			limit #{parm.start},#{parm.limit}
+		</if>
+</select>
+
+<select id="getMyCollectionForApp" parameterType="HashMap" resultType="HashMap">
+	SELECT 
+	d.TITLE as title,
+	d.ID as discoveryId,
+	u.USERNAME as postName,
+	DATE_FORMAT(c.CREATE_TIME,'%Y-%m-%d %H:%i:%s') as createTimeStr
+	FROM collection c 
+	LEFT JOIN discovery d on c.DISCOVERY_ID=d.ID
+	LEFT JOIN `user` u on c.USER_ID=u.ID
+	where 1=1 
+	<if test="parm.type == 'up'">
+   		and c.id &lt;#{parm.id}
+   	</if>
+   	<if test="parm.type == 'down'">
+   		and c.id >#{parm.id}
+   	</if>
+	
+	<if test="parm.orderby != null">
+   		order by ${parm.orderby}
+   	</if>
+	<if test="parm.limit != null">
+		limit #{parm.limit}
+	</if>
+</select>
+
+</mapper>

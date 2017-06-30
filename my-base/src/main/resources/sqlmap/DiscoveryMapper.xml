@@ -224,4 +224,25 @@
 		</if>
 </select>
 
+<select id="getMyCommentDiscovery" parameterType="HashMap" resultType="HashMap">
+	SELECT 
+	DISTINCT c.DISCOVERY_ID as id, d.TITLE as title,c.FROM_ID as fromId,c.TO_ID as toId
+	from `comment` c
+	LEFT JOIN discovery d on d.ID = c.DISCOVERY_ID
+	where c.discovery_id is not null
+	and c.from_id = #{parm.fromId}
+	GROUP BY c.DISCOVERY_ID HAVING COUNT(*) >= 1
+	ORDER BY c.CREATE_TIME desc
+	<if test="parm.start != null">
+		limit #{parm.start},#{parm.limit}
+	</if>
+</select>
+<select id="getMyCommentDiscoveryCount" parameterType="HashMap" resultType="integer">
+	SELECT 
+	count(DISTINCT c.DISCOVERY_ID)
+	from `comment` c
+	where c.discovery_id is not null
+	and c.from_id = #{parm.fromId}
+</select>
+
 </mapper>

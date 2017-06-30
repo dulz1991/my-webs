@@ -201,5 +201,25 @@ public class DiscoveryService extends AdapterService {
 		
 		return list;
 	}
+	
+	public Page<Map<String, Object>> getMyCommentDiscovery(Long userId, int pageNo, Integer pageSize, String orderby) {
+		Page<Map<String, Object>> page = new Page<Map<String, Object>>(pageNo, pageSize);
+		Map<String, Object> parm = new HashMap<String, Object>();
+		parm.put("fromId", userId);
+		if(StringUtils.isNotBlank(orderby)){
+			parm.put("orderBy", orderby);	
+		}
+		parm.put("start", page.getStartRow());
+		parm.put("limit", pageSize);
+		
+		List<Map<String, Object>> list = discoveryMapper.getMyCommentDiscovery(parm);
+		page.setTotalRecords(list.size());
+		page.setList(list);
+		
+		return page;
+	}
+	public int getMyCommentDiscoveryCount(Map<String, Object> parm) {
+		return discoveryMapper.getMyCommentDiscoveryCount(parm);
+	}
 
 }
