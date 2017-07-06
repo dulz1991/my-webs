@@ -11,50 +11,51 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-
+import com.demo.my.base.service.DiscoveryService;
+import com.demo.my.base.model.Discovery;
 import com.demo.my.backend.common.BaseBackendController;
-import com.demo.my.base.service.CollectionService;
-import com.demo.my.base.model.Collection;
 import com.demo.my.base.util.Page;
 
 @Controller
-@RequestMapping("/backend/collection")
-public class CollectionController extends BaseBackendController {
+@RequestMapping("/backend/discovery")
+public class DiscoveryController extends BaseBackendController {
 	
-	private static final Logger logger = LoggerFactory.getLogger(CollectionController.class);
+	private static final Logger logger = LoggerFactory.getLogger(DiscoveryController.class);
 	
 	@Autowired
-	private CollectionService collectionService;
+	private DiscoveryService discoveryService;
 	
 	@RequestMapping(value="/list", method = RequestMethod.GET)
 	public ModelAndView index() {
-		ModelAndView model = new ModelAndView("collection/collection_list");
+		ModelAndView model = new ModelAndView("discovery/discovery_list");
 		return model;
 	}
 	
 	@RequestMapping(value="/edit", method = RequestMethod.GET)
 	public ModelAndView edit(Long id) {
-		ModelAndView model = new ModelAndView("collection/collection_edit");
+		ModelAndView model = new ModelAndView("discovery/discovery_edit");
 		if(id!=null){
-			Collection entity = collectionService.getById(id);
+			Discovery entity = discoveryService.getById(id);
 			model.addObject("entity", entity);
+		} else {
+			model.addObject("entity", new Discovery());
 		}
 		return model;
 	}
 	
 	@ResponseBody
 	@RequestMapping(value="/getList", method = RequestMethod.GET)
-	public Map<String, Object> getList(Collection collection,
+	public Map<String, Object> getList(Discovery discovery,
 			@RequestParam(name="pageNo", defaultValue="1") int pageNo,  
 			@RequestParam(name="pageSize", defaultValue="10") int pageSize) {
 		//查询参数
-		Map<String, Object> parmMap =  this.getParmMap(collection);
+		Map<String, Object> parmMap =  this.getParmMap(discovery);
 		parmMap.put("orderBy", "");
 		parmMap.put("pageNo", pageNo);
 		parmMap.put("pageSize", pageSize);
 		
 		//查询
-		Page<Map<String, Object>> page = collectionService.getPageMapByParm(parmMap);
+		Page<Map<String, Object>> page = discoveryService.getPageMapByParm(parmMap);
 
 		//返回参数
 		Map<String, Object> resMap = responseOK("");
@@ -66,8 +67,8 @@ public class CollectionController extends BaseBackendController {
 	
 	@ResponseBody
 	@RequestMapping(value="/doSave", method = RequestMethod.POST)
-	public Map<String, Object> save(Collection collection) {
-		collectionService.save(collection);
+	public Map<String, Object> save(Discovery discovery) {
+		discoveryService.save(discovery);
 		return responseOK("保存成功");
 	}
 	
@@ -77,7 +78,7 @@ public class CollectionController extends BaseBackendController {
 		if(id==null){
 			return responseError(-1, "删除的记录不存在");
 		}
-		int i = collectionService.delete(id);
+		int i = discoveryService.delete(id);
 		if(i==0){
 			return responseError(-1, "删除失败");
 		}

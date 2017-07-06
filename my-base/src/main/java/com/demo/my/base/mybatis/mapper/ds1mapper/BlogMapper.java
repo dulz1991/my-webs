@@ -24,4 +24,6 @@ public interface BlogMapper extends BaseMapper {
 
 	List<Map<String, Object>> getMapListByParm( @Param("parm") Map<String, Object> paramMap);
 
+	int getMapListByParm_count(@Param("parm") Map<String, Object> parm);
+
 }

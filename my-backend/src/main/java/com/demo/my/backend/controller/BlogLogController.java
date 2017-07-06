@@ -1,6 +1,5 @@
 package com.demo.my.backend.controller;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -15,7 +14,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.demo.my.backend.common.BaseBackendController;
 import com.demo.my.base.service.BlogLogService;
+import com.demo.my.base.service.UserService;
 import com.demo.my.base.model.BlogLog;
+import com.demo.my.base.model.User;
 import com.demo.my.base.util.Page;
 
 @Controller
@@ -26,16 +27,18 @@ public class BlogLogController extends BaseBackendController {
 	
 	@Autowired
 	private BlogLogService blogLogService;
+	@Autowired
+	private UserService userService;
 	
 	@RequestMapping(value="/list", method = RequestMethod.GET)
 	public ModelAndView index() {
-		ModelAndView model = new ModelAndView("blogLog/blogLog_list");
+		ModelAndView model = new ModelAndView("blog/blog_log_list");
 		return model;
 	}
 	
 	@RequestMapping(value="/edit", method = RequestMethod.GET)
 	public ModelAndView edit(Long id) {
-		ModelAndView model = new ModelAndView("blogLog/blogLog_edit");
+		ModelAndView model = new ModelAndView("blog/blog_log_edit");
 		if(id!=null){
 			BlogLog entity = blogLogService.getById(id);
 			model.addObject("entity", entity);
@@ -48,9 +51,19 @@ public class BlogLogController extends BaseBackendController {
 	public Map<String, Object> getList(BlogLog blogLog,
 			@RequestParam(name="pageNo", defaultValue="1") int pageNo,  
 			@RequestParam(name="pageSize", defaultValue="10") int pageSize) {
-		Page<BlogLog> page = blogLogService.getBeanListByParm(blogLog, pageNo, pageSize, "");
+		//查询参数
+		Map<String, Object> parmMap =  this.getParmMap(blogLog);
+		parmMap.put("blogTitle", request.getParameter("blogTitle"));
+		parmMap.put("orderBy", "bl.id desc");
+		parmMap.put("pageNo", pageNo);
+		parmMap.put("pageSize", pageSize);
+		
+		//查询
+		Page<Map<String, Object>> page = blogLogService.getPageMapByParm(parmMap);
 
-		Map<String, Object> resMap = new HashMap<String, Object>();
+		//返回参数
+		Map<String, Object> resMap = responseOK("");
+		resMap.put("list", page.getList());
 		resMap.put("page", page);
 		
 		return resMap;
@@ -76,4 +89,14 @@ public class BlogLogController extends BaseBackendController {
 		return responseOK("删除成功");
 	}
 
+	@RequestMapping(value="/getDetail", method = RequestMethod.GET)
+	public ModelAndView getDetail(Long id) {
+		ModelAndView model = new ModelAndView("blog/blog_detail");
+		
+		Map<String, Object> blog = blogLogService.getDetail(id);
+		
+		model.addObject("entity", blog);
+		model.addObject("username", blog.get("username"));
+		return model;
+	}
 }

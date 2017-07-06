@@ -11,50 +11,51 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-
+import com.demo.my.base.service.CommentService;
+import com.demo.my.base.model.Comment;
 import com.demo.my.backend.common.BaseBackendController;
-import com.demo.my.base.service.CollectionService;
-import com.demo.my.base.model.Collection;
 import com.demo.my.base.util.Page;
 
 @Controller
-@RequestMapping("/backend/collection")
-public class CollectionController extends BaseBackendController {
+@RequestMapping("/backend/comment")
+public class CommentController extends BaseBackendController {
 	
-	private static final Logger logger = LoggerFactory.getLogger(CollectionController.class);
+	private static final Logger logger = LoggerFactory.getLogger(CommentController.class);
 	
 	@Autowired
-	private CollectionService collectionService;
+	private CommentService commentService;
 	
 	@RequestMapping(value="/list", method = RequestMethod.GET)
 	public ModelAndView index() {
-		ModelAndView model = new ModelAndView("collection/collection_list");
+		ModelAndView model = new ModelAndView("comment/comment_list");
 		return model;
 	}
 	
 	@RequestMapping(value="/edit", method = RequestMethod.GET)
 	public ModelAndView edit(Long id) {
-		ModelAndView model = new ModelAndView("collection/collection_edit");
+		ModelAndView model = new ModelAndView("comment/comment_edit");
 		if(id!=null){
-			Collection entity = collectionService.getById(id);
+			Comment entity = commentService.getById(id);
 			model.addObject("entity", entity);
+		} else {
+			model.addObject("entity", new Comment());
 		}
 		return model;
 	}
 	
 	@ResponseBody
 	@RequestMapping(value="/getList", method = RequestMethod.GET)
-	public Map<String, Object> getList(Collection collection,
+	public Map<String, Object> getList(Comment comment,
 			@RequestParam(name="pageNo", defaultValue="1") int pageNo,  
 			@RequestParam(name="pageSize", defaultValue="10") int pageSize) {
 		//查询参数
-		Map<String, Object> parmMap =  this.getParmMap(collection);
+		Map<String, Object> parmMap =  this.getParmMap(comment);
 		parmMap.put("orderBy", "");
 		parmMap.put("pageNo", pageNo);
 		parmMap.put("pageSize", pageSize);
 		
 		//查询
-		Page<Map<String, Object>> page = collectionService.getPageMapByParm(parmMap);
+		Page<Map<String, Object>> page = commentService.getPageMapByParm(parmMap);
 
 		//返回参数
 		Map<String, Object> resMap = responseOK("");
@@ -66,8 +67,8 @@ public class CollectionController extends BaseBackendController {
 	
 	@ResponseBody
 	@RequestMapping(value="/doSave", method = RequestMethod.POST)
-	public Map<String, Object> save(Collection collection) {
-		collectionService.save(collection);
+	public Map<String, Object> save(Comment comment) {
+		commentService.save(comment);
 		return responseOK("保存成功");
 	}
 	
@@ -77,7 +78,7 @@ public class CollectionController extends BaseBackendController {
 		if(id==null){
 			return responseError(-1, "删除的记录不存在");
 		}
-		int i = collectionService.delete(id);
+		int i = commentService.delete(id);
 		if(i==0){
 			return responseError(-1, "删除失败");
 		}

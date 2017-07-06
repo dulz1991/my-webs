@@ -1,6 +1,5 @@
 package com.demo.my.backend.controller;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -29,16 +28,18 @@ public class BlogMenuController extends BaseBackendController {
 	
 	@RequestMapping(value="/list", method = RequestMethod.GET)
 	public ModelAndView index() {
-		ModelAndView model = new ModelAndView("blogMenu/blogMenu_list");
+		ModelAndView model = new ModelAndView("blog/blog_menu_list");
 		return model;
 	}
 	
 	@RequestMapping(value="/edit", method = RequestMethod.GET)
 	public ModelAndView edit(Long id) {
-		ModelAndView model = new ModelAndView("blogMenu/blogMenu_edit");
+		ModelAndView model = new ModelAndView("blog/blog_menu_edit");
 		if(id!=null){
 			BlogMenu entity = blogMenuService.getById(id);
 			model.addObject("entity", entity);
+		} else {
+			model.addObject("entity", new BlogMenu());
 		}
 		return model;
 	}
@@ -48,9 +49,18 @@ public class BlogMenuController extends BaseBackendController {
 	public Map<String, Object> getList(BlogMenu blogMenu,
 			@RequestParam(name="pageNo", defaultValue="1") int pageNo,  
 			@RequestParam(name="pageSize", defaultValue="10") int pageSize) {
-		Page<BlogMenu> page = blogMenuService.getBeanListByParm(blogMenu, pageNo, pageSize, "");
+		//查询参数
+		Map<String, Object> parmMap =  this.getParmMap(blogMenu);
+		parmMap.put("orderBy", "");
+		parmMap.put("pageNo", pageNo);
+		parmMap.put("pageSize", pageSize);
+		
+		//查询
+		Page<BlogMenu> page = blogMenuService.getPageBeanByParm(parmMap);
 
-		Map<String, Object> resMap = new HashMap<String, Object>();
+		//返回参数
+		Map<String, Object> resMap = responseOK("");
+		resMap.put("list", page.getList());
 		resMap.put("page", page);
 		
 		return resMap;

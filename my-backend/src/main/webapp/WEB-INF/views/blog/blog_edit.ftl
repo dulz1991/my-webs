@@ -1,5 +1,5 @@
 <#include "/base-lib/baseMacro.ftl"> 
-<@base base_title="编辑" openIndex=1 activeIndex=0>
+<@base base_title="编辑blog" openIndex=3 activeIndex=0>
 	
 	<!-- 编辑区 -->
 	<div class="row">

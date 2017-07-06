@@ -166,7 +166,9 @@
 						<!-- <a href="/logout"><i class="fa-lock"></i><span class="title">&nbsp;退出</span></a> -->
 						<a href="#" data-toggle="dropdown">
 							<img src="/img/user-4.png" alt="user-image" class="img-circle img-inline userpic-32" width="28" />
-							<span>${userInfo.username}<i class="fa-angle-down"></i></span>
+							<#if userInfo??>
+								<span>${userInfo.username}<i class="fa-angle-down"></i></span>
+							</#if>
 						</a>
 						<ul class="dropdown-menu user-profile-menu list-unstyled">
 							<li><a href="/auth/admin/profile"><i class="fa-user"></i>个人中心</a></li>

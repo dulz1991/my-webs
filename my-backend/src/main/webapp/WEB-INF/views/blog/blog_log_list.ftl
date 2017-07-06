@@ -1,5 +1,5 @@
 <#include "/base-lib/baseMacro.ftl"> 
-<@base base_title="列表" openIndex=1 activeIndex=0>
+<@base base_title="列表 blog log" openIndex=1 activeIndex=0>
 	
     	<!-- 搜索区 -->
 			<div class="row">
@@ -10,11 +10,9 @@
 					<div class="panel-body">
 						<form class="form-horizontal form" id="form" action="javascript:void(0);">
 							<div class="form-group">
-								<div class="col-sm-3">
-								</div>
-								<div class="col-sm-3">
-								</div>
-								<div class="col-sm-3">
+								<div class="col-sm-6">
+									博客标题
+									<input type="text" class="form-control input" name="blogTitle" value="">
 								</div>
 							</div>
 							<div class="form-group">
@@ -23,7 +21,7 @@
 							</div>
 							<div class="form-group">
 								<div class="col-sm-2">
-									<button class="btn btn-info btn-icon" onclick="$.fn.doAutoSearch()">
+									<button class="btn btn-info btn-icon" onclick="search()">
 										<i class="fa-search"></i>
 										<span>搜索</span>
 									</button>
@@ -50,12 +48,11 @@
 							<thead>
 								<tr>
 									<th width="60" field="index">编号</th>
-									<th field="productName">产品名称</th>
-									<th field="productTypeName">产品类别</th>
-									<th field="productPrice">产品价格</th>
-									<th field="productCount">库存数量</th>
-									<th field="productStatusStr">产品状态</th>
-									<th field="op" field-role="2,0" width="110"></th>
+									<th field="blogTitle" url="/backend/blogLog/getDetail?id=" parm="id">博客标题</th>
+									<th field="username">用户名</th>
+									<th field="createTime">创建时间</th>
+									<th field="remark">备注</th>
+									<!--<th field="op" field-role="2,0" width="110"></th>-->
 								</tr>
 							</thead>
 							<tbody class="middle-align"></tbody>
@@ -69,15 +66,19 @@
 <script type="text/javascript">
 $(function(){
 	$('#datatable').datatable({
-		url_load : '/backend/product/getList',
-		url_edit : '/backend/product/edit',
-		url_remove : '/backend/product/doDelete',
+		url_load : '/backend/blogLog/getList',
+		url_edit : '/backend/blogLog/edit',
+		url_remove : '/backend/blogLog/doDelete',
 		backFn : function(p) {
 			// console.log(p);
 		}
 	}); 
 	
 });
+function search(){
+	var parm = $.fn.getFormJsonEncode('.form');
+	$.fn.doSearch(parm);
+}
 </script>
 
 </@base> 

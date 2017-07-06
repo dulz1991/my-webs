@@ -1,5 +1,5 @@
 <#include "/base-lib/baseMacro.ftl"> 
-<@base base_title="列表" openIndex=1 activeIndex=0>
+<@base base_title="列表" openIndex=3 activeIndex=1>
 	
     	<!-- 搜索区 -->
 			<div class="row">
@@ -11,10 +11,8 @@
 						<form class="form-horizontal form" id="form" action="javascript:void(0);">
 							<div class="form-group">
 								<div class="col-sm-3">
-								</div>
-								<div class="col-sm-3">
-								</div>
-								<div class="col-sm-3">
+									分类名称
+									<input type="text" class="form-control input" name="name" value="">
 								</div>
 							</div>
 							<div class="form-group">
@@ -42,6 +40,7 @@
 					<div class="panel-heading">
 						<h3 class="panel-title">列表</h3>
 						<div class="panel-options">
+							<a href="/backend/blogMenu/edit" target="_blank"><i class="fa-plus"></i></a>
 							<a href="#" data-toggle="reload" onclick="$.fn.reload()"><i class="fa-rotate-right"></i></a>
 						</div>
 					</div>
@@ -50,11 +49,7 @@
 							<thead>
 								<tr>
 									<th width="60" field="index">编号</th>
-									<th field="productName">产品名称</th>
-									<th field="productTypeName">产品类别</th>
-									<th field="productPrice">产品价格</th>
-									<th field="productCount">库存数量</th>
-									<th field="productStatusStr">产品状态</th>
+									<th field="name">分类名称</th>
 									<th field="op" field-role="2,0" width="110"></th>
 								</tr>
 							</thead>
@@ -69,9 +64,9 @@
 <script type="text/javascript">
 $(function(){
 	$('#datatable').datatable({
-		url_load : '/backend/product/getList',
-		url_edit : '/backend/product/edit',
-		url_remove : '/backend/product/doDelete',
+		url_load : '/backend/blogMenu/getList',
+		url_edit : '/backend/blogMenu/edit',
+		url_remove : '/backend/blogMenu/doDelete',
 		backFn : function(p) {
 			// console.log(p);
 		}

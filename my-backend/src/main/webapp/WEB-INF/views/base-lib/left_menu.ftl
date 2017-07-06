@@ -20,7 +20,7 @@
 	
 			<ul id="main-menu" class="main-menu">
 				<li class="li">
-					<a href="/backend/index"><i class="fa fa-home"></i><span class="title">主页</span></a>
+					<a href="/index"><i class="fa fa-home"></i><span class="title">主页</span></a>
 				</li>
 				<li class="li">
 					<a href="ui-panels.html"> 
@@ -34,7 +34,7 @@
 				</li>
 				<li class="li">
 					<a href="ui-panels.html"> 
-						<i class="fa fa-file-text-o"></i> 
+						<i class="fa fa-code"></i> 
 						<span class="title">代码笔记管理</span>
 					</a>
 					<ul>
@@ -45,17 +45,18 @@
 				</li>
 				<li class="li">
 					<a href="ui-panels.html"> 
-						<i class="linecons-user"></i> 
+						<i class="fa fa-file-text-o"></i> 
 						<span class="title">博客管理</span>
 					</a>
 					<ul>
-						<li><a href="/backend/user/list"><span class="title">博客列表</span></a></li>
-						<li><a href="/backend/user/userImport"><span class="title">导入用户</span></a></li>
+						<li><a href="/backend/blog/list"><span class="title">博客列表</span></a></li>
+						<li><a href="/backend/blogMenu/list"><span class="title">博客分类</span></a></li>
+						<li><a href="/backend/blogLog/list"><span class="title">博客日志</span></a></li>
 					</ul>
 				</li>
 				<li class="li">
 					<a href="ui-panels.html"> 
-						<i class="linecons-user"></i> 
+						<i class="fa fa-leaf"></i> 
 						<span class="title">Demo管理</span>
 					</a>
 					<ul>
@@ -64,7 +65,17 @@
 					</ul>
 				</li>
 				<li class="li">
-					<a href="/backend/inform/list"><i class="fa fa-star-o"></i><span class="title">系统配置</span></a>
+					<a href="ui-panels.html"> 
+						<i class="fa fa-fire"></i> 
+						<span class="title">Discovery管理</span>
+					</a>
+					<ul>
+						<li><a href="/backend/discovery/list"><span class="title">Discovery列表</span></a></li>
+						<li><a href="/backend/comment/list"><span class="title">Discovery评论</span></a></li>
+					</ul>
+				</li>
+				<li class="li">
+					<a href="/backend/inform/list"><i class="fa fa-cog"></i><span class="title">系统配置</span></a>
 				</li>
 			</ul>
 	

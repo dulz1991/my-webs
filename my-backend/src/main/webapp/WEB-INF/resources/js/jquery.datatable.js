@@ -61,7 +61,7 @@
 	 * onclick里直接传入表单的class或者id选择器即可
 	 *  */
 	$.fn.doAutoSearch = function() {
-		var _parm = $.fn.getFormJson(".form");
+		var _parm = $.fn.getFormJsonEncode(".form");
 		_args.parm = _parm;
 		action.load(_obj, _args);
 	}
@@ -187,6 +187,23 @@
         });
 	}
 	
+	/* 表单数据序列化  编码*/
+	 $.fn.getFormJsonEncode = function(elem) {
+        var o = {};
+        var a = $(elem).serializeArray();
+        $.each(a, function () {
+            if (o[this.name] !== undefined) {
+                if (!o[this.name].push) {
+                    o[this.name] = [o[this.name]];
+                }
+                o[this.name].push(this.value || '');
+            } else {
+                o[this.name] = encodeURIComponent(this.value) || '';
+            }
+        });
+        /*o = encodeURI(encodeURI(o));*/
+        return o;
+    }
 	/* 表单数据序列化 */
 	 $.fn.getFormJson = function(_elem) {
         var o = {};

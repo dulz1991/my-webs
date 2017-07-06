@@ -9,11 +9,12 @@
 	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
 		<property name="securityManager" ref="securityManager" />
 		<property name="loginUrl" value="/login" />
-		<property name="successUrl" value="/" />
+		<property name="successUrl" value="/authc" />
         <property name="unauthorizedUrl" value="/404"/>      
 		<property name="filterChainDefinitions">
 			<value>
 				<!-- anon:不验证；authc：验证 -->
+				/index = authc
 				/backend/** = authc
 			</value>
 		</property>

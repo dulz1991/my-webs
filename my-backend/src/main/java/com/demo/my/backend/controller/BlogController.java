@@ -1,6 +1,5 @@
 package com.demo.my.backend.controller;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -15,7 +14,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.demo.my.backend.common.BaseBackendController;
 import com.demo.my.base.service.BlogService;
+import com.demo.my.base.service.UserService;
 import com.demo.my.base.model.Blog;
+import com.demo.my.base.model.User;
 import com.demo.my.base.util.Page;
 
 @Controller
@@ -26,6 +27,8 @@ public class BlogController extends BaseBackendController {
 	
 	@Autowired
 	private BlogService blogService;
+	@Autowired
+	private UserService userService;
 	
 	@RequestMapping(value="/list", method = RequestMethod.GET)
 	public ModelAndView index() {
@@ -48,12 +51,33 @@ public class BlogController extends BaseBackendController {
 	public Map<String, Object> getList(Blog blog,
 			@RequestParam(name="pageNo", defaultValue="1") int pageNo,  
 			@RequestParam(name="pageSize", defaultValue="10") int pageSize) {
-		Page<Blog> page = blogService.getBeanListByParm(blog, pageNo, pageSize, "");
-
-		Map<String, Object> resMap = new HashMap<String, Object>();
+		//查询参数
+		Map<String, Object> parmMap =  this.getParmMap(blog);
+		parmMap.put("orderBy", "b.id desc");
+		parmMap.put("pageNo", pageNo);
+		parmMap.put("pageSize", pageSize);
+		
+		//查询
+		Page<Map<String, Object>> page = blogService.getPageMapByParm(parmMap);
+		
+		//返回参数
+		Map<String, Object> resMap = responseOK("");
+		resMap.put("list", page.getList());
 		resMap.put("page", page);
 		
 		return resMap;
+	}
+	
+	@RequestMapping(value="/getDetail", method = RequestMethod.GET)
+	public ModelAndView getDetail(Long id) {
+		ModelAndView model = new ModelAndView("blog/blog_detail");
+		
+		Blog blog = blogService.getById(id);
+		User user = userService.getById(blog.getUserId());
+		
+		model.addObject("entity", blog);
+		model.addObject("username", user.getUsername());
+		return model;
 	}
 	
 	@ResponseBody

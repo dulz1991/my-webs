@@ -221,5 +221,51 @@ public class DiscoveryService extends AdapterService {
 	public int getMyCommentDiscoveryCount(Map<String, Object> parm) {
 		return discoveryMapper.getMyCommentDiscoveryCount(parm);
 	}
+	
+	public int countByParm(Map<String, Object> parmMap) {
+		return discoveryMapper.countByParm(parmMap);
+	}
+	
+	public List<Map<String, Object>> getMapListByParm(Map<String, Object> parm) {
+		return  discoveryMapper.getMapListByParm(parm);
+	}
+	
+	public List<Discovery> getBeanListByParm(Map<String, Object> parm) {
+		return discoveryMapper.getBeanListByParm(parm);
+	}
+	
+	public Page<Discovery> getPageBeanByParm(Map<String, Object> parm) {
+		Page<Discovery> page = new Page<Discovery>((Integer)parm.get("pageNo"), (Integer)parm.get("pageSize"));
+		parm.put("start", page.getStartRow());
+		parm.put("limit", page.getPageSize());
+		
+		int count = this.countByParm(parm);
+		page.setTotalRecords(count);
+		
+		List<Discovery> list = new ArrayList<Discovery>();
+		if(count!=0){
+			list = this.getBeanListByParm(parm);
+		}
+		page.setList(list);
+		
+		return page;
+	}
+	
+	public Page<Map<String, Object>> getPageMapByParm(Map<String, Object> parm) {
+		Page<Map<String, Object>> page = new Page<Map<String, Object>>((Integer)parm.get("pageNo"), (Integer)parm.get("pageSize"));
+		parm.put("start", page.getStartRow());
+		parm.put("limit", page.getPageSize());
+		
+		int count = this.countByParm(parm);
+		page.setTotalRecords(count);
+		
+		List<Map<String, Object>> list = new ArrayList<Map<String,Object>>();
+		if(count!=0){
+			list = this.getMapListByParm(parm);
+		}
+		page.setList(list);
+		
+		return page;
+	}
 
 }

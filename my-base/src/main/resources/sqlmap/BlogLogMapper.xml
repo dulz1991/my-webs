@@ -51,6 +51,18 @@
 	SELECT * FROM blog_log WHERE id=#{id} 
 </select>
 
+<select id="getDetail" resultType="HashMap">
+	SELECT
+	u.USERNAME as username,
+	b.TITLE as title,
+	bl.CREATE_TIME as createTime,
+	bl.UPDATE_CONTENT as content
+	FROM blog b
+	LEFT JOIN blog_log bl on bl.BLOG_ID=b.ID
+	LEFT JOIN `user` u on u.ID=b.USER_ID
+	WHERE bl.id=#{id}
+</select>
+
 <select id="countByParm" resultType="integer">
 	select count(*) from blog_log  where 1=1 
 			<if test="parm.createTime != null">
@@ -97,7 +109,20 @@
 
 
 <select id="getMapListByParm" parameterType="HashMap" resultType="HashMap">
-	select * from blog_log where 1=1
+	select 
+	b.TITLE as blogTitle, 
+	bl.ID as id,
+	DATE_FORMAT(bl.CREATE_TIME,'%Y-%m-%d %H:%s:%i') as createTime,
+	bl.REMARK as remark,
+	u.USERNAME as username
+	from blog_log bl 
+	LEFT JOIN blog b on b.ID=bl.BLOG_ID
+	LEFT JOIN `user` u on u.ID = bl.USER_ID 
+	where 1=1
+		<if test="parm.blogTitle != null and parm.blogTitle != ''">
+	     	and b.TITLE = #{parm.blogTitle}
+	   	</if>
+	
 		<if test="parm.orderby != null">
 	   		order by ${parm.orderby}
 	   	</if>
