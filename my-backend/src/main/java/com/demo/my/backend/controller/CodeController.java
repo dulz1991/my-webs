@@ -120,7 +120,7 @@ public class CodeController extends BaseBackendController {
 			count++;
 			code.setItemOrder(Long.valueOf(count.toString()));
 			codeService.insert(code);
-		}
+		} 
 		Map<String, Object> resMap = this.responseOK("");
 		resMap.put("id", code.getId());
 		return resMap;
