@@ -71,7 +71,8 @@
 					</a>
 					<ul>
 						<li><a href="/backend/discovery/list"><span class="title">Discovery列表</span></a></li>
-						<li><a href="/backend/comment/list"><span class="title">Discovery评论</span></a></li>
+						<li><a href="/backend/discovery/commentLlist"><span class="title">Discovery评论</span></a></li>
+						<li><a href="/backend/discovery/collectionLlist"><span class="title">Discovery收藏</span></a></li>
 					</ul>
 				</li>
 				<li class="li">

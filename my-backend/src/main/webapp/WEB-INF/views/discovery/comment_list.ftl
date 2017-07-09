@@ -1,5 +1,5 @@
 <#include "/base-lib/baseMacro.ftl"> 
-<@base base_title="博客列表" openIndex=3 activeIndex=0>
+<@base base_title="discovery评论列表" openIndex=5 activeIndex=1>
 	
     	<!-- 搜索区 -->
 			<div class="row">
@@ -11,16 +11,8 @@
 						<form class="form-horizontal form" id="form" action="javascript:void(0);">
 							<div class="form-group">
 								<div class="col-sm-3">
-									标题
+									discovery标题
 									<input type="text" class="form-control input" name="title" value="">
-								</div>
-								<div class="col-sm-3">
-									分类
-									<@select id="menuId" class="form-control select" datas=menuList key="id" text="name" value="" defaultValue="--选择分类--" />
-								</div>
-								<div class="col-sm-3">
-									用户
-									<input type="text" class="form-control input" name="username" value="">
 								</div>
 							</div>
 							<div class="form-group">
@@ -29,7 +21,7 @@
 							</div>
 							<div class="form-group">
 								<div class="col-sm-2">
-									<button class="btn btn-info btn-icon" onclick="$.fn.doAutoSearch()">
+									<button class="btn btn-info btn-icon" onclick="search()">
 										<i class="fa-search"></i>
 										<span>搜索</span>
 									</button>
@@ -56,12 +48,11 @@
 							<thead>
 								<tr>
 									<th width="60" field="index">编号</th>
-									<th field="title" url="/backend/blog/getDetail?id=" parm="id">标题</th>
-									<th field="username">用户</th>
-									<th field="menuId">分类</th>
-									<th field="click">点击</th>
-									<th field="createTime">创建时间</th>
-									<th field="updateTime">更新时间</th>
+									<th field="title">标题</th>
+									<th field="fromName">作者</th>
+									<th field="toName">评论用户</th>
+									<th field="content">评论内容</th>
+									<th field="createTimeStr">评论时间</th>
 									<th field="op" field-role="0" width="110"></th>
 								</tr>
 							</thead>
@@ -76,15 +67,18 @@
 <script type="text/javascript">
 $(function(){
 	$('#datatable').datatable({
-		url_load : '/backend/blog/getList',
-		url_edit : '/backend/blog/edit',
-		url_remove : '/backend/blog/doDelete',
+		url_load : '/backend/discovery/getCommentLlist',
+		url_remove : '/backend/comment/doDelete',
 		backFn : function(p) {
 			// console.log(p);
 		}
 	}); 
 	
 });
+function search(){
+	var parm = $.fn.getFormJsonEncode('.form');
+	$.fn.doSearch(parm);
+}
 </script>
 
 </@base> 

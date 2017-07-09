@@ -1,5 +1,5 @@
 <#include "/base-lib/baseMacro.ftl"> 
-<@base base_title="博客列表" openIndex=3 activeIndex=0>
+<@base base_title="列表 discovery" openIndex=5 activeIndex=0>
 	
     	<!-- 搜索区 -->
 			<div class="row">
@@ -13,14 +13,6 @@
 								<div class="col-sm-3">
 									标题
 									<input type="text" class="form-control input" name="title" value="">
-								</div>
-								<div class="col-sm-3">
-									分类
-									<@select id="menuId" class="form-control select" datas=menuList key="id" text="name" value="" defaultValue="--选择分类--" />
-								</div>
-								<div class="col-sm-3">
-									用户
-									<input type="text" class="form-control input" name="username" value="">
 								</div>
 							</div>
 							<div class="form-group">
@@ -56,13 +48,13 @@
 							<thead>
 								<tr>
 									<th width="60" field="index">编号</th>
-									<th field="title" url="/backend/blog/getDetail?id=" parm="id">标题</th>
-									<th field="username">用户</th>
-									<th field="menuId">分类</th>
-									<th field="click">点击</th>
-									<th field="createTime">创建时间</th>
-									<th field="updateTime">更新时间</th>
-									<th field="op" field-role="0" width="110"></th>
+									<th field="title">标题</th>
+									<th field="username">用户名</th>
+									<th field="commentCount">评论</th>
+									<th field="collectionCount">收藏</th>
+									<th field="statusStr">状态</th>
+									<th field="createTimeStr">创建时间</th>
+									<th field="op" field-role="2,0" width="110"></th>
 								</tr>
 							</thead>
 							<tbody class="middle-align"></tbody>
@@ -76,9 +68,9 @@
 <script type="text/javascript">
 $(function(){
 	$('#datatable').datatable({
-		url_load : '/backend/blog/getList',
-		url_edit : '/backend/blog/edit',
-		url_remove : '/backend/blog/doDelete',
+		url_load : '/backend/discovery/getList',
+		url_edit : '/backend/discovery/edit',
+		url_remove : '/backend/discovery/doDelete',
 		backFn : function(p) {
 			// console.log(p);
 		}

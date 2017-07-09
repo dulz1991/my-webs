@@ -152,9 +152,14 @@
 		d.IMG_PATH as imagePath,
 		d.CONTENT as content,
 		d.`STATUS` as `status`,
+		case when d.`STATUS` = '1' then '正常'
+     		when d.`STATUS` = '0' then '禁用'
+     		else '其他' end  as statusStr,
 		d.USER_ID as userId,
 		DATE_FORMAT(d.CREATE_TIME,'%Y-%m-%d %H:%m:%i') as createTimeStr,
-		u.USERNAME as username
+		u.USERNAME as username,
+		(select count(*) from `comment` c where c.DISCOVERY_ID=d.ID) as commentCount,
+		(SELECT count(*) from collection col where col.DISCOVERY_ID = d.ID) as collectionCount
 		from discovery d
 		LEFT JOIN `user` u on u.ID=d.USER_ID
 		 where 1=1

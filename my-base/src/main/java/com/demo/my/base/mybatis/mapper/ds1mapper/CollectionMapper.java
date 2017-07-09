@@ -26,4 +26,6 @@ public interface CollectionMapper extends BaseMapper {
 
 	List<Map<String, Object>> getMyCollectionForApp(@Param("parm") Map<String, Object> parmMap);
 
+	int getMapListByParm_count(@Param("parm") Map<String, Object> parm);
+
 }

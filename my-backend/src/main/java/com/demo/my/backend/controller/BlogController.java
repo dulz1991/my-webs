@@ -1,5 +1,7 @@
 package com.demo.my.backend.controller;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -13,9 +15,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.demo.my.backend.common.BaseBackendController;
+import com.demo.my.base.service.BlogMenuService;
 import com.demo.my.base.service.BlogService;
 import com.demo.my.base.service.UserService;
 import com.demo.my.base.model.Blog;
+import com.demo.my.base.model.BlogMenu;
 import com.demo.my.base.model.User;
 import com.demo.my.base.util.Page;
 
@@ -29,10 +33,16 @@ public class BlogController extends BaseBackendController {
 	private BlogService blogService;
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private BlogMenuService blogMenuService;
 	
 	@RequestMapping(value="/list", method = RequestMethod.GET)
 	public ModelAndView index() {
 		ModelAndView model = new ModelAndView("blog/blog_list");
+		
+		List<BlogMenu> menuList = blogMenuService.getBeanListByParm(new HashMap<String, Object>());
+		model.addObject("menuList", menuList);
+		
 		return model;
 	}
 	

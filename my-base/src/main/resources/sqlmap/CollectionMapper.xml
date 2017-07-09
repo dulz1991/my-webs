@@ -84,9 +84,38 @@
 		</if>
 </select>
 
-
+<select id="getMapListByParm_count" parameterType="HashMap" resultType="integer">
+	select count(*)
+	FROM collection c 
+	LEFT JOIN discovery d on d.ID = c.DISCOVERY_ID
+	LEFT JOIN `user` u1 on u1.ID=d.USER_ID
+	LEFT JOIN `user` u2 on u2.ID=c.USER_ID
+	where 1=1
+	<if test="parm.title != null">
+		and d.title=#{parm.title}
+	</if>
+	<if test="parm.fromId != null">
+		and u2.username=#{parm.username}
+	</if>
+</select>
 <select id="getMapListByParm" parameterType="HashMap" resultType="HashMap">
-	select * from collection where 1=1
+	select 
+	u1.USERNAME as author,
+	u2.USERNAME as collectionUser,
+	c.ID as id,
+	d.TITLE as title,
+	DATE_FORMAT(c.CREATE_TIME,'%Y-%m-%d %H:%s:%i') as createTimeStr
+	FROM collection c 
+	LEFT JOIN discovery d on d.ID = c.DISCOVERY_ID
+	LEFT JOIN `user` u1 on u1.ID=d.USER_ID
+	LEFT JOIN `user` u2 on u2.ID=c.USER_ID
+	where 1=1
+	<if test="parm.title != null">
+		and d.title=#{parm.title}
+	</if>
+	<if test="parm.fromId != null">
+		and u2.username=#{parm.username}
+	</if>
 		<if test="parm.orderby != null">
 	   		order by ${parm.orderby}
 	   	</if>

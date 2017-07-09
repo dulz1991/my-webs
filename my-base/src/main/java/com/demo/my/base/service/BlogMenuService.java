@@ -1,16 +1,16 @@
 package com.demo.my.base.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import com.demo.my.base.util.Page;
 
+import com.demo.my.base.util.Page;
 import com.demo.my.base.model.BlogMenu;
 import com.demo.my.base.mybatis.mapper.ds1mapper.BlogMenuMapper;
-
 import com.demo.my.base.service.common.AdapterService;
 
 
@@ -45,14 +45,23 @@ public class BlogMenuService extends AdapterService {
 	}
 	
 	public int countByParm(Map<String, Object> parmMap) {
+		if(parmMap==null){
+			parmMap = new HashMap<String, Object>();
+		}
 		return blogMenuMapper.countByParm(parmMap);
 	}
 	
 	public List<Map<String, Object>> getMapListByParm(Map<String, Object> parm) {
+		if(parm==null){
+			parm = new HashMap<String, Object>();
+		}
 		return  blogMenuMapper.getMapListByParm(parm);
 	}
 	
 	public List<BlogMenu> getBeanListByParm(Map<String, Object> parm) {
+		if(parm==null){
+			parm = new HashMap<String, Object>();
+		}
 		return blogMenuMapper.getBeanListByParm(parm);
 	}
 	

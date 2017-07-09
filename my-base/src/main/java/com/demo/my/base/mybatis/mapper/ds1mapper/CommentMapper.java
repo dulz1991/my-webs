@@ -26,4 +26,6 @@ public interface CommentMapper extends BaseMapper {
 
 	List<Map<String, Object>> getMapListForDrag(@Param("parm") Map<String, Object> parm);
 
+	int getMapListByParm_count(@Param("parm") Map<String, Object> parm);
+
 }

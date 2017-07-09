@@ -11,7 +11,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.demo.my.base.service.CollectionService;
+import com.demo.my.base.service.CommentService;
 import com.demo.my.base.service.DiscoveryService;
+import com.demo.my.base.model.Comment;
 import com.demo.my.base.model.Discovery;
 import com.demo.my.backend.common.BaseBackendController;
 import com.demo.my.base.util.Page;
@@ -24,6 +28,10 @@ public class DiscoveryController extends BaseBackendController {
 	
 	@Autowired
 	private DiscoveryService discoveryService;
+	@Autowired
+	private CommentService commentService;
+	@Autowired
+	private CollectionService collectionService;
 	
 	@RequestMapping(value="/list", method = RequestMethod.GET)
 	public ModelAndView index() {
@@ -50,7 +58,7 @@ public class DiscoveryController extends BaseBackendController {
 			@RequestParam(name="pageSize", defaultValue="10") int pageSize) {
 		//查询参数
 		Map<String, Object> parmMap =  this.getParmMap(discovery);
-		parmMap.put("orderBy", "");
+		parmMap.put("orderBy", "d.id desc");
 		parmMap.put("pageNo", pageNo);
 		parmMap.put("pageSize", pageSize);
 		
@@ -84,5 +92,61 @@ public class DiscoveryController extends BaseBackendController {
 		}
 		return responseOK("删除成功");
 	}
+	
+	
+	/*评论*/
+	@RequestMapping(value="/commentLlist", method = RequestMethod.GET)
+	public ModelAndView commentLlist() {
+		ModelAndView model = new ModelAndView("discovery/comment_list");
+		return model;
+	}
+	@ResponseBody
+	@RequestMapping(value="/getCommentLlist", method = RequestMethod.GET)
+	public Map<String, Object> getCommentLlist(Comment comment,
+			@RequestParam(name="pageNo", defaultValue="1") int pageNo,  
+			@RequestParam(name="pageSize", defaultValue="10") int pageSize) {
+		//查询参数
+		Map<String, Object> parmMap =  this.getParmMap();
+		parmMap.put("orderBy", "c.id desc");
+		parmMap.put("pageNo", pageNo);
+		parmMap.put("pageSize", pageSize);
+		
+		//查询
+		Page<Map<String, Object>> page = commentService.getPageMapByParm(parmMap);
 
+		//返回参数
+		Map<String, Object> resMap = responseOK("");
+		resMap.put("list", page.getList());
+		resMap.put("page", page);
+		
+		return resMap;
+	}
+	
+	/*收藏*/
+	@RequestMapping(value="/collectionLlist", method = RequestMethod.GET)
+	public ModelAndView collectionLlist() {
+		ModelAndView model = new ModelAndView("discovery/collection_list");
+		return model;
+	}
+	@ResponseBody
+	@RequestMapping(value="/getCollectionLlist", method = RequestMethod.GET)
+	public Map<String, Object> getCollectionLlist(Comment comment,
+			@RequestParam(name="pageNo", defaultValue="1") int pageNo,  
+			@RequestParam(name="pageSize", defaultValue="10") int pageSize) {
+		//查询参数
+		Map<String, Object> parmMap =  this.getParmMap();
+		parmMap.put("orderBy", "c.id desc");
+		parmMap.put("pageNo", pageNo);
+		parmMap.put("pageSize", pageSize);
+		
+		//查询
+		Page<Map<String, Object>> page = collectionService.getPageMapByParm(parmMap);
+
+		//返回参数
+		Map<String, Object> resMap = responseOK("");
+		resMap.put("list", page.getList());
+		resMap.put("page", page);
+		
+		return resMap;
+	}
 }

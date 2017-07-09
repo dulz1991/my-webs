@@ -125,9 +125,46 @@
 		</if>
 </select>
 
-
+<select id="getMapListByParm_count" parameterType="HashMap" resultType="integer">
+	select count(*)
+	from `comment` c
+	LEFT JOIN discovery d on d.id=c.DISCOVERY_ID
+	LEFT JOIN `user` u1 on u1.ID = c.FROM_ID
+	LEFT JOIN `user` u2 on u2.ID = c.TO_ID
+	where 1=1
+	<if test="parm.title != null">
+		and d.title=#{parm.title}
+	</if>
+	<if test="parm.fromId != null">
+		and u1.username=#{parm.fromId}
+	</if>
+	<if test="parm.toId != null">
+		and u2.username=#{parm.toId} 
+	</if>
+</select>
 <select id="getMapListByParm" parameterType="HashMap" resultType="HashMap">
-	select * from comment where 1=1
+	select 
+	c.ID as id,
+	d.TITLE as title,
+	u1.USERNAME as fromName,
+	u2.USERNAME as toName,
+	c.COMMENT_ID as commentId,
+	c.MESSAGE_CONTENT as content,
+	DATE_FORMAT(c.CREATE_TIME,'%Y-%m-%d %H:%s:%i') as createTimeStr
+	from `comment` c
+	LEFT JOIN discovery d on d.id=c.DISCOVERY_ID
+	LEFT JOIN `user` u1 on u1.ID = c.FROM_ID
+	LEFT JOIN `user` u2 on u2.ID = c.TO_ID
+	where 1=1
+	<if test="parm.title != null">
+		and d.title=#{parm.title}
+	</if>
+	<if test="parm.fromId != null">
+		and u1.username=#{parm.fromId}
+	</if>
+	<if test="parm.toId != null">
+		and u2.username=#{parm.toId} 
+	</if>
 		<if test="parm.orderby != null">
 	   		order by ${parm.orderby}
 	   	</if>
