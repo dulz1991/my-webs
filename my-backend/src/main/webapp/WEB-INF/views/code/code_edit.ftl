@@ -11,17 +11,13 @@
 				<form class="form-horizontal form" id="form" action="javascript:void(0);">
 					<input type="hidden" name="id" value="${entity.id!}">
 					<div class="form-group">
-						<div class="col-sm-3">
+						<div class="col-sm-6">
 							标题
 							<input type="text" class="form-control input" name="item" value="${entity.item!''}">
 						</div>
 						<div class="col-sm-3">
 							排序
-							<input type="text" class="form-control input" name="itemOrder" value="${entity.itemOrder!''}">
-						</div>
-						<div class="col-sm-3">
-							级别
-							<@select id="codeLevel" class="form-control select" datas={"1":"一级","2":"二级"} value="${entity.codeLevel!''}" />
+							<input type="number" class="form-control input" name="itemOrder" value="${entity.itemOrder!''}">
 						</div>
 					</div>
 					<div class="form-group">

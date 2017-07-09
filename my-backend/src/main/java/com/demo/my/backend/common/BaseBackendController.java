@@ -2,21 +2,18 @@ package com.demo.my.backend.common;
 
 import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
 import com.demo.my.base.common.BaseCommon;
 
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Field;  
-import java.lang.reflect.Method;  
 import java.net.URLDecoder;
 
 public class BaseBackendController extends BaseCommon {

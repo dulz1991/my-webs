@@ -16,7 +16,6 @@ import com.demo.my.backend.common.BaseBackendController;
 import com.demo.my.base.service.BlogLogService;
 import com.demo.my.base.service.UserService;
 import com.demo.my.base.model.BlogLog;
-import com.demo.my.base.model.User;
 import com.demo.my.base.util.Page;
 
 @Controller

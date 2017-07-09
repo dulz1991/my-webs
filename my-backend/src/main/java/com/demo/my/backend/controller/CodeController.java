@@ -21,13 +21,10 @@ import com.demo.my.base.service.CodeMenuService;
 import com.demo.my.base.service.CodeService;
 import com.demo.my.base.service.CodeSubMenuService;
 import com.demo.my.base.common.ErrorConstant;
-import com.demo.my.base.common.KeyConstant;
 import com.demo.my.base.model.Code;
 import com.demo.my.base.model.CodeMenu;
 import com.demo.my.base.model.CodeSubMenu;
 import com.demo.my.base.util.Page;
-import com.ibm.db2.jcc.a.c;
-import com.sun.org.apache.bcel.internal.generic.NEW;
 
 @Controller
 @RequestMapping("/backend/code")
@@ -107,10 +104,6 @@ public class CodeController extends BaseBackendController {
 			return this.responseError(ErrorConstant.ERROR_500, ErrorConstant.ERROR_EMPTY_CONTENT);
 		} else if (null == code.getFatherId() || code.getFatherId()==0) {
 			return this.responseError(ErrorConstant.ERROR_500, ErrorConstant.ERROR_EMPTY_SUB_MENU);
-		}
-		//是否是节点
-		if (code.getCodeLevel()==1) {
-			code.setCodeId(null);
 		}
 		if (null != code.getId()) {
 			codeService.update(code);
