@@ -105,6 +105,14 @@ public class CodeController extends BaseBackendController {
 		} else if (null == code.getFatherId() || code.getFatherId()==0) {
 			return this.responseError(ErrorConstant.ERROR_500, ErrorConstant.ERROR_EMPTY_SUB_MENU);
 		}
+		
+		if(code.getCodeId()==null || code.getCodeId()<=0){
+			code.setCodeId(null);
+			code.setCodeLevel(1);
+		} else {
+			code.setCodeLevel(2);
+		}
+		
 		if (null != code.getId()) {
 			codeService.update(code);
 		} else {
