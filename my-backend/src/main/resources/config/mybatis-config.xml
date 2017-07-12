@@ -25,7 +25,7 @@
 	<!-- <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager" /> -->
 	
  	<!-- 数据源1 -->
-	<bean id="dataSourceOne" class="com.atomikos.jdbc.AtomikosDataSourceBean" init-method="init" destroy-method="close">
+	<!-- <bean id="dataSourceOne" class="com.atomikos.jdbc.AtomikosDataSourceBean" init-method="init" destroy-method="close">
 	   <property name="uniqueResourceName" value="mysql_dataSourceOne" />
 	   <property name="xaDataSourceClassName" value="com.mysql.jdbc.jdbc2.optional.MysqlXADataSource"/>
 	   <property name="xaProperties">
@@ -39,7 +39,7 @@
 	  	<property name="reapTimeout" value="20000" />
 	  	<property name="minPoolSize" value="${jdbc.minPoolSize}" />
 		<property name="maxPoolSize" value="${jdbc.maxPoolSize}" />	
-  </bean>
+  </bean> -->
   <!-- 数据源2 --> 
   <!-- <bean id="dataSourceTwo" class="com.atomikos.jdbc.AtomikosDataSourceBean" init-method="init" destroy-method="close">
     <property name="uniqueResourceName" value="mysql_dataSourceTwo" />
@@ -57,7 +57,7 @@
 	<property name="maxPoolSize" value="${jdbc.maxPoolSize}" />
   </bean> -->
 	<!-- 数据源1 -->
-	<!-- <bean id="dataSourceOne" class="com.mchange.v2.c3p0.ComboPooledDataSource"  destroy-method="close">  
+	<bean id="dataSourceOne" class="com.mchange.v2.c3p0.ComboPooledDataSource"  destroy-method="close">  
 		<property name="minPoolSize" value="${jdbc.minPoolSize}" />
 		<property name="maxPoolSize" value="${jdbc.maxPoolSize}" />
 		<property name="idleConnectionTestPeriod" value="18000" />
@@ -72,7 +72,7 @@
 		<property name="password">
 			<value><![CDATA[${jdbc.password}]]></value>
 		</property>
-	</bean> -->
+	</bean>
 	<!-- 数据源2 -->
 	<!-- <bean id="dataSourceTwo" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">  
 		<property name="minPoolSize" value="${jdbc.minPoolSize}" />
@@ -127,7 +127,7 @@
     </bean> 
     
     <!-- 分库事务 -->
-	<bean id="userTransactionService" class="com.atomikos.icatch.config.UserTransactionServiceImp" init-method="init" destroy-method="shutdownForce">
+	<!-- <bean id="userTransactionService" class="com.atomikos.icatch.config.UserTransactionServiceImp" init-method="init" destroy-method="shutdownForce">
         <constructor-arg>
             <props>
                 <prop key="com.atomikos.icatch.service">com.atomikos.icatch.standalone.UserTransactionServiceFactory</prop>
@@ -148,7 +148,8 @@
  	<bean id="txManager" class="org.springframework.transaction.jta.JtaTransactionManager" depends-on="userTransactionService">
   		<property name="userTransaction" ref="atomikosUserTransaction" />
   		<property name="transactionManager" ref="atomikosTransactionManager"></property>
- 	</bean>
+ 	</bean> -->
+ 	
  	<!-- 事务的切入点配置 -->
  	<!-- <tx:annotation-driven transaction-manager="txManager" /> --> 
     <!-- <tx:advice id="advice" transaction-manager="txManager">
