@@ -97,7 +97,7 @@ public class DiscoveryController extends BaseController {
 		discoveryService.update(entity);
 		
 		//是否登录 如果登陆 判断是否已关注
-		Long userId = this.getUserIdFromCookie();
+		Long userId = this.getCurrentUserId();
 		if(userId!=null){
 			Collection collection = new Collection();
 			collection.setUserId(userId);
@@ -128,7 +128,7 @@ public class DiscoveryController extends BaseController {
 		if(StringUtils.isBlank(discovery.getContent())){
 			return responseError(ErrorConstant.ERROR_GENERAL, "内容不能为空");
 		}
-		Long userId = this.getUserIdFromCookie();
+		Long userId = this.getCurrentUserId();
 		if(userId==null){
 			return responseError(ErrorConstant.ERROR_400, "请先登录");
 		}
@@ -169,7 +169,7 @@ public class DiscoveryController extends BaseController {
 			return responseError(ErrorConstant.ERROR_GENERAL, "该文章已删除");
 		}
 		
-		Long userId = this.getUserIdFromCookie();
+		Long userId = this.getCurrentUserId();
 		if(userId==null){
 			return responseError(ErrorConstant.ERROR_400, "请先登录");
 		}

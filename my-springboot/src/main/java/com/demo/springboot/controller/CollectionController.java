@@ -39,7 +39,7 @@ public class CollectionController extends BaseController {
 	@ResponseBody
 	@RequestMapping(value = "/auth/addDiscoveryCollection", method=RequestMethod.POST)
 	public Map<String, Object> addDiscoveryCollection(Collection col) {
-		Long userId = this.getUserIdFromCookie();
+		Long userId = this.getCurrentUserId();
 		if(userId==null){
 			return responseError(ErrorConstant.ERROR_400, "请先登录");
 		}

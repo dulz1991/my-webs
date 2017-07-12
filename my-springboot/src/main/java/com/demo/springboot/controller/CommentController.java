@@ -77,7 +77,7 @@ public class CommentController extends BaseController {
 			return responseError(ErrorConstant.ERROR_GENERAL, "请输入评论内容");
 		}
 		
-		Long userId = this.getUserIdFromCookie();
+		Long userId = this.getCurrentUserId();
 		comment.setFromId(userId);
 		comment.setCreateTime(new Date());
 		commentService.insert(comment);

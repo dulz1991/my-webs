@@ -50,7 +50,7 @@ public class UserCenterController extends BaseController {
 		Map<String, Object> resMap = this.responseOK("");
 		
 		//用户信息
-		User user = this.getUserFromCookie();
+		User user = this.getCurrentUser();
 		resMap.put("avatar", user.getAvatar());
 		resMap.put("username", user.getUsername());
 		
@@ -86,7 +86,7 @@ public class UserCenterController extends BaseController {
 		Map<String, Object> resMap = this.responseOK("");
 		int pageSize = 10;
 		
-		Long userId = this.getUserIdFromCookie();
+		Long userId = this.getCurrentUserId();
 		Discovery discovery = new Discovery();
 		discovery.setUserId(userId);
 		Page<Discovery> page = discoveryService.getBeanListByParm(discovery, pageNo, pageSize, "id desc");
@@ -106,7 +106,7 @@ public class UserCenterController extends BaseController {
 		Map<String, Object> resMap = this.responseOK("");
 		int pageSize = 10;
 		
-		Long userId = this.getUserIdFromCookie();
+		Long userId = this.getCurrentUserId();
 		
 		Page<Map<String, Object>> page = discoveryService.getMyCommentDiscovery(userId, pageNo, pageSize, "c.CREATE_TIME desc");
 		resMap.put("page", page);
@@ -125,7 +125,7 @@ public class UserCenterController extends BaseController {
 		Map<String, Object> resMap = this.responseOK("");
 		int pageSize = 10;
 		
-		Long userId = this.getUserIdFromCookie();
+		Long userId = this.getCurrentUserId();
 		List<Map<String, Object>> list = collectionService.getMyCollectionForApp(userId, colId, type, "c.id desc");
 		resMap.put("list", list);
 		
@@ -141,7 +141,7 @@ public class UserCenterController extends BaseController {
 	@ResponseBody
 	@RequestMapping(value="doChangepwd", method = RequestMethod.POST)
 	public Map<String, Object> doChangepwd(String oldPwd, String newPwd) {
-		User user = getUserFromCookie();
+		User user = getCurrentUser();
 		MD5Util md5 = new MD5Util(MD5Util.default_salt, "MD5");
 		if(!user.getPassword().equals(md5.encode(oldPwd))){
 			return responseError(ErrorConstant.ERROR_GENERAL, "修改失败：旧密码错误");
@@ -161,7 +161,7 @@ public class UserCenterController extends BaseController {
 			return this.responseError(ErrorConstant.ERROR_500, "请选择图片");
 		}
 		
-		User user = getUserFromCookie();
+		User user = getCurrentUser();
 		if(attachFile!=null){
 			Map<String, Object> resultMap = imageFileService.uploadImage(attachFile);
 		    String fileName = resultMap.get("fileName")==null?"":resultMap.get("fileName").toString(); 

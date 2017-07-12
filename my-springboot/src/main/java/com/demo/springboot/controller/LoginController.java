@@ -28,19 +28,15 @@ public class LoginController extends BaseController {
 	 * @return
 	 */
 	@ResponseBody
-	@RequestMapping(value = "/doLogin", method=RequestMethod.POST)
+	@RequestMapping(value = "/doLogin")
 	public Map<String, Object> doLogin(User user) {
-		Map<String, Object> resMap = loginService.login(user);
-		resMap.put("tip", "登录成功");
-		resMap.put("username", user.getUsername());
-		
-		String userNameBase64 = Base64Util.encodeBase64(user.getUsername());
-		resMap.put("userNameBase64", userNameBase64);
+		/*String userNameBase64 = Base64Util.encodeBase64(user.getUsername());
+		resMap.put("userNameBase64", userNameBase64);*/
 
 		/*CookieUtil cookieUtil = new CookieUtil(request, response, Integer.MAX_VALUE);
 		cookieUtil.addCookie(KeyConstant.COOKIE_USER, userNameBase64);*/
 		
-		return resMap;
+		return loginService.login(user);
 	}
 	
 	
