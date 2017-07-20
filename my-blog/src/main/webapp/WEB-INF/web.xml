@@ -7,7 +7,7 @@
       
     <context-param>  
         <param-name>contextConfigLocation</param-name>      
-        <param-value>classpath:shiro-config.xml</param-value>  
+        <param-value>classpath:config/shiro-config.xml</param-value>  
     </context-param>
     
     <!-- 字符集 过滤器  -->  

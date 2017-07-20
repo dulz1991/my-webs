@@ -17,7 +17,7 @@ public class HomeController extends BaseController {
 	 * 是否登陆
 	 */
 	@ResponseBody
-	@RequestMapping(value="isLogin", method = RequestMethod.GET)
+	@RequestMapping(value="loginResult", method = RequestMethod.GET)
 	public Map<String, Object> loginResult() {
 		if(this.getCurrentUserId()!=null){
 			return this.responseOK("已登录");

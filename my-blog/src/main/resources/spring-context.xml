@@ -42,8 +42,13 @@
 	
 	<bean id="SpringContextUtil" class="com.demo.my.base.util.SpringContextUtil" lazy-init="false"/>
 	
-	<!-- <import resource="redis-config.xml"/> -->
-	<import resource="data-sources.xml"/>
-	<!-- <import resource="activemq-config.xml"/> -->
+	<!-- redis -->
+	<!-- <import resource="config/redis-config.xml"/> -->
+	
+	<!-- mybatis -->
+	<import resource="config/data-sources.xml"/>
+	
+	<!-- activemq -->
+	<!-- <import resource="config/activemq-config.xml"/> -->
 	
 </beans>  
