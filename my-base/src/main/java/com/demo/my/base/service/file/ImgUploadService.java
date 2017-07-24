@@ -6,6 +6,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -18,22 +20,26 @@ import org.apache.tomcat.util.http.fileupload.FileUploadException;
 import org.apache.tomcat.util.http.fileupload.disk.DiskFileItemFactory;
 import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 import org.apache.tomcat.util.http.fileupload.util.Streams;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import com.demo.my.base.util.DateUtil;
+import com.demo.my.base.util.PropertiesUtil;
 
 @Component
-public class ImgUploadService {
+public class ImgUploadService extends BaseService {
+	
+	private static final Logger logger = LoggerFactory.getLogger(ImgUploadService.class);
 
-	public void imageUpload(String imgPath, HttpServletRequest request,
-			HttpServletResponse response) throws IOException,
-			FileUploadException {
-		// ±£´æÎÄ¼þÂ·¾¶
-		String realPath = imgPath;
-		// ÅÐ¶ÏÂ·¾¶ÊÇ·ñ´æÔÚ£¬²»´æÔÚÔò´´½¨
-		File dir = new File(realPath);
-		if (!dir.isDirectory()) {
-			dir.mkdirs();
-		}
+	//ï¿½ï¿½Í¼ï¿½Ï´ï¿½
+	public Map<String, Object> uploadImage(HttpServletRequest request, 
+			String uploadPath, String savePath) throws IOException, FileUploadException {
+		Map<String, Object> resMap = new HashMap<String, Object>();
+		// ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½Â·ï¿½ï¿½
+		// ï¿½Ð¶ï¿½Â·ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½Ú£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ò´´½ï¿½
+		File dir = new File(uploadPath);
+		this.checkDir(dir);
 
 		if (ServletFileUpload.isMultipartContent(request)) {
 			DiskFileItemFactory dff = new DiskFileItemFactory();
@@ -41,8 +47,7 @@ public class ImgUploadService {
 			dff.setSizeThreshold(1024000);
 			ServletFileUpload sfu = new ServletFileUpload(dff);
 			FileItemIterator fii = sfu.getItemIterator(request);
-			String title = ""; // Í¼Æ¬±êÌâ
-			String url = ""; // Í¼Æ¬µØÖ·
+			String title = ""; // Í¼Æ¬ï¿½ï¿½ï¿½ï¿½
 			String fileName = "";
 			String originalName = "";
 			String state = "SUCCESS";
@@ -60,13 +65,11 @@ public class ImgUploadService {
 						}
 						ftype = matcher.group();
 						fileName = new Date().getTime() + "." + ftype;
-						url = realPath + "/" + fileName;
-						BufferedInputStream in = new BufferedInputStream(
-								fis.openStream());// »ñµÃÎÄ¼þÊäÈëÁ÷
-						FileOutputStream a = new FileOutputStream(new File(url));
-						BufferedOutputStream output = new BufferedOutputStream(
-								a);
-						Streams.copy(in, output, true);// ¿ªÊ¼°ÑÎÄ¼þÐ´µ½ÄãÖ¸¶¨µÄÉÏ´«ÎÄ¼þ¼Ð
+						uploadPath = uploadPath + fileName;
+						BufferedInputStream in = new BufferedInputStream(fis.openStream());// ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+						FileOutputStream a = new FileOutputStream(new File(uploadPath));
+						BufferedOutputStream output = new BufferedOutputStream(a);
+						Streams.copy(in, output, true);// ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½Ä¼ï¿½Ð´ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½
 					} else {
 						String fname = fis.getFieldName();
 						if (fname.indexOf("fileName") != -1) {
@@ -102,11 +105,55 @@ public class ImgUploadService {
 					.replace(">", "&gt;");
 			String outputPat = "{'original':'"
 					+ originalName
-					+ "','url':'" + realPath.substring(realPath.lastIndexOf("\\") + 1,
-							realPath.length()) + "/" + fileName + "','title':'"
+					+ "','url':'" + savePath + fileName + "','title':'"
 					+ title + "','state':'" + state + "'}";
-			response.getWriter().print(outputPat);
+			/*response.getWriter().print(outputPat);*/
 			// response.getWriter().print("{'original':'"+originalName+"','url':'http://127.0.0.1:8095/upload/imageUpload/'"+fileName+"','title':'"+title+"','state':'"+state+"'}");
+			
+			resMap.put("result", outputPat);
+			resMap.put("fileName", fileName);
+			resMap.put("url", savePath + fileName);
 		}
+		return resMap;
+	}
+	
+	//codeÍ¼Æ¬ï¿½Ï´ï¿½
+	public Map<String, Object> uploadCodeImage(HttpServletRequest request) throws IOException, FileUploadException {
+		String dateStr = DateUtil.dateToString(new Date(), DateUtil.DATE_FORMATE_1);
+		String uploadPath = PropertiesUtil.get("pic_code_path_upload");
+		uploadPath = uploadPath.replace("{{yyyymmdd}}", dateStr);
+		String savePath = PropertiesUtil.get("pic_code_path_save");
+		savePath = savePath.replace("{{yyyymmdd}}", dateStr);
+		return this.uploadImage(request, uploadPath, savePath);
+	}
+	
+	//blogÍ¼Æ¬ï¿½Ï´ï¿½
+	public Map<String, Object> uploadBlogImage(HttpServletRequest request) throws IOException, FileUploadException {
+		 String dateStr = DateUtil.dateToString(new Date(), DateUtil.DATE_FORMATE_1);
+         String uploadPath = PropertiesUtil.get("pic_blog_path_upload");
+         uploadPath = uploadPath.replace("{{yyyymmdd}}", dateStr);
+         String savePath = PropertiesUtil.get("pic_blog_path_save");
+         savePath = savePath.replace("{{yyyymmdd}}", dateStr);
+         return this.uploadImage(request, uploadPath, savePath);
+	}
+	
+	//vueÍ¼Æ¬ï¿½Ï´ï¿½
+	public Map<String, Object> uploadVueImage(HttpServletRequest request) throws IOException, FileUploadException {
+		 String dateStr = DateUtil.dateToString(new Date(), DateUtil.DATE_FORMATE_1);
+         String uploadPath = PropertiesUtil.get("pic_vue_path_upload");
+         uploadPath = uploadPath.replace("{{yyyymmdd}}", dateStr);
+         String savePath = PropertiesUtil.get("pic_vue_path_save");
+         savePath = savePath.replace("{{yyyymmdd}}", dateStr);
+         return this.uploadImage(request, uploadPath, savePath);
+	}
+
+	//userÍ¼Æ¬ï¿½Ï´ï¿½
+	public Map<String, Object> uploadUserImage(HttpServletRequest request) throws IOException, FileUploadException {
+		 String dateStr = DateUtil.dateToString(new Date(), DateUtil.DATE_FORMATE_1);
+         String uploadPath = PropertiesUtil.get("pic_user_path_upload");
+         uploadPath = uploadPath.replace("{{yyyymmdd}}", dateStr);
+         String savePath = PropertiesUtil.get("pic_user_path_save");
+         savePath = savePath.replace("{{yyyymmdd}}", dateStr);
+         return this.uploadImage(request, uploadPath, savePath);
 	}
 }

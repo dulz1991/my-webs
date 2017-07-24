@@ -166,6 +166,7 @@ public class CodeController extends BaseBackendController {
 	public ModelAndView viewDetail(Long id) {
 		ModelAndView model = new ModelAndView("code/code_detail");
 		Code entity = codeService.getById(id);
+		entity.setContent(entity.getContent().replace("http://my.demo", "/api_img"));
 		model.addObject("entity", entity);
 		return model;
 	}
