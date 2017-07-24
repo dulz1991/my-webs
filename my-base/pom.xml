@@ -219,6 +219,11 @@
 		    <groupId>cn.songxinqiang</groupId>
 		    <artifactId>com.baidu.ueditor</artifactId>
 		</dependency>
+		
+		<dependency>
+	        <groupId>org.springframework</groupId>
+	        <artifactId>spring-web</artifactId>
+	    </dependency>
   </dependencies>
   
   <build>
