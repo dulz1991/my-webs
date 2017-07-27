@@ -42,6 +42,10 @@
 	delete from collection where id=#{id}
 </delete>
 
+<delete id="deleteByDiscoveryId">
+	delete from collection where user_id=#{userId} and discovery_id=#{discoveryId}
+</delete>
+
 <select id="getById" resultMap="CollectionBaseMapper">
 	SELECT * FROM collection WHERE id=#{id} 
 </select>

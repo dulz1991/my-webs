@@ -75,7 +75,9 @@
 	d.CLICK_NUM as clickNum,
 	DATE_FORMAT(d.CREATE_TIME,'%Y-%m-%d %H:%m:%i') as createTimeStr,
 	u.USERNAME as username,
-	u.AVATAR as avatar
+	u.AVATAR as avatar,
+	(select count(*) from `comment` c where c.DISCOVERY_ID=d.ID) as commentCount,
+	(SELECT count(*) from collection col where col.DISCOVERY_ID = d.ID) as collectionCount
 	from discovery d
 	LEFT JOIN `user` u on u.ID=d.USER_ID
 	WHERE d.id=#{id} 
@@ -158,6 +160,7 @@
 		d.USER_ID as userId,
 		DATE_FORMAT(d.CREATE_TIME,'%Y-%m-%d %H:%m:%i') as createTimeStr,
 		u.USERNAME as username,
+		u.AVATAR as avatar,
 		(select count(*) from `comment` c where c.DISCOVERY_ID=d.ID) as commentCount,
 		(SELECT count(*) from collection col where col.DISCOVERY_ID = d.ID) as collectionCount
 		from discovery d
@@ -206,17 +209,20 @@
 		d.CONTENT as content,
 		d.`STATUS` as `status`,
 		d.USER_ID as userId,
+		u.AVATAR as avatar,
 		DATE_FORMAT(d.CREATE_TIME,'%Y-%m-%d %H:%m:%i') as createTimeStr,
-		u.USERNAME as username
+		u.USERNAME as username,
+		(select count(*) from `comment` c where c.DISCOVERY_ID=d.ID) as commentCount,
+		(SELECT count(*) from collection col where col.DISCOVERY_ID = d.ID) as collectionCount
 		from discovery d
 		LEFT JOIN `user` u on u.ID=d.USER_ID
 		 where 1=1
 	
-			<if test="parm.type == 'up'">
+			<if test="parm.type == 1">
 		     	and d.id &lt; #{parm.id}
 		     	order by d.id desc
 		   	</if>
-		   	<if test="parm.type == 'down'">
+		   	<if test="parm.type == 2">
 		     	and d.id > #{parm.id}
 		     	order by d.id asc
 		   	</if>

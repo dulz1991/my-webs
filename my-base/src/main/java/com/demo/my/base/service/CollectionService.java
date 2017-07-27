@@ -14,7 +14,6 @@ import com.demo.my.base.model.Collection;
 import com.demo.my.base.mybatis.mapper.ds1mapper.CollectionMapper;
 import com.demo.my.base.service.common.AdapterService;
 
-
 @Component  
 public class CollectionService extends AdapterService {
 	
@@ -105,7 +104,15 @@ public class CollectionService extends AdapterService {
 		parm.put("limit", page.getPageSize());
 		
 		if(collection!=null){
-			
+			if(collection.getUserId()!=null){
+				parm.put("userId", collection.getUserId());
+			}
+			if(collection.getBlogId()!=null){
+				parm.put("blogId", collection.getBlogId());
+			}
+			if(collection.getDiscoveryId()!=null){
+				parm.put("discoveryId", collection.getDiscoveryId());
+			}
 		}
 		
 		if(StringUtils.isNotBlank(orderby)){
@@ -120,7 +127,15 @@ public class CollectionService extends AdapterService {
 	private Map<String, Object> queryParm(Collection collection) {
 		Map<String, Object> parm = new HashMap<String, Object>();
 		if(collection!=null){
-			
+			if(collection.getUserId()!=null){
+				parm.put("userId", collection.getUserId());
+			}
+			if(collection.getBlogId()!=null){
+				parm.put("blogId", collection.getBlogId());
+			}
+			if(collection.getDiscoveryId()!=null){
+				parm.put("discoveryId", collection.getDiscoveryId());
+			}
 		}
 		parm.put("orderby", "id desc" );
 		return parm;
@@ -185,6 +200,14 @@ public class CollectionService extends AdapterService {
 		page.setList(list);
 		
 		return page;
+	}
+	
+	public boolean deleteByDiscoveryId(Collection collection) {
+		int  count = collectionMapper.deleteByDiscoveryId(collection);
+		if(count==0){
+			return false;
+		}
+		return true;
 	}
 
 }

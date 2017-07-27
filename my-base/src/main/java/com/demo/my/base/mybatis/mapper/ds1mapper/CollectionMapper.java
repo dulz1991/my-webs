@@ -28,4 +28,6 @@ public interface CollectionMapper extends BaseMapper {
 
 	int getMapListByParm_count(@Param("parm") Map<String, Object> parm);
 
+	int deleteByDiscoveryId(Collection collection);
+
 }
