@@ -71,18 +71,67 @@ public class CommentController extends BaseController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value = "/auth/doCommentForComment", method=RequestMethod.POST)
+	@RequestMapping(value = "/getCommentListForComment", method=RequestMethod.GET)
+	public Map<String, Object> getCommentListForComment(Comment comment, String type) {
+		int pageSize = 10;
+		
+		Map<String, Object> parm = this.getParmMap();
+		parm.put("emptyCommentId", "false");
+		parm.put("pageSize", pageSize);
+		if(StringUtils.isNotBlank(type)){
+			parm.put("type", type);	
+		}
+		
+		Map<String, Object> commentEntity = commentService.getCommentDetailById(comment.getCommentId());
+		resMap.put("comment", commentEntity);
+		
+		List<Map<String, Object>> list = commentService.getCommentListForComment(parm);
+		if(!list.isEmpty()){
+			Collections.sort(list, new Comparator<Map<String, Object>>() {
+				@Override
+				public int compare(Map<String, Object> o1, Map<String, Object> o2) {
+					Long o1Id = Long.valueOf(o1.get("id").toString());
+					Long o2Id = Long.valueOf(o2.get("id").toString());
+					return (o1Id).compareTo(o2Id);
+				}
+			});
+			resMap.put("list", list);
+		}
+		
+		if(list!=null && !list.isEmpty()){
+			for(Map<String, Object> map : list){
+				Long id = Long.valueOf(map.get("id").toString());
+				Map<String, Object> parm1 = new HashMap<String, Object>();
+				parm1.put("commentId", id);
+				parm1.put("notEmptyCommentId", "true");
+				parm1.put("orderBy", "c.id desc");
+				map.put("commentList", commentService.excute("CommentMapper.getMapListForDrag", parm1));
+			}
+		}
+		
+		resMap.put("pageSize", pageSize);
+		return resMap;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/doComment", method=RequestMethod.POST)
 	public Map<String, Object> doCommentForComment(Comment comment) {
 		if(StringUtils.isBlank(comment.getMessageContent())){
 			return responseError(ErrorConstant.ERROR_GENERAL, "请输入评论内容");
 		}
 		
 		Long userId = this.getCurrentUserId();
+		if(userId==null){
+			return responseError(ErrorConstant.ERROR_400, "未登录");
+		}
+		
 		comment.setFromId(userId);
 		comment.setCreateTime(new Date());
 		commentService.insert(comment);
 		
-		return responseOK("");
+		Map<String, Object> resMap = responseOK("");
+		resMap.put("item", comment);
+		return resMap;
 	}
 	
 }

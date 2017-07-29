@@ -1,6 +1,9 @@
 package com.demo.my.blog.controller.common;
 
 import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -36,9 +39,9 @@ public class BaseController extends BaseCommon {
         request.setAttribute("isLogin", isLogin);
         this.resMap.put("isLogin", isLogin);
         
-        //vue post¿çÓò
+        //vue postï¿½ï¿½ï¿½ï¿½
         response.setHeader("Access-Control-Allow-Origin", "*");
-        response.setHeader("Access-Control-Allow-Credentials", "true"); // ÔÊĞí´øÉÏ cookie
+        response.setHeader("Access-Control-Allow-Credentials", "true"); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ cookie
         // Request methods you wish to allow
         response.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, PATCH, DELETE");
         // Request headers you wish to allow
@@ -63,5 +66,28 @@ public class BaseController extends BaseCommon {
     	}
     	return user.getId();
     }
+    
+    public Map<String, Object> getParmMap() {
+		Map<String, Object> parmMap = new HashMap<String, Object>();
+		
+		//éå† request
+		Enumeration paramNames = request.getParameterNames();  
+		while (paramNames.hasMoreElements()) {
+			String paramName = (String) paramNames.nextElement();  
+			String[] paramValues = request.getParameterValues(paramName);  
+			if (paramValues.length == 1) {  
+				String paramValue = paramValues[0];  
+				if (paramValue.length() != 0) {  
+					try {
+						parmMap.put(paramName, URLDecoder.decode(paramValue, "utf-8"));	
+					} catch (Exception e) {
+						parmMap.put(paramName, "");
+					}
+				}  
+			}  
+		}
+		
+		return parmMap;
+	}
 
 }

@@ -13,7 +13,6 @@ import com.demo.my.base.model.User;
 import com.demo.my.blog.controller.common.BaseController;
 
 @Controller
-@RequestMapping("/home")
 public class HomeController extends BaseController {
 	
 	@RequestMapping(value = "/index", method=RequestMethod.GET)

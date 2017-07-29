@@ -74,4 +74,12 @@ public class AccountController extends BaseController {
 		return modelAndView;
 	}
 	
+	@ResponseBody
+	@RequestMapping(value = "/doRegist", method=RequestMethod.POST)
+	public Map<String, Object> doRegist(User user) {
+		Map<String, Object> resMap = loginService.regist(user);
+		resMap.put("tip", "注册成功, 请登录");
+		return resMap;
+	}
+	
 }

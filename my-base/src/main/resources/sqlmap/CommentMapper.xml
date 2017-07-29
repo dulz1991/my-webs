@@ -228,5 +228,25 @@
 		</if>
 </select>
 
+<select id="getCommentDetailById" parameterType="HashMap" resultType="HashMap">
+		select 
+		c.ID as id,
+		c.COMMENT_ID as commentId,
+		c.MESSAGE_CONTENT as messageContent,
+		c.DISCOVERY_ID as discoveryId,
+		c.BLOG_ID as blogId,
+		DATE_FORMAT(c.CREATE_TIME,'%Y-%m-%d %H:%m:%i') as createTimeStr,
+		uf.ID as fromId,
+		uf.USERNAME as fromName,
+		uf.AVATAR as fromAvatar,
+		ut.ID as toId,
+		ut.USERNAME as toName,
+		ut.AVATAR as toAvatar
+		from `comment` c
+		LEFT JOIN `user` uf on uf.ID = c.FROM_ID
+		LEFT JOIN `user` ut on ut.ID = c.TO_ID
+		where c.ID = #{id}
+</select>
+
 
 </mapper>

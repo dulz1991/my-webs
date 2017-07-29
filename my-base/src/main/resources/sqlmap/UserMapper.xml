@@ -198,11 +198,14 @@
 </select>
 
 <select id="findUserByUsernameAndPassword" resultMap="UserBaseMapper">
-	select * from user where USERNAME=#{user.username} and PASSWORD=#{user.password} and STATUS=1
+	select * from user where (USERNAME=#{user.username} or PHONE=#{user.username}) and PASSWORD=#{user.password} and STATUS=1
 </select>
 
 <select id="getByUsername" resultMap="UserBaseMapper">
-	select * from user where USERNAME = #{username} and STATUS=1
+	select * from user where USERNAME = #{username}
+</select>
+<select id="getByPhone" resultMap="UserBaseMapper">
+	select * from user where PHONE = #{phone}
 </select>
 
 </mapper>

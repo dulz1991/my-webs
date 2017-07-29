@@ -28,4 +28,6 @@ public interface CommentMapper extends BaseMapper {
 
 	int getMapListByParm_count(@Param("parm") Map<String, Object> parm);
 
+	Map<String, Object> getCommentDetailById(@Param("id") Long id);
+
 }

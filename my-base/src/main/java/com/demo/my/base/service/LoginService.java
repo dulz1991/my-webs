@@ -42,7 +42,7 @@ public class LoginService extends AdapterService {
 		if (u != null) {
 			u.setPassword(null);
 			Subject currentUser = SecurityUtils.getSubject();
-			UsernamePasswordToken token = new UsernamePasswordToken(user.getUsername(), user.getPassword());
+			UsernamePasswordToken token = new UsernamePasswordToken(u.getUsername(), user.getPassword());
 			token.setRememberMe(true);	
 			try {
 				currentUser.login(token);
@@ -106,6 +106,10 @@ public class LoginService extends AdapterService {
 		User existUser = userMapper.getByUsername(user.getUsername());
 		if(existUser!=null){
 			return responseError(ErrorConstant.ERROR_500, ErrorConstant.ERROR_USER_EXIST);
+		}
+		existUser = userMapper.getByPhone(user.getPhone());
+		if(existUser!=null){
+			return responseError(ErrorConstant.ERROR_500, "手机号已存在");
 		}
 		
 		user.setRole(2L);

@@ -28,4 +28,6 @@ public interface UserMapper extends BaseMapper {
 
 	User getByUsername(@Param("username") String username);
 
+	User getByPhone(@Param("phone") String phone);
+
 }

@@ -8,13 +8,11 @@ import java.util.Map;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import com.demo.my.base.util.Page;
 
+import com.demo.my.base.util.Page;
 import com.demo.my.base.model.Comment;
 import com.demo.my.base.mybatis.mapper.ds1mapper.CommentMapper;
-
 import com.demo.my.base.service.common.AdapterService;
-
 
 @Component  
 public class CommentService extends AdapterService {
@@ -44,6 +42,10 @@ public class CommentService extends AdapterService {
 
 	public Comment getById(Long id) {
 		return commentMapper.getById(id);
+	}
+	
+	public Map<String, Object> getCommentDetailById(Long id) {
+		return commentMapper.getCommentDetailById(id);
 	}
 	
 	public int countByParm(Comment comment) {
@@ -118,6 +120,9 @@ public class CommentService extends AdapterService {
 			if(comment.getToId()!=null){
 				parm.put("toId", comment.getToId());
 			}
+			if(comment.getCommentId()!=null){
+				parm.put("commentId", comment.getCommentId());
+			}
 		}
 		
 		if(StringUtils.isNotBlank(orderby)){
@@ -147,6 +152,9 @@ public class CommentService extends AdapterService {
 			if(comment.getToId()!=null){
 				parm.put("toId", comment.getToId());
 			}
+			if(comment.getCommentId()!=null){
+				parm.put("commentId", comment.getCommentId());
+			}
 		}
 		parm.put("orderby", "id desc" );
 		return parm;
@@ -159,6 +167,11 @@ public class CommentService extends AdapterService {
 		if(StringUtils.isNotBlank(type)){
 			parm.put("type", type);	
 		}
+		List<Map<String, Object>> list = commentMapper.getMapListForDrag(parm);
+		return list;
+	}
+	
+	public List<Map<String, Object>> getCommentListForComment(Map<String, Object> parm) {
 		List<Map<String, Object>> list = commentMapper.getMapListForDrag(parm);
 		return list;
 	}
