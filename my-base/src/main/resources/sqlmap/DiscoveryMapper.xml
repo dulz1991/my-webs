@@ -237,7 +237,9 @@
 
 <select id="getMyCommentDiscovery" parameterType="HashMap" resultType="HashMap">
 	SELECT 
-	DISTINCT c.DISCOVERY_ID as id, d.TITLE as title,c.FROM_ID as fromId,c.TO_ID as toId
+	DISTINCT c.DISCOVERY_ID as id, d.TITLE as title,c.FROM_ID as fromId,c.TO_ID as toId,
+	d.CONTENT as content, d.CREATE_TIME as createTime,count(c.DISCOVERY_ID) as commentCount,
+	d.IMG_PATH as imgPath
 	from `comment` c
 	LEFT JOIN discovery d on d.ID = c.DISCOVERY_ID
 	where c.discovery_id is not null

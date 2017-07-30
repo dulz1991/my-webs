@@ -55,6 +55,13 @@ public class AccountController extends BaseController {
 		return resMap;
 	}
 	
+	@ResponseBody
+	@RequestMapping(value = "/doLogout", method=RequestMethod.GET)
+	public Map<String, Object> doLogout(HttpServletRequest request, User user) {
+		Map<String, Object> resMap = loginService.logout();
+		return resMap;
+	}
+	
 	@RequestMapping(value = "/logout", method=RequestMethod.GET)
 	public ModelAndView logout(HttpServletRequest request, User user) {
 		ModelAndView modelAndView = new ModelAndView();

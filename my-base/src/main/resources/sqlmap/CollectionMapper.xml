@@ -133,11 +133,16 @@
 	d.TITLE as title,
 	d.ID as discoveryId,
 	u.USERNAME as postName,
-	DATE_FORMAT(c.CREATE_TIME,'%Y-%m-%d %H:%i:%s') as createTimeStr
+	DATE_FORMAT(c.CREATE_TIME,'%Y-%m-%d %H:%i:%s') as createTimeStr,
+	d.CONTENT as content,
+	d.IMG_PATH as imgPath
 	FROM collection c 
 	LEFT JOIN discovery d on c.DISCOVERY_ID=d.ID
 	LEFT JOIN `user` u on c.USER_ID=u.ID
 	where 1=1 
+	<if test="parm.userId != null">
+		and c.user_id=#{parm.userId}
+	</if>
 	<if test="parm.type == 'up'">
    		and c.id &lt;#{parm.id}
    	</if>
