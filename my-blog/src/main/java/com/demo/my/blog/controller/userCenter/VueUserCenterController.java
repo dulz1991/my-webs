@@ -184,7 +184,7 @@ public class VueUserCenterController extends BaseController {
 
 	@ResponseBody
 	@RequestMapping(value="uploadAvatar", method = RequestMethod.POST)
-	public Map<String, Object> uploadAvatar(@RequestParam(name = "attachFile",value="attachFile", required = false) MultipartFile attachFile) {
+	public Map<String, Object> uploadAvatar(@RequestParam(name = "attachFile", required = false) MultipartFile attachFile) {
 		if(attachFile==null){
 			return this.responseError(ErrorConstant.ERROR_500, "请选择图片");
 		}
@@ -192,9 +192,9 @@ public class VueUserCenterController extends BaseController {
 		User user = getCurrentUser();
 		if(attachFile!=null){
 			Map<String, Object> resultMap = imageFileService.uploadUserImage(attachFile);
-		    String fileName = resultMap.get("fileName")==null?"":resultMap.get("fileName").toString(); 
-		    if(StringUtils.isNotBlank(fileName)){
-		    	user.setAvatar(fileName);
+		    String avatarUrl = resultMap.get("url")==null?"":resultMap.get("url").toString(); 
+		    if(StringUtils.isNotBlank(avatarUrl)){
+		    	user.setAvatar(avatarUrl);
 			}
 	    }
 		userService.update(user);

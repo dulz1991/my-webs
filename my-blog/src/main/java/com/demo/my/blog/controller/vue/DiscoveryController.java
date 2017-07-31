@@ -117,7 +117,7 @@ public class DiscoveryController extends BaseController {
 	@ResponseBody
 	@RequestMapping(value = "/post", method=RequestMethod.POST)
 	public Map<String, Object> doPost(Discovery discovery,
-			@RequestParam(name = "attachFile",value="attachFile", required = false) MultipartFile attachFile) {
+			@RequestParam(name = "attachFile",required = false) MultipartFile attachFile) {
 		
 		/*if(StringUtils.isBlank(discovery.getTitle())){
 			return responseError(ErrorConstant.ERROR_GENERAL, "标题不能为空");
@@ -132,9 +132,9 @@ public class DiscoveryController extends BaseController {
 		
 		if(attachFile!=null){
 			Map<String, Object> resultMap = imageFileService.uploadVueImage(attachFile);
-		    String fileName = resultMap.get("fileName")==null?"":resultMap.get("fileName").toString(); 
-		    if(StringUtils.isNotBlank(fileName)){
-		    	discovery.setImgPath(fileName);
+		    String url = resultMap.get("url")==null?"":resultMap.get("url").toString(); 
+		    if(StringUtils.isNotBlank(url)){
+		    	discovery.setImgPath(url);
 			}
 	    }
 		

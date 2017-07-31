@@ -57,7 +57,7 @@ public class ImageFileService extends BaseService {
 					Map<String, Object> resMap = responseOK("");
 					resMap.put("fileName", fileName);
 					resMap.put("type", ftype);
-					resMap.put("url", savePath+"fileName");
+					resMap.put("url", savePath+fileName);
 					return resMap;
 				}
 			}
