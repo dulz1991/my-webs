@@ -178,6 +178,7 @@
 		c.ID as id,
 		c.COMMENT_ID as commentId,
 		c.MESSAGE_CONTENT as messageContent,
+		c.CREATE_TIME as createTime,
 		DATE_FORMAT(c.CREATE_TIME,'%Y-%m-%d %H:%m:%i') as createTimeStr,
 		uf.ID as fromId,
 		uf.USERNAME as fromName,

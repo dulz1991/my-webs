@@ -1,5 +1,6 @@
 package com.demo.my.base.service;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,6 +10,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.demo.my.base.util.DateUtil;
 import com.demo.my.base.util.Page;
 import com.demo.my.base.model.Comment;
 import com.demo.my.base.mybatis.mapper.ds1mapper.CommentMapper;
@@ -168,6 +170,10 @@ public class CommentService extends AdapterService {
 			parm.put("type", type);	
 		}
 		List<Map<String, Object>> list = commentMapper.getMapListForDrag(parm);
+		for(Map<String, Object> map : list){
+			Date date = (Date) map.get("createTime");
+			map.put("createTimeStr", DateUtil.calcDatetime(date));
+		}
 		return list;
 	}
 	

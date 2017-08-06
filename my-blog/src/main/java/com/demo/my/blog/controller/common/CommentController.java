@@ -20,6 +20,7 @@ import com.demo.my.base.service.CommentService;
 import com.demo.my.base.service.DiscoveryService;
 import com.demo.my.base.service.UserService;
 import com.demo.my.base.service.file.ImageFileService;
+import com.demo.my.base.util.DateUtil;
 
 @RestController
 public class CommentController extends BaseController {
@@ -62,7 +63,14 @@ public class CommentController extends BaseController {
 				parm.put("commentId", id);
 				parm.put("notEmptyCommentId", "true");
 				parm.put("orderBy", "c.id desc");
-				map.put("commentList", commentService.excute("CommentMapper.getMapListForDrag", parm));
+				List<Map<String, Object>> list1 = commentService.excute("CommentMapper.getMapListForDrag", parm);
+				if(list1!=null && !list1.isEmpty()){
+					for(Map<String, Object> map1 : list1){
+						Date date = (Date) map1.get("createTime");
+						map1.put("createTimeStr", DateUtil.calcDatetime(date));
+					}
+				}
+				map.put("commentList", list1);
 			}
 		}
 		

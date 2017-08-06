@@ -35,8 +35,12 @@ public class HomeController extends BaseController {
 	@ResponseBody
 	@RequestMapping(value="loginResult", method = RequestMethod.GET)
 	public Map<String, Object> loginResult() {
-		if(this.getCurrentUserId()!=null){
-			return this.responseOK("已登录");
+		User user = this.getCurrentUser();
+		if(user!=null){
+			Map<String, Object> resMap = this.responseOK("已登录");
+			resMap.put("username", user.getUsername());
+			resMap.put("avatar", user.getAvatar());
+			return resMap;
 		}
 		return this.responseError(ErrorConstant.ERROR_400, "未登录");
 	}

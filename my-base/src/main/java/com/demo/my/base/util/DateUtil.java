@@ -60,5 +60,43 @@ public class DateUtil {
 		}
 		return dateStr;
 	}
+	
+	/**
+	 * 计算时间间隔
+	 * @param date
+	 * @return
+	 */
+	public static String calcDatetime(Date date) {
+		Long currentTime = new Date().getTime();
+		Long beforeTime = date.getTime();
+		//计算秒
+		Long diff = (currentTime-beforeTime)/1000;
+		if(diff>=0 && diff<59){
+			return (diff+1) + "秒钟前";
+		} 
+		//计算分钟
+		diff = diff/60;
+		if(diff>=0 && diff<59){
+			return (diff+1) + "分钟前";
+		} 
+		//计算小时
+		diff = diff/60;
+		if(diff>=0 && diff<23){
+			return (diff+1) + "小时前";
+		}
+		//计算天数
+		diff = diff/24;
+		if(diff>=0 && diff<29){
+			return (diff+1) + "天前";
+		}
+		//计算月数
+		diff = diff/30;
+		if(diff>=0 && diff<11){
+			return (diff+1) + "月前";
+		}
+		//计算年数
+		diff = diff/12;
+		return (diff+1) + "年前";
+	}
 
 }

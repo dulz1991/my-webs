@@ -23,6 +23,7 @@ import com.demo.my.base.service.CommentService;
 import com.demo.my.base.service.DiscoveryService;
 import com.demo.my.base.service.UserService;
 import com.demo.my.base.service.file.ImageFileService;
+import com.demo.my.base.util.DateUtil;
 import com.demo.my.base.util.Page;
 import com.demo.my.blog.controller.common.BaseController;
 
@@ -82,6 +83,7 @@ public class DiscoveryController extends BaseController {
 			return responseError(ErrorConstant.ERROR_404, "页面没找到");
 		}
 		Map<String, Object> discovery = discoveryService.getMapById(id);
+		discovery.put("createTimeStr", DateUtil.calcDatetime((Date)discovery.get("createTime")));
 		if(discovery==null || !discovery.get("status").equals(1)){
 			return responseError(ErrorConstant.ERROR_404, "页面没找到");
 		}

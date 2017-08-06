@@ -1,5 +1,6 @@
 package com.demo.my.base.service;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,6 +10,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.demo.my.base.util.DateUtil;
 import com.demo.my.base.util.Page;
 import com.demo.my.base.model.Discovery;
 import com.demo.my.base.mybatis.mapper.ds1mapper.DiscoveryMapper;
@@ -186,6 +188,7 @@ public class DiscoveryService extends AdapterService {
 		String imagePath = "";
 		String content = "";
 		for(Map<String, Object> map : list){
+			
 			imagePath = map.get("imagePath")==null?"":map.get("imagePath").toString();
 			if(StringUtils.isBlank(imagePath)){
 				map.put("hasImg", false);
@@ -193,10 +196,14 @@ public class DiscoveryService extends AdapterService {
 				map.put("hasImg", true);
 			}
 			
+			Date createTime = (Date) map.get("createTime");
+			map.put("createTimeStr", DateUtil.calcDatetime(createTime));
+			
 			content = map.get("content")==null?"":map.get("content").toString();
 			if(content.length()>140){
 				map.put("content", content.substring(0, 140)+"...");
 			}
+			
 		}
 		
 		return list;
