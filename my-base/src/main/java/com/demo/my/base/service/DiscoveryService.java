@@ -217,7 +217,7 @@ public class DiscoveryService extends AdapterService {
 			parm.put("orderBy", orderby);	
 		}
 		parm.put("start", page.getStartRow());
-		parm.put("limit", pageSize);
+		parm.put("limit", page.getPageSize());
 		
 		List<Map<String, Object>> list = discoveryMapper.getMyCommentDiscovery(parm);
 		page.setTotalRecords(list.size());

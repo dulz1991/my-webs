@@ -86,9 +86,8 @@ public class VueUserCenterController extends BaseController {
 	 */
 	@ResponseBody
 	@RequestMapping(value="myPost", method = RequestMethod.GET)
-	public Map<String, Object> myPost(int pageNo) {
+	public Map<String, Object> myPost(int pageNo, int pageSize) {
 		Map<String, Object> resMap = this.responseOK("");
-		int pageSize = 10;
 		
 		Long userId = this.getCurrentUserId();
 		Discovery discovery = new Discovery();
@@ -113,9 +112,8 @@ public class VueUserCenterController extends BaseController {
 	 */
 	@ResponseBody
 	@RequestMapping(value="myComment", method = RequestMethod.GET)
-	public Map<String, Object> myComment(int pageNo) {
+	public Map<String, Object> myComment(int pageNo, int pageSize) {
 		Map<String, Object> resMap = this.responseOK("");
-		int pageSize = 10;
 		
 		Long userId = this.getCurrentUserId();
 		
@@ -139,9 +137,8 @@ public class VueUserCenterController extends BaseController {
 	 */
 	@ResponseBody
 	@RequestMapping(value="myCollection", method = RequestMethod.GET)
-	public Map<String, Object> myCollection(Long colId, String type) {
+	public Map<String, Object> myCollection(Long colId, String type, Integer pageSize) {
 		Map<String, Object> resMap = this.responseOK("");
-		int pageSize = 10;
 		
 		Long userId = this.getCurrentUserId();
 		List<Map<String, Object>> list = collectionService.getMyCollectionForApp(userId, colId, type, "c.id desc");
