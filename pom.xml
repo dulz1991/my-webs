@@ -9,7 +9,7 @@
   
   <modules>
     <module>my-base</module>
-    <!-- <module>my-blog</module> -->
+    <module>my-blog</module>
     <!-- <module>my-user</module> -->
     <!-- <module>my-pic</module> -->
     <!-- <module>my-springboot</module> -->
@@ -92,7 +92,7 @@
 		<!-- end spring -->
 		
 		<!-- start log4j -->
-		<dependency>
+		<!-- <dependency>
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
 			<version>1.2.9</version>
@@ -108,6 +108,26 @@
 			<version>1.6.2</version>
 			<scope>compile</scope>
 			<optional>true</optional>
+		</dependency> -->
+		<dependency>
+		    <groupId>org.apache.logging.log4j</groupId>
+		    <artifactId>log4j-api</artifactId>
+		    <version>2.7</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.apache.logging.log4j</groupId>
+		    <artifactId>log4j-core</artifactId>
+		    <version>2.7</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.apache.logging.log4j</groupId>
+		    <artifactId>log4j-slf4j-impl</artifactId>
+		    <version>2.7</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.slf4j</groupId>
+		    <artifactId>slf4j-api</artifactId>
+		    <version>1.7.21</version>
 		</dependency>
 		<!-- end log4j -->
 		
