@@ -15,7 +15,6 @@ import com.demo.my.base.service.CollectionService;
 import com.demo.my.base.service.CommentService;
 import com.demo.my.base.service.DiscoveryService;
 import com.demo.my.base.service.UserService;
-import com.ibm.db2.jcc.a.c;
 
 @RestController
 public class CollectionController extends BaseController {

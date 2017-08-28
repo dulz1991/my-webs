@@ -12,6 +12,7 @@
 	<id property="fromId" column="FROM_ID" />
 	<id property="commentId" column="COMMENT_ID" />
 	<id property="messageContent" column="MESSAGE_CONTENT" />
+	<id property="isRead" column="IS_READ" />
 </resultMap>  
 
 <insert id="insert">
@@ -19,9 +20,9 @@
    		select LAST_INSERT_ID()
    	</selectKey>
 	insert into comment
-	(DISCOVERY_ID,TO_ID,CREATE_TIME,USER_IP,BLOG_ID,FROM_ID,MESSAGE_CONTENT,COMMENT_ID)
+	(DISCOVERY_ID,TO_ID,CREATE_TIME,USER_IP,BLOG_ID,FROM_ID,MESSAGE_CONTENT,COMMENT_ID,IS_READ)
 	values
-	(#{discoveryId},#{toId},#{createTime},#{userIp},#{blogId},#{fromId},#{messageContent},#{commentId})
+	(#{discoveryId},#{toId},#{createTime},#{userIp},#{blogId},#{fromId},#{messageContent},#{commentId},#{isRead})
 </insert>
 
 <update id="update">
@@ -50,6 +51,9 @@
 	    	</if>
 			<if test="messageContent != null">  
 	        	MESSAGE_CONTENT=#{messageContent},
+	    	</if>
+	    	<if test="isRead != null">  
+	        	IS_READ=#{isRead},
 	    	</if>
 	</set>   
     WHERE id=#{id}
@@ -89,6 +93,9 @@
 			<if test="parm.messageContent != null">
 		     	and MESSAGE_CONTENT = #{parm.messageContent}
 		   	</if>
+		   	<if test="parm.isRead != null">
+		     	and IS_READ = #{parm.isRead}
+		   	</if>
 </select>
 
 <select id="getBeanListByParm" resultMap="CommentBaseMapper">
@@ -116,6 +123,9 @@
 		   	</if>
 			<if test="parm.messageContent != null">
 		     	and MESSAGE_CONTENT = #{parm.messageContent}
+		   	</if>
+		   	<if test="parm.isRead != null">
+		     	and IS_READ = #{parm.isRead}
 		   	</if>
 		<if test="parm.orderby != null">
 	   		order by ${parm.orderby}
