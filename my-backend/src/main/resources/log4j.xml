@@ -13,7 +13,7 @@
 
 	<!-- [error] -->
 	<appender name="ERROR-APPENDER" class="org.apache.log4j.DailyRollingFileAppender">
-		<param name="File" value="F:\\logs\\backend_log\\error\\error.log" />
+		<param name="File" value="${error_log_path}" />
 		<param name="Append" value="true" />
 		<param name="encoding" value="GBK" />
 		<param name="threshold" value="error" />
@@ -25,7 +25,7 @@
 	
 	<!-- [info] -->
 	<appender name="INFO-APPENDER" class="org.apache.log4j.DailyRollingFileAppender">
-		<param name="File" value="F:\\logs\\backend_log\\info\\info.log" />
+		<param name="File" value="${info_log_path}" />
 		<param name="Append" value="true" />
 		<param name="encoding" value="GBK" />
 		<param name="threshold" value="info" />

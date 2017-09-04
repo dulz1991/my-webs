@@ -49,7 +49,7 @@
 		     	and FATHER_ID = #{parm.fatherId}
 		   	</if>
 			<if test="parm.name != null">
-		     	and NAME like "%"#{parm.name}"%"
+		     	and NAME like  CONCAT('%', #{parm.name}, '%')
 		   	</if>
 			<if test="parm.status != null">
 		     	and STATUS = #{parm.status}
@@ -62,7 +62,7 @@
 		     	and FATHER_ID = #{parm.fatherId}
 		   	</if>
 			<if test="parm.name != null">
-		     	and NAME like "%"#{parm.name}"%"
+		     	and NAME like  CONCAT('%', #{parm.name}, '%')
 		   	</if>
 			<if test="parm.status != null">
 		     	and STATUS = #{parm.status}
@@ -86,7 +86,7 @@
 	     	and csm.FATHER_ID = #{parm.fatherId}
 	   	</if>
 		<if test="parm.name != null">
-	     	and csm.NAME like "%"#{parm.name}"%"
+			and csm.NAME like  CONCAT('%', #{parm.name}, '%')
 	   	</if>
 		<if test="parm.status != null">
 	     	and csm.STATUS = #{parm.status}

@@ -16,7 +16,8 @@
 								</div>
 								<div class="col-sm-3">
 									一级分类
-									<@select id="fatherId" class="form-control select" datas=codeMenuList key="id" text="name" value="" defaultValue="--选择一级分类--" />
+									<@select id="fatherId" class="form-control select" datas=codeMenuList 
+									key="id" text="name" value="${codeMenuId!''}" defaultValue="--选择一级分类--" />
 								</div>
 								<div class="col-sm-3">
 									状态
@@ -52,8 +53,8 @@
 							<thead>
 								<tr>
 									<th width="60" field="index">编号</th>
-									<th field="menuName">分类名称</th>
-									<th field="fatherName">分类名称</th>
+									<th field="menuName" url="/backend/code/list?fatherId=" parm="id">分类名称</th>
+									<th field="fatherName">父级分类</th>
 									<th field="statusStr">状态</th>
 									<th field="op" field-role="2" width="110"></th>
 								</tr>
@@ -72,6 +73,11 @@ $(function(){
 		url_load : '/backend/codeSubMenu/getList',
 		url_edit : '/backend/codeSubMenu/edit',
 		url_remove : '/backend/codeSubMenu/doDelete',
+		parm:{
+				pageNo : 1,
+				pageSize : 10,
+				fatherId:'${codeMenuId!''}'
+			},
 		backFn : function(p) {
 			// console.log(p);
 		}

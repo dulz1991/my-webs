@@ -1,5 +1,6 @@
 package com.demo.my.base.service;
 
+import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.List;
@@ -121,7 +122,11 @@ public class CodeSubMenuService extends AdapterService {
 				parm.put("status", codeSubMenu.getStatus());
 			}
 			if(StringUtils.isNotBlank(codeSubMenu.getName())){
-				parm.put("name", codeSubMenu.getName());
+				try {
+					parm.put("name", URLDecoder.decode(codeSubMenu.getName(), "utf-8"));	
+				} catch (Exception e) {
+					// TODO: handle exception
+				}
 			}
 		}
 		

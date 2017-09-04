@@ -4,8 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,7 +24,7 @@ import com.demo.my.base.util.Page;
 @RequestMapping("/backend/codeMenu")
 public class CodeMenuController extends BaseBackendController {
 	
-	private static final Logger logger = LoggerFactory.getLogger(CodeMenuController.class);
+	private static final Log logger = LogFactory.getLog(CodeMenuController.class);
 	
 	@Autowired
 	private CodeMenuService codeMenuService;

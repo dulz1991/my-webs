@@ -42,7 +42,7 @@
 <select id="countByParm" resultType="integer">
 	select count(*) from code_menu  where 1=1 
 			<if test="parm.name != null">
-		     	and NAME = #{parm.name}
+		     	and NAME like CONCAT('%', #{parm.name}, '%')
 		   	</if>
 			<if test="parm.orderBy != null">
 		     	and ORDER_BY = #{parm.orderBy}
@@ -52,7 +52,7 @@
 <select id="getBeanListByParm" resultMap="CodeMenuBaseMapper">
 	select * from code_menu where 1=1 
 			<if test="parm.name != null">
-		     	and NAME = #{parm.name}
+		     	and NAME like CONCAT('%', #{parm.name}, '%')
 		   	</if>
 			<if test="parm.orderBy != null">
 		     	and ORDER_BY = #{parm.orderBy}

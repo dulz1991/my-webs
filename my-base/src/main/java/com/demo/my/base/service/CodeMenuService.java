@@ -1,5 +1,6 @@
 package com.demo.my.base.service;
 
+import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,11 +9,10 @@ import java.util.Map;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import com.demo.my.base.util.Page;
 
+import com.demo.my.base.util.Page;
 import com.demo.my.base.model.CodeMenu;
 import com.demo.my.base.mybatis.mapper.ds1mapper.CodeMenuMapper;
-
 import com.demo.my.base.service.common.AdapterService;
 
 
@@ -107,7 +107,11 @@ public class CodeMenuService extends AdapterService {
 		
 		if(codeMenu!=null){
 			if(StringUtils.isNotBlank(codeMenu.getName())){
-				parm.put("name", codeMenu.getName());
+				try {
+					parm.put("name", URLDecoder.decode(codeMenu.getName(), "utf-8"));	
+				} catch (Exception e) {
+					// TODO: handle exception
+				}
 			}
 		}
 		

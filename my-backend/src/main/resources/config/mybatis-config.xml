@@ -18,80 +18,9 @@
      http://www.springframework.org/schema/context 
      http://www.springframework.org/schema/context/spring-context-3.0.xsd"
 	default-lazy-init="true" default-autowire="byName">
-	
-	<!-- 单库事务 -->
-	<!-- <tx:annotation-driven transaction-manager="transactionManager" /> -->
-	<!-- Transaction manager for a single JDBC DataSource -->
-	<!-- <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager" /> -->
-	
- 	<!-- 数据源1 -->
-	<!-- <bean id="dataSourceOne" class="com.atomikos.jdbc.AtomikosDataSourceBean" init-method="init" destroy-method="close">
-	   <property name="uniqueResourceName" value="mysql_dataSourceOne" />
-	   <property name="xaDataSourceClassName" value="com.mysql.jdbc.jdbc2.optional.MysqlXADataSource"/>
-	   <property name="xaProperties">
-	     <props>
-	       <prop key="user">${jdbc.username}</prop>
-	       <prop key="password">${jdbc.password}</prop>
-	       <prop key="url">${jdbc.url}</prop>
-	     </props>
-	   </property>
-	  	<property name="poolSize" value="10" />
-	  	<property name="reapTimeout" value="20000" />
-	  	<property name="minPoolSize" value="${jdbc.minPoolSize}" />
-		<property name="maxPoolSize" value="${jdbc.maxPoolSize}" />	
-  </bean> -->
-  <!-- 数据源2 --> 
-  <!-- <bean id="dataSourceTwo" class="com.atomikos.jdbc.AtomikosDataSourceBean" init-method="init" destroy-method="close">
-    <property name="uniqueResourceName" value="mysql_dataSourceTwo" />
-    <property name="xaDataSourceClassName" value="com.mysql.jdbc.jdbc2.optional.MysqlXADataSource"/>
-    <property name="xaProperties">
-      <props>
-        <prop key="user">${jdbc.username}</prop>
-        <prop key="password">${jdbc.password}</prop>
-        <prop key="url">${jdbc.url_pic}</prop>
-      </props>
-    </property>
-   	<property name="poolSize" value="10" />
-   	<property name="reapTimeout" value="20000" />
-   	<property name="minPoolSize" value="${jdbc.minPoolSize}" />
-	<property name="maxPoolSize" value="${jdbc.maxPoolSize}" />
-  </bean> -->
-	<!-- 数据源1 -->
-	<bean id="dataSourceOne" class="com.mchange.v2.c3p0.ComboPooledDataSource"  destroy-method="close">  
-		<property name="minPoolSize" value="${jdbc.minPoolSize}" />
-		<property name="maxPoolSize" value="${jdbc.maxPoolSize}" />
-		<property name="idleConnectionTestPeriod" value="18000" />
-		<property name="maxIdleTime" value="10000" />
-		<property name="maxStatementsPerConnection" value="10" />
-		<property name="maxStatements" value="400" />
-		<property name="numHelperThreads" value="5" />
-		<property name="preferredTestQuery" value="SELECT @@SQL_MODE" />
-		<property name="driverClass" value="${jdbc.driverClassName}" />
-		<property name="jdbcUrl" value="${jdbc.url}" />
-		<property name="user" value="${jdbc.username}" />
-		<property name="password">
-			<value><![CDATA[${jdbc.password}]]></value>
-		</property>
-	</bean>
-	<!-- 数据源2 -->
-	<!-- <bean id="dataSourceTwo" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">  
-		<property name="minPoolSize" value="${jdbc.minPoolSize}" />
-		<property name="maxPoolSize" value="${jdbc.maxPoolSize}" />
-		<property name="idleConnectionTestPeriod" value="18000" />
-		<property name="maxIdleTime" value="10000" />
-		<property name="maxStatementsPerConnection" value="10" />
-		<property name="maxStatements" value="400" />
-		<property name="numHelperThreads" value="5" />
-		<property name="preferredTestQuery" value="SELECT @@SQL_MODE" />
-		<property name="testConnectionOnCheckin" value="true" />
-		<property name="testConnectionOnCheckout" value="false" />
-		<property name="driverClass" value="${jdbc.driverClassName}" />
-		<property name="jdbcUrl" value="${jdbc.url_pic}" />
-		<property name="user" value="${jdbc.username}" />
-		<property name="password">
-			<value><![CDATA[${jdbc.password}]]></value>
-		</property>
-	</bean> -->
+
+	<import resource="classpath:config/dataSource_one.xml"/>
+	<!-- <import resource="classpath:config/dataSource_two.xml"/> -->
 	
 	<!-- 管理多个数据源 -->
 	<bean id="dataSource" class="com.demo.my.base.mybatis.config.DynamicDataSource">  
@@ -126,6 +55,13 @@
         <property name="mapperLocations" value="classpath*:/sqlmap/*.xml" />  
     </bean> 
     
+    
+    <!-- 单库事务 -->
+	<!-- <tx:annotation-driven transaction-manager="transactionManager" /> -->
+	<!-- Transaction manager for a single JDBC DataSource -->
+	<!-- <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager" /> -->
+	
+	
     <!-- 分库事务 -->
 	<!-- <bean id="userTransactionService" class="com.atomikos.icatch.config.UserTransactionServiceImp" init-method="init" destroy-method="shutdownForce">
         <constructor-arg>

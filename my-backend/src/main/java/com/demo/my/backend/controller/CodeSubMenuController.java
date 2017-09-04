@@ -5,8 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,7 +27,7 @@ import com.demo.my.base.util.Page;
 @RequestMapping("/backend/codeSubMenu")
 public class CodeSubMenuController extends BaseBackendController {
 	
-	private static final Logger logger = LoggerFactory.getLogger(CodeSubMenuController.class);
+	private static final Log logger = LogFactory.getLog(CodeMenuController.class);
 	
 	@Autowired
 	private CodeMenuService codeMenuService;
@@ -34,10 +35,16 @@ public class CodeSubMenuController extends BaseBackendController {
 	private CodeSubMenuService codeSubMenuService;
 	
 	@RequestMapping(value="/list", method = RequestMethod.GET)
-	public ModelAndView index() {
+	public ModelAndView index(String codeMenuId) {
 		ModelAndView model = new ModelAndView("code/code_sub_menu_list");
+		
+		if(StringUtils.isNotBlank(codeMenuId)){
+			model.addObject("codeMenuId", codeMenuId);
+		}
+		
 		List<CodeMenu> codeMenuList = codeMenuService.excute("CodeMenuMapper.getBeanListByParm", null);
 		model.addObject("codeMenuList", codeMenuList);
+		
 		return model;
 	}
 	

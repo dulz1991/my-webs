@@ -43,7 +43,7 @@
 							<thead>
 								<tr>
 									<th width="60" field="index">编号</th>
-									<th field="name">分类名称</th>
+									<th field="name" url="/backend/codeSubMenu/list?codeMenuId=" parm="id">分类名称</th>
 									<th field="orderBy">分类排序</th>
 									<th field="op" field-role="2" width="110"></th>
 								</tr>

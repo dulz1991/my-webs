@@ -16,11 +16,13 @@
 								</div>
 								<div class="col-sm-3">
 									一级分类
-									<@select id="codeMenuId" class="form-control select" datas=codeMenuList key="id" text="name" value="" onchange="refreshFaterId()" defaultValue="--选择一级分类--" />
+									<@select id="codeMenuId" class="form-control select" datas=codeMenuList key="id" 
+									text="name" value="${codeMenuId!''}" onchange="refreshFaterId()" defaultValue="--选择一级分类--" />
 								</div>
 								<div class="col-sm-3">
 									二级分类
-									<select id="fatherId" name="fatherId" class="form-control select" onchange="refreshCodeId()">
+									<select id="fatherId" name="fatherId" class="form-control select"
+									  value="${codeSubMenuId!''}" onchange="refreshCodeId()">
 										<option value="-1">--选择二级分类--</option>
 									</select>
 								</div>
@@ -83,10 +85,21 @@ $(function(){
 		url_load : '/backend/code/getList',
 		url_edit : '/backend/code/edit',
 		url_remove : '/backend/code/doDelete',
+		parm:{
+			pageNo : 1,
+			pageSize : 10,
+			fatherId:'${codeSubMenuId!''}'
+		},
 		backFn : function(p) {
 			// console.log(p);
 		}
 	}); 
+	
+	var codeMenuId = '${codeMenuId!''}';
+	if(codeMenuId!=''){
+		refreshFaterId();
+		$('#fatherId').find("option[value='${codeSubMenuId!''}']").attr("selected",true);
+	}
 });
 
 function refreshFaterId(){

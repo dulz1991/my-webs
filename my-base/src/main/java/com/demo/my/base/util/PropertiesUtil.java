@@ -28,7 +28,16 @@ public class PropertiesUtil {
 	public static String FILE_DEMO_RESOURCE_PATH = "file_demo_resource_path";
      
     static {
-        InputStream in = PropertiesUtil.class.getResourceAsStream("/properties.properties");
+    	String propertiesPath = "/dev/properties.properties";
+    	String env = System.getProperty("spring.profiles.active");
+        if(StringUtils.isBlank(env)) {
+        	propertiesPath = "/dev/properties.properties";
+        } else if(env.equals("dev")) {
+        	propertiesPath = "/prod/properties.properties";
+        } else if(env.equals("prod")) {
+        	propertiesPath = "/prod/properties.properties";
+        }
+        InputStream in = PropertiesUtil.class.getResourceAsStream(propertiesPath);
         try {
             props.load(in);
             in.close();

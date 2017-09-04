@@ -122,6 +122,7 @@ jQuery.commonUtil = {
 		$.ajax({
 			type: "GET",
 			url: _getUrl,
+			async: false,
 			dataType : "json",
 			data: {
 				id : parentId 

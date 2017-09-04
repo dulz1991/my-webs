@@ -40,10 +40,20 @@ public class CodeController extends BaseBackendController {
 	private CodeSubMenuService codeSubMenuService;
 	
 	@RequestMapping(value="/list", method = RequestMethod.GET)
-	public ModelAndView index() {
+	public ModelAndView index(String fatherId) {
 		ModelAndView model = new ModelAndView("code/code_list");
+		
+		if(StringUtils.isNotBlank(fatherId)){
+			model.addObject("codeSubMenuId", fatherId);
+			CodeSubMenu codeSubMenu = codeSubMenuService.getById(Long.valueOf(fatherId));
+			if(codeSubMenu!=null){
+				model.addObject("codeMenuId", codeSubMenu.getFatherId());	
+			}
+		}
+		
 		List<CodeMenu> codeMenuList = codeMenuService.excute("CodeMenuMapper.getBeanListByParm", null);
 		model.addObject("codeMenuList", codeMenuList);
+		
 		return model;
 	}
 	
