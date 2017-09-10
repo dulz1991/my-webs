@@ -15,7 +15,7 @@
 $(document).ready(function(c) {
 	 $('#btn-submit').click(function(){
 		 $.ajax({
-				url: "/account/doLogin",
+				url: "/doLogin",
 				method: 'GET',
 				dataType: 'json',
 				data: {

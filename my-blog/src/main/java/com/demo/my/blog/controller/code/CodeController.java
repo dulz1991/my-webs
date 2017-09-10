@@ -142,7 +142,7 @@ public class CodeController extends BaseController {
 			}
 		}
 		
-		//²Ëµ¥Ê÷
+		//ï¿½Ëµï¿½ï¿½ï¿½
 		if(!codeList.isEmpty()){
 			List<Map<String, Object>> menuTreeData = getMenuTreeData(codeList);
 			ObjectMapper objectMapper = new ObjectMapper();

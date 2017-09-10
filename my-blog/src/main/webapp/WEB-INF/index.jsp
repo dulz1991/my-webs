@@ -16,14 +16,14 @@
 		<div id="container">
 			<div class="section active" id="section0">
 				<div class="intro">
-					<h1 class="title"><a href="/blog/index">My·Blog</a></h1>
+					<h1 class="title"><a href="/blog">My·Blog</a></h1>
 					<p>A summary of the problems encountered in the learning process</p>
 					<p><img style="width:40%;" src="/img/example.png"/></p>
 				</div>
 			</div>
 			<div class="section" id="section1">
 				<div class="intro">
-					<h1 class="title"><a href="/code/index">My·Code</a></h1>
+					<h1 class="title"><a href="/code">My·Code</a></h1>
 					<p>A summary of the technologies which have been approached or have been learned.x</p>
 					<img src="/img/example2.png"/>
 				</div>

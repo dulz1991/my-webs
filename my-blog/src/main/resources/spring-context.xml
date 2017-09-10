@@ -23,8 +23,6 @@
 	<context:annotation-config/>
 	<context:component-scan base-package="com.demo.my" />
 	
-	<context:property-placeholder location="classpath:properties.properties" ignore-unresolvable="true" />
-	
 	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix" value="/WEB-INF/" />
 		<property name="suffix" value=".jsp" />
@@ -36,17 +34,22 @@
 	<mvc:resources mapping="/fonts/**" location="/WEB-INF/resources/fonts/" />
 	<mvc:resources mapping="/ue/**" location="/WEB-INF/resources/ueditor/" />
 	<mvc:resources mapping="/vue/**" location="/WEB-INF/resources/vue/" />
+	<mvc:resources mapping="/blog/**" location="/WEB-INF/resources/blog/" />
+	<mvc:resources mapping="/code/**" location="/WEB-INF/resources/code/" />
 	
 	<!-- open aop -->
-	<aop:aspectj-autoproxy /> 
+	<aop:aspectj-autoproxy proxy-target-class="true" />  
 	
 	<bean id="SpringContextUtil" class="com.demo.my.base.util.SpringContextUtil" lazy-init="false"/>
 	
+	<!-- 环境切换 -->
+    <import resource="classpath:spring-profile.xml"/>
+    
+    <!-- mybatis 数据库配置 -->
+    <import resource="classpath:config/mybatis-config.xml"/>
+    
 	<!-- redis -->
 	<!-- <import resource="config/redis-config.xml"/> -->
-	
-	<!-- mybatis -->
-	<import resource="config/data-sources.xml"/>
 	
 	<!-- activemq -->
 	<!-- <import resource="config/activemq-config.xml"/> -->
@@ -55,5 +58,7 @@
           <property name="maxUploadSize"><value>10000000</value></property> 
           <property name="defaultEncoding"><value>UTF-8</value></property> 
     </bean> 
+    
+    
 	
 </beans>  

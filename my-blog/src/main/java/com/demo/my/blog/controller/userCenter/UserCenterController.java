@@ -34,7 +34,7 @@ public class UserCenterController extends BaseController {
 	private BlogService blogService;
 	@Autowired
 	private UserService userService;
-	//¶ÓÁÐÏûÏ¢Éú²úÕß
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     /*@Resource(name="producerService")
     private ProducerService producer;*/
 	
@@ -140,9 +140,9 @@ public class UserCenterController extends BaseController {
 		if(id!=null){
 			Blog blog = blogService.getById(id);
 			modelAndView.addObject("blog", blog);
-			modelAndView.addObject("title", "±à¼­£º"+blog.getTitle());
+			modelAndView.addObject("title", "ï¿½à¼­ï¿½ï¿½"+blog.getTitle());
 		} else {
-			modelAndView.addObject("title", "´´½¨ÐÂµÄ²©¿Í");
+			modelAndView.addObject("title", "ï¿½ï¿½ï¿½ï¿½ï¿½ÂµÄ²ï¿½ï¿½ï¿½");
 		}
 		
 		List<BlogMenu> menuList = blogService.excute("BlogMenuMapper.getBeanListByParm", null);
@@ -165,7 +165,7 @@ public class UserCenterController extends BaseController {
 		}
 		
 		blog.setUserId(this.getCurrentUserId());
-		String reg = "(?<=src=(\"|\'))[\\S\\s]+?(?=(\"|\'))"; // ½ØÈ¡imgµÄsrc
+		String reg = "(?<=src=(\"|\'))[\\S\\s]+?(?=(\"|\'))"; // ï¿½ï¿½È¡imgï¿½ï¿½src
 		String img = RegularUtil.cutContent(reg, blog.getContent());
 		blog.setImg(img);
 		String preContent = RegularUtil.Html2Text(blog.getContent());

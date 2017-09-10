@@ -18,8 +18,7 @@ import com.demo.my.blog.controller.common.BaseController;
 
 
 @Controller
-@RequestMapping("/account")
-public class AccountController extends BaseController {
+public class LoginController extends BaseController {
 	
 	@Autowired
 	private LoginService loginService;

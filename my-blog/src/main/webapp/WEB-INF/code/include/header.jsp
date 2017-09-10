@@ -18,13 +18,13 @@
 		  	</form>
 		</li>
 		<li><a href="/" class="nav-link">首页</a></li>
-		<li><a href="/blog/index" class="nav-link">技术博客</a></li>
-		<li><a href="/code/index" class="nav-link current">代码笔记</a></li>
+		<li><a href="/blog" class="nav-link">技术文档</a></li>
+		<li><a href="/code" class="nav-link current">代码笔记</a></li>
 		<c:if test="${isLogin}">
     		<li><a href="/auth/userCenter/index" class="nav-link"><i class="fa fa-user"></i>个人中心</a></li>
         </c:if>
         <c:if test="${!isLogin}">	
-        	<li><a href="/account/login" class="nav-link"><i class="fa fa-sign-in"></i>登陆</a></li>
+        	<li><a href="/login" class="nav-link"><i class="fa fa-sign-in"></i>登陆</a></li>
         </c:if>
 	</ul>
 </div>

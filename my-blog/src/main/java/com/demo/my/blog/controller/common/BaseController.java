@@ -34,10 +34,15 @@ public class BaseController extends BaseCommon {
         this.resMap = responseOK("");
         this.cookieName = this.request.getParameter(KeyConstant.COOKIE_USER);
         
-        //isLogin
-        boolean isLogin = this.isLogin();
-        request.setAttribute("isLogin", isLogin);
-        this.resMap.put("isLogin", isLogin);
+        User user = this.getCurrentUser(); 
+		if (user != null) {
+			request.setAttribute("role", user.getRole());
+			request.setAttribute("isLogin", true);
+			request.setAttribute("username", user.getUsername());
+		} else {
+			request.setAttribute("role", -1);
+			request.setAttribute("isLogin", false);
+		}
         
         //vue post����
         response.setHeader("Access-Control-Allow-Origin", "*");
