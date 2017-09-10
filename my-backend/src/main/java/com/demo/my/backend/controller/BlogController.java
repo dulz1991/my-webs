@@ -4,8 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,12 +22,13 @@ import com.demo.my.base.model.Blog;
 import com.demo.my.base.model.BlogMenu;
 import com.demo.my.base.model.User;
 import com.demo.my.base.util.Page;
+import com.ibm.db2.jcc.a.n;
 
 @Controller
 @RequestMapping("/backend/blog")
 public class BlogController extends BaseBackendController {
 	
-	private static final Logger logger = LoggerFactory.getLogger(BlogController.class);
+	private Log logger = LogFactory.getLog(this.getClass());  
 	
 	@Autowired
 	private BlogService blogService;
@@ -37,11 +38,20 @@ public class BlogController extends BaseBackendController {
 	private BlogMenuService blogMenuService;
 	
 	@RequestMapping(value="/list", method = RequestMethod.GET)
-	public ModelAndView index() {
+	public ModelAndView index(Long blogMenuId) {
 		ModelAndView model = new ModelAndView("blog/blog_list");
 		
 		List<BlogMenu> menuList = blogMenuService.getBeanListByParm(new HashMap<String, Object>());
 		model.addObject("menuList", menuList);
+		
+		if(blogMenuId!=null){
+			model.addObject("blogMenuId", blogMenuId);
+			for(BlogMenu menu : menuList){
+				if(menu.getId().equals(blogMenuId)){
+					model.addObject("currentMenu", menu);
+				}
+			}
+		}
 		
 		return model;
 	}

@@ -51,8 +51,7 @@ public class BlogLogController extends BaseBackendController {
 			@RequestParam(name="pageNo", defaultValue="1") int pageNo,  
 			@RequestParam(name="pageSize", defaultValue="10") int pageSize) {
 		//查询参数
-		Map<String, Object> parmMap =  this.getParmMap(blogLog);
-		parmMap.put("blogTitle", request.getParameter("blogTitle"));
+		Map<String, Object> parmMap =  this.getParmMap();
 		parmMap.put("orderBy", "bl.id desc");
 		parmMap.put("pageNo", pageNo);
 		parmMap.put("pageSize", pageSize);

@@ -2,6 +2,7 @@ package com.demo.my.blog.controller.blog;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,8 +20,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.demo.my.base.common.ErrorConstant;
 import com.demo.my.base.model.Blog;
+import com.demo.my.base.model.BlogLog;
 import com.demo.my.base.model.BlogMenu;
 import com.demo.my.base.model.User;
+import com.demo.my.base.service.BlogLogService;
 import com.demo.my.base.service.BlogMenuService;
 import com.demo.my.base.service.BlogService;
 import com.demo.my.base.service.UserService;
@@ -33,6 +36,8 @@ public class BlogController extends BaseController {
 	
 	@Autowired
 	private BlogService blogService;
+	@Autowired
+	private BlogLogService blogLogService;
 	@Autowired
 	private BlogMenuService blogMenuService;
 	@Autowired
@@ -149,6 +154,20 @@ public class BlogController extends BaseController {
 		}
 
 		blogService.save(blog);
+		
+		//更新blog log
+		BlogLog blogLog = new BlogLog();
+		blogLog.setBlogId(blog.getId());
+		blogLog.setCreateTime(new Date());
+		blogLog.setUpdateContent(blog.getContent());
+		blogLog.setUserId(this.getCurrentUserId());
+		if(blog.getId()!=null){
+			blogLog.setRemark("新增文档");
+		} else {
+			blogLog.setRemark("更新文档");
+		}
+		blogLogService.insert(blogLog);
+		
 		Map<String, Object> resMap = responseOK("");
 		resMap.put("id", blog.getId());
 		return resMap;

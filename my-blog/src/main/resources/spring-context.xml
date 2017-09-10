@@ -38,7 +38,7 @@
 	<mvc:resources mapping="/code/**" location="/WEB-INF/resources/code/" />
 	
 	<!-- open aop -->
-	<aop:aspectj-autoproxy proxy-target-class="true" />  
+	<aop:aspectj-autoproxy />  
 	
 	<bean id="SpringContextUtil" class="com.demo.my.base.util.SpringContextUtil" lazy-init="false"/>
 	

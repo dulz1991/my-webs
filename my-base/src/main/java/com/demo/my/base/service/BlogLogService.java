@@ -82,7 +82,7 @@ public class BlogLogService extends AdapterService {
 		parm.put("start", page.getStartRow());
 		parm.put("limit", page.getPageSize());
 		
-		int count = this.countByParm(parm);
+		int count = blogLogMapper.getMapListByParm_count(parm);
 		page.setTotalRecords(count);
 		
 		List<Map<String, Object>> list = new ArrayList<Map<String,Object>>();

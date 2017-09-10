@@ -16,7 +16,8 @@
 								</div>
 								<div class="col-sm-3">
 									分类
-									<@select id="menuId" class="form-control select" datas=menuList key="id" text="name" value="" defaultValue="--选择分类--" />
+									<@select id="menuId" class="form-control select" datas=menuList key="id" 
+									text="name" value="${blogMenuId!''}" defaultValue="--选择分类--" />
 								</div>
 								<div class="col-sm-3">
 									用户
@@ -58,7 +59,7 @@
 									<th width="60" field="index">编号</th>
 									<th field="title" url="/backend/blog/getDetail?id=" parm="id">标题</th>
 									<th field="username">用户</th>
-									<th field="menuId">分类</th>
+									<th field="menuName">分类</th>
 									<th field="click">点击</th>
 									<th field="createTime">创建时间</th>
 									<th field="updateTime">更新时间</th>
@@ -79,6 +80,11 @@ $(function(){
 		url_load : '/backend/blog/getList',
 		url_edit : '/backend/blog/edit',
 		url_remove : '/backend/blog/doDelete',
+		parm:{
+			pageNo : 1,
+			pageSize : 10,
+			menuId:'${blogMenuId!''}'
+		},
 		backFn : function(p) {
 			// console.log(p);
 		}

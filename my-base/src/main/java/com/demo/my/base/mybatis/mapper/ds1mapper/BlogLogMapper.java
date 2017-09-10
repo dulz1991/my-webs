@@ -23,6 +23,8 @@ public interface BlogLogMapper extends BaseMapper {
 	List<BlogLog> getBeanListByParm(@Param("parm") Map<String, Object> paramMap);
 
 	List<Map<String, Object>> getMapListByParm( @Param("parm") Map<String, Object> paramMap);
+	
+	int getMapListByParm_count( @Param("parm") Map<String, Object> paramMap);
 
 	Map<String, Object> getDetail(@Param("id") Long id);
 

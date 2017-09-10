@@ -24,7 +24,6 @@ import com.demo.my.base.service.DiscoveryService;
 import com.demo.my.base.service.UserService;
 import com.demo.my.base.service.file.ImageFileService;
 import com.demo.my.base.util.DateUtil;
-import com.demo.my.base.util.Page;
 import com.demo.my.blog.controller.common.BaseController;
 
 @RestController
