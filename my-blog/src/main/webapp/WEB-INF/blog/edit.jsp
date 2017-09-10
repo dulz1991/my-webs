@@ -5,7 +5,7 @@
 <html lang="en">
 <head>
 	<jsp:include page="include/meta.jsp"></jsp:include>
-	<title>${title}</title>
+	<title>编辑技术文档</title>
 	<script src="/ue/editor_config.js"></script>
 	<script src="/ue/editor_all.js"></script>
 	<link href="/ue/themes/default/ueditor.css" rel="stylesheet">

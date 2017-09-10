@@ -20,6 +20,10 @@
 			<c:forEach items="${menuList}" var="menu" varStatus="st">
 				<h3 class="<c:if test="${not empty blogMenu and blogMenu.id == menu.id}">active</c:if>">
 					<i class="fa fa-sitemap"></i> ${menu.name}(${menuCountMap[menu.id]})
+					<c:if test="${isLogin }">
+						<i class="fa fa-plus fa-lg fa-edit-icon" title="创建" 
+						onclick="javascript:self.location='/auth/blog/edit?menuId=${menu.id}'" style="color:#666"></i>
+					</c:if>
 				</h3>
 				<ul class="">
 					<c:forEach items="${menuBlogMap[menu.id]}" var="item" varStatus="indx">

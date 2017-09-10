@@ -1,16 +1,16 @@
 package com.demo.my.base.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import com.demo.my.base.util.Page;
 
+import com.demo.my.base.util.Page;
 import com.demo.my.base.model.Blog;
 import com.demo.my.base.mybatis.mapper.ds1mapper.BlogMapper;
-
 import com.demo.my.base.service.common.AdapterService;
 
 @Component  
@@ -33,8 +33,11 @@ public class BlogService extends AdapterService {
 	
 	public void save(Blog blog) {
 		if(blog.getId()!=null){
+			blog.setUpdateTime(new Date());
 			blogMapper.update(blog);
 		} else {
+			blog.setCreateTime(new Date());
+			blog.setUpdateTime(new Date());
 			blogMapper.insert(blog);
 		}
 	}

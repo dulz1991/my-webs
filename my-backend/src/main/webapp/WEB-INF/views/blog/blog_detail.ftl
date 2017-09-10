@@ -1,5 +1,5 @@
 <#include "/base-lib/baseMacro.ftl"> 
-<@base base_title="${entity.title}--blog" openIndex=2 activeIndex=0>
+<@base base_title="${entity.title}--blog" openIndex=3 activeIndex=0>
 	
 	<div class="row">
 		<div class="col-sm-12 panel panel-default">
