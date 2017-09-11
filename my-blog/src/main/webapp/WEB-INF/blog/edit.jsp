@@ -66,7 +66,7 @@ $(function(){
 		$('#inputTitle').text($('input[name="title"]').val());
 	});
 	
-	$('input[name="title"]').onblur(function(){
+	$('input[name="title"]').blur(function(){
 		$('#inputTitle').text($('input[name="title"]').val());
 	});
 	
