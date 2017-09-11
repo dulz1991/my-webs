@@ -43,7 +43,7 @@
 			$(function(){            
 				$(".menu h3").click(function(){
 			 		//找menu对应的tab
-			 		$(".menu_tab > div").removeClass("active");
+			 		/*$(".menu_tab > div").removeClass("active");*/
 
 			 		var val=($(this).next().attr('class'));
 			 		var menu_value=(val.substring(val.length-1));
@@ -63,13 +63,14 @@
 		            });
 			});
 			
-			$(function(){   // 导航 >
+			// 导航 >
+			/*$(function(){   
 				 $(".container .menu > h3").click(function(){
 
 				 	$(".container .content .A1").empty().text($(this).text());
 				 	
 				 });
-			});
+			});*/
 		});
 
 

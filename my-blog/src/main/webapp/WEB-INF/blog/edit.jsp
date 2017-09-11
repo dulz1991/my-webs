@@ -22,6 +22,12 @@
 			<div class="panel panel-default">
 				<div class="panel-body">
 					<form class="form-horizontal form" action="javascript:void(0);">
+						<div class="form-group">
+					    	<div class="col-sm-12">
+					    		<i class="fa fa-location-arrow"></i> <c:if test="${not empty blogMenu.name }">${blogMenu.name }</c:if>  ><c:if test="${not empty blog.title }"><a href="/blog?blogId=${blog.id }" id="inputTitle" style="display:inline">${blog.title }</a></c:if><c:if test="${empty blog.title }"><a href="javascript:;" id="inputTitle" style="display:inline"></a></c:if>
+					        </div>
+					    </div>
+					
 				        <div class="form-group">
 				          	<div class="col-sm-12">
 				          		<input type="hidden" value="${blog.id}" name="id" />
@@ -56,6 +62,11 @@
 	
 <script>
 $(function(){
+	$('input[name="title"]').keyup(function(){
+		$('#inputTitle').text($('input[name="title"]').val());
+	});
+	
+
 	
 	$('#blogSubmit').click(function(){
 		var elem = $('.form');

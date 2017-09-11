@@ -119,6 +119,13 @@ public class BlogController extends BaseController {
 			modelAndView.addObject("blog", blog);	
 		}
 		
+		modelAndView.addObject("blogMenu", new BlogMenu());
+		if(menuId!=null){
+			BlogMenu blogMenu = blogMenuService.getById(menuId);
+			if(blogMenu!=null){
+				modelAndView.addObject("blogMenu", blogMenu);	
+			}
+		}
 		modelAndView.addObject("menuId", menuId);
 		
 		return modelAndView;

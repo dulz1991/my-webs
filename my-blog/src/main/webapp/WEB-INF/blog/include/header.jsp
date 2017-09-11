@@ -8,7 +8,7 @@
 	<nav class="cd-nav">
 
 		<ul id="cd-primary-nav" class="cd-primary-nav">
-			<li class=""><a href="/">首页</a></li>
+			<li class=""><a href="/"><i class="fa fa-home"></i> 首页</a></li>
 			<li><a href="/blog" class="selected">技术文档</a></li>
 			<li><a href="/code">代码笔记</a></li>
 			<c:if test="${isLogin}">

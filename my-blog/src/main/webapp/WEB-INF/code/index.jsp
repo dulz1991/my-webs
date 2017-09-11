@@ -6,7 +6,7 @@
 <html lang="en">
 <head>
 	<jsp:include page="include/meta.jsp"></jsp:include>
-    <link href="/css/hover.css" rel="stylesheet" media="all">
+    <link href="/code/css/hover.css" rel="stylesheet" media="all">
 	<title>代码笔记</title>
 </head>
 

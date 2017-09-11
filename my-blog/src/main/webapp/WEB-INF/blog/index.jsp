@@ -22,7 +22,7 @@
 					<i class="fa fa-sitemap"></i> ${menu.name}(${menuCountMap[menu.id]})
 					<c:if test="${isLogin }">
 						<i class="fa fa-plus fa-lg fa-edit-icon" title="创建" 
-						onclick="javascript:self.location='/auth/blog/edit?menuId=${menu.id}'" style="color:#666"></i>
+						onclick="javascript:self.location='/auth/blog/edit?menuId=${menu.id}'" style="color:#00f"></i>
 					</c:if>
 				</h3>
 				<ul class="">
@@ -61,7 +61,8 @@
 						<p class="tt">1.概要说明</p>
 						<p>用于知识或文档的在线查看和编辑</p>
 						<p class="tt">2.使用说明</p>
-						<p>暂无</p>					
+						<p>2.1 登录后可在当前文档页新增、修改或删除文档</p>
+						<p>2.2 登录后，在左侧菜单栏后的"<i class="fa fa-plus fa-lg" style="color:#00f"></i>"号即可新增文档</p>					
 					</c:if>
 				</div>
 			</div>

@@ -8,8 +8,8 @@
 <link href="/css/lib/bootstrap.min.css" rel="stylesheet">
 <link href="/css/lib/font-awesome.css" rel="stylesheet">
 <!--Template Styles-->
-<link href="/css/style.css" rel="stylesheet">
-<link href="/css/lib/jquery.page.css" rel="stylesheet">
+<link href="/code/css/style.css" rel="stylesheet">
+<link href="/css/jquery.page.css" rel="stylesheet">
 
 <script src="/js/lib/jquery-1.10.2.min.js"></script>
 <script src="/js/lib/bootstrap.min.js"></script>

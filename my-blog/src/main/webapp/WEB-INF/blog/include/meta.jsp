@@ -17,6 +17,12 @@
 <script src="/js/lib/jquery.mobile.custom.min.js"></script>
 <script src="/blog/js/head-main.js"></script> 
 
+<script type="text/javascript" src="/ue/third-party/SyntaxHighlighter/shCore.js"></script>
+<link rel="stylesheet" type="text/css" href="/ue/third-party/SyntaxHighlighter/shCoreDefault.css">
+<script type="text/javascript">
+	SyntaxHighlighter.all();
+</script>
+
 
 
 

@@ -6,11 +6,11 @@
 <link rel="icon" type="image/png" href="/img/favicon.png" />
     
 <link href="/css/lib/font-awesome.css" rel="stylesheet">
-<link href="/css/style.css" rel="stylesheet" media="all">
-<link href="/css/vue/page.css" rel="stylesheet" type="text/css" >
+<link href="/code/css/style.css" rel="stylesheet" media="all">
+<link href="/code/css/page.css" rel="stylesheet" type="text/css" >
 
 <script src="/js/lib/jquery-1.10.2.min.js"></script>
 <script src="/js/lib/jquery.extend.js"></script>
 
 <script src="/js/my-js.js"></script>
-<script src="/js/vue/vue.js"></script>
+<script src="/code/js/vue.js"></script>
