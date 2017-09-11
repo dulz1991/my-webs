@@ -36,6 +36,7 @@
 	<mvc:resources mapping="/vue/**" location="/WEB-INF/resources/vue/" />
 	<mvc:resources mapping="/blog/**" location="/WEB-INF/resources/blog/" />
 	<mvc:resources mapping="/code/**" location="/WEB-INF/resources/code/" />
+	<mvc:resources mapping="/user/**" location="/WEB-INF/resources/user/" />
 	
 	<!-- open aop -->
 	<aop:aspectj-autoproxy />  
