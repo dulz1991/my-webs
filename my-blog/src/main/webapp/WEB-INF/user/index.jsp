@@ -99,7 +99,7 @@
                                             <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 tm-3-col-textbox">
                                                 <div class="text-xs-left tm-textbox tm-textbox-padding tm-bg-white-translucent tm-3-col-textbox-inner">
                                                     <i class="fa fa-4x fa-plane tm-home-fa"></i>
-                                                    <h2 class="tm-text-title">Stay relaxed</h2>
+                                                    <h2 class="tm-text-title"><a href="/logout">退出</a></h2>
                                                     <p class="tm-text">You can easily change icons in HTML codes by <a href="http://fontawesome.io/icons/" target="_parent">Font Awesome</a>. Praesent tempus dapibus. Curabitur sodales, est auctor congue vulputate, nisl tellus finibus nunc, vitae consectetur enim.</p>
                                                 </div>          
                                             </div>                                        
