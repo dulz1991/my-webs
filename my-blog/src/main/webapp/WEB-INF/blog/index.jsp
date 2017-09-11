@@ -82,6 +82,8 @@ $(function(){
 				$(".menu > ul").eq(i).show();			
 			}
 		});
+	} else {
+		$(".menu > ul").eq(0).show();
 	}
 })
 </script>

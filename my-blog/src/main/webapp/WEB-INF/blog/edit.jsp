@@ -66,7 +66,9 @@ $(function(){
 		$('#inputTitle').text($('input[name="title"]').val());
 	});
 	
-
+	$('input[name="title"]').onblur(function(){
+		$('#inputTitle').text($('input[name="title"]').val());
+	});
 	
 	$('#blogSubmit').click(function(){
 		var elem = $('.form');
