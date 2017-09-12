@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	import="com.demo.my.backend.ueditor.UeditorActionEnter"
+	import="com.demo.my.base.ueditor.UeditorActionEnter"
     pageEncoding="UTF-8"%>
 <%@ page trimDirectiveWhitespaces="true" %>
 <%

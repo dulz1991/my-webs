@@ -40,7 +40,8 @@
 							<script type="text/javascript">
 								var ue = UE.getEditor('myEditor',{
 							       initialFrameHeight:500,
-							       initialFrameWidth:'100%'
+							       initialFrameWidth:'100%',
+							       serverUrl:'/ue/jsp/controller.jsp?imgType=code'
 							       /* autoHeightEnabled: true,
 							       autoFloatEnabled: true */
 								});

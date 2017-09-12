@@ -22,7 +22,6 @@ import com.demo.my.base.model.Blog;
 import com.demo.my.base.model.BlogMenu;
 import com.demo.my.base.model.User;
 import com.demo.my.base.util.Page;
-import com.ibm.db2.jcc.a.n;
 
 @Controller
 @RequestMapping("/backend/blog")

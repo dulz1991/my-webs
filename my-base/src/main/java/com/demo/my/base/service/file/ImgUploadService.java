@@ -64,12 +64,12 @@ public class ImgUploadService extends BaseService {
 							break;
 						}
 						ftype = matcher.group();
-						fileName = new Date().getTime() + "." + ftype;
+						fileName = new Date().getTime() + ftype;
 						uploadPath = uploadPath + fileName;
-						BufferedInputStream in = new BufferedInputStream(fis.openStream());// ����ļ�������
+						BufferedInputStream in = new BufferedInputStream(fis.openStream());
 						FileOutputStream a = new FileOutputStream(new File(uploadPath));
 						BufferedOutputStream output = new BufferedOutputStream(a);
-						Streams.copy(in, output, true);// ��ʼ���ļ�д����ָ�����ϴ��ļ���
+						Streams.copy(in, output, true);
 					} else {
 						String fname = fis.getFieldName();
 						if (fname.indexOf("fileName") != -1) {
