@@ -6,9 +6,9 @@
 <head>
 	<jsp:include page="include/meta.jsp"></jsp:include>
 	<title>编辑技术文档</title>
-	<script src="/ue/editor_config.js"></script>
-	<script src="/ue/editor_all.js"></script>
-	<link href="/ue/themes/default/ueditor.css" rel="stylesheet">
+	<script src="/ue/ueditor.config.js"></script>
+	<script src="/ue/ueditor.all.js"></script>
+	<link href="/ue/themes/default/css/ueditor.css" rel="stylesheet">
 	
 	<link href="/css/lib/bootstrap.min.css" rel="stylesheet">
 </head>
@@ -40,12 +40,21 @@
 				        	<div class="col-sm-12">
 								<textarea id="myEditor">${blog.content}</textarea>
 								<script type="text/javascript">
+									var ue = UE.getEditor('myEditor',{
+								       initialFrameHeight:500,
+								       initialFrameWidth:'100%',
+								       serverUrl:'/ue/jsp/controller.jsp?imgType=blog'
+								       /* autoHeightEnabled: true,
+								       autoFloatEnabled: true */
+									});
+								</script>
+								<!-- <script type="text/javascript">
 									var ue = new baidu.editor.ui.Editor();
 									window.onload = render;
 									function render() {
 										ue.render('myEditor');
 									}
-								</script>
+								</script> -->
 				        		<!-- <iframe name="myFrame" src="/iframe/code_edit.html"></iframe> -->
 				        	</div> 	
 				        </div>

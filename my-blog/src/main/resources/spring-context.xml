@@ -32,7 +32,7 @@
 	<mvc:resources mapping="/js/**" location="/WEB-INF/resources/js/" />
 	<mvc:resources mapping="/img/**" location="/WEB-INF/resources/img/" />
 	<mvc:resources mapping="/fonts/**" location="/WEB-INF/resources/fonts/" />
-	<mvc:resources mapping="/ue/**" location="/WEB-INF/resources/ueditor/" />
+	<mvc:resources mapping="/ue/**" location="/ue/" />
 	<mvc:resources mapping="/vue/**" location="/WEB-INF/resources/vue/" />
 	<mvc:resources mapping="/blog/**" location="/WEB-INF/resources/blog/" />
 	<mvc:resources mapping="/code/**" location="/WEB-INF/resources/code/" />

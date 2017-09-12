@@ -160,19 +160,20 @@ public class BlogController extends BaseController {
 			blog.setPreContent(preContent);
 		}
 
-		blogService.save(blog);
-		
-		//更新blog log
 		BlogLog blogLog = new BlogLog();
-		blogLog.setBlogId(blog.getId());
-		blogLog.setCreateTime(new Date());
-		blogLog.setUpdateContent(blog.getContent());
-		blogLog.setUserId(this.getCurrentUserId());
 		if(blog.getId()!=null){
 			blogLog.setRemark("新增文档");
 		} else {
 			blogLog.setRemark("更新文档");
 		}
+		
+		blogService.save(blog);
+		
+		//更新blog log
+		blogLog.setBlogId(blog.getId());
+		blogLog.setCreateTime(new Date());
+		blogLog.setUpdateContent(blog.getContent());
+		blogLog.setUserId(this.getCurrentUserId());
 		blogLogService.insert(blogLog);
 		
 		Map<String, Object> resMap = responseOK("");
