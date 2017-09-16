@@ -6,11 +6,11 @@
 <head>
 	<jsp:include page="include/meta.jsp"></jsp:include>
 	<title>编辑技术文档</title>
+	<link href="/css/lib/bootstrap.min.css" rel="stylesheet">
+	
 	<script src="/ue/ueditor.config.js"></script>
 	<script src="/ue/ueditor.all.js"></script>
 	<link href="/ue/themes/default/css/ueditor.css" rel="stylesheet">
-	
-	<link href="/css/lib/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 

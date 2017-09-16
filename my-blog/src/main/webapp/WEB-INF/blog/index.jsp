@@ -51,7 +51,7 @@
 			<!-- 内容结束 -->
 
 			<!-- 内容主体 -->
-			<div class="menu1 menu_tab">
+			<div class="menu_tab">
 				<div id="tab1" class="tab active">
 					<c:if test="${not empty entity }">
 						<p>${entity.content }</p>

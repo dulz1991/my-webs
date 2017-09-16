@@ -139,13 +139,7 @@
 		<if test="parm.blogTitle != null and parm.blogTitle != ''">
 	     	and b.TITLE = #{parm.blogTitle}
 	   	</if>
-	
-		<if test="parm.orderby != null">
-	   		order by ${parm.orderby}
-	   	</if>
-		<if test="parm.start != null">
-			limit #{parm.start},#{parm.limit}
-		</if>
+		
 </select>
 
 </mapper>

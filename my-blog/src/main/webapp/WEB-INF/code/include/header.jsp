@@ -17,7 +17,7 @@
 		    	</span>
 		  	</form>
 		</li>
-		<li><a href="/" class="nav-link"><i class="fa fa-home"></i> 首页</a></li>
+		<li><a href="/index" class="nav-link"><i class="fa fa-home"></i> 首页</a></li>
 		<li><a href="/blog" class="nav-link">技术文档</a></li>
 		<li><a href="/code" class="nav-link current">代码笔记</a></li>
 		<c:if test="${isLogin}">

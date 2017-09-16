@@ -16,8 +16,7 @@
 							<thead>
 								<tr>
 									<th width="60" field="index">编号</th>
-									<th field="id">菜单ID</th>
-									<th field="name">菜单名称</th>
+									<th field="name" url="/backend/demo/list?demoMenuId=" parm="id">菜单名称</th>
 									<th field="op" field-role="2" width="110"></th>
 								</tr>
 							</thead>

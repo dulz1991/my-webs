@@ -162,9 +162,9 @@ public class BlogController extends BaseController {
 
 		BlogLog blogLog = new BlogLog();
 		if(blog.getId()!=null){
-			blogLog.setRemark("新增文档");
-		} else {
 			blogLog.setRemark("更新文档");
+		} else {
+			blogLog.setRemark("新增文档");
 		}
 		
 		blogService.save(blog);

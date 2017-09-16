@@ -4,8 +4,6 @@
 <meta name="author" content="">
 <link rel="icon" type="image/png" href="/img/favicon.png" />
 
-
-<link href="/blog/css/head-reset.css" rel="stylesheet" type="text/css" >
 <link href="/blog/css/head-style.css" rel="stylesheet" type="text/css" >
 <link href="/blog/css/stylepc.css" rel="stylesheet" type="text/css" >
 <link href="/css/lib/font-awesome.css" rel="stylesheet">

@@ -22,7 +22,7 @@ public class AutoLoginAop {
 	@Autowired
 	private UserService userService;
 
-	@Pointcut("execution (* com.demo.my..*.LoginController.login(..)) || execution (* com.demo.my.blog.controller.blog.BlogController.index(..))")
+	@Pointcut("execution (* com.demo.my..*.LoginController.login(..))")
 	public void autoLoginAop() { }
 
 	/**

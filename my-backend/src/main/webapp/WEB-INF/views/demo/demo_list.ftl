@@ -16,7 +16,8 @@
 								</div>
 								<div class="col-sm-3">
 									Demo菜单
-									<@select id="menuId" class="form-control select" datas=demoMenuList key="id" text="name" value="" defaultValue="--请选择--" />
+									<@select id="menuId" class="form-control select" datas=demoMenuList key="id" 
+									text="name" value="${demoMenuId!''}" defaultValue="--请选择--" />
 								</div>
 							</div>
 							<div class="form-group">
@@ -71,6 +72,11 @@ $(function(){
 		url_load : '/backend/demo/getList',
 		url_edit : '/backend/demo/edit',
 		url_remove : '/backend/demo/doDelete',
+		parm:{
+			pageNo : 1,
+			pageSize : 10,
+			menuId:'${demoMenuId!''}'
+		},
 		backFn : function(p) {
 			// console.log(p);
 		}

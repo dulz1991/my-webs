@@ -553,10 +553,12 @@ Main components
   }
   .cd-primary-nav > li > a:hover {
     color: #69aa6f;
+    text-decoration: none
   }
   .cd-primary-nav > li > a.selected {
     color: #69aa6f;
     box-shadow: inset 0 -2px 0 #69aa6f;
+    text-decoration: none;
   }
   .cd-primary-nav .go-back, .cd-primary-nav .see-all {
     display: none;

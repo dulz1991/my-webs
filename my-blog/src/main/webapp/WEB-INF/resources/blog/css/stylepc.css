@@ -1,5 +1,3 @@
-
-
 /*滚动条样式*/
 ::-webkit-scrollbar {
     width: 8px;
@@ -23,10 +21,11 @@
     background:#7d7d7d;
 }
 
-body{
-		margin: 0;
-		padding:0;
-	}	
+body, header, a, ul, li{
+	margin: 0;
+	padding: 0;
+	border: 0;
+}
 
 	.container{
 		font-family: 微软雅黑;
@@ -43,29 +42,6 @@ body{
 		border-right: 1px solid #aaa;
 	}
 	
-/*position 菜单背景图标*/
-	.positionIicon{
-		display: inline block;
-		width: 32px;
-		height: 32px;
-		margin: 0px 4px;
-		float: left;
-		margin-right: 10px;
-	}
-/*menu图标*/
-	.q-menu-img{
-		background: url("../img/iconfont-kuaisulu.png");
-	}
-	
-	.q-menu-doit{
-		background: url("../img/iconfont-0bangzhushouce.png");
-	}
-
-	.q-menu-three{
-		background: url("../img/iconfont-wenti.png");
-	}
-
-
 	.container .menu h3{
 		font-size: 14px;
 		cursor: pointer;
@@ -108,8 +84,6 @@ body{
 		border-radius: 14px;
 	}
 
-
-
 	.container .content{
 		margin-top: 15px;
 		width: 860px;
@@ -137,70 +111,9 @@ body{
 	    margin-left: -110px;
 	}
 
-	.container .content .menu1 .tab {
-		display: none;
-	}
-
-	.container .content .menu1 .active{
-		display: block;
-	}
-
-	.container .content .menu1 .tab p{
-		font-size: 14px;
-		line-height: 20px;
-		color: rgba(0,0,0,1);
-        word-break:break-all;
-	}
-
-	.container .content .menu1 .tab .tt{
-		font-size: 14px;
-		font-weight: bold;
-
-	}
-/*第二个菜单下的文档内容*/
-	.container .content .menu2 .tab {
-		display: none;
-	}
-
-	.container .content .menu2 .active{
-		display: block;
-	}
-
-	.container .content .menu2 .tab p{
-		font-size: 14px;
-		line-height: 20px;
-		color: rgba(0,0,0,0.8);
-        word-break:break-all;
-	}
-
-	.container .content .menu2 .tab .tt{
-		font-size: 14px;
-		font-weight: bold;
-
-	}
-/*第三个菜单下的文档内容*/
-	.container .content .menu3 .tab {
-		display: none;
-	}
-
-	.container .content .menu3 .active{
-		display: block;
-	}
-
-	.container .content .menu3 .tab p{
-		font-size: 14px;
-		line-height: 20px;
-		color: rgba(0,0,0,0.8);
-        word-break:break-all;
-	}
-
-	.container .content .menu3 .tab .tt{
-		font-size: 13px;
-		font-weight: bold;
-
+	.fa-edit-icon{
+		margin-left:20px;
+		cursor: pointer;
 	}
 	
-.fa-edit-icon{
-	margin-left:20px;
-	cursor: pointer;
-}
+	.tt{font-weight:bold }

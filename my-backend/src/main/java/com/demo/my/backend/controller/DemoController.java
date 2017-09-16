@@ -40,12 +40,16 @@ public class DemoController extends BaseBackendController {
 	private FileUploadService fileUploadService;
 	
 	@RequestMapping(value="/list", method = RequestMethod.GET)
-	public ModelAndView index() {
+	public ModelAndView index(Long demoMenuId) {
 		ModelAndView model = new ModelAndView("demo/demo_list");
 		
 		//查询菜单
 		List<DemoMenu> demoMenuList = demoService.excute("DemoMenuMapper.getBeanListByParm", null);
 		model.addObject("demoMenuList", demoMenuList);
+		
+		if(demoMenuId!=null){
+			model.addObject("demoMenuId", demoMenuId);
+		}
 		
 		return model;
 	}
@@ -100,21 +104,29 @@ public class DemoController extends BaseBackendController {
 		/*MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
 	    MultipartFile file = null;  
 	    file = multipartRequest.getFile("attachFile");// ��ȡ�ϴ��ļ���
-*/	    if(attachFile!=null){
-	    	String uploadPath = PropertiesUtil.get(PropertiesUtil.FILE_DEMO_PATHE); 
-	    	String dateStr = DateUtil.dateToString(new Date(), DateUtil.DATETIME_FORMATE_1); 
-		    uploadPath += dateStr + "\\";
+		 */	    
+		if(attachFile!=null){
+			//上传路径
+	    	String uploadPath = PropertiesUtil.get("file_demo_path"); 
+	    	String dateStr = DateUtil.dateToString(new Date(), DateUtil.DATE_FORMATE_1);
+	    	uploadPath=uploadPath.replace("{{yyyymmdd}}", dateStr);
+	    	//上传
 		    fileUploadService.uploadAttachFile(attachFile, uploadPath);
+		    //解压
 		    String zipFilePath = uploadPath+attachFile.getOriginalFilename(); 
-		    
 		    ZipUtil.unZip(zipFilePath, uploadPath);
-		    String picPath = PropertiesUtil.get(PropertiesUtil.FILE_DEMO_PIC_PATH); 
-		    
-		    demo.setPicPath(picPath+dateStr+"\\"+"demo.png");
-		    String resourcePath = PropertiesUtil.get(PropertiesUtil.FILE_DEMO_RESOURCE_PATH); 
-		    demo.setResourcePath(resourcePath+dateStr+"\\"+attachFile.getOriginalFilename());
-		    String urlPath = PropertiesUtil.get(PropertiesUtil.FILE_DEMO_URL_PATH); 
-		    demo.setUrl(urlPath+dateStr+"\\"+"demo.html");
+		    //图片地址
+		    String picPath = PropertiesUtil.get("file_demo_pic_path"); 
+		    picPath=picPath.replace("{{name}}", attachFile.getOriginalFilename().substring(0, attachFile.getOriginalFilename().length()-4)).replace("{{yyyymmdd}}", dateStr);
+		    demo.setPicPath(picPath);
+		    //资源路径
+		    String resourcePath = PropertiesUtil.get("file_demo_resource_path");
+		    resourcePath=resourcePath.replace("{{yyyymmdd}}", dateStr).replace("{{name}}", attachFile.getOriginalFilename());
+		    demo.setResourcePath(resourcePath);
+		    //在线预览路径
+		    String urlPath = PropertiesUtil.get("file_demo_url_path");
+		    urlPath=urlPath.replace("{{name}}", attachFile.getOriginalFilename().substring(0, attachFile.getOriginalFilename().length()-4)).replace("{{yyyymmdd}}", dateStr);
+		    demo.setUrl(urlPath);
 	    }
 	    
 		if (demo.getId() != null) {

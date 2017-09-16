@@ -8,7 +8,7 @@
 	<nav class="cd-nav">
 
 		<ul id="cd-primary-nav" class="cd-primary-nav">
-			<li class=""><a href="/"><i class="fa fa-home"></i> 首页</a></li>
+			<li class=""><a href="/index"><i class="fa fa-home"></i> 首页</a></li>
 			<li><a href="/blog" class="selected">技术文档</a></li>
 			<li><a href="/code">代码笔记</a></li>
 			<c:if test="${isLogin}">
@@ -19,7 +19,7 @@
 	        </c:if>
 
 			<li class="has-children">
-				<a href="http://www.jq22.com/demo/jquery-nav-150519214407/#">Services</a>
+				<!-- <a href="http://www.jq22.com/demo/jquery-nav-150519214407/#">Services</a> -->
 				<ul class="cd-nav-icons is-hidden">
 					<li class="go-back"><a href="http://www.jq22.com/demo/jquery-nav-150519214407/#0">Menu</a></li>
 					<li class="see-all"><a href="http://www.jq22.com/demo/jquery-nav-150519214407/#">Browse Services</a></li>
@@ -68,14 +68,14 @@
 	</nav>
 			
 	<ul class="cd-header-buttons">
-		<li><a class="cd-search-trigger" href="http://www.jq22.com/demo/jquery-nav-150519214407/#cd-search">Search<span></span></a></li>
-		<li><a class="cd-nav-trigger" href="http://www.jq22.com/demo/jquery-nav-150519214407/#cd-primary-nav">Menu<span></span></a></li>
+		<li><a class="cd-search-trigger" href="#">Search<span></span></a></li>
+		<!-- <li><a class="cd-nav-trigger" href="http://www.jq22.com/demo/jquery-nav-150519214407/#cd-primary-nav">Menu<span></span></a></li> -->
 	</ul>
 	</header>
 	
 	
 <div id="cd-search" class="cd-search">
-	<form>
+	<form action="#">
 		<input type="search" placeholder="Search...">
 	</form>
 </div>
