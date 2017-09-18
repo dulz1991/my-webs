@@ -61,7 +61,7 @@
 						<p class="tt">1.概要说明</p>
 						<p>用于知识或文档的在线查看和编辑</p>
 						<p class="tt">2.使用说明</p>
-						<p>2.1 登录后可在当前文档页新增、修改或删除文档</p>
+						<p>2.1 登录后可在当前文档页新增"<i class="fa fa-plus fa-lg" style="color:#00f"></i>"、修改"<i class="fa fa-edit fa-lg" style="color:#00f"></i>"或删除"<i class="fa fa-trash-o fa-lg" style="color:#f00"></i>"文档</p>
 						<p>2.2 登录后，在左侧菜单栏后的"<i class="fa fa-plus fa-lg" style="color:#00f"></i>"号即可新增文档</p>					
 					</c:if>
 				</div>
