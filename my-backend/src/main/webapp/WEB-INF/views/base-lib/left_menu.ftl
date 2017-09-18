@@ -76,7 +76,7 @@
 					</ul>
 				</li>
 				<li class="li">
-					<a href="/backend/inform/list"><i class="fa fa-cog"></i><span class="title">系统配置</span></a>
+					<a href="/backend/sys/index"><i class="fa fa-cog"></i><span class="title">系统配置</span></a>
 				</li>
 			</ul>
 	

@@ -21,7 +21,8 @@
 		<li><a href="/blog" class="nav-link">技术文档</a></li>
 		<li><a href="/code" class="nav-link current">代码笔记</a></li>
 		<c:if test="${isLogin}">
-    		<li><a href="/user" class="nav-link"><i class="fa fa-user"></i>个人中心</a></li>
+    		<!-- <li><a href="/user" class="nav-link"><i class="fa fa-user"></i>个人中心</a></li> -->
+    		<li><a href="/logout"><i class="fa fa-sign-out"></i> 退出</a></li>
         </c:if>
         <c:if test="${!isLogin}">	
         	<li><a href="/login" class="nav-link"><i class="fa fa-sign-in"></i>登陆</a></li>

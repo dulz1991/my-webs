@@ -24,7 +24,7 @@ $(document).ready(function(c) {
 				},
 				success: function(data) {
 					if (data.errorNo == 200) {
-						window.location.href=data.url;
+						window.location.href="/blog";
 					} else {
 						alert(data.errorInfo);
 					}
