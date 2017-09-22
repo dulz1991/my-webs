@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %> 
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -19,7 +20,8 @@
 		<div class="menu">
 			<c:forEach items="${menuList}" var="menu" varStatus="st">
 				<h3 class="<c:if test="${not empty blogMenu and blogMenu.id == menu.id}">active</c:if>">
-					<i class="fa fa-sitemap"></i> ${menu.name}(${menuCountMap[menu.id]})
+					<!-- <i class="fa fa-sitemap"></i> -->
+					<span style="background-color:#ff0055;color:#fff;padding:2px 8px;border-radius:30px;"> ${fn:substring(fn:toUpperCase(menu.name), 0, 1)}</span> ${menu.name}(${menuCountMap[menu.id]})
 					<c:if test="${isLogin }">
 						<i class="fa fa-plus fa-lg fa-edit-icon" title="创建" 
 						onclick="javascript:self.location='/auth/blog/edit?menuId=${menu.id}'" style="color:#00f"></i>

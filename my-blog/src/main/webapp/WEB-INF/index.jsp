@@ -76,8 +76,8 @@
                         <p>Responsive designed and Retina Ready. MyJourney will look perfect on any device you can imagine.</p>
                     </div><!-- features-column -->
                     <div class="features-column">
-                        <a href="http://116.62.205.176:8082/" target="_blank"><span class="ico-flag"></span></a>
-                        <a href="http://116.62.205.176:8082/" target="_blank"><h3>前端demo</h3></a>
+                        <a href="http://116.62.205.176:83/" target="_blank"><span class="ico-flag"></span></a>
+                        <a href="http://116.62.205.176:83/" target="_blank"><h3>前端demo</h3></a>
                         <p>Optimized and valid code using the latest  technologies allows to make changes in the page structure of the template.</p>
                     </div><!-- features-column -->
                 </div><!-- features-columns -->
