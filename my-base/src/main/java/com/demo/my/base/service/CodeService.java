@@ -1,5 +1,6 @@
 package com.demo.my.base.service;
 
+import java.net.URLDecoder;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.ArrayList;
@@ -47,7 +48,10 @@ public class CodeService extends AdapterService {
 	}
 
 	public Code getById(Long id) {
-		return codeMapper.getById(id);
+		Code code = codeMapper.getById(id);
+		String contentString = code.getContent().replace("http://127.0.0.1:8095", "/api_img");
+		code.setContent(contentString);
+		return code;
 	}
 	
 	public int countByParm(Code code) {
@@ -120,7 +124,12 @@ public class CodeService extends AdapterService {
 				parm.put("codeLevel", code.getCodeLevel());
 			}
 			if(StringUtils.isNotBlank(code.getItem())){
-				parm.put("item", code.getItem());
+				try {
+					parm.put("item", URLDecoder.decode(code.getItem(), "UTF-8"));	
+				} catch (Exception e) {
+					// TODO: handle exception
+				}
+				
 			}
 		}
 		
