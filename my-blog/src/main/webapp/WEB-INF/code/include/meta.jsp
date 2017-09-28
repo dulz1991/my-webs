@@ -8,9 +8,8 @@
 <link href="/css/lib/font-awesome.css" rel="stylesheet">
 <link href="/code/css/style.css" rel="stylesheet" media="all">
 <link href="/code/css/page.css" rel="stylesheet" type="text/css" >
+<link href="/css/my-css.css" rel="stylesheet" type="text/css" >
 
 <script src="/js/lib/jquery-1.10.2.min.js"></script>
-<script src="/js/lib/jquery.extend.js"></script>
-
 <script src="/js/my-js.js"></script>
 <script src="/code/js/vue.js"></script>

@@ -133,6 +133,7 @@ public class CodeController extends BaseController {
 			code = codeService.getById(codeId);
 			subMenuId = code.getFatherId();
 			parmMap.put("fatherId", subMenuId);
+			parmMap.put("codeLevel", 1);
 			codeList = codeService.excute("CodeMapper.getBeanListByParm", parmMap);
 		} else {
 			parmMap.put("fatherId", subMenuId);

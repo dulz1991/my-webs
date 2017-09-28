@@ -246,58 +246,6 @@ footer .social a i{
 }
 /* *****右侧内容***** */
 
-/* 右下角方块按钮 */
-.right-bottom-btns{
-	border:0px solid #aaa;
-	width: 40px;
-    height: 160px;
-   	position: fixed;
-	display: block;
-	right: 15px;
-	bottom: 15px;
-	text-align: center;
-}
-.to-btn{
-	background: #9B9F9F;
-    border-radius: 0;
-    color: #fff;
-    font-size: 18px;
-    line-height: 38px;
-    margin: 0 auto;
-    padding-top:0px;
-    width: 40px;
-    height: 40px;
-	display: block;
-	right: 15px;
-}
-.to-btn:hover{color: #FF5F3E;background-color:#ccc;}	
-.to-top-btn {}
-.to-top-btn:hover{}
-
-/* 右下角方块按钮 */
-
-/* 页面预加载动画 */
-#preloader {
-	background: #FFF;
-	bottom: 0;
-	left: 0;
-	position: fixed;
-	right: 0;
-	top: 0;
-	z-index: 9999;
-}
-#status {
-	background-image: url(/img/preloader.gif);
-	background-position: center;
-	background-repeat: no-repeat;
-	height: 200px;
-	left: 50%;
-	margin: -100px 0 0 -100px;
-	position: absolute;
-	top: 50%;
-	width: 200px;
-}
-
 /* 博客 -> 左侧菜单栏 */
 ul.left-menu{
 	width:180px;

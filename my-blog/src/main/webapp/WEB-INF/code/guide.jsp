@@ -39,7 +39,7 @@
 	<!-- 右边内容结束 -->
 </div>
 
-<jsp:include page="include/right_bottom.jsp"></jsp:include>
+<jsp:include page="../include/right_bottom.jsp"></jsp:include>
 
 <style>
 .content p{padding-bottom:0;}

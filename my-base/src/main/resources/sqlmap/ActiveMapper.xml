@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8" ?>   
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="com.demo.my.base.mybatis.mapper.ds1mapper.ActiveMapper">
+
+<resultMap type="com.demo.my.base.model.Active" id="ActiveBaseMapper">
+	<id property="activeTitle" column="ACTIVE_TITLE" />
+	<id property="endDate" column="END_DATE" />
+	<id property="updateTime" column="UPDATE_TIME" />
+	<id property="activeImg" column="ACTIVE_IMG" />
+	<id property="createTime" column="CREATE_TIME" />
+	<id property="activeContent" column="ACTIVE_CONTENT" />
+	<id property="startTime" column="START_TIME" />
+	<id property="createrId" column="CREATER_ID" />
+	<id property="endTime" column="END_TIME" />
+	<id property="id" column="ID" />
+	<id property="activeCity" column="ACTIVE_CITY" />
+	<id property="startDate" column="START_DATE" />
+</resultMap>  
+
+<insert id="insert">
+	<selectKey resultType="long" keyProperty="id">  
+   		select LAST_INSERT_ID()
+   	</selectKey>
+	insert into active
+	(ACTIVE_TITLE,END_DATE,UPDATE_TIME,ACTIVE_IMG,CREATE_TIME,ACTIVE_CONTENT,START_TIME,CREATER_ID,END_TIME,ACTIVE_CITY,START_DATE)
+	values
+	(#{activeTitle},#{endDate},#{updateTime},#{activeImg},#{createTime},#{activeContent},#{startTime},#{createrId},#{endTime},#{activeCity},#{startDate})
+</insert>
+
+<update id="update">
+	UPDATE active 
+	<set>
+			<if test="activeTitle != null">  
+	        	ACTIVE_TITLE=#{activeTitle},
+	    	</if>
+			<if test="endDate != null">  
+	        	END_DATE=#{endDate},
+	    	</if>
+			<if test="updateTime != null">  
+	        	UPDATE_TIME=#{updateTime},
+	    	</if>
+			<if test="activeImg != null">  
+	        	ACTIVE_IMG=#{activeImg},
+	    	</if>
+			<if test="createTime != null">  
+	        	CREATE_TIME=#{createTime},
+	    	</if>
+			<if test="activeContent != null">  
+	        	ACTIVE_CONTENT=#{activeContent},
+	    	</if>
+			<if test="startTime != null">  
+	        	START_TIME=#{startTime},
+	    	</if>
+			<if test="createrId != null">  
+	        	CREATER_ID=#{createrId},
+	    	</if>
+			<if test="endTime != null">  
+	        	END_TIME=#{endTime},
+	    	</if>
+			<if test="activeCity != null">  
+	        	ACTIVE_CITY=#{activeCity},
+	    	</if>
+			<if test="startDate != null">  
+	        	START_DATE=#{startDate},
+	    	</if>
+	</set>   
+    WHERE id=#{id}
+</update>
+
+<delete id="delete">
+	delete from active where id=#{id}
+</delete>
+
+<select id="getById" resultMap="ActiveBaseMapper">
+	SELECT * FROM active WHERE id=#{id} 
+</select>
+
+<select id="countByParm" resultType="integer">
+	select count(*) from active  where 1=1 
+			<if test="parm.activeTitle != null">
+		     	and ACTIVE_TITLE = #{parm.activeTitle}
+		   	</if>
+			<if test="parm.endDate != null">
+		     	and END_DATE = #{parm.endDate}
+		   	</if>
+			<if test="parm.updateTime != null">
+		     	and UPDATE_TIME = #{parm.updateTime}
+		   	</if>
+			<if test="parm.activeImg != null">
+		     	and ACTIVE_IMG = #{parm.activeImg}
+		   	</if>
+			<if test="parm.createTime != null">
+		     	and CREATE_TIME = #{parm.createTime}
+		   	</if>
+			<if test="parm.activeContent != null">
+		     	and ACTIVE_CONTENT = #{parm.activeContent}
+		   	</if>
+			<if test="parm.startTime != null">
+		     	and START_TIME = #{parm.startTime}
+		   	</if>
+			<if test="parm.createrId != null">
+		     	and CREATER_ID = #{parm.createrId}
+		   	</if>
+			<if test="parm.endTime != null">
+		     	and END_TIME = #{parm.endTime}
+		   	</if>
+			<if test="parm.activeCity != null">
+		     	and ACTIVE_CITY = #{parm.activeCity}
+		   	</if>
+			<if test="parm.startDate != null">
+		     	and START_DATE = #{parm.startDate}
+		   	</if>
+</select>
+
+<select id="getBeanListByParm" resultMap="ActiveBaseMapper">
+	select * from active where 1=1 
+			<if test="parm.activeTitle != null">
+		     	and ACTIVE_TITLE = #{parm.activeTitle}
+		   	</if>
+			<if test="parm.endDate != null">
+		     	and END_DATE = #{parm.endDate}
+		   	</if>
+			<if test="parm.updateTime != null">
+		     	and UPDATE_TIME = #{parm.updateTime}
+		   	</if>
+			<if test="parm.activeImg != null">
+		     	and ACTIVE_IMG = #{parm.activeImg}
+		   	</if>
+			<if test="parm.createTime != null">
+		     	and CREATE_TIME = #{parm.createTime}
+		   	</if>
+			<if test="parm.activeContent != null">
+		     	and ACTIVE_CONTENT = #{parm.activeContent}
+		   	</if>
+			<if test="parm.startTime != null">
+		     	and START_TIME = #{parm.startTime}
+		   	</if>
+			<if test="parm.createrId != null">
+		     	and CREATER_ID = #{parm.createrId}
+		   	</if>
+			<if test="parm.endTime != null">
+		     	and END_TIME = #{parm.endTime}
+		   	</if>
+			<if test="parm.activeCity != null">
+		     	and ACTIVE_CITY = #{parm.activeCity}
+		   	</if>
+			<if test="parm.startDate != null">
+		     	and START_DATE = #{parm.startDate}
+		   	</if>
+		<if test="parm.orderby != null">
+	   		order by ${parm.orderby}
+	   	</if>
+		<if test="parm.start != null">
+			limit #{parm.start},#{parm.limit}
+		</if>
+</select>
+
+
+<select id="getMapListByParm" parameterType="HashMap" resultType="HashMap">
+	select * from active where 1=1
+		<if test="parm.orderby != null">
+	   		order by ${parm.orderby}
+	   	</if>
+		<if test="parm.start != null">
+			limit #{parm.start},#{parm.limit}
+		</if>
+</select>
+
+
+</mapper>

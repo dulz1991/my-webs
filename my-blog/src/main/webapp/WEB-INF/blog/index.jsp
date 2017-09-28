@@ -11,6 +11,8 @@
 </head>
 
 <body>
+	<div id="top"></div>
+	
 	<!-- head -->
 	<jsp:include page="include/header.jsp"></jsp:include>
 
@@ -74,6 +76,8 @@
 		<!-- 内容区结束 -->
 		
 	</div>
+	
+	<jsp:include page="../include/right_bottom.jsp"></jsp:include> 
 	
 <script>
 $(function(){
