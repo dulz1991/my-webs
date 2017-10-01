@@ -28,9 +28,9 @@ import com.demo.my.base.util.DateUtil;
 import com.demo.my.base.util.PropertiesUtil;
 
 @Component
-public class ImgUploadService extends BaseService {
+public class UeditorImgUploadService extends BaseService {
 	
-	private static final Logger logger = LoggerFactory.getLogger(ImgUploadService.class);
+	private static final Logger logger = LoggerFactory.getLogger(UeditorImgUploadService.class);
 
 	//��ͼ�ϴ�
 	public Map<String, Object> uploadImage(HttpServletRequest request, 

@@ -7,7 +7,7 @@ import com.baidu.ueditor.define.BaseState;
 import com.baidu.ueditor.define.State;
 import com.baidu.ueditor.hunter.FileManager;
 import com.baidu.ueditor.hunter.ImageHunter;
-import com.demo.my.base.service.file.ImgUploadService;
+import com.demo.my.base.service.file.UeditorImgUploadService;
 import com.demo.my.base.util.SpringContextUtil;
 
 import javax.servlet.http.HttpServletRequest;
@@ -57,7 +57,7 @@ public class UeditorActionEnter extends ActionEnter {
                         /*conf.put("savePath", "/upload/" + conf.get("savePath"));*/
                         /*state = (new Uploader(this.request, conf)).doExec();*/
                         try {
-                        	ImgUploadService imgUploadService = SpringContextUtil.getBean("imgUploadService");
+                        	UeditorImgUploadService imgUploadService = SpringContextUtil.getBean("imgUploadService");
                         	Map<String, Object> retMap = null;
                         	String imgType = request.getParameter("imgType");
                         	if(imgType.equals("blog")){

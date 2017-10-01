@@ -9,14 +9,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.demo.my.base.service.file.ImgUploadService;
+import com.demo.my.base.service.file.UeditorImgUploadService;
 
 @Controller
 @RequestMapping("/upload")
 public class UploadController {
 	
 	@Autowired
-	private ImgUploadService imgUploadService;
+	private UeditorImgUploadService imgUploadService;
 
 	@ResponseBody
 	@RequestMapping(value = "/doImgUpload", method = RequestMethod.POST)

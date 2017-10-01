@@ -6,6 +6,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -61,14 +62,14 @@ public class BaseService extends BaseCommon{
 	 */
 	public static void downloadFile(HttpServletResponse response, String filePath) throws IOException {
 		try {
-            // path是指欲下载的文件的路径�??
+            // path是指欲下载的文件的路径�??
             File file = new File(filePath);
-            // 取得文件名�??
+            // 取得文件名�??
             String filename = file.getName();
-            // 取得文件的后�?名�??
+            // 取得文件的后�?名�??
             //String ext = filename.substring(filename.lastIndexOf(".") + 1).toUpperCase();
 
-            // 以流的形式下载文件�??
+            // 以流的形式下载文件�??
             InputStream fis = new FileInputStream(file);
             byte[] buffer = new byte[fis.available()];
             fis.read(buffer);
@@ -89,7 +90,7 @@ public class BaseService extends BaseCommon{
 	}
 
 	/**
-	 * 删除该目录filePath下的�?有文�?
+	 * 删除该目录filePath下的�?有文�?
 	 * @param filePath
 	 *			文件目录路径
 	 */
@@ -139,6 +140,34 @@ public class BaseService extends BaseCommon{
 		if (file.exists()) {
 			file.delete();
 		}
+	}
+	
+	public Map<String, Object> getImgInfo(String folder, Long imgSize, Long imgCount) {
+		Map<String, Object> resMap = this.responseOK("");
+		
+		folder = folder.replace("{{yyyymmdd}}\\", "");
+		File file = new File(folder);
+        if (file.exists()) {
+            File[] files = file.listFiles();
+            if (files.length != 0) {
+                for (File f : files) {
+                    if (f.isDirectory()) {
+                        System.out.println("文件夹:" + f.getAbsolutePath());
+                        resMap = getImgInfo(f.getAbsolutePath(), imgSize, imgCount);
+                        imgSize = (Long) resMap.get("imgSize");
+                        imgCount = (Long) resMap.get("imgCount");
+                    } else {
+                    	imgCount++;
+                    	imgSize += f.length();
+                        System.out.println("文件:" + f.getAbsolutePath());
+                    }
+                }
+            }
+        } 
+        
+        resMap.put("imgSize", imgSize);
+		resMap.put("imgCount", imgCount);
+		return resMap;
 	}
 	
 }
