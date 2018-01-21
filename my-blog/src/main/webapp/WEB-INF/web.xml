@@ -18,11 +18,11 @@
 	
 	<context-param>  
 	   <param-name>error_log_path</param-name>  
-	   <param-value>F:\\logs\\blog_log\\error\\error.log</param-value>  
+	   <param-value>F:\\data\\logs\\blog_log\\error\\error.log</param-value>  
 	</context-param> 
 	<context-param>  
 	   <param-name>info_log_path</param-name>  
-	   <param-value>F:\\logs\\blog_log\\info\\info.log</param-value>  
+	   <param-value>F:\\data\\logs\\blog_log\\info\\info.log</param-value>  
 	</context-param>  
     
     <!-- 字符集 过滤器  -->  
