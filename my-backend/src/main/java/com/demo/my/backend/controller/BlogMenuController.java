@@ -26,13 +26,13 @@ public class BlogMenuController extends BaseBackendController {
 	@Autowired
 	private BlogMenuService blogMenuService;
 	
-	@RequestMapping(value="/list", method = RequestMethod.GET)
+	@RequestMapping(value="/list")
 	public ModelAndView index() {
 		ModelAndView model = new ModelAndView("blog/blog_menu_list");
 		return model;
 	}
 	
-	@RequestMapping(value="/edit", method = RequestMethod.GET)
+	@RequestMapping(value="/edit")
 	public ModelAndView edit(Long id) {
 		ModelAndView model = new ModelAndView("blog/blog_menu_edit");
 		if(id!=null){
@@ -45,19 +45,13 @@ public class BlogMenuController extends BaseBackendController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value="/getList", method = RequestMethod.GET)
+	@RequestMapping(value="/getList")
 	public Map<String, Object> getList(BlogMenu blogMenu,
 			@RequestParam(name="pageNo", defaultValue="1") int pageNo,  
 			@RequestParam(name="pageSize", defaultValue="10") int pageSize) {
-		//查询参数
-		Map<String, Object> parmMap =  this.getParmMap(blogMenu);
-		parmMap.put("orderBy", "");
-		parmMap.put("pageNo", pageNo);
-		parmMap.put("pageSize", pageSize);
+		Map<String, Object> parmMap = this.getParmMap();
+		Page<BlogMenu> page = blogMenuService.getPage("BlogMenuMapper.getBeanListByParm", parmMap);
 		
-		//查询
-		Page<BlogMenu> page = blogMenuService.getPageBeanByParm(parmMap);
-
 		//返回参数
 		Map<String, Object> resMap = responseOK("");
 		resMap.put("list", page.getList());
@@ -74,7 +68,7 @@ public class BlogMenuController extends BaseBackendController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value="/doDelete", method = RequestMethod.GET)
+	@RequestMapping(value="/doDelete")
 	public Map<String, Object> doDelete(Long id) {
 		if(id==null){
 			return responseError(-1, "删除的记录不存在");

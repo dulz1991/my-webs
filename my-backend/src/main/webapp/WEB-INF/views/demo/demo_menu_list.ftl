@@ -15,14 +15,18 @@
 						<table class="table table-bordered table-striped" id="datatable">
 							<thead>
 								<tr>
-									<th width="60" field="index">编号</th>
+									<th width="60" field="index_no">编号</th>
 									<th field="name" url="/backend/demo/list?demoMenuId=" parm="id">菜单名称</th>
-									<th field="op" field-role="2" width="110"></th>
+									<th field="button" width="110"
+										btn_list='[
+				                        {fnName:"edit",args:"id",name:"编辑",icon:"fa fa-edit",cls:"btn btn-info btn-xs"}
+				                        ]'
+									></th>
 								</tr>
 							</thead>
 							<tbody class="middle-align"></tbody>
 						</table>
-						<div class="pagebar"></div>
+						<div id="pageDiv"></div>
 					</div>
 				</div>
 			</div>
@@ -37,8 +41,11 @@ $(function(){
 			// console.log(p);
 		}
 	}); 
-	
 });
+
+function edit(id){
+	window.open('/backend/demoMenu/edit?id='+id);
+}
 </script>
 
 </@base> 

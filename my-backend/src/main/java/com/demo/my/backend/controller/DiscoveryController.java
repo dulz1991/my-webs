@@ -33,13 +33,13 @@ public class DiscoveryController extends BaseBackendController {
 	@Autowired
 	private CollectionService collectionService;
 	
-	@RequestMapping(value="/list", method = RequestMethod.GET)
+	@RequestMapping(value="/list")
 	public ModelAndView index() {
 		ModelAndView model = new ModelAndView("discovery/discovery_list");
 		return model;
 	}
 	
-	@RequestMapping(value="/edit", method = RequestMethod.GET)
+	@RequestMapping(value="/edit")
 	public ModelAndView edit(Long id) {
 		ModelAndView model = new ModelAndView("discovery/discovery_edit");
 		if(id!=null){
@@ -52,19 +52,15 @@ public class DiscoveryController extends BaseBackendController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value="/getList", method = RequestMethod.GET)
+	@RequestMapping(value="/getList")
 	public Map<String, Object> getList(Discovery discovery,
 			@RequestParam(name="pageNo", defaultValue="1") int pageNo,  
 			@RequestParam(name="pageSize", defaultValue="10") int pageSize) {
-		//查询参数
-		Map<String, Object> parmMap =  this.getParmMap(discovery);
-		parmMap.put("orderBy", "d.id desc");
-		parmMap.put("pageNo", pageNo);
-		parmMap.put("pageSize", pageSize);
 		
-		//查询
-		Page<Map<String, Object>> page = discoveryService.getPageMapByParm(parmMap);
-
+		Map<String, Object> parmMap = this.getParmMap();
+		parmMap.put("orderBy", "d.id desc");
+		Page<Map<String, Object>> page = discoveryService.getPage("DiscoveryMapper.getMapListByParm", parmMap);
+		
 		//返回参数
 		Map<String, Object> resMap = responseOK("");
 		resMap.put("list", page.getList());
@@ -81,7 +77,7 @@ public class DiscoveryController extends BaseBackendController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value="/doDelete", method = RequestMethod.GET)
+	@RequestMapping(value="/doDelete")
 	public Map<String, Object> doDelete(Long id) {
 		if(id==null){
 			return responseError(-1, "删除的记录不存在");
@@ -95,24 +91,19 @@ public class DiscoveryController extends BaseBackendController {
 	
 	
 	/*评论*/
-	@RequestMapping(value="/commentLlist", method = RequestMethod.GET)
+	@RequestMapping(value="/commentLlist")
 	public ModelAndView commentLlist() {
 		ModelAndView model = new ModelAndView("discovery/comment_list");
 		return model;
 	}
 	@ResponseBody
-	@RequestMapping(value="/getCommentLlist", method = RequestMethod.GET)
+	@RequestMapping(value="/getCommentLlist")
 	public Map<String, Object> getCommentLlist(Comment comment,
 			@RequestParam(name="pageNo", defaultValue="1") int pageNo,  
 			@RequestParam(name="pageSize", defaultValue="10") int pageSize) {
-		//查询参数
-		Map<String, Object> parmMap =  this.getParmMap();
+		Map<String, Object> parmMap = this.getParmMap();
 		parmMap.put("orderBy", "c.id desc");
-		parmMap.put("pageNo", pageNo);
-		parmMap.put("pageSize", pageSize);
-		
-		//查询
-		Page<Map<String, Object>> page = commentService.getPageMapByParm(parmMap);
+		Page<Map<String, Object>> page = commentService.getPage("CommentMapper.getMapListByParm", parmMap);
 
 		//返回参数
 		Map<String, Object> resMap = responseOK("");
@@ -123,25 +114,20 @@ public class DiscoveryController extends BaseBackendController {
 	}
 	
 	/*收藏*/
-	@RequestMapping(value="/collectionLlist", method = RequestMethod.GET)
+	@RequestMapping(value="/collectionLlist")
 	public ModelAndView collectionLlist() {
 		ModelAndView model = new ModelAndView("discovery/collection_list");
 		return model;
 	}
 	@ResponseBody
-	@RequestMapping(value="/getCollectionLlist", method = RequestMethod.GET)
+	@RequestMapping(value="/getCollectionLlist")
 	public Map<String, Object> getCollectionLlist(Comment comment,
 			@RequestParam(name="pageNo", defaultValue="1") int pageNo,  
 			@RequestParam(name="pageSize", defaultValue="10") int pageSize) {
-		//查询参数
-		Map<String, Object> parmMap =  this.getParmMap();
+		Map<String, Object> parmMap = this.getParmMap();
 		parmMap.put("orderBy", "c.id desc");
-		parmMap.put("pageNo", pageNo);
-		parmMap.put("pageSize", pageSize);
+		Page<Map<String, Object>> page = collectionService.getPage("CollectionMapper.getMapListByParm", parmMap);
 		
-		//查询
-		Page<Map<String, Object>> page = collectionService.getPageMapByParm(parmMap);
-
 		//返回参数
 		Map<String, Object> resMap = responseOK("");
 		resMap.put("list", page.getList());

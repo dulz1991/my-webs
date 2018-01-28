@@ -34,7 +34,7 @@ public class CodeSubMenuController extends BaseBackendController {
 	@Autowired
 	private CodeSubMenuService codeSubMenuService;
 	
-	@RequestMapping(value="/list", method = RequestMethod.GET)
+	@RequestMapping(value="/list")
 	public ModelAndView index(String codeMenuId) {
 		ModelAndView model = new ModelAndView("code/code_sub_menu_list");
 		
@@ -48,7 +48,7 @@ public class CodeSubMenuController extends BaseBackendController {
 		return model;
 	}
 	
-	@RequestMapping(value="/edit", method = RequestMethod.GET)
+	@RequestMapping(value="/edit")
 	public ModelAndView edit(Long id) {
 		ModelAndView model = new ModelAndView("code/code_sub_menu_edit");
 		List<CodeMenu> codeMenuList = codeMenuService.excute("CodeMenuMapper.getBeanListByParm", null);
@@ -63,12 +63,14 @@ public class CodeSubMenuController extends BaseBackendController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value="/getList", method = RequestMethod.GET)
+	@RequestMapping(value="/getList")
 	public Map<String, Object> getList(CodeSubMenu codeSubMenu,
 			@RequestParam(name="pageNo", defaultValue="1") int pageNo,  
 			@RequestParam(name="pageSize", defaultValue="10") int pageSize) {
-		Page<Map<String, Object>> page = codeSubMenuService.getMapListByParm(codeSubMenu, pageNo, pageSize, "csm.`NAME` asc");
-
+		Map<String, Object> parmMap = this.getParmMap();
+		parmMap.put("orderBy", "csm.`NAME` asc");
+		Page<Map<String, Object>> page = codeSubMenuService.getPage("CodeSubMenuMapper.getMapListByParm", parmMap);
+		
 		Map<String, Object> resMap = new HashMap<String, Object>();
 		resMap.put("list", page.getList());
 		resMap.put("page", page);
@@ -84,7 +86,7 @@ public class CodeSubMenuController extends BaseBackendController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value="/doDelete", method = RequestMethod.GET)
+	@RequestMapping(value="/doDelete")
 	public Map<String, Object> doDelete(Long id) {
 		if(id==null){
 			return responseError(-1, "删除的记录不存在");

@@ -27,7 +27,9 @@
 				<link rel="stylesheet" href="/css/xenon-components.css">
 				<link rel="stylesheet" href="/css/xenon-skins.css">
 				<link rel="stylesheet" href="/css/custom.css">
+				<#--
 				<link rel="stylesheet" href="/css/jquery.page.css">
+				-->
 				<#-- 遍历扩展页css -->
 				<#list base_css as c>
 				<link rel="stylesheet" href="${c}">
@@ -49,11 +51,19 @@
 				<script src="/js/devexpress-web-14.1/js/dx.chartjs.js"></script>
 				
 				<script src="/js/jquery.form.js"></script>
+				<script src="/my/my.common.js"></script>	
+				<script src="/my/my.datatable.js"></script>
+				
+				<link rel="stylesheet" href="/my/my.page.css">
+				<script src="/my/my.page.js"></script>
+				
+				<#--
 				<script src="/js/common-util.js"></script>	
 				<script src="/js/jquery.page.js"></script>
 				<script src="/js/jquery.dateutil.js"></script>
 				<script src="/js/jquery.datatable.js"></script>
 				<script src="/js/jquery.select.js"></script>
+				-->
 				<#-- ueditor -->
 				<script src="/ue/ueditor.config.js"></script>
 				<script src="/ue/ueditor.all.js"></script>

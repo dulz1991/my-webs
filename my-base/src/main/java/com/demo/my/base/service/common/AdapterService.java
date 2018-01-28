@@ -2,17 +2,20 @@ package com.demo.my.base.service.common;
 
 import java.lang.reflect.Method;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 
 import com.demo.my.base.common.BaseCommon;
+import com.demo.my.base.mybatis.config.PagePlugin;
 import com.demo.my.base.mybatis.mapper.base.BaseMapper;
+import com.demo.my.base.util.Page;
 import com.demo.my.base.util.SpringContextUtil;
 
 public class AdapterService extends BaseCommon {
 	
-	private static String BASE_MAPPER_PATH = "com.demo.my.base.mybatis.mapper.ds1mapper.";
+	private static String BASE_MAPPER_PATH = "com.demo.my.base.mybatis.mapper.";
 
 	/*public <T> int insert(T t) {
 		// TODO Auto-generated method stub
@@ -30,6 +33,26 @@ public class AdapterService extends BaseCommon {
 	}*/
 
 	/**
+	 * 分页查询方法
+	 * @param mapperNameAndXmlId
+	 * @param parm
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	public <T> Page<T> getPage(String mapperNameAndXmlId, Map<String, Object> parm) {
+		Integer pageNo = parm.get("pageNo")==null?1:Integer.valueOf(parm.get("pageNo")+"");
+		Integer pageSize = parm.get("pageSize")==null?10:Integer.valueOf(parm.get("pageSize")+"");
+		Page<T> page = new Page<T>(pageNo, pageSize);
+		
+		PagePlugin.startPage(page);
+		List<T> list = this.excute(mapperNameAndXmlId, parm);
+		page = PagePlugin.getPage();
+		page.setList(list);
+		
+		return page;
+	}
+	
+	/**
 	 * sample: super.getByParm("TProductMapper.xmlId", parmMap)
 	 * @param mapperNameAndXmlId
 	 * @param paramMap
@@ -41,13 +64,13 @@ public class AdapterService extends BaseCommon {
 			return null;
 		}
 		String[] arr = mapperNameAndXmlId.split("\\.");
-		if(arr==null || arr.length<2){
+		if(arr==null || arr.length!=3){
 			return null;
 		}
 		if(paramMap==null){
 			paramMap = new HashMap<String, Object>();
 		}
-		return  (T) invokeMapper(arr[0], arr[1], paramMap);
+		return  (T) invokeMapper(arr[0]+"."+arr[1], arr[2], paramMap);
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -60,8 +83,9 @@ public class AdapterService extends BaseCommon {
 						if (args==null) {
 							args = (Object[]) new Object();
 						}
-						Map<String, Object> map = (Map<String, Object>) SpringContextUtil.getBean(mapperClass);
-						Object mapperInstance = map.get(mapperName.substring(0, 1).toLowerCase()+mapperName.subSequence(1, mapperName.length())); //鑾峰彇bean瀹炰緥
+						String mapperKey = mapperName.substring(mapperName.lastIndexOf(".")+1, mapperName.length());
+						mapperKey = BaseCommon.toLowerCaseFirstOne(mapperKey);
+						Object mapperInstance = SpringContextUtil.getBean(mapperKey);
 						return mapperMethod.invoke(mapperInstance, args);
 					}
 				}		

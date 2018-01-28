@@ -19,6 +19,7 @@ public interface CollectionMapper extends BaseMapper {
 	Collection getById(@Param("id") Long id);
 	
 	int countByParm(@Param("parm") Map<String, Object> paramMap);
+	int countByParm(@Param("parm") Collection c);
 	
 	List<Collection> getBeanListByParm(@Param("parm") Map<String, Object> paramMap);
 

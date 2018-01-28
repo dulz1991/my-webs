@@ -147,9 +147,10 @@
 	csm.`NAME` as codeSubType
 	from `code` c
 	LEFT JOIN code_sub_menu csm on c.FATHER_ID=csm.ID
+	LEFT JOIN code_menu cm on cm.ID=csm.FATHER_ID
 	where 1=1
 		<if test="parm.item != null">
-		     	and c.ITEM like "%"#{parm.item}"%"
+		     	and c.ITEM LIKE CONCAT(CONCAT('%', #{parm.item,jdbcType=VARCHAR}),'%') 
 		   	</if>
 			<if test="parm.codeId != null">
 		     	and c.CODE_ID = #{parm.codeId}
@@ -159,6 +160,9 @@
 		   	</if>
 			<if test="parm.createTime != null">
 		     	and c.CREATE_TIME = #{parm.createTime}
+		   	</if>
+		   	<if test="parm.codeMenuId != null">
+		   		and  cm.ID = #{parm.codeMenuId}
 		   	</if>
 			<if test="parm.fatherId != null">
 		     	and c.FATHER_ID = #{parm.fatherId}

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+
 import com.demo.my.base.service.CommentService;
 import com.demo.my.base.model.Comment;
 import com.demo.my.backend.common.BaseBackendController;
@@ -25,13 +26,13 @@ public class CommentController extends BaseBackendController {
 	@Autowired
 	private CommentService commentService;
 	
-	@RequestMapping(value="/list", method = RequestMethod.GET)
+	@RequestMapping(value="/list")
 	public ModelAndView index() {
 		ModelAndView model = new ModelAndView("comment/comment_list");
 		return model;
 	}
 	
-	@RequestMapping(value="/edit", method = RequestMethod.GET)
+	@RequestMapping(value="/edit")
 	public ModelAndView edit(Long id) {
 		ModelAndView model = new ModelAndView("comment/comment_edit");
 		if(id!=null){
@@ -44,19 +45,14 @@ public class CommentController extends BaseBackendController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value="/getList", method = RequestMethod.GET)
+	@RequestMapping(value="/getList")
 	public Map<String, Object> getList(Comment comment,
 			@RequestParam(name="pageNo", defaultValue="1") int pageNo,  
 			@RequestParam(name="pageSize", defaultValue="10") int pageSize) {
-		//查询参数
-		Map<String, Object> parmMap =  this.getParmMap(comment);
-		parmMap.put("orderBy", "");
-		parmMap.put("pageNo", pageNo);
-		parmMap.put("pageSize", pageSize);
 		
-		//查询
-		Page<Map<String, Object>> page = commentService.getPageMapByParm(parmMap);
-
+		Map<String, Object> parmMap = this.getParmMap();
+		Page<Map<String, Object>> page = commentService.getPage("CommentMapper.getPageMapByParm", parmMap);
+		
 		//返回参数
 		Map<String, Object> resMap = responseOK("");
 		resMap.put("list", page.getList());
@@ -73,7 +69,7 @@ public class CommentController extends BaseBackendController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value="/doDelete", method = RequestMethod.GET)
+	@RequestMapping(value="/doDelete")
 	public Map<String, Object> doDelete(Long id) {
 		if(id==null){
 			return responseError(-1, "删除的记录不存在");

@@ -96,10 +96,10 @@
 	LEFT JOIN `user` u2 on u2.ID=c.USER_ID
 	where 1=1
 	<if test="parm.title != null">
-		and d.title=#{parm.title}
+		and d.title LIKE CONCAT(CONCAT('%', #{parm.title,jdbcType=VARCHAR}),'%') 
 	</if>
 	<if test="parm.fromId != null">
-		and u2.username=#{parm.username}
+		and u2.username LIKE CONCAT(CONCAT('%', #{parm.username,jdbcType=VARCHAR}),'%') 
 	</if>
 </select>
 <select id="getMapListByParm" parameterType="HashMap" resultType="HashMap">
@@ -115,10 +115,10 @@
 	LEFT JOIN `user` u2 on u2.ID=c.USER_ID
 	where 1=1
 	<if test="parm.title != null">
-		and d.title=#{parm.title}
+		and d.title LIKE CONCAT(CONCAT('%', #{parm.title,jdbcType=VARCHAR}),'%') 
 	</if>
-	<if test="parm.fromId != null">
-		and u2.username=#{parm.username}
+	<if test="parm.username != null">
+		and u2.username  LIKE CONCAT(CONCAT('%', #{parm.username,jdbcType=VARCHAR}),'%') 
 	</if>
 		<if test="parm.orderby != null">
 	   		order by ${parm.orderby}

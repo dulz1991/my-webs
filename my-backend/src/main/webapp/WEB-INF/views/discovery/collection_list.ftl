@@ -15,7 +15,7 @@
 									<input type="text" class="form-control input" name="title" value="">
 								</div>
 								<div class="col-sm-3">
-									用户名
+									收藏用户
 									<input type="text" class="form-control input" name="username" value="">
 								</div>
 							</div>
@@ -25,7 +25,7 @@
 							</div>
 							<div class="form-group">
 								<div class="col-sm-2">
-									<button class="btn btn-info btn-icon" onclick="search()">
+									<button class="btn btn-info btn-icon" onclick="$.fn.autoSearch('.form')">
 										<i class="fa-search"></i>
 										<span>搜索</span>
 									</button>
@@ -51,17 +51,16 @@
 						<table class="table table-bordered table-striped" id="datatable">
 							<thead>
 								<tr>
-									<th width="60" field="index">编号</th>
+									<th width="60" field="index_no">编号</th>
 									<th field="title">discovery标题</th>
 									<th field="author">作者</th>
 									<th field="collectionUser">收藏用户</th>
 									<th field="createTimeStr">收藏时间</th>
-									<th field="op" field-role="0" width="110"></th>
 								</tr>
 							</thead>
 							<tbody class="middle-align"></tbody>
 						</table>
-						<div class="pagebar"></div>
+						<div id="pageDiv"></div>
 					</div>
 				</div>
 			</div>
@@ -78,10 +77,6 @@ $(function(){
 	}); 
 	
 });
-function search(){
-	var parm = $.fn.getFormJsonEncode('.form');
-	$.fn.doSearch(parm);
-}
 </script>
 
 </@base> 

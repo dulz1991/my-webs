@@ -20,6 +20,7 @@ import com.demo.my.backend.common.BaseBackendController;
 import com.demo.my.base.service.CodeMenuService;
 import com.demo.my.base.service.CodeService;
 import com.demo.my.base.service.CodeSubMenuService;
+import com.demo.my.base.common.BaseCommon;
 import com.demo.my.base.common.ErrorConstant;
 import com.demo.my.base.model.Code;
 import com.demo.my.base.model.CodeMenu;
@@ -39,7 +40,7 @@ public class CodeController extends BaseBackendController {
 	@Autowired
 	private CodeSubMenuService codeSubMenuService;
 	
-	@RequestMapping(value="/list", method = RequestMethod.GET)
+	@RequestMapping(value="/list")
 	public ModelAndView index(String fatherId) {
 		ModelAndView model = new ModelAndView("code/code_list");
 		
@@ -57,7 +58,7 @@ public class CodeController extends BaseBackendController {
 		return model;
 	}
 	
-	@RequestMapping(value="/edit", method = RequestMethod.GET)
+	@RequestMapping(value="/edit")
 	public ModelAndView edit(Long id) {
 		ModelAndView model = new ModelAndView("code/code_edit");
 		
@@ -92,11 +93,13 @@ public class CodeController extends BaseBackendController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value="/getList", method = RequestMethod.GET)
+	@RequestMapping(value="/getList")
 	public Map<String, Object> getList(Code code, Long levelOne,
 			@RequestParam(name="pageNo", defaultValue="1") int pageNo,  
 			@RequestParam(name="pageSize", defaultValue="10") int pageSize) {
-		Page<Map<String, Object>> page = codeService.getMapListByParm(code, pageNo, pageSize, "c.item_order asc");
+		Map<String, Object> parmMap = this.getParmMap();
+		parmMap.put("orderBy", "c.item_order asc");
+		Page<Map<String, Object>> page = codeService.getPage("CodeMapper.getMapListByParm", parmMap);
 
 		Map<String, Object> resMap = new HashMap<String, Object>();
 		resMap.put("list", page.getList());
@@ -109,7 +112,7 @@ public class CodeController extends BaseBackendController {
 	@RequestMapping(value="/doSave", method = RequestMethod.POST)
 	public Map<String, Object> save(Code code) {
 		if (StringUtils.isBlank(code.getItem())) {
-			return this.responseError(ErrorConstant.ERROR_500, ErrorConstant.ERROR_EMPTY_TITLE);
+			return BaseCommon.responseError(ErrorConstant.ERROR_500, ErrorConstant.ERROR_EMPTY_TITLE);
 		} else if (StringUtils.isBlank(code.getContent())) {
 			return this.responseError(ErrorConstant.ERROR_500, ErrorConstant.ERROR_EMPTY_CONTENT);
 		} else if (null == code.getFatherId() || code.getFatherId()==0) {
@@ -126,7 +129,7 @@ public class CodeController extends BaseBackendController {
 		if (null != code.getId()) {
 			codeService.update(code);
 		} else {
-			Integer count = codeService.countByParm(new Code());
+			Integer count = codeService.countByParm(null);
 			count++;
 			code.setItemOrder(Long.valueOf(count.toString()));
 			codeService.insert(code);
@@ -137,7 +140,7 @@ public class CodeController extends BaseBackendController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value="/doDelete", method = RequestMethod.GET)
+	@RequestMapping(value="/doDelete")
 	public Map<String, Object> doDelete(Long id) {
 		if(id==null){
 			return responseError(-1, "删除的记录不存在");
@@ -172,7 +175,7 @@ public class CodeController extends BaseBackendController {
 		return resMap; 
 	}
 	
-	@RequestMapping(value="/viewDetail", method = RequestMethod.GET)
+	@RequestMapping(value="/viewDetail")
 	public ModelAndView viewDetail(Long id) {
 		ModelAndView model = new ModelAndView("code/code_detail");
 		Code entity = codeService.getById(id);

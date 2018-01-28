@@ -143,7 +143,7 @@
 	LEFT JOIN `user` u2 on u2.ID = c.TO_ID
 	where 1=1
 	<if test="parm.title != null">
-		and d.title=#{parm.title}
+		and d.title LIKE CONCAT(CONCAT('%', #{parm.title,jdbcType=VARCHAR}),'%') 
 	</if>
 	<if test="parm.fromId != null">
 		and u1.username=#{parm.fromId}
@@ -167,13 +167,13 @@
 	LEFT JOIN `user` u2 on u2.ID = c.TO_ID
 	where 1=1
 	<if test="parm.title != null">
-		and d.title=#{parm.title}
+		and d.title LIKE CONCAT(CONCAT('%', #{parm.title,jdbcType=VARCHAR}),'%') 
 	</if>
 	<if test="parm.fromId != null">
-		and u1.username=#{parm.fromId}
+		and u1.username  LIKE CONCAT(CONCAT('%', #{parm.fromId,jdbcType=VARCHAR}),'%') 
 	</if>
 	<if test="parm.toId != null">
-		and u2.username=#{parm.toId} 
+		and u2.username  LIKE CONCAT(CONCAT('%', #{parm.toId,jdbcType=VARCHAR}),'%')  
 	</if>
 		<if test="parm.orderby != null">
 	   		order by ${parm.orderby}

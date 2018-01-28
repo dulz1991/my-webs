@@ -60,7 +60,7 @@ public class HomeController extends BaseBackendController {
 		return modelAndView;
 	}
 
-	@RequestMapping(value = "/ueditor", method=RequestMethod.GET)
+	@RequestMapping(value = "/ueditor")
 	public void ueditor() throws IOException {
 		request.setCharacterEncoding( "utf-8" );
 		response.setHeader("Content-Type" , "text/html");

@@ -19,6 +19,7 @@ public interface CommentMapper extends BaseMapper {
 	Comment getById(@Param("id") Long id);
 	
 	int countByParm(@Param("parm") Map<String, Object> paramMap);
+	int countByParm(@Param("parm") Comment c);
 	
 	List<Comment> getBeanListByParm(@Param("parm") Map<String, Object> paramMap);
 

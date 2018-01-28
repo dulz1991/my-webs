@@ -28,13 +28,13 @@ public class UserRoleController extends BaseBackendController {
 	@Autowired
 	private UserRoleService userRoleService;
 	
-	@RequestMapping(value="/list", method = RequestMethod.GET)
+	@RequestMapping(value="/list")
 	public ModelAndView index() {
 		ModelAndView model = new ModelAndView("user/user_role_list");
 		return model;
 	}
 	
-	@RequestMapping(value="/edit", method = RequestMethod.GET)
+	@RequestMapping(value="/edit")
 	public ModelAndView edit(Long id) {
 		ModelAndView model = new ModelAndView("user/user_role_edit");
 		if(id!=null){
@@ -47,12 +47,13 @@ public class UserRoleController extends BaseBackendController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value="/getList", method = RequestMethod.GET)
+	@RequestMapping(value="/getList")
 	public Map<String, Object> getList(UserRole userRole,
 			@RequestParam(name="pageNo", defaultValue="1") int pageNo,  
 			@RequestParam(name="pageSize", defaultValue="10") int pageSize) {
-		Page<UserRole> page = userRoleService.getBeanListByParm(userRole, pageNo, pageSize, "");
-
+		Map<String, Object> parmMap = this.getParmMap();
+		Page<Map<String, Object>> page = userRoleService.getPage("UserRoleMapper.getBeanListByParm", parmMap);
+		
 		Map<String, Object> resMap = new HashMap<String, Object>();
 		resMap.put("list", page.getList());
 		resMap.put("page", page);
@@ -71,7 +72,7 @@ public class UserRoleController extends BaseBackendController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value="/doDelete", method = RequestMethod.GET)
+	@RequestMapping(value="/doDelete")
 	public Map<String, Object> doDelete(Long id) {
 		if(id==null){
 			return responseError(-1, "删除的记录不存在");

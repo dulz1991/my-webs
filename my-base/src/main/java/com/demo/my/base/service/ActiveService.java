@@ -9,14 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.demo.my.base.util.Page;
-import com.demo.my.base.common.ErrorConstant;
 import com.demo.my.base.model.Active;
 import com.demo.my.base.mybatis.mapper.ds1mapper.ActiveMapper;
-import com.demo.my.base.service.common.AdapterService;
 
 
 @Component  
-public class ActiveService extends AdapterService {
+public class ActiveService extends AbstractBaseService {
 	
 	@Autowired
     ActiveMapper activeMapper;

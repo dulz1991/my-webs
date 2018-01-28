@@ -22,7 +22,7 @@
 					</div>
 					<div class="form-group">
 						<div class="col-sm-12">
-							<button class="btn btn-info btn-icon" onclick="$.fn.doSaveAndJump('.form','/backend/codeMenu/doSave','/backend/codeMenu/list')">
+							<button class="btn btn-info btn-icon" onclick="doSave()">
 								<span>提交</span>
 							</button>
 						</div>
@@ -34,9 +34,16 @@
 	<!-- 编辑区结束 -->
 
 <script type="text/javascript">
-$(function(){
-	
-});
+function doSave(){
+	var parm = $.common.getFormJson('.form');
+	$.common.postRequest(parm, '/backend/codeMenu/doSave', function(data){
+		if(data.errorNo==200){
+			self.location='/backend/codeMenu/list';
+		} else {
+			$.common.alert(data.errorInfo);
+		}
+	});
+}
 </script>
 
 </@base> 

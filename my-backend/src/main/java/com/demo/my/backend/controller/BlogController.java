@@ -36,7 +36,7 @@ public class BlogController extends BaseBackendController {
 	@Autowired
 	private BlogMenuService blogMenuService;
 	
-	@RequestMapping(value="/list", method = RequestMethod.GET)
+	@RequestMapping(value="/list")
 	public ModelAndView index(Long blogMenuId) {
 		ModelAndView model = new ModelAndView("blog/blog_list");
 		
@@ -55,7 +55,7 @@ public class BlogController extends BaseBackendController {
 		return model;
 	}
 	
-	@RequestMapping(value="/edit", method = RequestMethod.GET)
+	@RequestMapping(value="/edit")
 	public ModelAndView edit(Long id) {
 		ModelAndView model = new ModelAndView("blog/blog_edit");
 		if(id!=null){
@@ -66,18 +66,13 @@ public class BlogController extends BaseBackendController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value="/getList", method = RequestMethod.GET)
+	@RequestMapping(value="/getList")
 	public Map<String, Object> getList(Blog blog,
 			@RequestParam(name="pageNo", defaultValue="1") int pageNo,  
 			@RequestParam(name="pageSize", defaultValue="10") int pageSize) {
-		//查询参数
-		Map<String, Object> parmMap =  this.getParmMap(blog);
+		Map<String, Object> parmMap = this.getParmMap();
 		parmMap.put("orderBy", "b.id desc");
-		parmMap.put("pageNo", pageNo);
-		parmMap.put("pageSize", pageSize);
-		
-		//查询
-		Page<Map<String, Object>> page = blogService.getPageMapByParm(parmMap);
+		Page<Map<String, Object>> page = blogService.getPage("BlogMapper.getMapListByParm", parmMap);
 		
 		//返回参数
 		Map<String, Object> resMap = responseOK("");
@@ -87,7 +82,7 @@ public class BlogController extends BaseBackendController {
 		return resMap;
 	}
 	
-	@RequestMapping(value="/getDetail", method = RequestMethod.GET)
+	@RequestMapping(value="/getDetail")
 	public ModelAndView getDetail(Long id) {
 		ModelAndView model = new ModelAndView("blog/blog_detail");
 		
@@ -107,7 +102,7 @@ public class BlogController extends BaseBackendController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value="/doDelete", method = RequestMethod.GET)
+	@RequestMapping(value="/doDelete")
 	public Map<String, Object> doDelete(Long id) {
 		if(id==null){
 			return responseError(-1, "删除的记录不存在");

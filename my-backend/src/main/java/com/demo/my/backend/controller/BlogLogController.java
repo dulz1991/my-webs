@@ -29,13 +29,13 @@ public class BlogLogController extends BaseBackendController {
 	@Autowired
 	private UserService userService;
 	
-	@RequestMapping(value="/list", method = RequestMethod.GET)
+	@RequestMapping(value="/list")
 	public ModelAndView index() {
 		ModelAndView model = new ModelAndView("blog/blog_log_list");
 		return model;
 	}
 	
-	@RequestMapping(value="/edit", method = RequestMethod.GET)
+	@RequestMapping(value="/edit")
 	public ModelAndView edit(Long id) {
 		ModelAndView model = new ModelAndView("blog/blog_log_edit");
 		if(id!=null){
@@ -46,18 +46,13 @@ public class BlogLogController extends BaseBackendController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value="/getList", method = RequestMethod.GET)
+	@RequestMapping(value="/getList")
 	public Map<String, Object> getList(BlogLog blogLog,
 			@RequestParam(name="pageNo", defaultValue="1") int pageNo,  
 			@RequestParam(name="pageSize", defaultValue="10") int pageSize) {
-		//查询参数
-		Map<String, Object> parmMap =  this.getParmMap();
+		Map<String, Object> parmMap = this.getParmMap();
 		parmMap.put("orderBy", "bl.id desc");
-		parmMap.put("pageNo", pageNo);
-		parmMap.put("pageSize", pageSize);
-		
-		//查询
-		Page<Map<String, Object>> page = blogLogService.getPageMapByParm(parmMap);
+		Page<Map<String, Object>> page = blogLogService.getPage("BlogLogMapper.getMapListByParm", parmMap);
 
 		//返回参数
 		Map<String, Object> resMap = responseOK("");
@@ -75,7 +70,7 @@ public class BlogLogController extends BaseBackendController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value="/doDelete", method = RequestMethod.GET)
+	@RequestMapping(value="/doDelete")
 	public Map<String, Object> doDelete(Long id) {
 		if(id==null){
 			return responseError(-1, "删除的记录不存在");
@@ -87,7 +82,7 @@ public class BlogLogController extends BaseBackendController {
 		return responseOK("删除成功");
 	}
 
-	@RequestMapping(value="/getDetail", method = RequestMethod.GET)
+	@RequestMapping(value="/getDetail")
 	public ModelAndView getDetail(Long id) {
 		ModelAndView model = new ModelAndView("blog/blog_detail");
 		

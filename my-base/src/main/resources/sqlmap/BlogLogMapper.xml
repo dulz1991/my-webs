@@ -120,7 +120,7 @@
 	LEFT JOIN `user` u on u.ID = bl.USER_ID 
 	where 1=1
 		<if test="parm.blogTitle != null and parm.blogTitle != ''">
-	     	and b.TITLE = #{parm.blogTitle}
+	     	and b.TITLE LIKE CONCAT(CONCAT('%', #{parm.blogTitle,jdbcType=VARCHAR}),'%')
 	   	</if>
 	
 		<if test="parm.orderby != null">

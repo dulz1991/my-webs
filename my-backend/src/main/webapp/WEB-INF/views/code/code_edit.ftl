@@ -50,7 +50,7 @@
 					</div>
 					<div class="form-group">
 						<div class="col-sm-12">
-							<button class="btn btn-info btn-icon" onclick="$.fn.doSaveAndJump('.form','/backend/code/doSave','/backend/code/viewDetail')">
+							<button class="btn btn-info btn-icon" onclick="doSave()">
 								<span>提交</span>
 							</button>
 						</div>
@@ -66,11 +66,22 @@ $(function(){
 	
 });
 function refreshFaterId(){
-	jQuery.commonUtil.refreshSelect('#codeMenuId','#fatherId','/backend/codeSubMenu/getCodeSubMenuListByFatherId');
+	$.common.refreshSelect('#codeMenuId','#fatherId','/backend/codeSubMenu/getCodeSubMenuListByFatherId');
 }
 
 function refreshCodeId(){
-	jQuery.commonUtil.refreshSelect('#fatherId','#codeId','/backend/code/getCodeListByFatherId');
+	$.common.refreshSelect('#fatherId','#codeId','/backend/code/getCodeListByFatherId');
+}
+
+function doSave(){
+	var parm = $.common.getFormJson('.form');
+	$.common.postRequest(parm, '/backend/code/doSave', function(data){
+		if(data.errorNo==200){
+			self.location='/backend/code/viewDetail';
+		} else {
+			$.common.alert(data.errorInfo);
+		}
+	});
 }
 </script>
 

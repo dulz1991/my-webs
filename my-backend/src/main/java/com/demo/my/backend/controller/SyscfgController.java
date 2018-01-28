@@ -9,7 +9,7 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/backend/sys")
 public class SyscfgController {
 	
-	@RequestMapping(value = "/index", method=RequestMethod.GET)
+	@RequestMapping(value = "/index")
 	public ModelAndView index() {
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("syscfg/index");

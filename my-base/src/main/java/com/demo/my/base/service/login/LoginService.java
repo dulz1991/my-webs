@@ -1,4 +1,4 @@
-package com.demo.my.base.service;
+package com.demo.my.base.service.login;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -14,15 +14,15 @@ import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.util.SavedRequest;
 
 import com.demo.my.base.model.User;
+import com.demo.my.base.common.BaseCommon;
 import com.demo.my.base.common.ErrorConstant;
 import com.demo.my.base.common.KeyConstant;
 import com.demo.my.base.mybatis.mapper.ds1mapper.UserMapper;
-import com.demo.my.base.service.common.AdapterService;
 import com.demo.my.base.util.MD5Util;
 import com.demo.my.base.util.RegularUtil;
 
 @Component
-public class LoginService extends AdapterService {
+public class LoginService extends BaseCommon {
 	
 	@Autowired
 	private UserMapper userMapper;

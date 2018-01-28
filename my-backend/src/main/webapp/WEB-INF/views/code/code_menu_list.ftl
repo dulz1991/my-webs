@@ -16,7 +16,7 @@
 								</div>
 								<div class="col-sm-2">
 									<br />
-									<button class="btn btn-info btn-icon" onclick="$.fn.doAutoSearch()">
+									<button class="btn btn-info btn-icon" onclick="$.fn.autoSearch('.form')">
 										<i class="fa-search"></i>
 										<span>搜索</span>
 									</button>
@@ -42,15 +42,19 @@
 						<table class="table table-bordered table-striped" id="datatable">
 							<thead>
 								<tr>
-									<th width="60" field="index">编号</th>
-									<th field="name" url="/backend/codeSubMenu/list?codeMenuId=" parm="id">分类名称</th>
+									<th width="60" field="index_no">编号</th>
+									<th field="name" my-attrs='{textFun:"viewSubMenuList",args:"id",style:"color:rgb(0,155,219);cursor:pointer;text-decoration:underline"}'>分类名称</th>
 									<th field="orderBy">分类排序</th>
-									<th field="op" field-role="2" width="110"></th>
+									<th field="button" field-role="2" width="110"
+										btn_list='[
+				                        {fnName:"edit", args:"id",name:"编辑",icon:"fa fa-edit",cls:"btn btn-info btn-xs"}
+				                        ]'
+									></th>
 								</tr>
 							</thead>
 							<tbody class="middle-align"></tbody>
 						</table>
-						<div class="pagebar"></div>
+						<div id="pageDiv"></div>
 					</div>
 				</div>
 			</div>
@@ -66,8 +70,13 @@ $(function(){
 			// console.log(p);
 		}
 	}); 
-	
 });
+function edit(id){
+	window.open('/backend/codeMenu/edit?id='+id);
+}
+function viewSubMenuList(id){
+	window.open('/backend/codeSubMenu/list?codeMenuId='+id);
+}
 </script>
 
 </@base> 

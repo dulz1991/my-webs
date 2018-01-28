@@ -18,7 +18,9 @@ public class Page<E> {
     //结果�?  
     private List<E> list;  
     //查询记录�?  
-    private int totalRecords;  
+    private int totalRecords;
+    //总页数
+    private int totalPages;
     //当前�?
     private int currentPage;
     //每页多少条数�?  
@@ -149,5 +151,13 @@ public class Page<E> {
 
 	public void setCurrentPage(int currentPage) {
 		this.currentPage = currentPage;
+	}
+
+	public int getTotalPages() {
+		return totalPages;
+	}
+
+	public void setTotalPages(int totalPages) {
+		this.totalPages = totalPages;
 	}  
 }  

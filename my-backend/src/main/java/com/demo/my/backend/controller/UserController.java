@@ -1,6 +1,5 @@
 package com.demo.my.backend.controller;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -15,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.demo.my.backend.common.BaseBackendController;
 import com.demo.my.base.service.UserService;
+import com.demo.my.base.enums.EnumUserStatus;
 import com.demo.my.base.model.User;
 import com.demo.my.base.util.Page;
 
@@ -27,13 +27,13 @@ public class UserController extends BaseBackendController {
 	@Autowired
 	private UserService userService;
 	
-	@RequestMapping(value="/list", method = RequestMethod.GET)
+	@RequestMapping(value="/list")
 	public ModelAndView index() {
 		ModelAndView model = new ModelAndView("user/user_list");
 		return model;
 	}
 	
-	@RequestMapping(value="/edit", method = RequestMethod.GET)
+	@RequestMapping(value="/edit")
 	public ModelAndView edit(Long id) {
 		ModelAndView model = new ModelAndView("user/user_edit");
 		if(id!=null){
@@ -44,13 +44,21 @@ public class UserController extends BaseBackendController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value="/getList", method = RequestMethod.GET)
+	@RequestMapping(value="/getList")
 	public Map<String, Object> getList(User user,
 			@RequestParam(name="pageNo", defaultValue="1") int pageNo,  
 			@RequestParam(name="pageSize", defaultValue="10") int pageSize) {
-		Page<Map<String, Object>> page = userService.getMapListByParm(user, pageNo, pageSize, "");
+		Map<String, Object> parmMap = this.getParmMap();
+		Page<Map<String, Object>> page = userService.getPage("UserMapper.getMapListByParm", parmMap);
 
-		Map<String, Object> resMap = new HashMap<String, Object>();
+		if(page.getList()!=null){
+			for(Map<String, Object> map : page.getList()){
+				int s = (int) map.get("status");
+				map.put("userStatusStr", EnumUserStatus.getValueByKey(s));
+			}
+		}
+		
+		Map<String, Object> resMap = this.responseOK("");
 		resMap.put("list", page.getList());
 		resMap.put("page", page);
 		
@@ -65,7 +73,7 @@ public class UserController extends BaseBackendController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value="/doDelete", method = RequestMethod.GET)
+	@RequestMapping(value="/doDelete")
 	public Map<String, Object> doDelete(Long id) {
 		if(id==null){
 			return responseError(-1, "删除的记录不存在");

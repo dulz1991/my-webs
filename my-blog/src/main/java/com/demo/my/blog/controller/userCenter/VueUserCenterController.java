@@ -90,9 +90,11 @@ public class VueUserCenterController extends BaseController {
 		Map<String, Object> resMap = this.responseOK("");
 		
 		Long userId = this.getCurrentUserId();
-		Discovery discovery = new Discovery();
-		discovery.setUserId(userId);
-		Page<Discovery> page = discoveryService.getBeanListByParm(discovery, pageNo, pageSize, "id desc");
+		Map<String, Object> parm = new HashMap<String, Object>();
+		parm.put("userId", userId);
+		parm.put("pageNo", pageNo);
+		parm.put("pageSize", pageSize);
+		Page<Discovery> page = discoveryService.getPage("DiscoveryMapper.getBeanListByParm", parm);
 		String contentStr = "";
 		for(Discovery d : page.getList()){
 			contentStr = d.getContent();
@@ -116,8 +118,12 @@ public class VueUserCenterController extends BaseController {
 		Map<String, Object> resMap = this.responseOK("");
 		
 		Long userId = this.getCurrentUserId();
-		
-		Page<Map<String, Object>> page = discoveryService.getMyCommentDiscovery(userId, pageNo, pageSize, "c.CREATE_TIME desc");
+		Map<String, Object> parm = new HashMap<String, Object>();
+		parm.put("userId", userId);
+		parm.put("pageNo", pageNo);
+		parm.put("pageSize", pageSize);
+		parm.put("orderBy", "c.CREATE_TIME desc");
+		Page<Map<String, Object>> page = discoveryService.getPage("DiscoveryMapper.getMyCommentDiscovery", parm);
 		String contentStr = "";
 		for(Map<String, Object> d : page.getList()){
 			contentStr = d.get("content")==null?"":d.get("content").toString();

@@ -21,7 +21,7 @@
 							</div>
 							<div class="form-group">
 								<div class="col-sm-2">
-									<button class="btn btn-info btn-icon" onclick="search()">
+									<button class="btn btn-info btn-icon" onclick="$.fn.autoSearch('.form')">
 										<i class="fa-search"></i>
 										<span>搜索</span>
 									</button>
@@ -47,18 +47,17 @@
 						<table class="table table-bordered table-striped" id="datatable">
 							<thead>
 								<tr>
-									<th width="60" field="index">编号</th>
+									<th width="60" field="index_no">编号</th>
 									<th field="title">标题</th>
 									<th field="fromName">作者</th>
 									<th field="toName">评论用户</th>
 									<th field="content">评论内容</th>
 									<th field="createTimeStr">评论时间</th>
-									<th field="op" field-role="0" width="110"></th>
 								</tr>
 							</thead>
 							<tbody class="middle-align"></tbody>
 						</table>
-						<div class="pagebar"></div>
+						<div id="pageDiv"></div>
 					</div>
 				</div>
 			</div>
@@ -75,10 +74,6 @@ $(function(){
 	}); 
 	
 });
-function search(){
-	var parm = $.fn.getFormJsonEncode('.form');
-	$.fn.doSearch(parm);
-}
 </script>
 
 </@base> 

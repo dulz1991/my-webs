@@ -19,6 +19,7 @@ public interface DiscoveryMapper extends BaseMapper {
 	Discovery getById(@Param("id") Long id);
 	
 	int countByParm(@Param("parm") Map<String, Object> paramMap);
+	int countByParm(@Param("parm") Discovery d);
 	
 	List<Discovery> getBeanListByParm(@Param("parm") Map<String, Object> paramMap);
 

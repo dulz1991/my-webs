@@ -47,7 +47,16 @@
 
 <script type="text/javascript">
 $(function(){
-		$('#demoSubmit').click(function(){
+	$('#demoSubmit').click(function(){
+		$.common.ajaxFileSubmit('.form', '/backend/demo/save', function(data){
+			if(data.errorNo==200){
+        		self.location='/backend/demo/list';
+			} else {
+				$.commonUtil.showTip(data.errorInfo);
+			}
+		})
+		
+		<!--
 			$(".form").ajaxSubmit({  
 	            type:'post',  
 	            url:'/backend/demo/save',  
@@ -67,7 +76,8 @@ $(function(){
 		        	$.commonUtil.showTip(data.errorInfo); 
 		        }   
 	        }); 
-	       });
+		-->
+	});
 });
 </script>
 

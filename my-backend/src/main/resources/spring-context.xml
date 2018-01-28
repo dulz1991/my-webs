@@ -49,6 +49,7 @@
 	<mvc:resources mapping="/css/**" location="/WEB-INF/resources/css/" />
 	<mvc:resources mapping="/img/**" location="/WEB-INF/resources/images/" />
 	<mvc:resources mapping="/ue/**" location="/ue/" />
+	<mvc:resources mapping="/my/**" location="/WEB-INF/resources/my/" />
 	
 	<!-- open aop -->
 	<aop:aspectj-autoproxy /> 

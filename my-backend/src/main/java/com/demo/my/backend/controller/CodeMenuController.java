@@ -29,13 +29,13 @@ public class CodeMenuController extends BaseBackendController {
 	@Autowired
 	private CodeMenuService codeMenuService;
 	
-	@RequestMapping(value="/list", method = RequestMethod.GET)
+	@RequestMapping(value="/list")
 	public ModelAndView index() {
 		ModelAndView model = new ModelAndView("code/code_menu_list");
 		return model;
 	}
 	
-	@RequestMapping(value="/edit", method = RequestMethod.GET)
+	@RequestMapping(value="/edit")
 	public ModelAndView edit(Long id) {
 		ModelAndView model = new ModelAndView("code/code_menu_edit");
 		if(id!=null){
@@ -48,11 +48,12 @@ public class CodeMenuController extends BaseBackendController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value="/getList", method = RequestMethod.GET)
+	@RequestMapping(value="/getList")
 	public Map<String, Object> getList(CodeMenu codeMenu,
 			@RequestParam(name="pageNo", defaultValue="1") int pageNo,  
 			@RequestParam(name="pageSize", defaultValue="10") int pageSize) {
-		Page<CodeMenu> page = codeMenuService.getBeanListByParm(codeMenu, pageNo, pageSize, "ORDER_BY asc");
+		Map<String, Object> parmMap = this.getParmMap();
+		Page<CodeMenu> page = codeMenuService.getPage("CodeMenuMapper.getBeanListByParm", parmMap);
 
 		Map<String, Object> resMap = new HashMap<String, Object>();
 		resMap.put("list", page.getList());
@@ -75,7 +76,7 @@ public class CodeMenuController extends BaseBackendController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value="/doDelete", method = RequestMethod.GET)
+	@RequestMapping(value="/doDelete")
 	public Map<String, Object> doDelete(Long id) {
 		if(id==null){
 			return responseError(-1, "删除的记录不存在");

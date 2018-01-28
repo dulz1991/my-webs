@@ -29,7 +29,7 @@
 								</div>
 								<div class="col-sm-2">
 									<br>
-									<button class="btn btn-info btn-icon" onclick="$.fn.doAutoSearch()">
+									<button class="btn btn-info btn-icon" onclick="$.fn.autoSearch('.form')">
 										<i class="fa-search"></i>
 										<span>搜索</span>
 									</button>
@@ -56,19 +56,19 @@
 						<table class="table table-bordered table-striped" id="datatable">
 							<thead>
 								<tr>
-									<th width="60" field="index">编号</th>
+									<th width="60" field="index_no">序号</th>
 									<th field="username">用户名</th>
 									<th field="phone">手机号</th>
 									<th field="email">邮箱</th>
 									<th field="roleName">用户权限</th>
-									<th field="status">用户状态</th>
+									<th field="userStatusStr">用户状态</th>
 									<th field="createTimeStr">创建时间</th>
 									<th field="updateTimeStr">更新时间</th>
 								</tr>
 							</thead>
 							<tbody class="middle-align"></tbody>
 						</table>
-						<div class="pagebar"></div>
+						<div id="pageDiv"></div>
 					</div>
 				</div>
 			</div>

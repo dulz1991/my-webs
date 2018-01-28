@@ -27,13 +27,13 @@ public class DemoMenuController extends BaseBackendController {
 	@Autowired
 	private DemoMenuService demoMenuService;
 	
-	@RequestMapping(value="/list", method = RequestMethod.GET)
+	@RequestMapping(value="/list")
 	public ModelAndView index() {
 		ModelAndView model = new ModelAndView("demo/demo_menu_list");
 		return model;
 	}
 	
-	@RequestMapping(value="/edit", method = RequestMethod.GET)
+	@RequestMapping(value="/edit")
 	public ModelAndView edit(Long id) {
 		ModelAndView model = new ModelAndView("demo/demo_menu_edit");
 		if(id!=null){
@@ -46,11 +46,12 @@ public class DemoMenuController extends BaseBackendController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value="/getList", method = RequestMethod.GET)
+	@RequestMapping(value="/getList")
 	public Map<String, Object> getList(DemoMenu demoMenu,
 			@RequestParam(name="pageNo", defaultValue="1") int pageNo,  
 			@RequestParam(name="pageSize", defaultValue="10") int pageSize) {
-		Page<DemoMenu> page = demoMenuService.getBeanListByParm(demoMenu, pageNo, pageSize, "");
+		Map<String, Object> parmMap = this.getParmMap();
+		Page<DemoMenu> page = demoMenuService.getPage("DemoMenuMapper.getBeanListByParm", parmMap);
 
 		Map<String, Object> resMap = new HashMap<String, Object>();
 		resMap.put("list", page.getList());
@@ -67,7 +68,7 @@ public class DemoMenuController extends BaseBackendController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value="/doDelete", method = RequestMethod.GET)
+	@RequestMapping(value="/doDelete")
 	public Map<String, Object> doDelete(Long id) {
 		if(id==null){
 			return responseError(-1, "删除的记录不存在");

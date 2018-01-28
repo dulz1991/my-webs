@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.demo.my.base.model.User;
-import com.demo.my.base.service.LoginService;
+import com.demo.my.base.service.login.LoginService;
 import com.demo.my.blog.controller.common.BaseController;
 
 

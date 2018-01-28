@@ -23,20 +23,20 @@
 									二级分类
 									<select id="fatherId" name="fatherId" class="form-control select"
 									  value="${codeSubMenuId!''}" onchange="refreshCodeId()">
-										<option value="-1">--选择二级分类--</option>
+										<option value="">--选择二级分类--</option>
 									</select>
 								</div>
 								<div class="col-sm-3" >
 									父级菜单
 									<select id="codeId" name="codeId" class="form-control select">
-										<option value="-1">--选择父级菜单--</option>
+										<option value="">--选择父级菜单--</option>
 									</select> 
 								</div>
 							</div>
 							<div class="form-group">
 								<div class="col-sm-2">
 									<br>
-									<button class="btn btn-info btn-icon" onclick="$.fn.doAutoSearch()">
+									<button class="btn btn-info btn-icon" onclick="$.fn.autoSearch('.form')">
 										<i class="fa-search"></i>
 										<span>搜索</span>
 									</button>
@@ -62,18 +62,22 @@
 						<table class="table table-bordered table-striped" id="datatable">
 							<thead>
 								<tr>
-									<th width="60" field="index">编号</th>
-									<th field="item" url="/backend/code/viewDetail?id=" parm="id">标题</th>
+									<th width="60" field="index_no">编号</th>
+									<th field="item" my-attrs='{textFun:"viewDetail",args:"id",style:"color:rgb(0,155,219);cursor:pointer;text-decoration:underline"}'>标题</th>
 									<th field="codeSubType">类别</th>
 									<th field="orderBy">排序</th>
 									<th field="createTimeStr">创建时间</th>
 									<th field="updateTimeStr">更新时间</th>
-									<th field="op" field-role="2,0" width="110"></th>
+									<th field="button" field-role="2" width="110"
+										btn_list='[
+				                        {fnName:"edit", args:"id",name:"编辑",icon:"fa fa-edit",cls:"btn btn-info btn-xs"}
+				                        ]'
+									></th>
 								</tr>
 							</thead>
 							<tbody class="middle-align"></tbody>
 						</table>
-						<div class="pagebar"></div>
+						<div id="pageDiv"></div>
 					</div>
 				</div>
 			</div>
@@ -103,11 +107,19 @@ $(function(){
 });
 
 function refreshFaterId(){
-	jQuery.commonUtil.refreshSelect('#codeMenuId','#fatherId','/backend/codeSubMenu/getCodeSubMenuListByFatherId');
+	$.common.refreshSelect('#codeMenuId','#fatherId','/backend/codeSubMenu/getCodeSubMenuListByFatherId');
 }
 
 function refreshCodeId(){
-	jQuery.commonUtil.refreshSelect('#fatherId','#codeId','/backend/code/getCodeListByFatherId');
+	$.common.refreshSelect('#fatherId','#codeId','/backend/code/getCodeListByFatherId');
+}
+
+function edit(id){
+	window.open('/backend/code/edit?id='+id);
+}
+
+function viewDetail(id){
+	window.open('/backend/code/viewDetail?id='+id);
 }
 </script>
 

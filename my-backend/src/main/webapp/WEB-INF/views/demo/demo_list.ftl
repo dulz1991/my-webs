@@ -22,7 +22,7 @@
 							</div>
 							<div class="form-group">
 								<div class="col-sm-2">
-									<button class="btn btn-info btn-icon" onclick="$.fn.doAutoSearch()">
+									<button class="btn btn-info btn-icon" onclick="$.fn.autoSearch('.form')">
 										<i class="fa-search"></i>
 										<span>搜索</span>
 									</button>
@@ -49,18 +49,22 @@
 						<table class="table table-bordered table-striped" id="datatable">
 							<thead>
 								<tr>
-									<th width="60" field="index">编号</th>
+									<th width="60" field="index_no">编号</th>
 									<th field="title">标题</th>
 									<th field="name">所属分类</th>
 									<th field="downloadTimes">下载次数</th>
 									<th field="createTimeStr">创建时间</th>
 									<th field="updateTimeStr">更新时间</th>
-									<th field="op" field-role="2,0" width="110"></th>
+									<th field="button" field-role="2,0" width="110" 
+										btn_list='[
+				                        {fnName:"edit",args:"id",name:"编辑",icon:"fa fa-edit",cls:"btn btn-info btn-xs"}
+				                        ]'
+									></th>
 								</tr>
 							</thead>
 							<tbody class="middle-align"></tbody>
 						</table>
-						<div class="pagebar"></div>
+						<div id="pageDiv"></div>
 					</div>
 				</div>
 			</div>
@@ -81,8 +85,11 @@ $(function(){
 			// console.log(p);
 		}
 	}); 
-	
 });
+
+function edit(id){
+	window.open('/backend/demo/edit?id='+id);
+}
 </script>
 
 </@base> 

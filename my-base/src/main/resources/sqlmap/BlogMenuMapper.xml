@@ -45,7 +45,7 @@
 <select id="getBeanListByParm" resultMap="BlogMenuBaseMapper">
 	select * from blog_menu where 1=1 
 			<if test="parm.name != null">
-		     	and NAME = #{parm.name}
+		     	and NAME LIKE CONCAT(CONCAT('%', #{parm.name,jdbcType=VARCHAR}),'%')
 		   	</if>
 		<if test="parm.orderby != null">
 	   		order by ${parm.orderby}

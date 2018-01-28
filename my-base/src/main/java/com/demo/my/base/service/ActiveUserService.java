@@ -11,11 +11,8 @@ import com.demo.my.base.util.Page;
 import com.demo.my.base.model.ActiveUser;
 import com.demo.my.base.mybatis.mapper.ds1mapper.ActiveUserMapper;
 
-import com.demo.my.base.service.common.AdapterService;
-
-
 @Component  
-public class ActiveUserService extends AdapterService {
+public class ActiveUserService extends AbstractBaseService {
 	
 	@Autowired
     ActiveUserMapper activeUserMapper;

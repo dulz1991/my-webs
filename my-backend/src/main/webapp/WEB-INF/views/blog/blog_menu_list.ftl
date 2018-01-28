@@ -21,7 +21,7 @@
 							</div>
 							<div class="form-group">
 								<div class="col-sm-2">
-									<button class="btn btn-info btn-icon" onclick="$.fn.doAutoSearch()">
+									<button class="btn btn-info btn-icon" onclick="$.fn.autoSearch('.form')">
 										<i class="fa-search"></i>
 										<span>搜索</span>
 									</button>
@@ -48,14 +48,18 @@
 						<table class="table table-bordered table-striped" id="datatable">
 							<thead>
 								<tr>
-									<th width="60" field="index">编号</th>
-									<th field="name" url="/backend/blog/list?blogMenuId=" parm="id">分类名称</th>
-									<th field="op" field-role="2,0" width="110"></th>
+									<th width="60" field="index_no">编号</th>
+									<th field="name" my-attrs='{textFun:"viewDetail",args:"id",style:"color:rgb(0,155,219);cursor:pointer;text-decoration:underline"}'>分类名称</th>
+									<th field="button" field-role="2" width="110"
+										btn_list='[
+				                        {fnName:"edit", args:"id",name:"编辑",icon:"fa fa-edit",cls:"btn btn-info btn-xs"}
+				                        ]'
+									></th>
 								</tr>
 							</thead>
 							<tbody class="middle-align"></tbody>
 						</table>
-						<div class="pagebar"></div>
+						<div id="pageDiv"></div>
 					</div>
 				</div>
 			</div>
@@ -73,6 +77,14 @@ $(function(){
 	}); 
 	
 });
+
+function edit(id){
+	window.open('/backend/blogMenu/edit?id='+id);
+}
+
+function viewDetail(id){
+	window.open('/backend/blog/list?blogMenuId='+id);
+}
 </script>
 
 </@base> 

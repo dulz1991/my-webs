@@ -26,13 +26,13 @@ public class CollectionController extends BaseBackendController {
 	@Autowired
 	private CollectionService collectionService;
 	
-	@RequestMapping(value="/list", method = RequestMethod.GET)
+	@RequestMapping(value="/list")
 	public ModelAndView index() {
 		ModelAndView model = new ModelAndView("collection/collection_list");
 		return model;
 	}
 	
-	@RequestMapping(value="/edit", method = RequestMethod.GET)
+	@RequestMapping(value="/edit")
 	public ModelAndView edit(Long id) {
 		ModelAndView model = new ModelAndView("collection/collection_edit");
 		if(id!=null){
@@ -43,18 +43,13 @@ public class CollectionController extends BaseBackendController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value="/getList", method = RequestMethod.GET)
+	@RequestMapping(value="/getList")
 	public Map<String, Object> getList(Collection collection,
 			@RequestParam(name="pageNo", defaultValue="1") int pageNo,  
 			@RequestParam(name="pageSize", defaultValue="10") int pageSize) {
-		//查询参数
-		Map<String, Object> parmMap =  this.getParmMap(collection);
-		parmMap.put("orderBy", "");
-		parmMap.put("pageNo", pageNo);
-		parmMap.put("pageSize", pageSize);
 		
-		//查询
-		Page<Map<String, Object>> page = collectionService.getPageMapByParm(parmMap);
+		Map<String, Object> parmMap = this.getParmMap();
+		Page<Map<String, Object>> page = collectionService.getPage("CollectionMapper.getPageMapByParm", parmMap);
 
 		//返回参数
 		Map<String, Object> resMap = responseOK("");
@@ -72,7 +67,7 @@ public class CollectionController extends BaseBackendController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value="/doDelete", method = RequestMethod.GET)
+	@RequestMapping(value="/doDelete")
 	public Map<String, Object> doDelete(Long id) {
 		if(id==null){
 			return responseError(-1, "删除的记录不存在");

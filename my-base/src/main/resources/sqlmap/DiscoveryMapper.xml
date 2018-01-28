@@ -153,7 +153,6 @@
 		d.TITLE as title,
 		d.CONTENT as content,
 		d.IMG_PATH as imagePath,
-		d.CONTENT as content,
 		d.`STATUS` as `status`,
 		case when d.`STATUS` = '1' then '正常'
      		when d.`STATUS` = '0' then '禁用'
@@ -181,13 +180,13 @@
 		     	and d.UPDATE_TIME = #{parm.updateTime}
 		   	</if>
 			<if test="parm.title != null">
-		     	and d.TITLE = #{parm.title}
+		     	and d.TITLE LIKE CONCAT(CONCAT('%', #{parm.title,jdbcType=VARCHAR}),'%')
 		   	</if>
 			<if test="parm.userId != null">
 		     	and d.USER_ID = #{parm.userId}
 		   	</if>
 			<if test="parm.content != null">
-		     	and d.CONTENT = #{parm.content}
+		     	and d.CONTENT LIKE CONCAT(CONCAT('%', #{parm.content,jdbcType=VARCHAR}),'%')
 		   	</if>
 			<if test="parm.status != null">
 		     	and d.STATUS = #{parm.status}
@@ -207,7 +206,6 @@
 		d.TITLE as title,
 		d.CONTENT as content,
 		d.IMG_PATH as imagePath,
-		d.CONTENT as content,
 		d.`STATUS` as `status`,
 		d.USER_ID as userId,
 		u.AVATAR as avatar,
