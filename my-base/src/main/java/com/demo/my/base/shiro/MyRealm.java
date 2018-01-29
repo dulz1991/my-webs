@@ -33,11 +33,7 @@ public class MyRealm extends AuthorizingRealm {
 	    	 Set<String> permissions = new HashSet<String>();
 	    	 Subject subject = SecurityUtils.getSubject();
 	    	 User user = (User) subject.getSession().getAttribute(KeyConstant.USER_INFO);
-	    	 if (user.getRole() == 1) {
-	    		 roleNames.add("LV1");	 
-	    	 } else {
-	    		 roleNames.add("LV2");
-	    	 }
+	    	 roleNames.add(user.getRoleName());	 
 	    	 SimpleAuthorizationInfo authenticationInfo = new SimpleAuthorizationInfo();
 	    	 authenticationInfo.setRoles(roleNames);
 	    	 authenticationInfo.setStringPermissions(permissions);

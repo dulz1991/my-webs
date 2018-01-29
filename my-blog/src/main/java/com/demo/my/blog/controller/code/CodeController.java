@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -36,6 +37,7 @@ public class CodeController extends BaseController {
 	@Autowired
 	private CodeMenuService codeMenuService;
 	
+	@RequiresRoles("admin")
 	@RequestMapping(value = "/index", method=RequestMethod.GET)
 	public ModelAndView index() {
 		ModelAndView mv = new ModelAndView();
@@ -57,6 +59,7 @@ public class CodeController extends BaseController {
 		return mv;
 	}
 	
+	@RequiresRoles("admin")
 	@RequestMapping(value = "/list", method=RequestMethod.GET)
 	public ModelAndView list(Long codeId, Long subMenuId) {
 		ModelAndView modelAndView = new ModelAndView();
@@ -93,6 +96,7 @@ public class CodeController extends BaseController {
 		return modelAndView;
 	}
 	
+	@RequiresRoles("admin")
 	@ResponseBody
 	@RequestMapping(value = "/getMenuList", method=RequestMethod.GET)
 	public Map<String, Object> getMenuList() {
@@ -110,6 +114,7 @@ public class CodeController extends BaseController {
 		return codeMenuList;
 	}
 	
+	@RequiresRoles("admin")
 	@ResponseBody
 	@RequestMapping(value = "/getCodeById", method=RequestMethod.GET)
 	public Map<String, Object> getCodeById(Long codeId) {
@@ -121,6 +126,7 @@ public class CodeController extends BaseController {
 		return resMap;
 	}
 	
+	@RequiresRoles("admin")
 	@RequestMapping(value = "/guide", method=RequestMethod.GET)
 	public ModelAndView guide(Long codeId, Long subMenuId) throws JsonGenerationException, JsonMappingException, IOException {
 		ModelAndView modelAndView = new ModelAndView();

@@ -10,9 +10,11 @@
 		<property name="securityManager" ref="securityManager" />
 		<property name="loginUrl" value="/login" />
 		<property name="successUrl" value="/" />
+		<property name="unauthorizedUrl" value="/noAuth"/>  
 		<property name="filterChainDefinitions">
 			<value>
 				<!-- anon:不验证；authc：验证 -->
+				/code/** = authc,roles["admin"]
 				/auth/** = authc
 			</value>
 		</property>

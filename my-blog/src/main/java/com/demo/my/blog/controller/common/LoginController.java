@@ -86,4 +86,11 @@ public class LoginController extends BaseController {
 		return resMap;
 	}
 	
+	@RequestMapping(value = "/noAuth", method = RequestMethod.GET)
+	public ModelAndView noAuth() {
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("noAuth");
+		return modelAndView;
+	}
+	
 }

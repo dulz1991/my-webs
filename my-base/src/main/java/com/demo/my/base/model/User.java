@@ -3,7 +3,9 @@ package com.demo.my.base.model;
 import java.io.Serializable;
 import java.util.Date;
 
-public class User implements Serializable {
+import com.demo.my.base.model.extend.UserExtend;
+
+public class User extends UserExtend implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 

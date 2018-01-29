@@ -14,10 +14,12 @@ import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.util.SavedRequest;
 
 import com.demo.my.base.model.User;
+import com.demo.my.base.model.UserRole;
 import com.demo.my.base.common.BaseCommon;
 import com.demo.my.base.common.ErrorConstant;
 import com.demo.my.base.common.KeyConstant;
 import com.demo.my.base.mybatis.mapper.ds1mapper.UserMapper;
+import com.demo.my.base.mybatis.mapper.ds1mapper.UserRoleMapper;
 import com.demo.my.base.util.MD5Util;
 import com.demo.my.base.util.RegularUtil;
 
@@ -26,6 +28,8 @@ public class LoginService extends BaseCommon {
 	
 	@Autowired
 	private UserMapper userMapper;
+	@Autowired
+	private UserRoleMapper userRoleMapper;
 
 	public Map<String, Object> login(User user) {
 		Map<String, Object> resMap = new HashMap<String, Object>();
@@ -45,6 +49,8 @@ public class LoginService extends BaseCommon {
 			UsernamePasswordToken token = new UsernamePasswordToken(u.getUsername(), user.getPassword());
 			token.setRememberMe(true);	
 			try {
+				UserRole userRole = userRoleMapper.getById(u.getRole());
+				u.setRoleName(userRole.getRoleName());
 				currentUser.login(token);
 			} catch (AuthenticationException e) {
 				return responseError(ErrorConstant.ERROR_500, ErrorConstant.ERROR_SYS_EXCEPTION);
