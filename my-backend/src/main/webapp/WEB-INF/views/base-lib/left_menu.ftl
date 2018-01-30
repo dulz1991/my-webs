@@ -6,7 +6,7 @@
 				<div class="logo">
 					<a href="javascript:void(0);" class="logo-expanded"> 
 						<h2 style="color: #fff; padding: 0; margin: 0;">
-							<i class="fa fa-cog"></i> 后台管理
+							<i class="fa fa-coffee"></i> 后台管理
 						</h2>
 					</a>
 				</div>

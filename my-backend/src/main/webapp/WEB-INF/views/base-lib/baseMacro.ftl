@@ -125,49 +125,160 @@
     <#--<@my.select id="sex" datas={"0":"男","1":"女"}  value="1" defaultValue="请选择性别"/>-->
     <#--对象是集合对象有默认值-->
     <#--<@my.select id="group" datas=groups key="id" text="name" value="1" defaultValue="请选择组"/>-->
-	<#macro select id datas value="" defaultValue="" key="" text="" class="" onchange="">
+	<#macro select id datas value="" defaultValue="" key="" text="" class="form-control select" onchange="">
 	    <select id="${id}" name="${id}" class="${class}" <#if onchange!="">onchange="${onchange}"</#if>>
 	    	 <#if datas?exists>
 	    	 
-	    	 <#if defaultValue!="">
-	    		<option value="">${defaultValue}</option> 
-	    	 </#if>
-	    	 
-	        <#--判断对象是否为map-->
-	        <#if datas?is_hash_ex>
-	            <#--循环map的key值-->
-	            <#list datas?keys as key>
-	                <#--如果传进来的key值和默认的值相等，则选中这个值-->
-	                <#if key==value>
-	                    <option value="${key}" selected>${datas[key]}</option>
-	                <#else>
-	                    <option value="${key}">${datas[key]}</option>
-	                </#if>
-	            </#list>    
-	        <#else>
-	            <#list datas as data>
-	                <#--如果key值不为空-->
-	                <#if key!="">
-	                    <#--传进来的默认value和通过data的key取出来的值相等，则选中-->
-	                    <#if value==data[key]?string>
-	                        <option value="${data[key]}" selected>${data[text]}</option>
-	                    <#else>
-	                        <option value="${data[key]}" >${data[text]}</option>
-	                    </#if>
-	                <#else>
-	                    <#if data==value>
-	                        <option value="${data}" selected>${data}</option>
-	                    <#else>
-	                        <option value="${data}">${data}</option>
-	                    </#if>
-	                </#if> 
-	            </#list>
-	        </#if>
+		    	 <#if defaultValue!="">
+		    		<option value="">${defaultValue}</option> 
+		    	 </#if>
+		    	 
+		        <#--判断对象是否为map-->
+		        <#if datas?is_hash_ex>
+		            <#--循环map的key值-->
+		            <#list datas?keys as key>
+		                <#--如果传进来的key值和默认的值相等，则选中这个值-->
+		                <#if key==value>
+		                    <option value="${key}" selected>${datas[key]}</option>
+		                <#else>
+		                    <option value="${key}">${datas[key]}</option>
+		                </#if>
+		            </#list>    
+		        <#else>
+		            <#list datas as data>
+		                <#--如果key值不为空-->
+		                <#if key!="">
+		                    <#--传进来的默认value和通过data的key取出来的值相等，则选中-->
+		                    <#if value==data[key]?string>
+		                        <option value="${data[key]}" selected>${data[text]}</option>
+		                    <#else>
+		                        <option value="${data[key]}" >${data[text]}</option>
+		                    </#if>
+		                <#else>
+		                    <#if data==value>
+		                        <option value="${data}" selected>${data}</option>
+		                    <#else>
+		                        <option value="${data}">${data}</option>
+		                    </#if>
+		                </#if> 
+		            </#list>
+		        </#if>
 	        
 	        </#if>
 	    <select>
 	</#macro>
 
+	<#macro searchForm id="" class="" title="">
+		<div class="row">
+			<div class="col-sm-12 panel panel-default">
+				<#if title!="">
+					<div class="panel-heading">
+						<h3 class="panel-title">${title}</h3>
+					</div>
+				</#if>
+				<div class="panel-body">
+					<form class="form-horizontal ${class}" <#if id!="">id="${id}"</#if>  action="javascript:void(0);">
+						<div class="form-group">
+							<#nested>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</#macro>
+	
+	<#macro searchInput type="text" class="col-sm-3" title="" name="" value="">
+		<div class="${class}">
+			${title}
+			<input type="${type}" class="form-control input" name="${name}" value="${value}">
+		</div>
+	</#macro>
+	
+	<#macro searchSelect id datas value="" defaultValue="" key="" text="" class="form-control select" onchange="" title="">
+		<div class="col-sm-3">
+			${title}
+		    <select id="${id}" name="${id}" class="${class}" <#if onchange!="">onchange="${onchange}"</#if>>
+		    	 <#if datas?exists>
+		    	 
+			    	 <#if defaultValue!="">
+			    		<option value="">${defaultValue}</option> 
+			    	 </#if>
+			    	 
+			        <#--判断对象是否为map-->
+			        <#if datas?is_hash_ex>
+			            <#--循环map的key值-->
+			            <#list datas?keys as key>
+			                <#--如果传进来的key值和默认的值相等，则选中这个值-->
+			                <#if key==value>
+			                    <option value="${key}" selected>${datas[key]}</option>
+			                <#else>
+			                    <option value="${key}">${datas[key]}</option>
+			                </#if>
+			            </#list>    
+			        <#else>
+			            <#list datas as data>
+			                <#--如果key值不为空-->
+			                <#if key!="">
+			                    <#--传进来的默认value和通过data的key取出来的值相等，则选中-->
+			                    <#if value==data[key]?string>
+			                        <option value="${data[key]}" selected>${data[text]}</option>
+			                    <#else>
+			                        <option value="${data[key]}" >${data[text]}</option>
+			                    </#if>
+			                <#else>
+			                    <#if data==value>
+			                        <option value="${data}" selected>${data}</option>
+			                    <#else>
+			                        <option value="${data}">${data}</option>
+			                    </#if>
+			                </#if> 
+			            </#list>
+			        </#if>
+		        
+		        </#if>
+		    <select>
+	    </div>
+	</#macro>
+	
+	<#macro searchButton class="col-sm-2" style="margin-top:15px;" clickEvent="$.fn.autoSearch('.form')">
+		<div class="${class}">
+			<button class="btn btn-info btn-icon" <#if style!="">style="${style}"</#if> onclick="${clickEvent}">
+				<i class="fa-search"></i>
+				<span>搜索</span>
+			</button>
+		</div>
+	</#macro>
+	
+	<#macro dataList>
+		<div class="row">
+			<div class="panel panel-default">
+				<#nested>
+			</div>
+		</div>
+	</#macro>
+	
+	<#macro dataHeader title="">
+		<div class="panel-heading">
+			<#if title!=""><h3 class="panel-title">${title}</h3></#if>
+			<div class="panel-options">
+				<#nested>
+			</div>
+		</div>
+	</#macro>
+	
+	<#macro dataTable tableId="datatable" pageId="pageDiv">
+		<div class="panel-body">
+			<table class="table table-bordered table-striped" id="${tableId}">
+				<thead>
+					<tr>
+						<#nested>		
+					</tr>
+				</thead>
+				<tbody class="middle-align"></tbody>
+			</table>
+			<div id="${pageId}"></div>
+		</div>
+	</#macro>
 
 </#compress>
 
