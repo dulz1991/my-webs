@@ -17,9 +17,9 @@
 		</@dataHeader>
 		<@dataTable tableId="datatable" pageId="pageDiv">
 			<th width="60" field="index_no">编号</th>
-			<th field="title" my-attrs='{textFun:"viewDetail",args:"id",style:"color:rgb(0,155,219);cursor:pointer;text-decoration:underline"}'>标题</th>
+			<th field="title" my-attrs='{textFun:"viewDetail",args:"id",clazz:"table-a"}'>标题</th>
 			<th field="username">用户</th>
-			<th field="menuName">分类</th>
+			<th field="menuName" my-attrs='{textFun:"getByMenu",args:"menuId",clazz:"table-a"}'>分类</th>
 			<th field="click">点击</th>
 			<th field="createTime">创建时间</th>
 			<th field="updateTime">更新时间</th>
@@ -48,6 +48,10 @@
 	function viewDetail(id){
 		window.open('/backend/blog/getDetail?id='+id);
 	}
-	</script>
+	
+	function getByMenu(menuId){
+		self.location='/backend/blog/list?blogMenuId='+menuId;
+	}
+1	</script>
 
 </@base> 

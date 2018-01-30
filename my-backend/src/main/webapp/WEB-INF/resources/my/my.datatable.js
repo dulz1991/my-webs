@@ -182,7 +182,7 @@
 		//class
 		var clazz = attrs.clazz; //样式
 		if($.common.isNotBlank(clazz)){
-			span += " clazz='" + clazz +"' ";	
+			span += " class='" + clazz +"' ";	
 		}
 		
 		span += ">"+text+"</span>";

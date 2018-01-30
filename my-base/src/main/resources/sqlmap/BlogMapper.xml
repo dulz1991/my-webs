@@ -155,25 +155,10 @@
 		</if>
 </select>
 
-
-<select id="getMapListByParm_count" parameterType="HashMap" resultType="integer">
-	select count(*) from blog b 
-	LEFT JOIN `user` u on b.USER_ID = u.ID
-	LEFT JOIN blog_menu bm on b.MENU_ID = bm.ID
-	where 1=1
-	<if test="parm.title != null">
-   		and b.title like "%"#{parm.title}"%"
-   	</if>
-   	<if test="parm.username != null">
-   		and u.USERNAME like "%"#{parm.username}"%"
-   	</if>
-   	<if test="parm.menuId != null">
-   		and b.menu_id = #{parm.menuId}
-   	</if>
-</select>
 <select id="getMapListByParm" parameterType="HashMap" resultType="HashMap">
 	select 
 	b.id as id, 
+	b.MENU_ID menuId,
 	b.TITLE as title,
 	DATE_FORMAT(b.CREATE_TIME,"%Y-%m-%d %H:%s:%i") as createTime,
 	DATE_FORMAT(b.UPDATE_TIME,"%Y-%m-%d %H:%s:%i") as updateTime,

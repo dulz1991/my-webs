@@ -9,3 +9,6 @@ body {
 
 a {
 }
+
+.table-a{color:rgb(0,155,219);cursor:pointer;}
+.table-a:hover{text-decoration:underline}
