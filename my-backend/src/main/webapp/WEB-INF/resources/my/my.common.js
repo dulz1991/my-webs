@@ -380,7 +380,7 @@ jQuery.common = {
 	},
 	
 	//删除
-	deleteById:function(id){
+	deleteById:function(id, url){
 		swal({
 			title: '删除',
 		  	text: "确定删除么?",
@@ -392,7 +392,7 @@ jQuery.common = {
 		}).then(function() {    //大部分，then是通用的回调函数
 			var parm = {};
 			parm.id=id;
-			$.common.postRequest(parm, '/backend/blogMenu/doDelete', function(data){
+			$.common.postRequest(parm, url, function(data){
 				if(data.errorNo==200){
 					$.common.tip("删除成功");
 					$.common.reloadTable();

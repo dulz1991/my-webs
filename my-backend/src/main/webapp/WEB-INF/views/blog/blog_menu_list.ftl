@@ -16,11 +16,11 @@
 		</@dataHeader>
 		<@dataTable tableId="datatable" pageId="pageDiv">
 			<th width="60" field="index_no">编号</th>
-			<th field="name" my-attrs='{textFun:"viewDetail",args:"id",style:"color:rgb(0,155,219);cursor:pointer;text-decoration:underline"}'>分类名称</th>
+			<th field="name" my-attrs='{textFun:"viewDetail",args:"id",clazz:"table-a"}'>分类名称</th>
 			<th field="button" field-role="2"
 				btn_list='[
                 {fnName:"edit", args:"id,name",name:"编辑",icon:"fa fa-edit",cls:"btn btn-info btn-xs"},
-                {fnName:"$.common.deleteById", args:"id",name:"删除",icon:"fa fa-trash-o",cls:"btn btn-danger btn-xs"}
+                {fnName:"toDelete", args:"id",name:"删除",icon:"fa fa-trash-o",cls:"btn btn-danger btn-xs"}
                 ]'
 			></th>
 		</@dataTable>
@@ -67,6 +67,10 @@
 		})
 	}
 	
+	function toDelete(id){
+		$.common.deleteById(id,'/backend/blogMenu/doDelete');
+	}
+
 	function viewDetail(id){
 		window.open('/backend/blog/list?blogMenuId='+id);
 	}
