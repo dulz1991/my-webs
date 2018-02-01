@@ -19,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.demo.my.backend.common.BaseBackendController;
 import com.demo.my.base.service.CodeMenuService;
 import com.demo.my.base.service.CodeSubMenuService;
+import com.demo.my.base.enums.EnumCodeSubMenuStatus;
 import com.demo.my.base.model.CodeMenu;
 import com.demo.my.base.model.CodeSubMenu;
 import com.demo.my.base.util.Page;
@@ -70,6 +71,9 @@ public class CodeSubMenuController extends BaseBackendController {
 		Map<String, Object> parmMap = this.getParmMap();
 		parmMap.put("orderBy", "csm.`NAME` asc");
 		Page<Map<String, Object>> page = codeSubMenuService.getPage("CodeSubMenuMapper.getMapListByParm", parmMap);
+		for(Map<String, Object> m : page.getList()){
+			m.put("statusStr", EnumCodeSubMenuStatus.getValueByKey(Integer.valueOf(m.get("menuStatus")+"")));
+		}
 		
 		Map<String, Object> resMap = new HashMap<String, Object>();
 		resMap.put("list", page.getList());
