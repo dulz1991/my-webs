@@ -1,9 +1,9 @@
 <#include "/base-lib/baseMacro.ftl"> 
-<@base base_title="列表 blog log" openIndex=3 activeIndex=2>
+<@base base_title="博客日志" openIndex=3 activeIndex=2>
 	
 	<!-- 搜索区 -->
     <@searchForm class="form" title="搜索区">
-		<@searchInput title="博客标题" name="blogTitle" class="col-sm-6" />
+		<@searchInput title="博客标题" name="blogTitle" class="col-sm-4" />
 		<@searchButton />
 	</@searchForm>
 	<!-- 搜索区结束 -->

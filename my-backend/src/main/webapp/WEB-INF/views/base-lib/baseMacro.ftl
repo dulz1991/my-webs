@@ -27,9 +27,6 @@
 				<link rel="stylesheet" href="/css/xenon-components.css">
 				<link rel="stylesheet" href="/css/xenon-skins.css">
 				<link rel="stylesheet" href="/css/custom.css">
-				<#--
-				<link rel="stylesheet" href="/css/jquery.page.css">
-				-->
 				<#-- 遍历扩展页css -->
 				<#list base_css as c>
 				<link rel="stylesheet" href="${c}">
@@ -57,17 +54,18 @@
 				<link rel="stylesheet" href="/my/my.page.css">
 				<script src="/my/my.page.js"></script>
 				
-				<#--
-				<script src="/js/common-util.js"></script>	
-				<script src="/js/jquery.page.js"></script>
-				<script src="/js/jquery.dateutil.js"></script>
-				<script src="/js/jquery.datatable.js"></script>
-				<script src="/js/jquery.select.js"></script>
-				-->
+				<link rel="stylesheet" href="/js/sweetalert2/sweetalert2.css">
+				<script src="/js/sweetalert2/sweetalert2.js"></script>
+				
+				<link rel="stylesheet" href="/js/toast/animate.css">
+				<link rel="stylesheet" href="/js/toast/toast.css">
+				<script src="/js/toast/toast.js"></script>
+				
 				<#-- ueditor -->
 				<script src="/ue/ueditor.config.js"></script>
 				<script src="/ue/ueditor.all.js"></script>
 				<link href="/ue/themes/default/css/ueditor.css" rel="stylesheet">
+				
 				<#-- 遍历公共js -->
 				<#list base_js as j>
 				<script src="${j}"></script>

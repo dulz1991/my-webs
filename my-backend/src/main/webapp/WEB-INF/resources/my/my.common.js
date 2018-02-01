@@ -303,7 +303,7 @@ jQuery.common = {
 	},
 	
 	alert: function(text){
-		alert(text);
+		swal('text', '', 'error');
 	},
 	
 	//显示提示
@@ -373,6 +373,34 @@ jQuery.common = {
 	
 	openQQ: function(){
 		window.open("http://wpa.qq.com/msgrd?v=3&uin=3566877072&site=qq&menu=yes");
+	},
+	
+	reloadTable: function(){
+		$.fn.reload();
+	},
+	
+	//删除
+	deleteById:function(id){
+		swal({
+			title: '删除',
+		  	text: "确定删除么?",
+		  	type: 'warning',   //感叹号图标
+		  	showCancelButton: true,   //显示取消按钮
+		  	confirmButtonColor: '#d33', //俩个按钮的颜色
+		  	confirmButtonText: '确定删除', //俩个按钮的文本
+		  	cancelButtonText: '取消',
+		}).then(function() {    //大部分，then是通用的回调函数
+			var parm = {};
+			parm.id=id;
+			$.common.postRequest(parm, '/backend/blogMenu/doDelete', function(data){
+				if(data.errorNo==200){
+					$.common.tip("删除成功");
+					$.common.reloadTable();
+				} else {
+					$.common.tip(data.errorInfo);
+				}
+			});
+		})
 	}
 	
 }
