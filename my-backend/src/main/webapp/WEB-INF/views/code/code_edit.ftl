@@ -11,11 +11,11 @@
 				<form class="form-horizontal form" id="form" action="javascript:void(0);">
 					<input type="hidden" name="id" value="${entity.id!}">
 					<div class="form-group">
-						<div class="col-sm-6">
+						<div class="col-sm-4">
 							标题
 							<input type="text" class="form-control input" name="item" value="${entity.item!''}">
 						</div>
-						<div class="col-sm-3">
+						<div class="col-sm-2">
 							排序
 							<input type="number" class="form-control input" name="itemOrder" value="${entity.itemOrder!''}">
 						</div>
@@ -66,11 +66,15 @@ $(function(){
 	
 });
 function refreshFaterId(){
-	$.common.refreshSelect('#codeMenuId','#fatherId','/backend/codeSubMenu/getCodeSubMenuListByFatherId');
+	var parm = {};
+	parm.id=$('#codeMenuId').val();
+	$.common.refreshSelect('#fatherId','/backend/codeSubMenu/getCodeSubMenuListByFatherId',parm);
+	$.common.cleanSelect('#codeId');
 }
 
 function refreshCodeId(){
-	$.common.refreshSelect('#fatherId','#codeId','/backend/code/getCodeListByFatherId');
+	var parm = {id:$('#fatherId').val()}
+	$.common.refreshSelect('#codeId','/backend/code/getCodeListByFatherId', parm);
 }
 
 function doSave(){

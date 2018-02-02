@@ -141,7 +141,7 @@ jQuery.common = {
 	 */
 	refreshSelect : function( _targetElem, _getUrl, _parm){
 		$.common.getRequest(_parm, _getUrl, function(data){
-			if (data.errorNo == 0) {
+			if (data.errorNo == 200) {
 				if(data.list==undefined){
 					return;
 				}
@@ -149,7 +149,7 @@ jQuery.common = {
 				var len = data.list.length;
 				for (var i = 0; i < len; i++) {
 					var item = data.list[i];
-					html += '<option value="'+item.value+'">'+item.text+'</option>';
+					html += '<option value="'+item.key+'">'+item.value+'</option>';
 				}
 				$(_targetElem).html(html);
 			}
@@ -168,6 +168,15 @@ jQuery.common = {
 		    }
 		});
 	},
+	
+	/**
+	 * 清除select
+	 */
+	cleanSelect : function(_targetElem){
+		var html = '<option value="">--请选择--</option>';
+		$(_targetElem).html(html);
+	},
+	
 	/**
 	 * 根据select的value默认选中
 	 * @param _elem

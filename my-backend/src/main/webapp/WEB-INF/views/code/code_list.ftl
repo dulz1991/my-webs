@@ -8,8 +8,7 @@
 									text="name" value="${codeMenuId!''}" onchange="refreshFaterId()" defaultValue="--选择一级分类--" />
 		<div class="col-sm-3">
 			二级分类
-			<select id="fatherId" name="fatherId" class="form-control select"
-			  value="${codeSubMenuId!''}" onchange="refreshCodeId()">
+			<select id="fatherId" name="fatherId" class="form-control select" value="${codeSubMenuId!''}" onchange="refreshCodeId()">
 				<option value="">--选择二级分类--</option>
 			</select>
 		</div>
@@ -69,11 +68,15 @@ $(function(){
 });
 
 function refreshFaterId(){
-	$.common.refreshSelect('#codeMenuId','#fatherId','/backend/codeSubMenu/getCodeSubMenuListByFatherId');
+	var parm = {};
+	parm.id=$('#codeMenuId').val();
+	$.common.refreshSelect('#fatherId','/backend/codeSubMenu/getCodeSubMenuListByFatherId',parm);
+	$.common.cleanSelect('#codeId');
 }
 
 function refreshCodeId(){
-	$.common.refreshSelect('#fatherId','#codeId','/backend/code/getCodeListByFatherId');
+	var parm = {id:$('#fatherId').val()}
+	$.common.refreshSelect('#codeId','/backend/code/getCodeListByFatherId', parm);
 }
 
 function edit(id){
