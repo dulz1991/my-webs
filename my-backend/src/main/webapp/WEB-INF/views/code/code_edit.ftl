@@ -81,7 +81,7 @@ function doSave(){
 	var parm = $.common.getFormJson('.form');
 	$.common.postRequest(parm, '/backend/code/doSave', function(data){
 		if(data.errorNo==200){
-			self.location='/backend/code/viewDetail';
+			self.location='/backend/code/viewDetail?id='+data.id;
 		} else {
 			$.common.alert(data.errorInfo);
 		}

@@ -42,7 +42,7 @@
 <jsp:include page="../include/right_bottom.jsp"></jsp:include>
 
 <style>
-.content p{padding-bottom:0;}
+.content p{padding-bottom:10;}
 </style>
 </body>
 </html>

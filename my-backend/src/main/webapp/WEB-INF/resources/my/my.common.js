@@ -145,7 +145,7 @@ jQuery.common = {
 				if(data.list==undefined){
 					return;
 				}
-				var html = '<option value="-1">--请选择--</option>';
+				var html = '<option value="">--请选择--</option>';
 				var len = data.list.length;
 				for (var i = 0; i < len; i++) {
 					var item = data.list[i];
