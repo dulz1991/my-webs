@@ -85,13 +85,18 @@
 		var hidden = ''; //是否隐藏
 		
 		for(var i=0; i<btn_list.length; i++) { 
-			btnName = btn_list[i].name; //方法名
-			btnFnName = btn_list[i].fnName; //按钮文字
+			btnFnName = btn_list[i].fnName; //js方法名
 			btnArgs = btn_list[i].args; //方法参数
 			btnIcon = $.common.convertBlank(btn_list[i].icon); //图标
 			disable = btn_list[i].disable; //是否disable
 			hidden = btn_list[i].hidden; //是否隐藏
 
+			//按钮名字
+			btnName = btn_list[i].name; //方法名			
+			if($.common.isNotBlank(item[btnName])){
+				btnName=item[btnName];
+			}
+			
 			//判断是否隐藏按钮
 			if($.common.isNotBlank(hidden)){
 				if(item[hidden]==true){

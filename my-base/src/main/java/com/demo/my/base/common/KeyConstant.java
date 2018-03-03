@@ -8,4 +8,7 @@ public class KeyConstant {
 	
 	/*cookie key*/
 	public static String COOKIE_USER = "cookie_user";
+	
+	/*博客网站首页 系统配置的key*/
+	public static String BLOG_SLOGAN = "blogSlogan";
 }

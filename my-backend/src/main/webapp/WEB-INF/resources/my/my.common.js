@@ -366,6 +366,9 @@ jQuery.common = {
 		} 
 		return true;
 	},
+	isBlank: function(value) {
+		return !$.common.isNotBlank(value);
+	},
 	
 	dateconvert: function(value) {
 		var date = new Date(value);
@@ -386,6 +389,12 @@ jQuery.common = {
 	
 	reloadTable: function(){
 		$.fn.reload();
+	},
+	autoSearch: function(elem){
+		if($.common.isNotBlank(elem)){
+			elem = '.form';
+		}
+		$.fn.autoSearch('.form')
 	},
 	
 	//删除

@@ -14,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.demo.my.backend.common.BaseBackendController;
 import com.demo.my.base.service.UserService;
+import com.demo.my.base.enums.EnumUserRole;
 import com.demo.my.base.enums.EnumUserStatus;
 import com.demo.my.base.model.User;
 import com.demo.my.base.util.Page;
@@ -28,8 +29,14 @@ public class UserController extends BaseBackendController {
 	private UserService userService;
 	
 	@RequestMapping(value="/list")
-	public ModelAndView index() {
+	public ModelAndView index(String role) {
 		ModelAndView model = new ModelAndView("user/user_list");
+		model.addObject("role", role);
+		if(role.equals(EnumUserRole.ADMIN.getKey()+"")){
+			model.addObject("activeIndex", 1);
+		} else if(role.equals(EnumUserRole.REGISTER.getKey()+"")){
+			model.addObject("activeIndex", 0);
+		}
 		return model;
 	}
 	
@@ -55,10 +62,17 @@ public class UserController extends BaseBackendController {
 			for(Map<String, Object> map : page.getList()){
 				int s = (int) map.get("status");
 				map.put("userStatusStr", EnumUserStatus.getValueByKey(s));
+				map.put("hidepb", false);
+				map.put("hidehf", false);
+				if(s==EnumUserStatus.NORMAL.getKey()){
+					map.put("hidehf", true);
+				} else if(s==EnumUserStatus.FORBIDDEN.getKey()){
+					map.put("hidepb", true);
+				}
 			}
 		}
 		
-		Map<String, Object> resMap = this.responseOK("");
+		Map<String, Object> resMap = responseOK("");
 		resMap.put("list", page.getList());
 		resMap.put("page", page);
 		

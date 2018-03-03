@@ -22,7 +22,7 @@
 			<th field="downloadTimes">下载次数</th>
 			<th field="createTimeStr">创建时间</th>
 			<th field="updateTimeStr">更新时间</th>
-			<th field="button" field-role="2,0" width="110" 
+			<th field="button" width="110" 
 				btn_list='[
                 {fnName:"edit",args:"id",name:"编辑",icon:"fa fa-edit",cls:"btn btn-info btn-xs"}
                 ]'

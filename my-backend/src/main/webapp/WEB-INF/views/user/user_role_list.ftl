@@ -1,5 +1,5 @@
 <#include "/base-lib/baseMacro.ftl"> 
-<@base base_title="列表" openIndex=1 activeIndex=1>
+<@base base_title="列表" openIndex=1 activeIndex=2>
 	
 	<!-- 列表区 -->
 	<@dataList>

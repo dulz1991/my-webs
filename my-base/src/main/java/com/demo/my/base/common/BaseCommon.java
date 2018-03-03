@@ -44,18 +44,22 @@ public class BaseCommon {
 		}
 	}
 	
-	public static HashMap<String, Object> responseOK(String result){
-		HashMap<String, Object> resMap = new HashMap<String, Object>();
-		resMap.put(ErrorConstant.ERROR_NO, ErrorConstant.ERROR_200);
-		resMap.put(ErrorConstant.ERROR_INFO, result);
-		return resMap;
+	public static Map<String, Object> responseOK(){
+		return responseError(ErrorConstant.ERROR_200, "");
 	}
-	public static HashMap<String, Object> responseError(Integer errorNo, String errorInfo){
-		HashMap<String, Object> resMap = new HashMap<String, Object>();
+	public static Map<String, Object> responseOK(String result){
+		return responseError(ErrorConstant.ERROR_200, result);
+	}
+	public static Map<String, Object> responseGeneralError(String errorInfo){
+		return responseError(ErrorConstant.ERROR_GENERAL, errorInfo);
+	}
+	public static Map<String, Object> responseError(Integer errorNo, String errorInfo){
+		Map<String, Object> resMap = new HashMap<String, Object>();
 		resMap.put(ErrorConstant.ERROR_NO, errorNo);
 		resMap.put(ErrorConstant.ERROR_INFO, errorInfo);
 		return resMap;
 	}
+	
 	
 	public SavedRequest getSavedRequest() {
         SavedRequest savedRequest = null;

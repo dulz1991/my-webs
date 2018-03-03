@@ -171,8 +171,8 @@
 				</#if>
 			</a>
 			<ul class="dropdown-menu user-profile-menu list-unstyled">
-				<li><a href="/auth/admin/profile"><i class="fa-user"></i>个人中心</a></li>
-				<li><a href="#settings"><i class="fa-wrench"></i>设置</a></li>
+				<li><a href="/backend/profile/index"><i class="fa-user"></i>个人中心</a></li>
+				<li><a href="/backend/sys/index"><i class="fa-wrench"></i>系统配置</a></li>
 				<li class="last"><a href="/logout"><i class="fa-lock"></i>退出</a></li>
 			</ul> 
 		</li>

@@ -11,9 +11,9 @@ import com.demo.my.base.util.PageUtil;
 
 public interface SysCfgMapper extends BaseMapper {
 
-	void insert(SysCfg sysCfg);
+	int insert(SysCfg sysCfg);
 	
-	void update(SysCfg sysCfg);
+	int update(SysCfg sysCfg);
 	
 	SysCfg getById(@Param("id") Long id);
 	
@@ -26,4 +26,6 @@ public interface SysCfgMapper extends BaseMapper {
 	int countByParm(@Param("parm") Map<String, Object> paramMap);
 
 	List<Map<String, Object>> getMapListByParm(@Param("page") PageUtil page, @Param("parm") Map<String, Object> paramMap);
+ 
+	SysCfg getByKey(@Param("key") String key);
 }

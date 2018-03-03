@@ -3,8 +3,9 @@
 <mapper namespace="com.demo.my.base.mybatis.mapper.ds1mapper.SysCfgMapper">
 
 <resultMap type="com.demo.my.base.model.SysCfg" id="SysCfgBaseMapper">
-	<id property="remark" column="REMARK" />
-	<id property="countJson" column="COUNT_JSON" />
+	<id property="key" column="key" />
+	<id property="value" column="value" />
+	<id property="flag" column="flag" />
 	<id property="id" column="ID" />
 </resultMap>  
 
@@ -13,19 +14,22 @@
    		select LAST_INSERT_ID()
    	</selectKey>
 	insert into sys_cfg
-	(REMARK,COUNT_JSON)
+	(`KEY`,VALUE,FLAG)
 	values
-	(#{remark},#{countJson})
+	(#{key},#{value},#{flag})
 </insert>
 
 <update id="update">
 	UPDATE sys_cfg 
 	<set>
-			<if test="remark != null">  
-	        	REMARK=#{remark},
+			<if test="key != null">  
+	        	`KEY`=#{key},
 	    	</if>
-			<if test="countJson != null">  
-	        	COUNT_JSON=#{countJson},
+			<if test="value != null">  
+	        	VALUE=#{value},
+	    	</if>
+	    	<if test="flag != null">  
+	        	FLAG=#{flag},
 	    	</if>
 	</set>   
     WHERE id=#{id}
@@ -39,23 +43,33 @@
 	SELECT * FROM sys_cfg WHERE id=#{id} 
 </select>
 
+<select id="getByKey" resultMap="SysCfgBaseMapper">
+	SELECT * FROM sys_cfg WHERE `KEY`=#{key} 
+</select>
+
 <select id="countByParm" resultType="integer">
 	select count(*) from sys_cfg  where 1=1 
-			<if test="parm.remark != null">
-		     	and REMARK = #{parm.remark}
+			<if test="parm.key != null">
+		     	and `KEY` = #{parm.key}
 		   	</if>
-			<if test="parm.countJson != null">
-		     	and COUNT_JSON = #{parm.countJson}
+			<if test="parm.value != null">
+		     	and VALUE = #{parm.value}
+		   	</if>
+		   	<if test="parm.flag != null">
+		     	and FLAG = #{parm.flag}
 		   	</if>
 </select>
 
 <select id="getBeanListByParm" resultMap="SysCfgBaseMapper">
 	select * from sys_cfg where 1=1 
-			<if test="parm.remark != null">
-		     	and REMARK = #{parm.remark}
+			<if test="parm.key != null">
+		     	and `KEY` = #{parm.key}
 		   	</if>
-			<if test="parm.countJson != null">
-		     	and COUNT_JSON = #{parm.countJson}
+			<if test="parm.value != null">
+		     	and VALUE = #{parm.value}
+		   	</if>
+		   	<if test="parm.flag != null">
+		     	and FLAG = #{parm.flag}
 		   	</if>
 		<if test="parm.orderby != null">
 	   		order by ${parm.orderby}

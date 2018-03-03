@@ -49,6 +49,7 @@
 				
 				<script src="/js/jquery.form.js"></script>
 				<script src="/my/my.common.js"></script>	
+				<script src="/my/my.biz.js"></script>	
 				<script src="/my/my.datatable.js"></script>
 				
 				<link rel="stylesheet" href="/my/my.page.css">
@@ -74,7 +75,7 @@
 				$(function(){
 					$('#main-menu li.li').removeClass('active').removeClass('opened');
 					$('#main-menu li.li').eq(${openIndex}).addClass('active').addClass('opened');
-					$('#main-menu li.li').eq(${openIndex}).find('ul li').eq(${activeIndex}).addClass('active');
+					$('#main-menu li.li').eq(${openIndex}).find('ul li').eq(${activeIndex}).addClass('active');	
 				});
 				</script>
 			</head>
@@ -94,9 +95,6 @@
 					</div>
 					<!-- 主内容区域 end -->
 				</div>
-			    
-			    <!-- 弹出框 -->
-			    <#include "dialog_delete.ftl">
 			    
 			    <#-- 以下是公共页脚	-->
 			    <#-- 
@@ -186,10 +184,15 @@
 	</#macro>
 	
 	<#macro searchInput type="text" class="col-sm-3" title="" name="" value="">
-		<div class="${class}">
-			${title}
+		<#if type=="hidden">
 			<input type="${type}" class="form-control input" name="${name}" value="${value}">
-		</div>
+		</#if>
+		<#if type!="hidden">
+			<div class="${class}">
+				${title}
+				<input type="${type}" class="form-control input" name="${name}" value="${value}">
+			</div>
+		</#if>
 	</#macro>
 	
 	<#macro searchSelect id datas value="" defaultValue="" key="" text="" class="form-control select" onchange="" title="">
