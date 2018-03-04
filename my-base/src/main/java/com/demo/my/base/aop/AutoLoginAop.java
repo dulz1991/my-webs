@@ -1,5 +1,7 @@
 package com.demo.my.base.aop;
 
+import java.util.Date;
+
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
@@ -12,7 +14,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.demo.my.base.model.User;
+import com.demo.my.base.model.UserLog;
 import com.demo.my.base.common.KeyConstant;
+import com.demo.my.base.enums.EnumUserLogType;
+import com.demo.my.base.service.UserLogService;
 import com.demo.my.base.service.UserService;
 
 @Aspect
@@ -21,6 +26,8 @@ public class AutoLoginAop {
 
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private UserLogService userLogService;
 
 	@Pointcut("execution (* com.demo.my..*.*Controller.*(..))")
 	public void autoLoginAop() { }
@@ -31,8 +38,8 @@ public class AutoLoginAop {
 	 */
 	@Before("autoLoginAop()")
 	public void doBefore(JoinPoint joinPoint) {
+		Subject subject = SecurityUtils.getSubject();
 		try {
-			Subject subject = SecurityUtils.getSubject();
 			if (!subject.isAuthenticated() && subject.isRemembered()) {
 	            Object principal = subject.getPrincipal();
 	            if (null != principal) {
@@ -43,11 +50,25 @@ public class AutoLoginAop {
 	                subject.login(token);//登录
 	                user.setPassword(null);
 	                subject.getSession().setAttribute(KeyConstant.USER_INFO, user);
+	                //记录用户自动登录日志
+	                autoLoginResult(user.getId(), "自动登录成功");
 	            }
 	        }
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
+			//记录用户自动登录日志
+			autoLoginResult(0L, subject.getPrincipal()+":"+e.getMessage());
 		}
+	}
+	
+	private void autoLoginResult(Long userId, String remark){
+		//记录用户自动登录日志
+        UserLog userLog = new UserLog();
+        userLog.setCreateTime(new Date());
+        userLog.setRemark(remark);
+        userLog.setUserId(userId);
+        userLog.setType(EnumUserLogType.AUTO_LOGIN.getKey());
+        userLogService.insert(userLog);
 	}
 
 	

@@ -17,7 +17,7 @@ import com.demo.my.base.service.UserService;
 
 @Controller
 @RequestMapping("/backend/profile")
-public class AdminController extends BaseBackendController {
+public class ProfileController extends BaseBackendController {
 	
 	private Log logger = LogFactory.getLog(this.getClass());
 	

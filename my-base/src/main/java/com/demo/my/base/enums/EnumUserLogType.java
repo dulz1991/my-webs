@@ -1,15 +1,14 @@
 package com.demo.my.base.enums;
 
-public enum EnumSysCfgFlag {
+public enum EnumUserLogType {
 	
-	BLOG_SITE(0, "博客网站首页"),
-	EXCUTE(1, "任务执行"),
-	PUBLIC(2, "公共数据");
+	PWD_LOGIN(1, "密码登录"), 
+	AUTO_LOGIN(2, "自动登录");
 	
 	private int key;
 	private String value;
     
-    private EnumSysCfgFlag(int key, String value){
+    private EnumUserLogType(int key, String value){
         this.setKey(key) ;
         this.setValue(value);
     }
@@ -31,7 +30,7 @@ public enum EnumSysCfgFlag {
 	}
 	
 	public static String getValueByKey(int key) {
-		for (EnumSysCfgFlag e : EnumSysCfgFlag.values()) {
+		for (EnumUserLogType e : EnumUserLogType.values()) {
             if(e.getKey()==key){
             	return e.getValue();
             }

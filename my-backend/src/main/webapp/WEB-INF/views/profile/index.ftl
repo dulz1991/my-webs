@@ -40,9 +40,7 @@
 			<!-- 右侧 -->		
 			<div class="col-sm-9">
 				<!-- 登录历史 仅管理员显示 -->
-				<#if user.role==1>
-					<#include "login_record_list.ftl">
-				</#if>
+				<#include "login_record_list.ftl">
 				<!-- 修改基础信息 -->
 				<#include "form_baseinfo.ftl">
 			</div>

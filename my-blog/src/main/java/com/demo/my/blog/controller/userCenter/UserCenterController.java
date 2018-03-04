@@ -67,7 +67,7 @@ public class UserCenterController extends BaseController {
 	}
 	@ResponseBody
 	@RequestMapping(value = "/modifyPwd", method=RequestMethod.POST)
-	public HashMap<String, Object> modifyPwd(String newpwd, String oldpwd, String cfmpwd) {
+	public Map<String, Object> modifyPwd(String newpwd, String oldpwd, String cfmpwd) {
 		if(StringUtils.isBlank(newpwd)||StringUtils.isBlank(oldpwd)||StringUtils.isBlank(cfmpwd)){
 			return responseError(ErrorConstant.ERROR_500, ErrorConstant.ERROR_EMPTY_PWD);
 		}

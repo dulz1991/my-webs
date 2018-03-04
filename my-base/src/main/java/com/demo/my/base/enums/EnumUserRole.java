@@ -2,8 +2,8 @@ package com.demo.my.base.enums;
 
 public enum EnumUserRole {
 	
-	ADMIN(1, "¹ÜÀíÔ±"), 
-	REGISTER(2, "×¢²áÓÃ»§");
+	ADMIN(1, "ç®¡ç†å‘˜"), 
+	REGISTER(2, "æ³¨å†Œç”¨æˆ·");
 	
 	private int key;
 	private String value;

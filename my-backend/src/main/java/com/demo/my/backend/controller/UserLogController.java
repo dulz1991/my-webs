@@ -15,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.demo.my.backend.common.BaseBackendController;
 import com.demo.my.base.service.UserLogService;
+import com.demo.my.base.enums.EnumUserLogType;
 import com.demo.my.base.model.UserLog;
 import com.demo.my.base.util.Page;
 
@@ -48,10 +49,17 @@ public class UserLogController extends BaseBackendController {
 	public Map<String, Object> getList(UserLog userLog,
 			@RequestParam(name="pageNo", defaultValue="1") int pageNo,  
 			@RequestParam(name="pageSize", defaultValue="10") int pageSize) {
-		Page<UserLog> page = userLogService.getBeanListByParm(userLog, pageNo, pageSize, "");
+		Map<String, Object> parmMap = this.getParmMap();
+		Page<Map<String, Object>> page = userLogService.getPage("UserLogMapper.getMapListByParm", parmMap);
+		if(page!=null && page.getList()!=null){
+			for(Map<String, Object> map : page.getList()){
+				map.put("logTypeStr", EnumUserLogType.getValueByKey((Integer)map.get("type")));
+			}
+		}
 
-		Map<String, Object> resMap = new HashMap<String, Object>();
+		Map<String, Object> resMap = responseOK();
 		resMap.put("page", page);
+		resMap.put("list", page.getList());
 		
 		return resMap;
 	}

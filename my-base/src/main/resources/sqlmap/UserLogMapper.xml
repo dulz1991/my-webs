@@ -87,7 +87,17 @@
 
 
 <select id="getMapListByParm" parameterType="HashMap" resultType="HashMap">
-	select * from user_log where 1=1
+	SELECT 
+		t1.REMARK remark,
+		DATE_FORMAT(t1.CREATE_TIME,'%Y-%m-%d %H:%i:%s') loginTimeStr,
+		t2.USERNAME username,
+		t1.TYPE type,
+		t3.ROLE_NAME
+		from user_log t1 
+		LEFT JOIN `user` t2 on t1.USER_ID=t2.ID
+		LEFT JOIN user_role t3 on t3.ID=t2.ROLE
+		where 1=1
+		
 		<if test="parm.orderby != null">
 	   		order by ${parm.orderby}
 	   	</if>

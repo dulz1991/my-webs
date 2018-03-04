@@ -2,8 +2,8 @@ package com.demo.my.base.enums;
 
 public enum EnumUserStatus {
 	
-	NORMAL(1, "Õı³£"), 
-	FORBIDDEN(2, "½ûÓÃ");
+	NORMAL(1, "æ­£å¸¸"), 
+	FORBIDDEN(2, "å·²å±è”½");
 	
 	private int key;
 	private String value;

@@ -2,9 +2,9 @@ package com.demo.my.base.enums;
 
 public enum EnumCodeSubMenuStatus {
 	
-	NOT_START(0, "Î´¿ªÊ¼"), 
-	EDIT(1, "±à¼­ÖĞ"), 
-	COMPLETE(2, "ÒÑÍê³É");
+	NOT_START(0, "æœªå¼€å§‹Ê¼"), 
+	EDIT(1, "ç¼–è¾‘ä¸­"), 
+	COMPLETE(2, "å·²å®Œæˆ");
 	
 	private int key;
 	private String value;

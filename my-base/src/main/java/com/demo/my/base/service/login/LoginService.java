@@ -14,10 +14,13 @@ import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.util.SavedRequest;
 
 import com.demo.my.base.model.User;
+import com.demo.my.base.model.UserLog;
 import com.demo.my.base.model.UserRole;
 import com.demo.my.base.common.BaseCommon;
 import com.demo.my.base.common.ErrorConstant;
 import com.demo.my.base.common.KeyConstant;
+import com.demo.my.base.enums.EnumUserLogType;
+import com.demo.my.base.mybatis.mapper.ds1mapper.UserLogMapper;
 import com.demo.my.base.mybatis.mapper.ds1mapper.UserMapper;
 import com.demo.my.base.mybatis.mapper.ds1mapper.UserRoleMapper;
 import com.demo.my.base.util.MD5Util;
@@ -30,14 +33,16 @@ public class LoginService extends BaseCommon {
 	private UserMapper userMapper;
 	@Autowired
 	private UserRoleMapper userRoleMapper;
+	@Autowired
+	private UserLogMapper userLogMapper;
 
 	public Map<String, Object> login(User user) {
-		Map<String, Object> resMap = new HashMap<String, Object>();
+		Map<String, Object> resMap = responseOK();
 		if(StringUtils.isBlank(user.getUsername())){
-			return responseError(ErrorConstant.ERROR_500, ErrorConstant.ERROR_EMPTY_USERNAME);
+			return responseGeneralError(ErrorConstant.ERROR_EMPTY_USERNAME);
 		} 
 		if(StringUtils.isBlank(user.getPassword())){
-			return responseError(ErrorConstant.ERROR_500, ErrorConstant.ERROR_EMPTY_PWD);
+			return responseGeneralError(ErrorConstant.ERROR_EMPTY_PWD);
 		} else {
 			MD5Util md5 = new MD5Util(MD5Util.default_salt, "MD5");
 			user.setPassword(md5.encode(user.getPassword()));
@@ -53,29 +58,41 @@ public class LoginService extends BaseCommon {
 				u.setRoleName(userRole.getRoleName());
 				currentUser.login(token);
 			} catch (AuthenticationException e) {
-				return responseError(ErrorConstant.ERROR_500, ErrorConstant.ERROR_SYS_EXCEPTION);
+				return loginResult(u.getId(), ErrorConstant.ERROR_500, ErrorConstant.ERROR_SYS_EXCEPTION);
 			}
 			if (currentUser.isAuthenticated()) {
 				currentUser.getSession().setAttribute(KeyConstant.USER_INFO, u);
 				SavedRequest savedRequest = getSavedRequest();
+				resMap = loginResult(u.getId(), ErrorConstant.ERROR_200, "");
 				if (savedRequest != null){
 					String requestUrl = savedRequest.getRequestUrl();
 					resMap.put("url", requestUrl);
 				} else {
-					if (u.getRole() == 1) {
-						resMap.put("url", "/");
-					} else if (u.getRole() == 2) {
-						resMap.put("url", "/user");
-					}	
+					resMap.put("url", "/");	
 				}
 			} else {
-				return responseError(ErrorConstant.ERROR_500, ErrorConstant.ERROR_UNKNOW_EXCEPTION);
+				return loginResult(u.getId(), ErrorConstant.ERROR_500, ErrorConstant.ERROR_UNKNOW_EXCEPTION);
 			}
 		} else {
-			return responseError(ErrorConstant.ERROR_500, ErrorConstant.ERROR_USERNAME_OR_PASSWORD_WRONG);
+			return responseGeneralError(ErrorConstant.ERROR_USERNAME_OR_PASSWORD_WRONG);
 		}
-		resMap.put(ErrorConstant.ERROR_NO, ErrorConstant.ERROR_200);
 		return resMap;
+	}
+	
+	private Map<String, Object> loginResult(Long userId, Integer errorNo,  String errorInfo) {
+		String logRemark = ""; 
+		if(errorNo.equals(ErrorConstant.ERROR_200)){
+			logRemark = "µÇÂ¼³É¹¦";
+		} else {
+			logRemark = "µÇÂ¼Ê§°Ü";
+		}
+		UserLog userLog = new UserLog();
+        userLog.setCreateTime(new Date());
+        userLog.setRemark(logRemark);
+        userLog.setUserId(userId);
+        userLog.setType(EnumUserLogType.AUTO_LOGIN.getKey());
+        userLogMapper.insert(userLog);
+		return responseError(errorNo, errorInfo);
 	}
 	
 	public Map<String, Object> logout() {

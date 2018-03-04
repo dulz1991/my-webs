@@ -28,7 +28,7 @@
 						<span class="title">用户管理</span>
 					</a>
 					<ul>
-						<li><a href="/backend/user/list?role=2"><span class="title">用户列表</span></a></li>
+						<li><a href="/backend/user/list?role=2"><span class="title">注册用户列表</span></a></li>
 						<li><a href="/backend/user/list?role=1"><span class="title">管理员列表</span></a></li>
 						<li><a href="/backend/userRole/list"><span class="title">权限列表</span></a></li>
 					</ul>
