@@ -24,7 +24,7 @@
 			<th field="button" field-role="2" 
 				btn_list='[
                 {fnName:"edit", args:"id",name:"编辑",icon:"fa fa-edit",cls:"btn btn-info btn-xs"},
-                {fnName:"toDelete", args:"id",name:"删除",icon:"fa fa-trash-o",cls:"btn btn-danger btn-xs"}
+                {fnName:"$.fn.deleteById", args:"id",name:"删除",icon:"fa fa-trash-o",cls:"btn btn-danger btn-xs"}
                 ]'
 			></th>
 		</@dataTable>
@@ -36,6 +36,7 @@
 $(function(){
 	$('#datatable').datatable({
 		url_load : '/backend/codeSubMenu/getList',
+		url_delete : '/backend/codeSubMenu/doDelete',
 		parm:{
 				pageNo : 1,
 				pageSize : 10,
@@ -46,9 +47,6 @@ $(function(){
 		}
 	}); 
 });
-function toDelete(id){
-	$.common.deleteById(id,'/backend/codeSubMenu/doDelete');
-}
 function edit(id){
 	window.open('/backend/codeSubMenu/edit?id='+id);
 }

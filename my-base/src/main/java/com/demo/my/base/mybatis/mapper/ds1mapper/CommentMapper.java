@@ -12,7 +12,7 @@ public interface CommentMapper extends BaseMapper {
 
 	int insert(Comment Comment);
 	
-	int delete(@Param("id") Long id);
+	int delete(@Param("list") List<String> ids);
 	
 	int update(Comment Comment);
 	

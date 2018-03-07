@@ -60,7 +60,10 @@
 </update>
 
 <delete id="delete">
-	delete from comment where id=#{id}
+	delete from comment where id in 
+	<foreach item="item" collection="list" open="(" separator="," close=")">
+        #{item}
+    </foreach>
 </delete>
 
 <select id="getById" resultMap="CommentBaseMapper">

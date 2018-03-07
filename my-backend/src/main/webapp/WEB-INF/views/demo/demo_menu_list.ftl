@@ -13,7 +13,7 @@
 			<th field="button"
 				btn_list='[
                 {fnName:"edit",args:"id,name",name:"编辑",icon:"fa fa-edit",cls:"btn btn-info btn-xs"},
-                {fnName:"toDelete", args:"id",name:"删除",icon:"fa fa-trash-o",cls:"btn btn-danger btn-xs"}
+                {fnName:"$.fn.deleteById", args:"id",name:"删除",icon:"fa fa-trash-o",cls:"btn btn-danger btn-xs"}
                 ]'
 			></th>
 		</@dataTable>
@@ -25,6 +25,7 @@
 $(function(){
 	$('#datatable').datatable({
 		url_load : '/backend/demoMenu/getList',
+		url_delete : '/backend/demoMenu/doDelete',
 		backFn : function(p) {
 			// console.log(p);
 		}
@@ -53,7 +54,7 @@ $(function(){
 			parm.name=name;
 			$.common.postRequest(parm, '/backend/demoMenu/doSave', function(data){
 				if(data.errorNo==200){
-					$.common.reloadTable();
+					$.fn.reload();
 				} else {
 					$.common.tip(data.errorInfo);
 				}
@@ -61,9 +62,6 @@ $(function(){
 		})
 	}
 
-function toDelete(id){
-	$.common.deleteById(id,'/backend/demoMenu/doDelete');
-}
 function viewList(id){
 	window.open('/backend/demo/list?demoMenuId='+id);
 }

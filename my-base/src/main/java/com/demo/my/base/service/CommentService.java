@@ -28,8 +28,8 @@ public class CommentService extends AbstractBaseService {
 		return commentMapper.update(comment);
 	}
 	
-	public int delete(Long id) {
-		return commentMapper.delete(id);
+	public int delete(List<String> ids) {
+		return commentMapper.delete(ids);
 	}
 	
 	public void save(Comment comment) {

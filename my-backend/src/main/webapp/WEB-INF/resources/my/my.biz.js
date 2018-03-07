@@ -1,3 +1,18 @@
+$(function(){
+	//全选
+	$('#chkAll').click(function () {
+        chkAll($('#chkAll').is(":checked"));
+    });
+})
+//全选或反选
+function chkAll(isChecked) {
+    $(":checkbox[name$='ID_CHECK']").each(function () {
+        if (!$(this).is(":disabled")) {
+            $(this).prop("checked", isChecked);
+        }
+    });
+}
+
 //修改用户状态
 function changeUserStatusCallback(status, userId, callback){
 	var title = "确定此次操作么";
@@ -14,11 +29,11 @@ function changeUserStatusCallback(status, userId, callback){
 		text: "",
 		type: 'warning',   //感叹号图标
 		showCancelButton: true,   //显示取消按钮
-		confirmButtonColor: '#3085d6', //俩个按钮的颜色
-		cancelButtonColor: '#d33',
+		confirmButtonColor: '#d33', //俩个按钮的颜色
+		cancelButtonColor: '#3085d6',
 		confirmButtonText: '确定', //俩个按钮的文本
 		cancelButtonText: '取消',
-		confirmButtonClass: 'btn btn-success',  //俩个按钮的类样式
+		confirmButtonClass: 'btn btn-info',  //俩个按钮的类样式
 	}).then(function() {
 		$.common.postRequest(_parm, '/backend/profile/changeUserStatus', function(data){
 			callback(data);

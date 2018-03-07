@@ -8,7 +8,8 @@
 	
 	$.fn.datatable = function(options) {
 		var args = $.extend({
-			url_load : '', //加载地址
+			url_load : '', //加载数据接口
+			url_delete : '', //删除数据接口
 			parm : {
 				pageNo : 1,
 				pageSize : 10
@@ -30,6 +31,20 @@
 	/* 重新加载 */
 	$.fn.reload = function() {
 		action.load(_obj, _args);
+	}
+	
+	/* 删除单个记录 */
+	$.fn.deleteById = function(id) {
+		action.doDelete(_args.url_delete, id);
+	}
+	/* 批量删除 */
+	$.fn.deleteByIds = function() {
+		var checkItems = $("input[type='checkbox'][name$='ID_CHECK']:checked");
+		var ids = '';
+		for(var i=0; i<checkItems.length; i++){ 
+			ids += checkItems[i].value+',';
+		}
+		action.doDelete(_args.url_delete, ids);
 	}
 	
 	/* 翻页 */
@@ -224,26 +239,19 @@
 				
 				for (var i = 0; i < len; i++) {
 					var item = data.list[i];
-					html += '<tr>';
+					html += '<tr onmouseover="this.style.backgroundColor=\'#FFFDD7\'" onmouseout="this.style.backgroundColor=\'\'">';
 					$.each(fields, function(index) {
 						var field = fields.eq(index).attr('field');//获取当前列的字段
 						if (field == 'index_no') { //是否是序列号
 							html += '<td>' + (i + 1) + '</td>';
 						} else if(field == 'check_box'){ //渲染复选框
-							var checkBoxName = "";
 							var checkBoxValue = "";
-							
-							var checkBoxNameKey = fields.eq(index).attr('name');
-							if($.common.isNotBlank(checkBoxNameKey)){
-								checkBoxName = fields.eq(index).attr('name');
-							}
-							
 							var chackBoxValueKey = fields.eq(index).attr('value');
 							if($.common.isNotBlank(chackBoxValueKey)){
 								checkBoxValue = item[chackBoxValueKey];
 							}
 							
-							html += '<td><input type="checkbox" value="'+checkBoxValue+'" name="'+checkBoxName+'" /></td>';
+							html += '<td><input type="checkbox" value="'+checkBoxValue+'" name="ID_CHECK" /></td>';
 						}else if (field == 'button') { //是否是按钮列
 							//渲染按钮
 							text = $.fn.renderButtons(fields, index, item);
@@ -280,7 +288,48 @@
 				//回调
 				args.backFn(data);
 			});
+		},
+		//删除
+		doDelete : function(delete_url, delete_ids) {
+			if($.common.isBlank(delete_url)){
+				$.common.tip("参数异常：未找到删除地址");
+				return false;
+			}
+			if($.common.isBlank(delete_ids)){
+				$.common.tip("参数异常：未选择要删除的数据");
+				return false;
+			}
+			swal({  
+				title: '确定要删除么?',
+				text: "",
+				type: 'warning',   //感叹号图标
+				showCancelButton: true,   //显示取消按钮
+				confirmButtonColor: '#d33', //俩个按钮的颜色
+				cancelButtonColor: '#3085d6',
+				confirmButtonText: '确定删除', //俩个按钮的文本
+				cancelButtonText: '取消',
+				confirmButtonClass: 'btn btn-success',  //俩个按钮的类样式
+				cancelButtonClass: 'btn btn-danger',
+			}).then(function() {    //大部分，then是通用的回调函数
+				var deleteParm = {};
+				deleteParm.ids = delete_ids;
+				$.common.postRequest(deleteParm, delete_url, function(data){
+					if(data.errorNo==200){
+						$.common.tip("删除成功!");
+						$.fn.reload();
+					} else {
+						$.common.alert('删除失败!', data.errorInfo);
+					}
+				})
+			}, function(dismiss) {
+				// dismiss can be 'cancel', 'overlay',
+				// 'close', and 'timer'
+				if (dismiss === 'cancel') {
+					//swal('Cancelled', 'Your imaginary file is safe :)', 'error')
+				}
+			});
 		}
+		
 	}
 	
 })(jQuery);

@@ -72,39 +72,6 @@ jQuery.common = {
 	},
 		
 	/**
-	 * 删除
-	 * @param _parm
-	 * @param _url
-	 */
-	confirmDelete: function(_parm, _url) {
-		swal({
-			title: '确定要删除么?',
-			text: "",
-			type: 'warning',   //感叹号图标
-			showCancelButton: true,   //显示取消按钮
-			confirmButtonColor: '#3085d6', //俩个按钮的颜色
-			cancelButtonColor: '#d33',
-			confirmButtonText: '确定删除', //俩个按钮的文本
-			cancelButtonText: '取消',
-			confirmButtonClass: 'btn btn-success',  //俩个按钮的类样式
-			cancelButtonClass: 'btn btn-danger',
-		}).then(function() {
-			$.common.postRequest(_parm, _url, function(data){
-				if(data.errorNo==0){
-					$.fn.reload();
-					swal('删除成功', '记录已被删除', 'success');
-				} else {
-					swal('删除失败', data.errorInfo, 'error');
-				}
-			})
-		}, function(dismiss) {
-			/*if (dismiss === 'cancel') {
-				swal('Cancelled', 'Your imaginary file is safe :)', 'error')
-			}*/
-		})
-	},
-	
-	/**
 	 * 含文件的表单提交
 	 * @param _elem 表单标签 如:#form .form
 	 * @param _submitUrl 提交的接口地址
@@ -311,8 +278,11 @@ jQuery.common = {
 		showMessage(text,time,false,'bounceInUp-hastrans','bounceOutDown-hastrans');
 	},
 	
-	alert: function(text){
-		swal('text', '', 'error');
+	alert: function(title){
+		$.common.alert(title, "");
+	},
+	alert: function(title, text){
+		swal(title, text, 'error');
 	},
 	
 	//显示提示
@@ -385,40 +355,6 @@ jQuery.common = {
 	
 	openQQ: function(){
 		window.open("http://wpa.qq.com/msgrd?v=3&uin=3566877072&site=qq&menu=yes");
-	},
-	
-	reloadTable: function(){
-		$.fn.reload();
-	},
-	autoSearch: function(elem){
-		if($.common.isNotBlank(elem)){
-			elem = '.form';
-		}
-		$.fn.autoSearch('.form')
-	},
-	
-	//删除
-	deleteById:function(id, url){
-		swal({
-			title: '删除',
-		  	text: "确定删除么?",
-		  	type: 'warning',   //感叹号图标
-		  	showCancelButton: true,   //显示取消按钮
-		  	confirmButtonColor: '#d33', //俩个按钮的颜色
-		  	confirmButtonText: '确定删除', //俩个按钮的文本
-		  	cancelButtonText: '取消',
-		}).then(function() {    //大部分，then是通用的回调函数
-			var parm = {};
-			parm.id=id;
-			$.common.postRequest(parm, url, function(data){
-				if(data.errorNo==200){
-					$.common.tip("删除成功");
-					$.common.reloadTable();
-				} else {
-					$.common.tip(data.errorInfo);
-				}
-			});
-		})
 	}
 	
 }

@@ -56,7 +56,7 @@
 		}
 		changeUserStatusCallback(status, userId, function(data){
 			if(data.errorNo==200){
-				$.common.reloadTable();
+				$.fn.reload();
 				swal('操作成功', '', 'success');
 			} else {
 				swal('操作失败', data.errorInfo, 'error');

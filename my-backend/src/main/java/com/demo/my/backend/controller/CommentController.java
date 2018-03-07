@@ -1,7 +1,10 @@
 package com.demo.my.backend.controller;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,15 +73,23 @@ public class CommentController extends BaseBackendController {
 	
 	@ResponseBody
 	@RequestMapping(value="/doDelete")
-	public Map<String, Object> doDelete(Long id) {
-		if(id==null){
-			return responseError(-1, "删除的记录不存在");
+	public Map<String, Object> doDelete(String ids) {
+		if(StringUtils.isBlank(ids)){
+			return responseGeneralError("删除的记录不存在");
 		}
-		int i = commentService.delete(id);
-		if(i==0){
-			return responseError(-1, "删除失败");
+		String arr[] = ids.split(",");
+		List<String> idList = new ArrayList<String>();
+		for(String str : arr){
+			if(StringUtils.isNotBlank(str)){
+				idList.add(str);
+			}
 		}
-		return responseOK("删除成功");
+		
+		int i = commentService.delete(idList);
+		if(i>0){
+			return responseOK("删除成功");
+		}
+		return responseGeneralError("删除失败");
 	}
 
 }

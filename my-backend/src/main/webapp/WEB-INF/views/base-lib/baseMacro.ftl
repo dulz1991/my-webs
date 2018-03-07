@@ -67,6 +67,11 @@
 				<script src="/ue/ueditor.all.js"></script>
 				<link href="/ue/themes/default/css/ueditor.css" rel="stylesheet">
 				
+				<#-- ztree -->
+				<link rel="stylesheet" href="/js/zTree_v3/css/zTreeStyle/zTreeStyle.css" type="text/css">
+				<script type="text/javascript" src="/js/zTree_v3/js/jquery.ztree.core-3.5.js"></script>
+				<script type="text/javascript" src="/js/zTree_v3/js/jquery.ztree.exedit-3.5.js"></script>
+				
 				<#-- 遍历公共js -->
 				<#list base_js as j>
 				<script src="${j}"></script>
