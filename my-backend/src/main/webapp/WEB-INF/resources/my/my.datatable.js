@@ -17,6 +17,8 @@
 			type : 'POST',
 			dataType : 'json',
 			pageDiv : '#pageDiv', //分页栏id
+			pageNoInput : '.zxfinputPageNo',
+			pageSizeInput : '.zxfinputPageSize',
 			changePageSize : true, //是否允许修改每页数量
 			backFn : function() {}
 		},options);
@@ -33,12 +35,12 @@
 	/* 翻页 */
 	$.fn.nextPage = function(_pageNo) {
 		if(_pageNo==-1){
-			_pageNo = $('.zxfinputPageNo').val();
+			_pageNo = $(_args.pageNoInput).val();
 		} 
 		_args.parm.pageNo = _pageNo;
-		_args.parm.pageSize = $('.zxfinputPageSize').val();
+		_args.parm.pageSize = $(_args.pageSizeInput).val();
 		if(_args.parm.pageSize>100){
-			$('.zxfinputPageSize').val('10');
+			$(_args.pageSizeInput).val('10');
 			_args.parm.pageSize = 10;
 		}
 		action.load(_obj, _args);
@@ -56,8 +58,8 @@
 	$.fn.autoSearch = function(_elem) {
 		var _parm = $.common.getFormJson(_elem);
 		_args.parm = _parm;
-		if($.common.isNotBlank($('.zxfinputPageSize').val())){
-			_args.parm.pageSize = $('.zxfinputPageSize').val();	
+		if($.common.isNotBlank($(_args.pageSizeInput).val())){
+			_args.parm.pageSize = $(_args.pageSizeInput).val();	
 		}
 		action.load(_obj, _args);
 	}
@@ -204,21 +206,19 @@
 		load: function(obj, args) {
 			var fields = $(obj).find('thead tr th');
 			var fieldsLen = fields.length;
-			/*$(obj).find('tbody').html('<tr><td colspan="'+fieldsLen+'">数据加载中...</td></tr>');
-			$.common.tip("数据加载中...",1000);*/
 			$.common.postRequest(args.parm, args.url_load, function(data){
 				var html = '';
-				if(data.list==undefined){
+				if(data.list==undefined || data.list==null){
 					$(obj).find('tbody').html('<tr><td colspan="'+fieldsLen+'">查无数据</td></tr>');
 					$.common.cleanPage(args.pageDiv,'$.fn.nextPage');
-					$.common.tip("查无数据",2000);
+					args.backFn(data);
 					return;
 				}
 				var len = data.list.length;
 				if(len==0){
 					$(obj).find('tbody').html('<tr><td colspan="'+fieldsLen+'">查无数据</td></tr>');
 					$.common.cleanPage(args.pageDiv,'$.fn.nextPage');
-					$.common.tip("查无数据",2000);
+					args.backFn(data);
 					return;
 				}
 				
@@ -261,7 +261,7 @@
 				$(obj).find('tbody').html(html);
 				
 				//是否有分页数据
-				if(data.page!=null){
+				if(data.page!=undefined && data.page!=null){
 					$(args.pageDiv).createPage({
 						totalNum: data.page.totalRecords,//总数据量
 						pageNum: data.page.pageCount,//总页码
@@ -277,8 +277,9 @@
 					//清空分页栏
 					$.common.cleanPage(args.pageDiv,'$.fn.nextPage');
 				}
-			
-			})
+				//回调
+				args.backFn(data);
+			});
 		}
 	}
 	

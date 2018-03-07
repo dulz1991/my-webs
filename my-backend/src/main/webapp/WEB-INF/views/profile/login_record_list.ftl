@@ -15,6 +15,14 @@
 
 <script>
 	$('#datatable').datatable({
-		url_load : '/backend/userLog/getList'
+		url_load : '/backend/userLog/getList',
+		parm : {
+			pageNo : 1,
+			pageSize : 10,
+			userId : '${user.id}'
+		},
+		backFn : function(data) {
+		}
 	}); 
 </script>
+
