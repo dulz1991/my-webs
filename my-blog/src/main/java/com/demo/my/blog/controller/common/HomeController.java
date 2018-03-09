@@ -61,12 +61,12 @@ public class HomeController extends BaseController {
 		
 		User user = this.getCurrentUser();
 		if(user!=null){
-			Map<String, Object> resMap = this.responseOK("已登录");
+			Map<String, Object> resMap = responseOK("已登录");
 			resMap.put("username", user.getUsername());
 			resMap.put("avatar", user.getAvatar());
 			return resMap;
 		}
-		return this.responseError(ErrorConstant.ERROR_400, "未登录");
+		return responseNoLogin();
 	}
 	
 	/**
@@ -75,7 +75,7 @@ public class HomeController extends BaseController {
 	@ResponseBody
 	@RequestMapping(value="404", method = RequestMethod.GET)
 	public Map<String, Object> error404(ModelAndView model) {
-		return this.responseError(ErrorConstant.ERROR_404, "Page not found!");
+		return this.response404();
 	}
 	/**
 	 * 500页面
@@ -83,7 +83,7 @@ public class HomeController extends BaseController {
 	@ResponseBody
 	@RequestMapping(value="500", method = RequestMethod.GET)
 	public Map<String, Object> error500(ModelAndView model) {
-		return this.responseError(ErrorConstant.ERROR_500, "Internal exception!");
+		return responseGeneralError("Internal exception!");
 	}
 	
 }

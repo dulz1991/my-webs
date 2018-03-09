@@ -93,13 +93,13 @@ public class DemoController extends BaseBackendController {
 	public Map<String, Object> saveDemo(Demo demo, 
 			@RequestParam(value = "attachFile", required = false) MultipartFile attachFile) throws Exception {
 		if(StringUtils.isBlank(demo.getTitle())){
-			return responseError(ErrorConstant.ERROR_500, ErrorConstant.ERROR_EMPTY_TITLE);
+			return responseGeneralError(ErrorConstant.ERROR_EMPTY_TITLE);
 		}
 		if(StringUtils.isBlank(demo.getDescription())){
-			return responseError(ErrorConstant.ERROR_500, ErrorConstant.ERROR_EMPTY_DESCRIPTIPN);
+			return responseGeneralError(ErrorConstant.ERROR_EMPTY_DESCRIPTIPN);
 		}
 		if(demo.getMenuId() == null||demo.getMenuId()<0L){
-			return responseError(ErrorConstant.ERROR_500, ErrorConstant.ERROR_EMPTY_MENU_NAME);
+			return responseGeneralError(ErrorConstant.ERROR_EMPTY_MENU_NAME);
 		}
 		
 		/*MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;

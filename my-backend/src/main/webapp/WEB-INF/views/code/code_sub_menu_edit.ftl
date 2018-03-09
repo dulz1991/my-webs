@@ -21,7 +21,15 @@
 						</div>
 						<div class="col-sm-3">
 							状态
-							<@select id="status" class="form-control select" datas={"0":"未开始","1":"编辑中","2":"已完成"} value="${entity.status!}" defaultValue="--请选择状态--" /> 
+							<@select id="status" class="form-control select" datas={"-1":"已停用","0":"未开始","1":"编辑中","2":"已完成"} value="${entity.status!}" defaultValue="--请选择状态--" /> 
+						</div>
+						<div class="col-sm-3">
+							排序号
+							<input type="text" class="form-control input" name="orderBy" value="${entity.orderBy!}">
+						</div>
+						<div class="col-sm-6">
+							备注
+							<input type="text" class="form-control input" name="remark" value="${entity.remark!''}">
 						</div>
 					</div>
 					<div class="form-group">

@@ -47,6 +47,12 @@ public class BaseCommon {
 	public static Map<String, Object> responseOK(){
 		return responseError(ErrorConstant.ERROR_200, "");
 	}
+	public static Map<String, Object> responseNoLogin(){
+		return responseError(ErrorConstant.ERROR_400, "æœªç™»å½•");
+	}
+	public static Map<String, Object> response404(){
+		return responseError(ErrorConstant.ERROR_404, "æœªæ‰¾åˆ°èµ„æº");
+	}
 	public static Map<String, Object> responseOK(String result){
 		return responseError(ErrorConstant.ERROR_200, result);
 	}
@@ -71,14 +77,14 @@ public class BaseCommon {
         return savedRequest;
     }
 
-	//Ê××ÖÄ¸×ªĞ¡Ğ´
+	//ï¿½ï¿½ï¿½ï¿½Ä¸×ªĞ¡Ğ´
 	public static String toLowerCaseFirstOne(String s){
 	  if(Character.isLowerCase(s.charAt(0)))
 	    return s;
 	  else
 	    return (new StringBuilder()).append(Character.toLowerCase(s.charAt(0))).append(s.substring(1)).toString();
 	}
-	//Ê××ÖÄ¸×ª´óĞ´
+	//ï¿½ï¿½ï¿½ï¿½Ä¸×ªï¿½ï¿½Ğ´
 	public static String toUpperCaseFirstOne(String s){
 	  if(Character.isUpperCase(s.charAt(0)))
 	    return s;
@@ -89,20 +95,20 @@ public class BaseCommon {
 	public static Map<String, Object> obj2Map(Object obj) {
 		Map<String, Object> parmMap = new HashMap<String, Object>();
 		
-		// µÃµ½Àà¶ÔÏó
+		// ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		if(obj!=null){
 			Class clazz = (Class) obj.getClass();
-	        /* µÃµ½ÀàÖĞµÄËùÓĞÊôĞÔ¼¯ºÏ */
+	        /* ï¿½Ãµï¿½ï¿½ï¿½ï¿½Ğµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô¼ï¿½ï¿½ï¿½ */
 	        Field[] fs = clazz.getDeclaredFields();
 	        for(int i = 0 ; i < fs.length; i++){
 	        	Field f = fs[i];
-	        	f.setAccessible(true); // ÉèÖÃĞ©ÊôĞÔÊÇ¿ÉÒÔ·ÃÎÊµÄ
+	        	f.setAccessible(true); // ï¿½ï¿½ï¿½ï¿½Ğ©ï¿½ï¿½ï¿½ï¿½ï¿½Ç¿ï¿½ï¿½Ô·ï¿½ï¿½Êµï¿½
 	        	Object val = new Object();
 	        	try {
-	        		val = f.get(obj); // µÃµ½´ËÊôĞÔµÄÖµ
+	        		val = f.get(obj); // ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ôµï¿½Öµ
 	        		if(null != val && StringUtils.isNotBlank(val.toString())){
 	        			val = URLDecoder.decode(val.toString(), "utf-8");
-	        			parmMap.put(f.getName(), val);// ÉèÖÃ¼üÖµ
+	        			parmMap.put(f.getName(), val);// ï¿½ï¿½ï¿½Ã¼ï¿½Öµ
 	        		}
 	        	} catch (IllegalArgumentException e) {
 	        		e.printStackTrace();

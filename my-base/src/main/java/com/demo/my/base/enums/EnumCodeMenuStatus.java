@@ -1,16 +1,14 @@
 package com.demo.my.base.enums;
 
-public enum EnumCodeSubMenuStatus {
+public enum EnumCodeMenuStatus {
 	
-	STOP(-1, "已停用"),
-	NOT_START(0, "未开始"), 
-	EDIT(1, "编辑中"), 
-	COMPLETE(2, "已完成");
+	STOP(-1, "已停用"), 
+	EDIT(1, "使用中"); 
 	
 	private int key;
 	private String value;
     
-    private EnumCodeSubMenuStatus(int key, String value){
+    private EnumCodeMenuStatus(int key, String value){
         this.setKey(key) ;
         this.setValue(value);
     }
@@ -32,7 +30,7 @@ public enum EnumCodeSubMenuStatus {
 	}
 	
 	public static String getValueByKey(int key) {
-		for (EnumCodeSubMenuStatus e : EnumCodeSubMenuStatus.values()) {
+		for (EnumCodeMenuStatus e : EnumCodeMenuStatus.values()) {
             if(e.getKey()==key){
             	return e.getValue();
             }

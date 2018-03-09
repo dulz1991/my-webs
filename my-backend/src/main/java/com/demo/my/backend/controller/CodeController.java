@@ -1,11 +1,15 @@
 package com.demo.my.backend.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
+import org.codehaus.jackson.JsonGenerationException;
+import org.codehaus.jackson.map.JsonMappingException;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -112,11 +116,11 @@ public class CodeController extends BaseBackendController {
 	@RequestMapping(value="/doSave", method = RequestMethod.POST)
 	public Map<String, Object> save(Code code) {
 		if (StringUtils.isBlank(code.getItem())) {
-			return BaseCommon.responseError(ErrorConstant.ERROR_500, ErrorConstant.ERROR_EMPTY_TITLE);
+			return BaseCommon.responseError(ErrorConstant.ERROR_GENERAL, ErrorConstant.ERROR_EMPTY_TITLE);
 		} else if (StringUtils.isBlank(code.getContent())) {
-			return this.responseError(ErrorConstant.ERROR_500, ErrorConstant.ERROR_EMPTY_CONTENT);
+			return responseGeneralError(ErrorConstant.ERROR_EMPTY_CONTENT);
 		} else if (null == code.getFatherId() || code.getFatherId()==0) {
-			return this.responseError(ErrorConstant.ERROR_500, ErrorConstant.ERROR_EMPTY_SUB_MENU);
+			return responseGeneralError(ErrorConstant.ERROR_EMPTY_SUB_MENU);
 		}
 		
 		if(code.getCodeId()==null || code.getCodeId()<=0){
@@ -134,7 +138,7 @@ public class CodeController extends BaseBackendController {
 			code.setItemOrder(Long.valueOf(count.toString()));
 			codeService.insert(code);
 		} 
-		Map<String, Object> resMap = this.responseOK("");
+		Map<String, Object> resMap = responseOK();
 		resMap.put("id", code.getId());
 		return resMap;
 	}
@@ -155,7 +159,7 @@ public class CodeController extends BaseBackendController {
 	@ResponseBody
 	@RequestMapping(value="/getCodeListByFatherId",  method = RequestMethod.GET)
 	public Map<String, Object> getCodeListByFatherId(Long id) {
-		Map<String, Object> resMap = new HashMap<String, Object>();
+		Map<String, Object> resMap = responseOK();
 		resMap.put("fatherId", id);
 		resMap.put("codeLevel", 1);
 		
@@ -170,8 +174,6 @@ public class CodeController extends BaseBackendController {
 			listMap.add(map);
 		}
 		resMap.put("list", listMap);
-		
-		resMap.put("errorNo", 200);
 		return resMap; 
 	}
 	
@@ -181,6 +183,16 @@ public class CodeController extends BaseBackendController {
 		Code entity = codeService.getById(id);
 		entity.setContent(entity.getContent().replace("http://my.demo", "/api_img"));
 		model.addObject("entity", entity);
+		return model;
+	}
+	
+	@RequestMapping(value="/zTreelist")
+	public ModelAndView zTreelist() throws JsonGenerationException, JsonMappingException, IOException {
+		ModelAndView model = new ModelAndView("code/code_ztree_list");
+		List<Map<String, Object>> codeMenuList = codeMenuService.getListForZtree();
+		ObjectMapper mapper = new ObjectMapper();  
+		model.addObject("codeMenuList", mapper.writeValueAsString(codeMenuList));
+		model.addObject("defaultNodeId", "101");
 		return model;
 	}
 }

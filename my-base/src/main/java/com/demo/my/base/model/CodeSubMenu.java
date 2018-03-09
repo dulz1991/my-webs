@@ -10,6 +10,8 @@ public class CodeSubMenu implements Serializable {
 	private String name;
 	private Long fatherId;
 	private Integer status;
+	private Integer orderBy;
+	private String remark;
 	
 	/**
 	 * @return the name
@@ -52,6 +54,18 @@ public class CodeSubMenu implements Serializable {
 	}
 	public void setId(Long id) {
 		this.id = id;
+	}
+	public Integer getOrderBy() {
+		return orderBy;
+	}
+	public void setOrderBy(Integer orderBy) {
+		this.orderBy = orderBy;
+	}
+	public String getRemark() {
+		return remark;
+	}
+	public void setRemark(String remark) {
+		this.remark = remark;
 	}
 	
 	

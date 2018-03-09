@@ -5,7 +5,7 @@
     <@searchForm class="form" title="搜索区">
 		<@searchInput title="分类名称" name="name" />
 		<@searchSelect title="一级分类" id="fatherId" datas=codeMenuList key="id" text="name" value="${codeMenuId!''}" defaultValue="--选择一级分类--" />
-		<@searchSelect title="状态" id="status" datas={"0":"未开始","1":"编辑中","2":"已完成"} defaultValue="--请选择状态--"  />
+		<@searchSelect title="状态" id="status" datas={"-1":"已停用","0":"未开始","1":"编辑中","2":"已完成"} defaultValue="--请选择状态--"  />
 		<@searchButton />
 	</@searchForm>
 	<!-- 搜索区结束 -->
@@ -20,7 +20,9 @@
 			<th width="60" field="index_no">编号</th>
 			<th field="menuName" my-attrs='{textFun:"viewCodeList",args:"id",clazz:"table-a"}'>分类名称</th>
 			<th field="fatherName">父级分类</th>
+			<th field="orderBy">分类排序</th>
 			<th field="statusStr">状态</th>
+			<th field="remark">备注</th>
 			<th field="button" field-role="2" 
 				btn_list='[
                 {fnName:"edit", args:"id",name:"编辑",icon:"fa fa-edit",cls:"btn btn-info btn-xs"},

@@ -58,7 +58,7 @@ public class LoginService extends BaseCommon {
 				u.setRoleName(userRole.getRoleName());
 				currentUser.login(token);
 			} catch (AuthenticationException e) {
-				return loginResult(u.getId(), ErrorConstant.ERROR_500, ErrorConstant.ERROR_SYS_EXCEPTION);
+				return loginResult(u.getId(), ErrorConstant.ERROR_GENERAL, "Á≥ªÁªüÂºÇÂ∏∏Ôºö"+e.getMessage());
 			}
 			if (currentUser.isAuthenticated()) {
 				currentUser.getSession().setAttribute(KeyConstant.USER_INFO, u);
@@ -71,7 +71,7 @@ public class LoginService extends BaseCommon {
 					resMap.put("url", "/");	
 				}
 			} else {
-				return loginResult(u.getId(), ErrorConstant.ERROR_500, ErrorConstant.ERROR_UNKNOW_EXCEPTION);
+				return loginResult(u.getId(), ErrorConstant.ERROR_GENERAL, ErrorConstant.ERROR_UNKNOW_EXCEPTION);
 			}
 		} else {
 			return responseGeneralError(ErrorConstant.ERROR_USERNAME_OR_PASSWORD_WRONG);
@@ -82,9 +82,9 @@ public class LoginService extends BaseCommon {
 	private Map<String, Object> loginResult(Long userId, Integer errorNo,  String errorInfo) {
 		String logRemark = ""; 
 		if(errorNo.equals(ErrorConstant.ERROR_200)){
-			logRemark = "µ«¬º≥…π¶";
+			logRemark = "ÔøΩÔøΩ¬ºÔøΩ…πÔøΩ";
 		} else {
-			logRemark = "µ«¬º ß∞‹";
+			logRemark = "ÔøΩÔøΩ¬º ßÔøΩÔøΩ";
 		}
 		UserLog userLog = new UserLog();
         userLog.setCreateTime(new Date());
@@ -115,12 +115,12 @@ public class LoginService extends BaseCommon {
 		Map<String, Object> resMap = responseOK("");
 		
 		if(StringUtils.isBlank(user.getUsername())){
-			return responseError(ErrorConstant.ERROR_500, ErrorConstant.ERROR_EMPTY_USERNAME);
+			return responseError(ErrorConstant.ERROR_GENERAL, ErrorConstant.ERROR_EMPTY_USERNAME);
 		} 
 		if(StringUtils.isBlank(user.getPassword())){
-			return responseError(ErrorConstant.ERROR_500, ErrorConstant.ERROR_EMPTY_PWD);
+			return responseError(ErrorConstant.ERROR_GENERAL, ErrorConstant.ERROR_EMPTY_PWD);
 		} else if(!RegularUtil.isMatch(RegularUtil.REG_PASSWORD, user.getPassword())){
-			return responseError(ErrorConstant.ERROR_500, ErrorConstant.ERROR_FORMATE_PWD);
+			return responseError(ErrorConstant.ERROR_GENERAL, ErrorConstant.ERROR_FORMATE_PWD);
 		} else {
 			MD5Util md5 = new MD5Util(MD5Util.default_salt, "MD5");
 			user.setPassword(md5.encode(user.getPassword()));
@@ -128,11 +128,11 @@ public class LoginService extends BaseCommon {
 		
 		User existUser = userMapper.getByUsername(user.getUsername());
 		if(existUser!=null){
-			return responseError(ErrorConstant.ERROR_500, ErrorConstant.ERROR_USER_EXIST);
+			return responseError(ErrorConstant.ERROR_GENERAL, ErrorConstant.ERROR_USER_EXIST);
 		}
 		existUser = userMapper.getByPhone(user.getPhone());
 		if(existUser!=null){
-			return responseError(ErrorConstant.ERROR_500, " ÷ª˙∫≈“—¥Ê‘⁄");
+			return responseError(ErrorConstant.ERROR_GENERAL, "Áî®Êà∑‰∏çÂ≠òÂú®");
 		}
 		
 		user.setRole(2L);

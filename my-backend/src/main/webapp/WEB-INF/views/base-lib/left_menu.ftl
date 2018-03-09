@@ -42,6 +42,7 @@
 						<li><a href="/backend/code/list"><span class="title">代码笔记列表</span></a></li>
 						<li><a href="/backend/codeMenu/list"><span class="title">一级分类管理</span></a></li>
 						<li><a href="/backend/codeSubMenu/list"><span class="title">二级分类管理</span></a></li>
+						<li><a href="/backend/code/zTreelist"><span class="title">笔记树形列表</span></a></li>
 					</ul>
 				</li>
 				<li class="li">

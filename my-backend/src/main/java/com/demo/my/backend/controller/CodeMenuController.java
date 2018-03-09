@@ -16,7 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.demo.my.backend.common.BaseBackendController;
 import com.demo.my.base.service.CodeMenuService;
-import com.demo.my.base.common.ErrorConstant;
+import com.demo.my.base.enums.EnumCodeMenuStatus;
 import com.demo.my.base.model.CodeMenu;
 import com.demo.my.base.util.Page;
 
@@ -54,6 +54,9 @@ public class CodeMenuController extends BaseBackendController {
 			@RequestParam(name="pageSize", defaultValue="10") int pageSize) {
 		Map<String, Object> parmMap = this.getParmMap();
 		Page<CodeMenu> page = codeMenuService.getPage("CodeMenuMapper.getBeanListByParm", parmMap);
+		for(CodeMenu m : page.getList()){
+			m.setStatus(EnumCodeMenuStatus.getValueByKey(Integer.valueOf(m.getStatus())));
+		}
 
 		Map<String, Object> resMap = new HashMap<String, Object>();
 		resMap.put("list", page.getList());
@@ -66,10 +69,10 @@ public class CodeMenuController extends BaseBackendController {
 	@RequestMapping(value="/doSave", method = RequestMethod.POST)
 	public Map<String, Object> save(CodeMenu codeMenu) {
 		if(codeMenu.getOrderBy()==null || codeMenu.getOrderBy()<0){
-			return responseError(ErrorConstant.ERROR_500, "分类排序不能为空且大于0");
+			return responseGeneralError("分类排序不能为空且大于0");
 		}
 		if(StringUtils.isBlank(codeMenu.getName())){
-			return responseError(ErrorConstant.ERROR_500, "分类名称不能为空");
+			return responseGeneralError("分类名称不能为空");
 		}
 		codeMenuService.save(codeMenu);
 		return responseOK("保存成功");

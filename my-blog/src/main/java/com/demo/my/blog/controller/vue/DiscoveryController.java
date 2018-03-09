@@ -79,12 +79,12 @@ public class DiscoveryController extends BaseController {
 	@RequestMapping(value = "/getDetail", method=RequestMethod.GET)
 	public Map<String, Object> discoveryDetail(Long id) {
 		if(id==null){
-			return responseError(ErrorConstant.ERROR_404, "页面没找到");
+			return response404();
 		}
 		Map<String, Object> discovery = discoveryService.getMapById(id);
 		discovery.put("createTimeStr", DateUtil.calcDatetime((Date)discovery.get("createTime")));
 		if(discovery==null || !discovery.get("status").equals(1)){
-			return responseError(ErrorConstant.ERROR_404, "页面没找到");
+			return response404();
 		}
 		resMap.put("detail", discovery);
 		
@@ -124,11 +124,11 @@ public class DiscoveryController extends BaseController {
 			return responseError(ErrorConstant.ERROR_GENERAL, "标题不能为空");
 		}*/
 		if(StringUtils.isBlank(discovery.getContent())){
-			return responseError(ErrorConstant.ERROR_GENERAL, "内容不能为空");
+			return responseGeneralError("内容不能为空");
 		}
 		Long userId = this.getCurrentUserId();
 		if(userId==null){
-			return responseError(ErrorConstant.ERROR_400, "请先登录");
+			return responseNoLogin();
 		}
 		
 		if(attachFile!=null){

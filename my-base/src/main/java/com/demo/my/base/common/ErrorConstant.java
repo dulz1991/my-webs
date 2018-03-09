@@ -5,51 +5,49 @@ public class ErrorConstant {
 	public static String ERROR_NO = "errorNo";
 	public static String ERROR_INFO = "errorInfo";
 	
-	public static Integer ERROR_200 = 200; //³É¹¦
-	public static Integer ERROR_500 = 500; //´íÎó£¬Å×³ö´íÎóĞÅÏ¢£¬¿ÉÄÜÔ­Òò£º¿Í»§¶ËÌá½»ÇëÇóÊı¾İÓĞÎó
-	public static Integer ERROR_400 = 400; //´íÎó£¬ĞèÒªµÇÂ¼
-	public static Integer ERROR_401 = 401; //´íÎó£¬Ã»ÓĞÈ¨ÏŞ
-	public static Integer ERROR_404 = 404; //´íÎó£¬×ÊÔ´Î´ÕÒµ½
-	public static Integer ERROR_GENERAL = -1; //Í¬ÓÃ´íÎó
+	public static Integer ERROR_200 = 200; //æ­£ç¡®çš„ä¸šåŠ¡å¤„ç†ç»“æœ
+	public static Integer ERROR_400 = 400; //æœªç™»å½•
+	public static Integer ERROR_404 = 404; //æœªæ‰¾åˆ°èµ„æº
+	public static Integer ERROR_GENERAL = -1; //Í¬é€šç”¨é”™è¯¯
 
-	//Òì³£
-	public static String ERROR_SYS_EXCEPTION = "ÏµÍ³Òì³££¬ÇëÉÔºóÔÙÊÔ»òÁªÏµ¹ÜÀíÔ±";
-	public static String ERROR_UNKNOW_EXCEPTION = "Î´Öª´íÎó£¬ÇëÉÔºóÔÙÊÔ»òÁªÏµ¹ÜÀíÔ±";
-	//µÇÂ½
-	public static String ERROR_EMPTY_USERNAME = "ÇëÊäÈëÓÃ»§Ãû";
-	public static String ERROR_EMPTY_PWD = "ÇëÊäÈëÃÜÂë";
-	public static String ERROR_FORMATE_PWD = "ÃÜÂë¸ñÊ½´íÎó,Ö»Ö§³Ö´óĞ¡Ğ´,Êı×ÖºÍÏÂ»®Ïß";
-	public static String ERROR_USERNAME_OR_PASSWORD_WRONG = "ÓÃ»§Ãû»òÃÜÂë´íÎó";
-	public static String ERROR_USER_EXIST = "ÓÃ»§ÃûÒÑ´æÔÚ";
-	//ĞŞ¸ÄÃÜÂë
-	public static String ERROR_NEW_CFM_PWD_NOT_SAME = "ĞŞ¸ÄµÄĞÂÃÜÂëºÍÈ·ÈÏÃÜÂë²»Æ¥Åä";
-	public static String ERROR_PWD_MODIFY_SUCCESS = "ÃÜÂëĞŞ¸Ä³É¹¦";
-	//±£´æ²©¿Í
-	public static String ERROR_EMPTY_TITLE = "ÇëÊäÈë±êÌâ";
-	public static String ERROR_EMPTY_MENU = "ÇëÑ¡Ôñ²Ëµ¥";
-	public static String ERROR_EMPTY_CONTENT = "ÇëÊäÈëÄÚÈİ";
-	public static String ERROR_EMPTY_ID = "ÇëÑ¡ÔñÉ¾³ıµÄÌõÄ¿";
+	//ï¿½ì³£
+	public static String ERROR_SYS_EXCEPTION = "ç³»ç»Ÿå¼‚å¸¸";
+	public static String ERROR_UNKNOW_EXCEPTION = "Î´Öªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ôºï¿½ï¿½ï¿½ï¿½Ô»ï¿½ï¿½ï¿½Ïµï¿½ï¿½ï¿½ï¿½Ô±";
+	//ï¿½ï¿½Â½
+	public static String ERROR_EMPTY_USERNAME = "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½";
+	public static String ERROR_EMPTY_PWD = "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½";
+	public static String ERROR_FORMATE_PWD = "ï¿½ï¿½ï¿½ï¿½ï¿½Ê½ï¿½ï¿½ï¿½ï¿½,Ö»Ö§ï¿½Ö´ï¿½Ğ¡Ğ´,ï¿½ï¿½ï¿½Öºï¿½ï¿½Â»ï¿½ï¿½ï¿½";
+	public static String ERROR_USERNAME_OR_PASSWORD_WRONG = "ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½";
+	public static String ERROR_USER_EXIST = "ï¿½Ã»ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½ï¿½ï¿½";
+	//ï¿½Ş¸ï¿½ï¿½ï¿½ï¿½ï¿½
+	public static String ERROR_NEW_CFM_PWD_NOT_SAME = "ï¿½Ş¸Äµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È·ï¿½ï¿½ï¿½ï¿½ï¿½ë²»Æ¥ï¿½ï¿½";
+	public static String ERROR_PWD_MODIFY_SUCCESS = "ï¿½ï¿½ï¿½ï¿½ï¿½Ş¸Ä³É¹ï¿½";
+	//ï¿½ï¿½ï¿½æ²©ï¿½ï¿½
+	public static String ERROR_EMPTY_TITLE = "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½";
+	public static String ERROR_EMPTY_MENU = "ï¿½ï¿½Ñ¡ï¿½ï¿½Ëµï¿½";
+	public static String ERROR_EMPTY_CONTENT = "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½";
+	public static String ERROR_EMPTY_ID = "ï¿½ï¿½Ñ¡ï¿½ï¿½É¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¿";
 	//handbook
-	public static String ERROR_EMPTY_SUB_MENU = "ÇëÑ¡Ôñ×Ó²Ëµ¥";
+	public static String ERROR_EMPTY_SUB_MENU = "ï¿½ï¿½Ñ¡ï¿½ï¿½ï¿½Ó²Ëµï¿½";
 	//move
-	public static String ERROR_MOVE_FIRST = "µÚÒ»¸ö²»ÄÜÒÆ¶¯";
-	public static String ERROR_MOVE_LAST = "×îºóÒ»¸ö²»ÄÜÒÆ¶¯";
-	//²Ëµ¥
-	public static String ERROR_EMPTY_MENU_NAME = "ÇëÊäÈë²Ëµ¥Ãû³Æ";
-	public static String ERROR_EMPTY_SUB_MENU_STATUS = "×Ó²Ëµ¥×´Ì¬²»ÄÜÎª¿Õ";
+	public static String ERROR_MOVE_FIRST = "ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ¶ï¿½";
+	public static String ERROR_MOVE_LAST = "ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ¶ï¿½";
+	//ï¿½Ëµï¿½
+	public static String ERROR_EMPTY_MENU_NAME = "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ëµï¿½ï¿½ï¿½ï¿½ï¿½";
+	public static String ERROR_EMPTY_SUB_MENU_STATUS = "ï¿½Ó²Ëµï¿½×´Ì¬ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½";
 	//demo
-	public static String ERROR_NO_RECORD = "Ã»ÓĞ²éµ½¸Ã¼ÇÂ¼";
-	public static String ERROR_EMPTY_DESCRIPTIPN = "ÇëÊäÈëÃèÊö";
-	//ÌáÊ¾Óï
-	public static String TIP_SUCCESS = "²Ù×÷³É¹¦";
-	public static String TIP_FAILED = "²Ù×÷Ê§°Ü";
-	public static String TIP_DELETE_SUCCESS = "É¾³ı³É¹¦";
-	public static String TIP_MODIFY_SUCCESS = "ĞŞ¸Ä³É¹¦";
-	public static String TIP_SAVE_SUCCESS = "±£´æ³É¹¦";
-	//´íÎóÌáÊ¾
-	public static String TIP_NOT_EXIST = "¼ÇÂ¼Î´ÕÒµ½";
-	public static String NOT_LOGIN = "ÇëÏÈµÇÂ¼";
-	public static String FAILED_REFRESH = "Ë¢ĞÂÊ§°Ü";
+	public static String ERROR_NO_RECORD = "Ã»ï¿½Ğ²éµ½ï¿½Ã¼ï¿½Â¼";
+	public static String ERROR_EMPTY_DESCRIPTIPN = "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½";
+	//ï¿½ï¿½Ê¾ï¿½ï¿½
+	public static String TIP_SUCCESS = "ï¿½ï¿½ï¿½ï¿½ï¿½É¹ï¿½";
+	public static String TIP_FAILED = "ï¿½ï¿½ï¿½ï¿½Ê§ï¿½ï¿½";
+	public static String TIP_DELETE_SUCCESS = "É¾ï¿½ï¿½ï¿½É¹ï¿½";
+	public static String TIP_MODIFY_SUCCESS = "ï¿½Ş¸Ä³É¹ï¿½";
+	public static String TIP_SAVE_SUCCESS = "ï¿½ï¿½ï¿½ï¿½É¹ï¿½";
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾
+	public static String TIP_NOT_EXIST = "ï¿½ï¿½Â¼Î´ï¿½Òµï¿½";
+	public static String NOT_LOGIN = "ï¿½ï¿½ï¿½Èµï¿½Â¼";
+	public static String FAILED_REFRESH = "Ë¢ï¿½ï¿½Ê§ï¿½ï¿½";
 	
 	
 }

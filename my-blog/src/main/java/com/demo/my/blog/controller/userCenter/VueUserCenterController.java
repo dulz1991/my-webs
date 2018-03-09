@@ -53,7 +53,7 @@ public class VueUserCenterController extends BaseController {
 		//用户信息
 		User user = this.getCurrentUser();
 		if(user==null){
-			return this.responseError(ErrorConstant.ERROR_400, "未登录");
+			return responseNoLogin();
 		}
 		resMap.put("avatar", user.getAvatar());
 		resMap.put("username", user.getUsername());
@@ -182,14 +182,14 @@ public class VueUserCenterController extends BaseController {
 		user.setPassword(newPwd);
 		userService.update(user);
 		
-		return this.responseOK("修改成功");
+		return responseOK("修改成功");
 	}
 
 	@ResponseBody
 	@RequestMapping(value="uploadAvatar", method = RequestMethod.POST)
 	public Map<String, Object> uploadAvatar(@RequestParam(name = "attachFile", required = false) MultipartFile attachFile) {
 		if(attachFile==null){
-			return this.responseError(ErrorConstant.ERROR_500, "请选择图片");
+			return responseGeneralError("请选择图片");
 		}
 		
 		User user = getCurrentUser();

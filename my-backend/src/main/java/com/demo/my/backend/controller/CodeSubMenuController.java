@@ -83,7 +83,7 @@ public class CodeSubMenuController extends BaseBackendController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value="/doSave", method = RequestMethod.POST)
+	@RequestMapping(value="/doSave")
 	public Map<String, Object> save(CodeSubMenu codeSubMenu) {
 		codeSubMenuService.save(codeSubMenu);
 		return responseOK("保存成功");

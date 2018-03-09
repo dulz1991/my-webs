@@ -140,13 +140,13 @@ public class BlogController extends BaseController {
 	@RequestMapping(value = "/auth/blog/save")
 	public Map<String, Object> saveBlog(Blog blog) {
 		if(StringUtils.isBlank(blog.getTitle())){
-			return responseError(ErrorConstant.ERROR_500, ErrorConstant.ERROR_EMPTY_TITLE);
+			return responseGeneralError(ErrorConstant.ERROR_EMPTY_TITLE);
 		}
 		if(StringUtils.isBlank(blog.getContent())){
-			return responseError(ErrorConstant.ERROR_500, ErrorConstant.ERROR_EMPTY_CONTENT);
+			return responseGeneralError(ErrorConstant.ERROR_EMPTY_CONTENT);
 		}
 		if(blog.getMenuId() == null){
-			return responseError(ErrorConstant.ERROR_500, ErrorConstant.ERROR_EMPTY_MENU);
+			return responseGeneralError(ErrorConstant.ERROR_EMPTY_MENU);
 		}
 		
 		blog.setUserId(this.getCurrentUserId());

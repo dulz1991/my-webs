@@ -130,7 +130,7 @@ public class CommentController extends BaseController {
 		
 		Long userId = this.getCurrentUserId();
 		if(userId==null){
-			return responseError(ErrorConstant.ERROR_400, "未登录");
+			return responseNoLogin();
 		}
 		
 		comment.setFromId(userId);

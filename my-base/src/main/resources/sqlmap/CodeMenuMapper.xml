@@ -6,6 +6,8 @@
 	<id property="name" column="NAME" />
 	<id property="orderBy" column="ORDER_BY" />
 	<id property="id" column="ID" />
+	<id property="remark" column="REMARK" />
+	<id property="status" column="STATUS" />
 </resultMap>  
 
 <insert id="insert">
@@ -13,9 +15,9 @@
    		select LAST_INSERT_ID()
    	</selectKey>
 	insert into code_menu
-	(NAME,ORDER_BY)
+	(NAME,ORDER_BY,REMARK,STATUS)
 	values
-	(#{name},#{orderBy})
+	(#{name},#{orderBy},#{remark},#{status})
 </insert>
 
 <update id="update">
@@ -26,6 +28,12 @@
 	    	</if>
 			<if test="orderBy != null">  
 	        	ORDER_BY=#{orderBy},
+	    	</if>
+	    	<if test="remark != null">  
+	        	REMARK=#{remark},
+	    	</if>
+	    	<if test="status != null">  
+	        	STATUS=#{status},
 	    	</if>
 	</set>   
     WHERE id=#{id}
@@ -39,15 +47,6 @@
 	SELECT * FROM code_menu WHERE id=#{id} 
 </select>
 
-<select id="countByParm" resultType="integer">
-	select count(*) from code_menu  where 1=1 
-			<if test="parm.name != null">
-		     	and NAME like CONCAT('%', #{parm.name}, '%')
-		   	</if>
-			<if test="parm.orderBy != null">
-		     	and ORDER_BY = #{parm.orderBy}
-		   	</if>
-</select>
 
 <select id="getBeanListByParm" resultMap="CodeMenuBaseMapper">
 	select * from code_menu where 1=1 
@@ -57,9 +56,10 @@
 			<if test="parm.orderBy != null">
 		     	and ORDER_BY = #{parm.orderBy}
 		   	</if>
-		<if test="parm.orderby != null">
-	   		order by ${parm.orderby}
-	   	</if>
+		   	<if test="parm.status != null">  
+	        	and STATUS=#{parm.status}
+	    	</if>
+	   		order by ORDER_BY asc
 		<if test="parm.start != null">
 			limit #{parm.start},#{parm.limit}
 		</if>
@@ -68,13 +68,26 @@
 
 <select id="getMapListByParm" parameterType="HashMap" resultType="HashMap">
 	select * from code_menu where 1=1
-		<if test="parm.orderby != null">
-	   		order by ${parm.orderby}
-	   	</if>
+		order by ORDER_BY asc
 		<if test="parm.start != null">
 			limit #{parm.start},#{parm.limit}
 		</if>
 </select>
 
+<select id="getListForZtree" resultType="HashMap">
+	SELECT 
+	0 pId,
+	ID id,
+	`NAME` `name`,
+	`STATUS` `status`
+	from code_menu 
+	union
+	SELECT 
+	FATHER_ID pId,
+	ID+100 id,
+	`NAME` `name`,
+	`STATUS` `status`
+	from code_sub_menu
+</select>
 
 </mapper>

@@ -69,10 +69,10 @@ public class UserCenterController extends BaseController {
 	@RequestMapping(value = "/modifyPwd", method=RequestMethod.POST)
 	public Map<String, Object> modifyPwd(String newpwd, String oldpwd, String cfmpwd) {
 		if(StringUtils.isBlank(newpwd)||StringUtils.isBlank(oldpwd)||StringUtils.isBlank(cfmpwd)){
-			return responseError(ErrorConstant.ERROR_500, ErrorConstant.ERROR_EMPTY_PWD);
+			return responseGeneralError(ErrorConstant.ERROR_EMPTY_PWD);
 		}
 		if(!oldpwd.equals(cfmpwd)){
-			return responseError(ErrorConstant.ERROR_500, ErrorConstant.ERROR_NEW_CFM_PWD_NOT_SAME);
+			return responseGeneralError(ErrorConstant.ERROR_NEW_CFM_PWD_NOT_SAME);
 		}
 		Long userId = this.getCurrentUserId();
 		User user = new User();
@@ -155,13 +155,13 @@ public class UserCenterController extends BaseController {
 	@RequestMapping(value = "/saveBlog", method = RequestMethod.POST)
 	public Map<String, Object> saveBlog(Blog blog) {
 		if(StringUtils.isBlank(blog.getTitle())){
-			return responseError(ErrorConstant.ERROR_500, ErrorConstant.ERROR_EMPTY_TITLE);
+			return responseGeneralError(ErrorConstant.ERROR_EMPTY_TITLE);
 		}
 		if(StringUtils.isBlank(blog.getContent())){
-			return responseError(ErrorConstant.ERROR_500, ErrorConstant.ERROR_EMPTY_CONTENT);
+			return responseGeneralError(ErrorConstant.ERROR_EMPTY_CONTENT);
 		}
 		if(blog.getMenuId() == null){
-			return responseError(ErrorConstant.ERROR_500, ErrorConstant.ERROR_EMPTY_MENU);
+			return responseGeneralError(ErrorConstant.ERROR_EMPTY_MENU);
 		}
 		
 		blog.setUserId(this.getCurrentUserId());
@@ -186,7 +186,7 @@ public class UserCenterController extends BaseController {
 	@RequestMapping(value = "/deleteBlog", method = RequestMethod.POST)
 	public Map<String, Object> delete(Long id) {
 		if(id==null){
-			return responseError(ErrorConstant.ERROR_500, ErrorConstant.ERROR_EMPTY_ID);
+			return responseGeneralError(ErrorConstant.ERROR_EMPTY_ID);
 		}
 		blogService.delete(id);
 		return responseOK("");

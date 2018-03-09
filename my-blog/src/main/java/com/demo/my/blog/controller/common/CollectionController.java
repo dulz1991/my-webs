@@ -38,7 +38,7 @@ public class CollectionController extends BaseController {
 	public Map<String, Object> addDiscoveryCollection(Collection col) {
 		Long userId = this.getCurrentUserId();
 		if(userId==null){
-			return responseError(ErrorConstant.ERROR_400, "请先登录");
+			return responseNoLogin();
 		}
 		
 		col.setUserId(userId);
@@ -58,7 +58,7 @@ public class CollectionController extends BaseController {
 	public Map<String, Object> cancelDiscoveryCollection(Collection col) {
 		Long userId = this.getCurrentUserId();
 		if(userId==null){
-			return responseError(ErrorConstant.ERROR_400, "请先登录");
+			return responseNoLogin();
 		}
 		
 		col.setUserId(userId);
