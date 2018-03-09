@@ -11,6 +11,9 @@
 						</#if>
 						<#if active=='1'>
 							<#include "form_excute_syscfg.ftl">
+						</#if>
+						<#if active=='3'>
+							<#include "form_backend_syscfg.ftl">
 						</#if>				
 					</div>
 					
@@ -33,6 +36,12 @@
 									<a href="/backend/sys/index?active=2">
 										公共
 										<span class="badge badge-success pull-right">0</span>
+									</a>
+								</li>
+								<li class="<#if active=='3'>active</#if>">
+									<a href="/backend/sys/index?active=3">
+										后台管理配置
+										<span class="badge badge-success pull-right">1</span>
 									</a>
 								</li>
 							</ul>

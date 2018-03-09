@@ -24,11 +24,14 @@ import com.demo.my.backend.common.BaseBackendController;
 import com.demo.my.base.service.CodeMenuService;
 import com.demo.my.base.service.CodeService;
 import com.demo.my.base.service.CodeSubMenuService;
+import com.demo.my.base.service.SysCfgService;
 import com.demo.my.base.common.BaseCommon;
 import com.demo.my.base.common.ErrorConstant;
+import com.demo.my.base.common.KeyConstant;
 import com.demo.my.base.model.Code;
 import com.demo.my.base.model.CodeMenu;
 import com.demo.my.base.model.CodeSubMenu;
+import com.demo.my.base.model.SysCfg;
 import com.demo.my.base.util.Page;
 
 @Controller
@@ -43,6 +46,8 @@ public class CodeController extends BaseBackendController {
 	private CodeMenuService codeMenuService;
 	@Autowired
 	private CodeSubMenuService codeSubMenuService;
+	@Autowired
+	private SysCfgService sysCfgService;
 	
 	@RequestMapping(value="/list")
 	public ModelAndView index(String fatherId) {
@@ -192,7 +197,25 @@ public class CodeController extends BaseBackendController {
 		List<Map<String, Object>> codeMenuList = codeMenuService.getListForZtree();
 		ObjectMapper mapper = new ObjectMapper();  
 		model.addObject("codeMenuList", mapper.writeValueAsString(codeMenuList));
-		model.addObject("defaultNodeId", "101");
+		SysCfg sysCfg = sysCfgService.getByKey(KeyConstant.DEFAULT_CODE_SUB_MENU_ID);
+		if(sysCfg!=null){
+			model.addObject("defaultNodeId", sysCfg.getValue());	
+		} else {
+			model.addObject("defaultNodeId", "1");	
+		}
 		return model;
+	}
+	@ResponseBody
+	@RequestMapping(value="/zTreeCodelist")
+	public Map<String, Object> zTreeCodelist(Long faltherId) {
+		try {
+			Map<String, Object> resMap = responseOK();
+			List<Map<String, Object>> codeList = codeService.getCodeListForZtree(faltherId);
+			ObjectMapper mapper = new ObjectMapper();  
+			resMap.put("codeList", mapper.writeValueAsString(codeList));
+			return resMap;
+		} catch (Exception e) {
+			return responseGeneralError("系统异常："+e.getMessage());
+		}
 	}
 }

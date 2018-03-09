@@ -190,5 +190,20 @@
 		</if>
 </select>
 
+<select id="getCodeListForZtree" resultType="HashMap">
+	SELECT 
+	IFNULL(CODE_ID,'0') pId,
+	IFNULL(ID,'0') id,
+	ITEM `name`,
+	`STATUS` `status`,
+	ITEM_ORDER itemOrder,
+	DATE_FORMAT(CREATE_TIME,'%Y-%m-%d %H:%i:%s') createTime,
+	DATE_FORMAT(UPDATE_TIME,'%Y-%m-%d %H:%i:%s') updateTime,
+	CODE_LEVEL codeLevel
+	from `code`
+where FATHER_ID=#{fatherId}
+order by ITEM_ORDER asc 
+</select>
+
 
 </mapper>

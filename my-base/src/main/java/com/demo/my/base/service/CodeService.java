@@ -2,6 +2,7 @@ package com.demo.my.base.service;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,6 +53,10 @@ public class CodeService extends AbstractBaseService {
 			parm = new HashMap<String, Object>();
 		}
 		return codeMapper.countByParm(parm);
+	}
+	
+	public List<Map<String, Object>> getCodeListForZtree(Long fatherId){
+		return codeMapper.getCodeListForZtree(fatherId);
 	}
 	
 }

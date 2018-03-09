@@ -9,6 +9,7 @@ public class KeyConstant {
 	/*cookie key*/
 	public static String COOKIE_USER = "cookie_user";
 	
-	/*²©¿ÍÍøÕ¾Ê×Ò³ ÏµÍ³ÅäÖÃµÄkey*/
+	/*ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Õ¾ï¿½ï¿½Ò³ ÏµÍ³ï¿½ï¿½ï¿½Ãµï¿½key*/
 	public static String BLOG_SLOGAN = "blogSlogan";
+	public static String DEFAULT_CODE_SUB_MENU_ID = "defaultCodeSubMenuId";
 }

@@ -24,4 +24,6 @@ public interface CodeMapper extends BaseMapper {
 
 	List<Map<String, Object>> getMapListByParm( @Param("parm") Map<String, Object> paramMap);
 
+	List<Map<String, Object>> getCodeListForZtree(@Param("fatherId") Long fatherId);
+
 }

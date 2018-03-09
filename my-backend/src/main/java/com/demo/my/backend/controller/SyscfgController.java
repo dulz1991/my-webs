@@ -37,6 +37,11 @@ public class SyscfgController extends BaseBackendController {
 			}
 		} else if(active.equals(EnumSysCfgFlag.PUBLIC.getKey()+"")){
 			
+		} else if(active.equals(EnumSysCfgFlag.BACKEND.getKey()+"")){
+			SysCfg sysCfg = sysCfgService.getByKey(KeyConstant.DEFAULT_CODE_SUB_MENU_ID);
+			if(sysCfg!=null){
+				modelAndView.addObject(KeyConstant.DEFAULT_CODE_SUB_MENU_ID, sysCfg.getValue());	
+			}
 		}
 		
 		modelAndView.addObject("active", active);
@@ -51,7 +56,7 @@ public class SyscfgController extends BaseBackendController {
 		}
 		
 		int i = 0;
-		SysCfg cfg = sysCfgService.getByKey(KeyConstant.BLOG_SLOGAN);
+		SysCfg cfg = sysCfgService.getByKey(sysCfg.getKey());
 		if(cfg!=null){
 			cfg.setValue(sysCfg.getValue());
 			i = sysCfgService.update(cfg);

@@ -77,16 +77,18 @@
 <select id="getListForZtree" resultType="HashMap">
 	SELECT 
 	0 pId,
-	ID id,
+	concat("menu",ID) id,
 	`NAME` `name`,
-	`STATUS` `status`
+	`STATUS` `status`,
+	1 menuLevel
 	from code_menu 
 	union
-	SELECT 
-	FATHER_ID pId,
-	ID+100 id,
+	SELECT
+	concat("menu",FATHER_ID)  pId,
+	ID id,
 	`NAME` `name`,
-	`STATUS` `status`
+	`STATUS` `status`,
+	2 menuLevel
 	from code_sub_menu
 </select>
 

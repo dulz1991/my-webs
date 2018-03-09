@@ -4,7 +4,8 @@ public enum EnumSysCfgFlag {
 	
 	BLOG_SITE(0, "博客网站首页"),
 	EXCUTE(1, "任务执行"),
-	PUBLIC(2, "公共数据");
+	PUBLIC(2, "公共数据"),
+	BACKEND(3, "后台管理配置");
 	
 	private int key;
 	private String value;
