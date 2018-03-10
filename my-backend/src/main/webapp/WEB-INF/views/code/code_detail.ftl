@@ -1,5 +1,5 @@
 <#include "/base-lib/baseMacro.ftl"> 
-<@base base_title="${entity.item}--代码笔记" openIndex=2 activeIndex=0>
+<@base base_title="${entity.item}--代码笔记" openIndex=2 activeIndex=9999>
 	
 	<div class="row">
 		<div class="col-sm-12 panel panel-default">
@@ -35,5 +35,9 @@
 			</div>
 		</div>
 	</div>
+	
+	<style>
+	p{color:#000;}
+	</style>
 
 </@base> 

@@ -82,9 +82,9 @@ public class LoginService extends BaseCommon {
 	private Map<String, Object> loginResult(Long userId, Integer errorNo,  String errorInfo) {
 		String logRemark = ""; 
 		if(errorNo.equals(ErrorConstant.ERROR_200)){
-			logRemark = "��¼�ɹ�";
+			logRemark = "密码登录成功";
 		} else {
-			logRemark = "��¼ʧ��";
+			logRemark = "密码登录失败";
 		}
 		UserLog userLog = new UserLog();
         userLog.setCreateTime(new Date());

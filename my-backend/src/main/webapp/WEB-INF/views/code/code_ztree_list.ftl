@@ -88,8 +88,12 @@ function loadData(codeSubMenuId){
 	$.common.getRequest(parm, '/backend/code/zTreeCodelist',function(data){
 		if(data.errorNo!=0){
 			codezTree = $.fn.zTree.init($("#codezTree"), codeSetting,  eval('(' + data.codeList + ')'));
-			var li_head = ' <li class="head"><div class="diy name_diy" style="text-align:center">名称</div><div class="diy">级别</div><div class="diy">创建时间</div>' +
-			    '<div class="diy">最近更新</div><div class="diy op_diy" style="text-align:center">操作</div></li>';
+			var li_head ='<li class="head"><div class="diy name_diy" style="width:30%;text-align:center;">名称</div>'
+				+'<div class="diy" style="width:10%">级别</div>'
+				+'<div class="diy" style="width:10%">排序</div>'
+				+'<div class="diy" style="width:20%">创建时间</div>' 
+				+'<div class="diy" style="width:20%">最近更新</div>'
+				+'<div class="diy op_diy" style="width:10%";text-align:center">操作</div></li>';
 			var rows = $("#codezTree").find('li');
 			if (rows.length > 0) {
 			    rows.eq(0).before(li_head)
@@ -123,12 +127,14 @@ function addDiyDom(treeId, treeNode) {
     
     var icoObj = $("#" + treeNode.tId + "_ico");
     var spanObj = $("#" + treeNode.tId + "_span");
+    spanObj.attr('onclick', 'javascript:window.open("/backend/code/viewDetail?id='+treeNode.id+'");');
+    spanObj.attr('style', 'cursor:pointer;color:#5787EB');
     spanObj.prepend(icoObj);
     
     aObj.attr('title', treeNode.name);
     /* aObj.append(icoObj); */
     /* aObj.append(spanObj); */
-    aObj.append('<div class="diy swich name_diy"></div>');
+    aObj.append('<div class="diy swich name_diy" style="width:30%"></div>');
     
     
     var div = $(liObj).find('div').eq(0);
@@ -142,10 +148,11 @@ function addDiyDom(treeId, treeNode) {
     var spaceStr = "<span style='height:1px;display: inline-block;width:" + (spaceWidth * treeNode.level) + "px'></span>";
     switchObj.before(spaceStr);
     var editStr = '';
-    editStr += '<div class="diy">' + (treeNode.codeLevel) + '</div>';
-    editStr += '<div class="diy">' + (treeNode.createTime) + '</div>';
-    editStr += '<div class="diy">' + (treeNode.updateTime) + '</div>';
-    editStr += '<div class="diy op_diy">' + formatHandle(treeNode) + '</div>';
+    editStr += '<div class="diy" style="width:10%">' + (treeNode.codeLevel) + '</div>';
+    editStr += '<div class="diy" style="width:10%">' + (treeNode.itemOrder) + '</div>';
+    editStr += '<div class="diy" style="width:20%">' + (treeNode.createTime) + '</div>';
+    editStr += '<div class="diy" style="width:20%">' + (treeNode.updateTime) + '</div>';
+    editStr += '<div class="diy op_diy" style="width:10%">' + formatHandle(treeNode) + '</div>';
     aObj.append(editStr);
 }
 /**
@@ -212,6 +219,11 @@ function removeHoverDom(treeId, treeNode) {
         vertical-align: middle;
         height: 30px;
     }
+    .panel-body .ztree li a a  {
+    	height: 20px;
+    	width:34px;
+    	padding-left:4px;
+    }
     .panel-body .ztree li > a {
         width: 100%;
     }
@@ -235,7 +247,6 @@ function removeHoverDom(treeId, treeNode) {
         vertical-align: middle;
     }
     .ztree div.diy {
-        width: 20%;
         line-height: 30px;
         border-top: 1px dotted #ccc;
         border-left: 1px solid #eeeeee;
@@ -247,14 +258,10 @@ function removeHoverDom(treeId, treeNode) {
         font-size: 12px;
     }
     .ztree div.name_diy {
-		width: 30%;
-		text-align: left;
 		text-align: left;
 	}
 	.ztree div.op_diy {
-		width: 10%;
-		padding-left:10px;
-		text-align: left;
+		text-align: center;
 	}
 	.ztree div.op_diy div img {
 		margin-top: 5px;
