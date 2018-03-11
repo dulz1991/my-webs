@@ -90,7 +90,7 @@ public class LoginService extends BaseCommon {
         userLog.setCreateTime(new Date());
         userLog.setRemark(logRemark);
         userLog.setUserId(userId);
-        userLog.setType(EnumUserLogType.AUTO_LOGIN.getKey());
+        userLog.setType(EnumUserLogType.PWD_LOGIN.getKey());
         userLogMapper.insert(userLog);
 		return responseError(errorNo, errorInfo);
 	}

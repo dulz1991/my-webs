@@ -213,6 +213,7 @@ public class CodeController extends BaseBackendController {
 			List<Map<String, Object>> codeList = codeService.getCodeListForZtree(faltherId);
 			ObjectMapper mapper = new ObjectMapper();  
 			resMap.put("codeList", mapper.writeValueAsString(codeList));
+			resMap.put("count", codeList.size());
 			return resMap;
 		} catch (Exception e) {
 			return responseGeneralError("系统异常："+e.getMessage());

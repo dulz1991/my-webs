@@ -87,6 +87,8 @@ function loadData(codeSubMenuId){
 	var parm = {faltherId:codeSubMenuId};
 	$.common.getRequest(parm, '/backend/code/zTreeCodelist',function(data){
 		if(data.errorNo!=0){
+			$('.panel-heading h3').text("code树形列表("+data.count+")");
+		
 			codezTree = $.fn.zTree.init($("#codezTree"), codeSetting,  eval('(' + data.codeList + ')'));
 			var li_head ='<li class="head"><div class="diy name_diy" style="width:30%;text-align:center;">名称</div>'
 				+'<div class="diy" style="width:10%">级别</div>'
@@ -256,6 +258,11 @@ function removeHoverDom(treeId, treeNode) {
         color: #6c6c6c;
         font-family: "SimSun";
         font-size: 12px;
+        
+	 	white-space:nowrap; 
+ 		text-overflow:ellipsis; 
+ 		-o-text-overflow:ellipsis; 
+ 		overflow: hidden;
     }
     .ztree div.name_diy {
 		text-align: left;
