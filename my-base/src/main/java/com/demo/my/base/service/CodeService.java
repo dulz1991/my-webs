@@ -8,6 +8,8 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.demo.my.base.enums.EnumCodeStatus;
+import com.demo.my.base.enums.EnumSysCfgFlag;
 import com.demo.my.base.model.Code;
 import com.demo.my.base.mybatis.mapper.ds1mapper.CodeMapper;
 
@@ -20,7 +22,7 @@ public class CodeService extends AbstractBaseService {
     public int insert(Code code) {
     	code.setCreateTime(new Date());
     	code.setUpdateTime(new Date());
-    	code.setStatus(0);
+    	code.setStatus(EnumCodeStatus.NORMAL.getKey());
 		return codeMapper.insert(code);
 	}
     

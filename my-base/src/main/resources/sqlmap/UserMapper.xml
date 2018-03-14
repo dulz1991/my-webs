@@ -199,6 +199,9 @@
 
 <select id="findUserByUsernameAndPassword" resultMap="UserBaseMapper">
 	select * from user where (USERNAME=#{user.username} or PHONE=#{user.username}) and PASSWORD=#{user.password} and STATUS=1
+	<if test="user.role != null">
+    	and ROLE = #{user.role}
+  	</if>
 </select>
 
 <select id="getByUsername" resultMap="UserBaseMapper">

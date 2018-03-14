@@ -28,6 +28,7 @@ public class BaseBackendController extends BaseCommon {
         this.response = response;
         
         request.setAttribute("userInfo", this.getCurrentUser());
+        request.setAttribute("imgApi", "/api_img");
     }
 	
 	public Map<String, Object> getParmMap() {

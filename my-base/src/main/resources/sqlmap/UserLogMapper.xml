@@ -93,16 +93,14 @@
 		t2.USERNAME username,
 		t1.TYPE type,
 		t3.ROLE_NAME
-		from user_log t1 
+		from user_log t1
 		LEFT JOIN `user` t2 on t1.USER_ID=t2.ID
 		LEFT JOIN user_role t3 on t3.ID=t2.ROLE
 		where 1=1
 		<if test="parm.userId != null">
 			and t1.USER_ID=#{parm.userId}
 		</if>
-		<if test="parm.orderby != null">
-	   		order by ${parm.orderby}
-	   	</if>
+		order by t1.CREATE_TIME desc
 		<if test="parm.start != null">
 			limit #{parm.start},#{parm.limit}
 		</if>

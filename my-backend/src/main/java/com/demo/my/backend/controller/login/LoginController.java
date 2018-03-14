@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.demo.my.backend.common.BaseBackendController;
+import com.demo.my.base.enums.EnumUserRole;
 import com.demo.my.base.model.User;
 import com.demo.my.base.service.login.LoginService;
 
@@ -45,6 +46,7 @@ public class LoginController extends BaseBackendController {
 	@ResponseBody
 	@RequestMapping(value = "/doLogin")
 	public Map<String, Object> doLogin(HttpServletRequest request, User user) {
+		user.setRole(Long.valueOf(EnumUserRole.ADMIN.getKey()));
 		Map<String, Object> resMap = loginService.login(user);
 		return resMap;
 	}

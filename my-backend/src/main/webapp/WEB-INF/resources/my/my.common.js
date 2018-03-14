@@ -278,11 +278,23 @@ jQuery.common = {
 		showMessage(text,time,false,'bounceInUp-hastrans','bounceOutDown-hastrans');
 	},
 	
-	alert: function(title){
-		$.common.alert(title, "");
+	/**
+	 * 各种弹框提示
+	 */
+	error : function(text){
+		swal('错误',text,'error')
 	},
-	alert: function(title, text){
-		swal(title, text, 'error');
+	warning : function(text){
+		swal('提醒',text,'warning')
+	},
+	success : function(text){
+		swal('提示',text,'success')
+	},
+	success : function(text, msecond){
+		swal('提示',text,'success', msecond)
+	},
+	info : function(text){
+		swal('',text);
 	},
 	
 	//显示提示
@@ -355,6 +367,35 @@ jQuery.common = {
 	
 	openQQ: function(){
 		window.open("http://wpa.qq.com/msgrd?v=3&uin=3566877072&site=qq&menu=yes");
+	},
+	
+	doDelete: function(deleteParm, deleteUrl, callback){
+		swal({  
+			title: '确定要删除么?',
+			text: "",
+			type: 'warning',   //感叹号图标
+			showCancelButton: true,   //显示取消按钮
+			confirmButtonColor: '#d33', //俩个按钮的颜色
+			cancelButtonColor: '#3085d6',
+			confirmButtonText: '确定删除', //俩个按钮的文本
+			cancelButtonText: '取消',
+			confirmButtonClass: 'btn btn-success',  //俩个按钮的类样式
+			cancelButtonClass: 'btn btn-danger',
+		}).then(function() {    //大部分，then是通用的回调函数
+			$.common.postRequest(deleteParm, deleteUrl, function(data){
+				if(data.errorNo==200){
+					callback(data);
+				} else {
+					$.common.alert('删除失败!', data.errorInfo);
+				}
+			})
+		}, function(dismiss) {
+			// dismiss can be 'cancel', 'overlay',
+			// 'close', and 'timer'
+			if (dismiss === 'cancel') {
+				//swal('Cancelled', 'Your imaginary file is safe :)', 'error')
+			}
+		});
 	}
 	
 }

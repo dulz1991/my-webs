@@ -12,7 +12,7 @@
 				<span class="input-group-addon">
 					<i class="linecons-mobile"></i>
 				</span>
-				<input type="text" class="form-control" data-mask="phone" name="phone" value="${user.phone}">
+				<input type="text" class="form-control" data-mask="phone" name="phone" value="${user.phone!''}">
 			</div>
 		</div>
 		
@@ -22,7 +22,7 @@
 				<span class="input-group-addon">
 					<i class="linecons-mail"></i>
 				</span>
-				<input type="text" class="form-control" data-mask="email" name="email" value="${user.email}">
+				<input type="text" class="form-control" data-mask="email" name="email" value="${user.email!''}">
 			</div>
 		</div>
 		</form>

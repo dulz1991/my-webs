@@ -147,6 +147,16 @@ public class CodeController extends BaseBackendController {
 		resMap.put("id", code.getId());
 		return resMap;
 	}
+	@ResponseBody
+	@RequestMapping(value="/doDelete", method = RequestMethod.POST)
+	public Map<String, Object> doDelete(Code code) {
+		int i= codeService.update(code);
+		if(i>0){
+			return responseOK();
+		} else {
+			return responseGeneralError("删除失败");
+		}
+	}
 	
 	@ResponseBody
 	@RequestMapping(value="/doDelete")
@@ -189,6 +199,15 @@ public class CodeController extends BaseBackendController {
 		entity.setContent(entity.getContent().replace("http://my.demo", "/api_img"));
 		model.addObject("entity", entity);
 		return model;
+	}
+	@ResponseBody
+	@RequestMapping(value="/viewDetailReload")
+	public Map<String, Object> viewDetailReload(Long id) {
+		Map<String, Object> resMap = responseOK();
+		Code entity = codeService.getById(id);
+		entity.setContent(entity.getContent().replace("http://my.demo", "/api_img"));
+		resMap.put("entity", entity);
+		return resMap;
 	}
 	
 	@RequestMapping(value="/zTreelist")

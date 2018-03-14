@@ -165,7 +165,13 @@
 		<li class="dropdown user-profile">
 			<!-- <a href="/logout"><i class="fa-lock"></i><span class="title">&nbsp;退出</span></a> -->
 			<a href="#" data-toggle="dropdown">
+			<#if userInfo.avatar!=''>
+				<img src="${imgApi}${userInfo.avatar}" alt="user-image" class="img-circle img-inline userpic-32" width="28" />
+			</#if>
+			<#if userInfo.avatar==''>
 				<img src="/img/user-4.png" alt="user-image" class="img-circle img-inline userpic-32" width="28" />
+			</#if>
+				
 				<#if userInfo??>
 					<span>${userInfo.username}<i class="fa-angle-down"></i></span>
 				</#if>
