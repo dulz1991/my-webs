@@ -189,9 +189,9 @@ function addHoverDom(treeId, treeNode) {
 	var btn = $("#addBtn_"+treeNode.tId);
 	if (btn) btn.bind("click", function(){
 		if(treeNode.menuLevel==1){
-			self.location="/backend/codeMenu/list";
+			self.location="/backend/code/codeMenuPage";
 		} else if(treeNode.menuLevel==2){
-			self.location="/backend/codeSubMenu/list";
+			self.location="/backend/code/codeMenuPage?level=2&codeMenuId="+treeNode.codeMenuId;
 		}
 		return;
 	});

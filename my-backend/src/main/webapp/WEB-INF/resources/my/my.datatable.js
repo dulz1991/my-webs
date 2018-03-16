@@ -152,7 +152,7 @@
 				}
 			}
 			
-			opHtml += '<a href="javascript:;" index="'+i+'" '+disableHtml+' onclick="'+btnFnName+'('+btnArgValue+');"  class="am-btn '+btnCls+' am-btn-xs"><i class="'+btnIcon+'"></i> '+btnName+'</a>';
+			opHtml += '<a href="javascript:;" index="'+i+'" '+disableHtml+' onclick="'+btnFnName+'('+btnArgValue+');"  class="'+btnCls+'"><i class="'+btnIcon+'"></i> '+btnName+'</a>';
 		}  
 		
 		return opHtml;
@@ -300,25 +300,25 @@
 				return false;
 			}
 			swal({  
-				title: '确定要删除么?',
+				title: '确定要删除(此操作)么?',
 				text: "",
 				type: 'warning',   //感叹号图标
 				showCancelButton: true,   //显示取消按钮
 				confirmButtonColor: '#d33', //俩个按钮的颜色
 				cancelButtonColor: '#3085d6',
-				confirmButtonText: '确定删除', //俩个按钮的文本
+				confirmButtonText: '确定', //俩个按钮的文本
 				cancelButtonText: '取消',
 				confirmButtonClass: 'btn btn-success',  //俩个按钮的类样式
 				cancelButtonClass: 'btn btn-danger',
 			}).then(function() {    //大部分，then是通用的回调函数
 				var deleteParm = {};
-				deleteParm.ids = delete_ids;
+				deleteParm.id = delete_ids;
 				$.common.postRequest(deleteParm, delete_url, function(data){
 					if(data.errorNo==200){
 						$.common.tip("删除成功!");
 						$.fn.reload();
 					} else {
-						$.common.alert('删除失败!', data.errorInfo);
+						$.common.tip('删除失败!', data.errorInfo);
 					}
 				})
 			}, function(dismiss) {

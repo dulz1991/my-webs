@@ -19,6 +19,7 @@
 			<th field="name" my-attrs='{textFun:"viewSubMenuList",args:"id",style:"color:rgb(0,155,219);cursor:pointer;text-decoration:underline"}'>分类名称</th>
 			<th field="orderBy">分类排序</th>
 			<th field="status">状态</th>
+			<th field="remark">备注</th>
 			<th field="button" field-role="2" 
 				btn_list='[
                 {fnName:"edit", args:"id,name,orderBy,status",name:"编辑",icon:"fa fa-edit",cls:"btn btn-info btn-xs"},

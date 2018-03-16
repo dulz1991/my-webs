@@ -95,7 +95,11 @@ public class CodeSubMenuController extends BaseBackendController {
 		if(id==null){
 			return responseError(-1, "删除的记录不存在");
 		}
-		int i = codeSubMenuService.delete(id);
+		CodeSubMenu codeSubMenu = new CodeSubMenu();
+		codeSubMenu.setId(id);
+		codeSubMenu.setStatus(EnumCodeSubMenuStatus.STOP.getKey());
+		int i = codeSubMenuService.update(codeSubMenu);
+		/*int i = codeSubMenuService.delete(id);*/
 		if(i==0){
 			return responseError(-1, "删除失败");
 		}

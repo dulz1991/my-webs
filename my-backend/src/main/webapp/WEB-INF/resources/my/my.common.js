@@ -386,7 +386,7 @@ jQuery.common = {
 				if(data.errorNo==200){
 					callback(data);
 				} else {
-					$.common.alert('删除失败!', data.errorInfo);
+					$.common.tip('删除失败!', data.errorInfo);
 				}
 			})
 		}, function(dismiss) {

@@ -17,8 +17,10 @@ import org.springframework.web.servlet.ModelAndView;
 import com.demo.my.backend.common.BaseBackendController;
 import com.demo.my.base.service.CodeMenuService;
 import com.demo.my.base.enums.EnumCodeMenuStatus;
+import com.demo.my.base.enums.EnumCodeStatus;
 import com.demo.my.base.model.CodeMenu;
 import com.demo.my.base.util.Page;
+import com.ibm.db2.jcc.a.c;
 
 @Controller
 @RequestMapping("/backend/codeMenu")
@@ -84,7 +86,11 @@ public class CodeMenuController extends BaseBackendController {
 		if(id==null){
 			return responseError(-1, "删除的记录不存在");
 		}
-		int i = codeMenuService.delete(id);
+		CodeMenu codeMenu = new CodeMenu();
+		codeMenu.setId(id);
+		codeMenu.setStatus(EnumCodeMenuStatus.STOP.getKey()+"");
+		int i = codeMenuService.update(codeMenu);
+		/*int i = codeMenuService.delete(id);*/
 		if(i==0){
 			return responseError(-1, "删除失败");
 		}

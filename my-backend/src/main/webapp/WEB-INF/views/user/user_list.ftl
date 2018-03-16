@@ -27,7 +27,7 @@
 			<th field="button" 
 				btn_list='[
                 {fnName:"changeUserStatus",args:"status,id",name:"屏蔽",icon:"fa fa-ban",cls:"btn btn-danger btn-xs",hidden:"hidepb"},
-                {fnName:"changeUserStatus",args:"status,id",name:"恢复",icon:"fa fa-ban",cls:"btn btn-success btn-xs",hidden:"hidehf"}
+                {fnName:"changeUserStatus",args:"status,id",name:"恢复",icon:"fa fa-shield",cls:"btn btn-success btn-xs",hidden:"hidehf"}
                 ]'>操作</th>
 		</@dataTable>
 	</@dataList>

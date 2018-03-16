@@ -29,14 +29,12 @@ import com.demo.my.base.common.BaseCommon;
 import com.demo.my.base.common.ErrorConstant;
 import com.demo.my.base.common.KeyConstant;
 import com.demo.my.base.enums.EnumCodeMenuStatus;
-import com.demo.my.base.enums.EnumCodeStatus;
 import com.demo.my.base.enums.EnumCodeSubMenuStatus;
 import com.demo.my.base.model.Code;
 import com.demo.my.base.model.CodeMenu;
 import com.demo.my.base.model.CodeSubMenu;
 import com.demo.my.base.model.SysCfg;
 import com.demo.my.base.util.Page;
-import com.ibm.db2.jcc.a.ob;
 
 @Controller
 @RequestMapping("/backend/code")
@@ -240,29 +238,35 @@ public class CodeController extends BaseBackendController {
 	}
 	
 	@RequestMapping(value="/zTreelist")
-	public ModelAndView zTreelist() throws JsonGenerationException, JsonMappingException, IOException {
+	public ModelAndView zTreelist(Long codeSubMenuId) throws JsonGenerationException, JsonMappingException, IOException {
 		ModelAndView model = new ModelAndView("code/code_ztree_list");
 		List<Map<String, Object>> codeMenuList = codeMenuService.getListForZtree();
 		String name = "";
 		for(Map<String, Object> map : codeMenuList){
 			name=map.get("name").toString();
 			if(map.get("menuLevel").toString().equals("1")){
-				name += "("+EnumCodeMenuStatus.getValueByKey((int)map.get("status"))+")";
+				name += "("+EnumCodeMenuStatus.getValueByKey(Integer.valueOf(map.get("status").toString()))+")";
 				map.put("name", name);
 			} else {
-				name += "("+EnumCodeSubMenuStatus.getValueByKey((int)map.get("status"))+")";
+				name += "("+EnumCodeSubMenuStatus.getValueByKey(Integer.valueOf(map.get("status").toString()))+")";
 				map.put("name", name);	
 			}
 		}
 		
 		ObjectMapper mapper = new ObjectMapper();  
 		model.addObject("codeMenuList", mapper.writeValueAsString(codeMenuList));
-		SysCfg sysCfg = sysCfgService.getByKey(KeyConstant.DEFAULT_CODE_SUB_MENU_ID);
-		if(sysCfg!=null){
-			model.addObject("defaultNodeId", sysCfg.getValue());	
+		
+		if(codeSubMenuId==null){
+			SysCfg sysCfg = sysCfgService.getByKey(KeyConstant.DEFAULT_CODE_SUB_MENU_ID);
+			if(sysCfg!=null){
+				model.addObject("defaultNodeId", sysCfg.getValue());	
+			} else {
+				model.addObject("defaultNodeId", "1");	
+			}
 		} else {
-			model.addObject("defaultNodeId", "1");	
+			model.addObject("defaultNodeId", codeSubMenuId.toString());
 		}
+		
 		return model;
 	}
 	@ResponseBody
@@ -279,5 +283,21 @@ public class CodeController extends BaseBackendController {
 		} catch (Exception e) {
 			return responseGeneralError("系统异常："+e.getMessage());
 		}
+	}
+
+	/**
+	 * code菜单页面 集成一级和二级菜单
+	 * @return
+	 */
+	@RequestMapping(value="/codeMenuPage")
+	public ModelAndView codeMenuPage(@RequestParam(value="level", defaultValue="1")Integer level,Long codeMenuId){
+		ModelAndView model = new ModelAndView("code/menu_list");
+		model.addObject("level", level);
+		if(codeMenuId!=null){
+			model.addObject("codeMenuId", codeMenuId);
+			CodeMenu codeMenu = codeMenuService.getById(codeMenuId);
+			model.addObject("codeMenuName", codeMenu.getName());
+		}
+		return model;
 	}
 }
