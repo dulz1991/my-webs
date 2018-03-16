@@ -1,6 +1,7 @@
 package com.demo.my.base.service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +38,10 @@ public class CodeSubMenuService extends AbstractBaseService {
 
 	public CodeSubMenu getById(Long id) {
 		return codeSubMenuMapper.getById(id);
+	}
+	
+	public List<CodeSubMenu> getBeanListByParm(Map<String, Object> parm) {
+		return codeSubMenuMapper.getBeanListByParm(parm);
 	}
 	
 	public int countByParm(Map<String, Object> parm) {

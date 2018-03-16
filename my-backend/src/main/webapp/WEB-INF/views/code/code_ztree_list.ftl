@@ -1,15 +1,15 @@
 <#include "/base-lib/baseMacro.ftl"> 
 <@base base_title="代码笔记列表" openIndex=2 activeIndex=3>
 	
-	<div class="col-sm-2">
+	<div class="col-sm-3">
 		<div id="zTree" class="ztree"></div>
 	</div>
 	
-	<div class="col-sm-10">
+	<div class="col-sm-9">
 		<!-- 列表区 -->
 		<@dataList>
 			<@dataHeader title="code树形列表">
-				<a href="/backend/code/edit" target="_blank"><i class="fa-plus"></i></a>
+				<a href="#" onclick="gotoEdit()"><i class="fa-plus"></i></a>
 				<a href="#" data-toggle="reload" onclick="reloadCodeZtree()"><i class="fa-rotate-right"></i></a>
 			</@dataHeader>
 			<div class="panel-body">
@@ -22,6 +22,10 @@
 	
 				
 <script type="text/javascript">
+function gotoEdit(){
+	window.open('/backend/code/edit?codeFatherId='+codeFatherId);
+}
+
 var setting = {
 	view: {
 		removeHoverDom: removeHoverDom,

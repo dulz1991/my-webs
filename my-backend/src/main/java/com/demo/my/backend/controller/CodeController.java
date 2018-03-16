@@ -28,11 +28,15 @@ import com.demo.my.base.service.SysCfgService;
 import com.demo.my.base.common.BaseCommon;
 import com.demo.my.base.common.ErrorConstant;
 import com.demo.my.base.common.KeyConstant;
+import com.demo.my.base.enums.EnumCodeMenuStatus;
+import com.demo.my.base.enums.EnumCodeStatus;
+import com.demo.my.base.enums.EnumCodeSubMenuStatus;
 import com.demo.my.base.model.Code;
 import com.demo.my.base.model.CodeMenu;
 import com.demo.my.base.model.CodeSubMenu;
 import com.demo.my.base.model.SysCfg;
 import com.demo.my.base.util.Page;
+import com.ibm.db2.jcc.a.ob;
 
 @Controller
 @RequestMapping("/backend/code")
@@ -68,7 +72,7 @@ public class CodeController extends BaseBackendController {
 	}
 	
 	@RequestMapping(value="/edit")
-	public ModelAndView edit(Long id) {
+	public ModelAndView edit(Long id, Long codeFatherId) {
 		ModelAndView model = new ModelAndView("code/code_edit");
 		
 		List<CodeMenu> codeMenuList = codeMenuService.excute("CodeMenuMapper.getBeanListByParm", null);
@@ -78,14 +82,17 @@ public class CodeController extends BaseBackendController {
 			Code entity = codeService.getById(id);
 			model.addObject("entity", entity);
 			
+			//一级菜单
 			CodeSubMenu codeSubMenu = codeSubMenuService.getById(entity.getFatherId());
 			model.addObject("codeMenuId", codeSubMenu.getFatherId());
 			
+			//二级菜单
 			Map<String, Object> parmMap = new HashMap<String, Object>();
 			parmMap.put("fatherId", codeSubMenu.getFatherId());
-			List<CodeSubMenu> codeSubMenuList = codeSubMenuService.excute("CodeSubMenuMapper.getBeanListByParm", parmMap);
+			List<CodeSubMenu> codeSubMenuList = codeSubMenuService.getBeanListByParm(parmMap);
 			model.addObject("codeSubMenuList", codeSubMenuList);
 			
+			//三级 codeList
 			parmMap = new HashMap<String, Object>();
 			parmMap.put("codeLevel", 1);
 			parmMap.put("codeId", entity.getCodeId());
@@ -93,11 +100,33 @@ public class CodeController extends BaseBackendController {
 			List<Code> codeIdList = codeService.excute("CodeMapper.getBeanListByParm", parmMap);
 			model.addObject("codeIdList", codeIdList);
 		} else {
-			model.addObject("entity", new Code());
-			model.addObject("codeMenuId", "");
-			model.addObject("codeSubMenuList", new ArrayList<CodeSubMenu>());
-			model.addObject("codeIdList", new ArrayList<Code>());
+			Code newCode = new Code();
+			if(codeFatherId!=null){
+				newCode.setFatherId(codeFatherId);
+				//一级菜单
+				CodeSubMenu codeSubMenu = codeSubMenuService.getById(codeFatherId);
+				model.addObject("codeMenuId", codeSubMenu.getFatherId());
+				
+				//二级菜单
+				Map<String, Object> parmMap = new HashMap<String, Object>();
+				parmMap.put("fatherId", codeSubMenu.getFatherId());
+				List<CodeSubMenu> codeSubMenuList = codeSubMenuService.getBeanListByParm(parmMap);
+				model.addObject("codeSubMenuList", codeSubMenuList);
+				
+				//三级 codeList
+				parmMap = new HashMap<String, Object>();
+				parmMap.put("codeLevel", 1);
+				parmMap.put("fatherId", codeSubMenu.getId());
+				List<Code> codeIdList = codeService.excute("CodeMapper.getBeanListByParm", parmMap);
+				model.addObject("codeIdList", codeIdList);
+			} else {
+				model.addObject("codeMenuId", "");
+				model.addObject("codeSubMenuList", new ArrayList<CodeSubMenu>());
+				model.addObject("codeIdList", new ArrayList<Code>());
+			}
+			model.addObject("entity", newCode);
 		}
+		
 		return model;
 	}
 	
@@ -214,6 +243,18 @@ public class CodeController extends BaseBackendController {
 	public ModelAndView zTreelist() throws JsonGenerationException, JsonMappingException, IOException {
 		ModelAndView model = new ModelAndView("code/code_ztree_list");
 		List<Map<String, Object>> codeMenuList = codeMenuService.getListForZtree();
+		String name = "";
+		for(Map<String, Object> map : codeMenuList){
+			name=map.get("name").toString();
+			if(map.get("menuLevel").toString().equals("1")){
+				name += "("+EnumCodeMenuStatus.getValueByKey((int)map.get("status"))+")";
+				map.put("name", name);
+			} else {
+				name += "("+EnumCodeSubMenuStatus.getValueByKey((int)map.get("status"))+")";
+				map.put("name", name);	
+			}
+		}
+		
 		ObjectMapper mapper = new ObjectMapper();  
 		model.addObject("codeMenuList", mapper.writeValueAsString(codeMenuList));
 		SysCfg sysCfg = sysCfgService.getByKey(KeyConstant.DEFAULT_CODE_SUB_MENU_ID);
@@ -230,6 +271,7 @@ public class CodeController extends BaseBackendController {
 		try {
 			Map<String, Object> resMap = responseOK();
 			List<Map<String, Object>> codeList = codeService.getCodeListForZtree(faltherId);
+			
 			ObjectMapper mapper = new ObjectMapper();  
 			resMap.put("codeList", mapper.writeValueAsString(codeList));
 			resMap.put("count", codeList.size());

@@ -66,6 +66,7 @@ $(function(){
 	
 });
 function refreshFaterId(){
+debugger
 	var parm = {};
 	parm.id=$('#codeMenuId').val();
 	$.common.refreshSelect('#fatherId','/backend/codeSubMenu/getCodeSubMenuListByFatherId',parm);
