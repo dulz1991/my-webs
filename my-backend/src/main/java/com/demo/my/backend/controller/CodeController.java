@@ -93,7 +93,6 @@ public class CodeController extends BaseBackendController {
 			//三级 codeList
 			parmMap = new HashMap<String, Object>();
 			parmMap.put("codeLevel", 1);
-			parmMap.put("codeId", entity.getCodeId());
 			parmMap.put("fatherId", codeSubMenu.getId());
 			List<Code> codeIdList = codeService.excute("CodeMapper.getBeanListByParm", parmMap);
 			model.addObject("codeIdList", codeIdList);
