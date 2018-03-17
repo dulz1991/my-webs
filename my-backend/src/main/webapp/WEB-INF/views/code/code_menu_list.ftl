@@ -18,7 +18,7 @@
 			<th width="60" field="index_no">编号</th>
 			<th field="name" my-attrs='{textFun:"viewSubMenuList",args:"id",style:"color:rgb(0,155,219);cursor:pointer;text-decoration:underline"}'>分类名称</th>
 			<th field="orderBy">分类排序</th>
-			<th field="status">状态</th>
+			<th field="statusStr">状态</th>
 			<th field="remark">备注</th>
 			<th field="button" field-role="2" 
 				btn_list='[

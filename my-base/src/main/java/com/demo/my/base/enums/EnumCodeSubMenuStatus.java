@@ -1,5 +1,8 @@
 package com.demo.my.base.enums;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public enum EnumCodeSubMenuStatus {
 	
 	STOP(-1, "已停用"),
@@ -37,6 +40,14 @@ public enum EnumCodeSubMenuStatus {
             	return e.getValue();
             }
         }
-		return "δ֪";
+		return "֪";
+	}
+	
+	public static Map<Object, Object> getListForSelect() {
+		Map<Object, Object> map = new HashMap<Object, Object>();
+		for (EnumCodeSubMenuStatus e : EnumCodeSubMenuStatus.values()) {
+			map.put(e.getKey(), e.getValue());
+        }
+		return map;
 	}
 }

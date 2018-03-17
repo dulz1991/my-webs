@@ -1,49 +1,32 @@
-<#include "/base-lib/baseMacro.ftl"> 
-<@base base_title="编辑代码笔记一级分类" openIndex=2 activeIndex=1>
-	
-	<!-- 编辑区 -->
-	<div class="row">
-		<div class="col-sm-12 panel panel-default">
-			<div class="panel-heading">
-				<h3 class="panel-title">编辑</h3>
+<div class="panel-body">
+	<form class="form-horizontal form" id="codeMenuForm" action="javascript:void(0);">
+		<div class="form-group">
+			<input type="hidden" name="id" value="${entity.id!}">
+			
+			<label class="col-sm-12" style="text-align:left;font-size:14px;padding-left:0">一级菜单名称</label>
+			<div class="col-sm-12 input-group input-group-sm">
+				<input type="text" class="form-control" name="name" value="${entity.name!}">
 			</div>
-			<div class="panel-body">
-				<form class="form-horizontal form" id="form" action="javascript:void(0);">
-					<input type="hidden" name="id" value="${entity.id!}">
-					<div class="form-group">
-						<div class="col-sm-3">
-							分类名称
-							<input type="text" class="form-control input" name="name" value="${entity.name!}">
-						</div>
-						<div class="col-sm-3">
-							排序
-							<input type="text" class="form-control input" name="orderBy" value="${entity.orderBy!}">
-						</div>
-					</div>
-					<div class="form-group">
-						<div class="col-sm-12">
-							<button class="btn btn-info btn-icon" onclick="doSave()">
-								<span>提交</span>
-							</button>
-						</div>
-					</div>
-				</form>
+			<br>			
+			
+			<label class="col-sm-12" style="text-align:left;font-size:14px;padding-left:0">排序</label>
+			<div class="col-sm-12 input-group input-group-sm">
+				<input type="text" class="form-control" name="orderBy" value="${entity.orderBy!}">
 			</div>
+			<br>		
+			
+			<label class="col-sm-12" style="text-align:left;font-size:14px;padding-left:0">备注</label>
+			<div class="col-sm-12 input-group input-group-sm">
+				<input type="text" class="form-control" name="remark" value="${entity.remark!}">
+			</div>	
+			<br>
+			
+			<label class="col-sm-12" style="text-align:left;font-size:14px;padding-left:0">状态</label>
+			<div class="col-sm-12 input-group input-group-sm">
+				${selectHtml}			
+			</div>	
 		</div>
-	</div>
-	<!-- 编辑区结束 -->
+	</form>
+</div>
 
-<script type="text/javascript">
-function doSave(){
-	var parm = $.common.getFormJson('.form');
-	$.common.postRequest(parm, '/backend/codeMenu/doSave', function(data){
-		if(data.errorNo==200){
-			self.location='/backend/codeMenu/list';
-		} else {
-			$.common.alert(data.errorInfo);
-		}
-	});
-}
-</script>
 
-</@base> 

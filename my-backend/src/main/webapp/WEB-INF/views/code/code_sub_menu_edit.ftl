@@ -1,61 +1,36 @@
-<#include "/base-lib/baseMacro.ftl"> 
-<@base base_title="编辑代码笔记二级分类" openIndex=2 activeIndex=2>
-	
-	<!-- 编辑区 -->
-	<div class="row">
-		<div class="col-sm-12 panel panel-default">
-			<div class="panel-heading">
-				<h3 class="panel-title">编辑</h3>
+<div class="panel-body">
+	<form class="form-horizontal form" id="codeMenuSubForm" action="javascript:void(0);">
+		<input type="hidden" name="id" value="${entity.id!}">
+		<div class="form-group">
+			<label class="col-sm-12" style="text-align:left;font-size:14px;padding-left:0">菜单名称</label>
+			<div class="col-sm-12 input-group input-group-sm">
+				<input type="text" class="form-control" name="name" value="${entity.name!''}">
 			</div>
-			<div class="panel-body">
-				<form class="form-horizontal form" id="form" action="javascript:void(0);">
-					<input type="hidden" name="id" value="${entity.id!}">
-					<div class="form-group">
-						<div class="col-sm-3">
-							分类名称
-							<input type="text" class="form-control input" name="name" value="${entity.name!}">
-						</div>
-						<div class="col-sm-3">
-							一级分类
-							<@select id="fatherId" class="form-control select" datas=codeMenuList key="id" text="name" value="${entity.fatherId!}" />
-						</div>
-						<div class="col-sm-3">
-							状态
-							<@select id="status" class="form-control select" datas={"-1":"已停用","0":"未开始","1":"编辑中","2":"已完成"} value="${entity.status!}" defaultValue="--请选择状态--" /> 
-						</div>
-						<div class="col-sm-3">
-							排序号
-							<input type="text" class="form-control input" name="orderBy" value="${entity.orderBy!}">
-						</div>
-						<div class="col-sm-6">
-							备注
-							<input type="text" class="form-control input" name="remark" value="${entity.remark!''}">
-						</div>
-					</div>
-					<div class="form-group">
-						<div class="col-sm-12">
-							<button class="btn btn-info btn-icon" onclick="doSave()">
-								<span>提交</span>
-							</button>
-						</div>
-					</div>
-				</form>
+			<br>	
+			
+			<label class="col-sm-12" style="text-align:left;font-size:14px;padding-left:0">一级菜单</label>
+			<div class="col-sm-12 input-group input-group-sm">
+				${codeMenuSelectHtml}
 			</div>
+			<br>
+			
+			<label class="col-sm-12" style="text-align:left;font-size:14px;padding-left:0">状态</label>
+			<div class="col-sm-12 input-group input-group-sm">
+				${statusSelectHtml}
+			</div>
+			<br>
+		
+			<label class="col-sm-12" style="text-align:left;font-size:14px;padding-left:0">排序号</label>
+			<div class="col-sm-12 input-group input-group-sm">
+				<input type="text" class="form-control" name="orderBy" value="${entity.orderBy!''}">
+			</div>
+			<br>
+			
+			<label class="col-sm-12" style="text-align:left;font-size:14px;padding-left:0">备注</label>
+			<div class="col-sm-12 input-group input-group-sm">
+				<input type="text" class="form-control" name="remark" value="${entity.remark!''}">
+			</div>
+			<br>
 		</div>
-	</div>
-	<!-- 编辑区结束 -->
-
-<script type="text/javascript">
-function doSave(){
-	var parm = $.common.getFormJson('.form');
-	$.common.postRequest(parm, '/backend/codeSubMenu/doSave', function(data){
-		if(data.errorNo==200){
-			self.location='/backend/codeSubMenu/list';
-		} else {
-			$.common.alert(data.errorInfo);
-		}
-	});
-}
-</script>
-
-</@base> 
+	</form>
+</div>

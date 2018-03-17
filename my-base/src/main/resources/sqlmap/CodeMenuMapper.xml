@@ -67,7 +67,13 @@
 
 
 <select id="getMapListByParm" parameterType="HashMap" resultType="HashMap">
-	select * from code_menu where 1=1
+	select 
+	`NAME` `name`,
+	ID id,
+	ORDER_BY orderBy,
+	`STATUS` `status`,
+	REMARK remark
+	from code_menu where 1=1
 		order by ORDER_BY asc
 		<if test="parm.start != null">
 			limit #{parm.start},#{parm.limit}

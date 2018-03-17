@@ -1,5 +1,5 @@
 <#include "/base-lib/baseMacro.ftl"> 
-<@base base_title="笔记分类管理" openIndex=2 activeIndex=4>
+<@base base_title="笔记菜单管理" openIndex=2 activeIndex=4>
 	
 	<!-- 列表区 -->
 	<@dataList>
@@ -8,7 +8,7 @@
 				<a href="/backend/code/codeMenuPage" class="upMenu" title="返回父级菜单"><i class=""></i>上级菜单</a>
 			</#if>
 			<a href="#" onclick="gotoEdit()"><i class="fa-plus"></i></a>
-			<a href="#" data-toggle="reload" onclick="$.fn.reload()"><i class="fa-rotate-right"></i></a>
+			<a href="#" data-toggle="reload" onclick="$.fn.reload()" id="reloadBtn"><i class="fa-rotate-right"></i></a>
 		</@dataHeader>
 		<@dataTable tableId="datatable" pageId="pageDiv">
 			<th width="60" field="index_no">编号</th>
@@ -33,9 +33,9 @@
 				<#if level==1>
                 {fnName:"gotoNext", args:"id",name:"下级菜单",icon:"",cls:"btn btn-success btn-xs"},	
                 </#if>
-                {fnName:"edit", args:"id",name:"编辑",icon:"fa fa-edit",cls:"btn btn-info btn-xs"},
-                {fnName:"enableMenu", args:"id",name:"启用",icon:"fa fa-shield",cls:"btn btn-success btn-xs"},
-                {fnName:"$.fn.deleteById", args:"id",name:"禁用",icon:"fa fa-ban",cls:"btn btn-danger btn-xs"}
+                {fnName:"gotoEdit", args:"id,menuName",name:"编辑",icon:"fa fa-edit",cls:"btn btn-info btn-xs"},
+                {fnName:"enableMenu", args:"id",name:"启用",icon:"fa fa-shield",cls:"btn btn-success btn-xs",hidden:"hideEnable"},
+                {fnName:"$.fn.deleteById", args:"id",name:"禁用",icon:"fa fa-ban",cls:"btn btn-danger btn-xs",hidden:"hideBan"}
                 ]'
 			></th>
 		</@dataTable>
@@ -68,12 +68,53 @@ $(function(){
 	}
 });
 //编辑
-function gotoEdit(){
+function gotoEdit(id, menuName){
+	var title = "";
+	var saveUrl = "";
+	var loadDataUrl = "";
+	var formElem = "";
 	if(level==1){
-		//编辑一级菜单	
+		//编辑一级菜单
+		saveUrl = "/backend/codeMenu/doSave";
+		formElem = "#codeMenuForm";
+		loadDataUrl	
+		if($.common.isBlank(id)){
+			title = "新增一级菜单";
+			loadDataUrl = "/backend/codeMenu/edit";
+		} else {
+			title = "编辑"+menuName;
+			loadDataUrl = "/backend/codeMenu/edit?id="+id;
+		}
 	} else {
 		//编辑二级菜单
+		saveUrl = "/backend/codeSubMenu/doSave";	
+		formElem = "#codeMenuSubForm";
+		if($.common.isBlank(id)){
+			title = "新增二级菜单";
+			loadDataUrl = "/backend/codeSubMenu/edit";
+		} else {
+			title = "编辑"+menuName;
+			loadDataUrl = "/backend/codeSubMenu/edit?id="+id;
+		}
 	}
+	editMenu(id, title, saveUrl, loadDataUrl, formElem);
+}
+//编辑菜单
+function editMenu(id, title, saveUrl, loadDataUrl, formElem){
+	var html = '<div id="menuHtml"><i class="fa fa-spinner fa-pulse"></i>数据加载中...</div>';
+	$.common.dialog(title, html, function(data){
+		var formData = $.common.getFormJson(formElem);
+		$.common.postRequest(formData, saveUrl, function(data){
+			if(data.errorNo==200){
+				$.common.tip('保存成功');
+				$.fn.reload();
+				$('#reloadBtn').trigger('click');
+			} else {
+				$.common.error(data.errorInfo);
+			}
+		});
+	});
+	$('#menuHtml').load(loadDataUrl);
 }
 
 //下级下单

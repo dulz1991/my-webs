@@ -296,6 +296,26 @@ jQuery.common = {
 	info : function(text){
 		swal('',text);
 	},
+	dialog: function(title, html, callback){
+		swal({  
+			title: title,
+			html: html,
+			//type: 'info',   //感叹号图标
+			showCancelButton: true,   //显示取消按钮
+			confirmButtonColor: '#3085d6',
+			confirmButtonText: '确定', //俩个按钮的文本
+			cancelButtonText: '取消',
+			allowOutsideClick: false  
+		}).then(function() {    
+			callback();
+		}, function(dismiss) {
+			// dismiss can be 'cancel', 'overlay',
+			// 'close', and 'timer'
+			if (dismiss === 'cancel') {
+				//swal('Cancelled', 'Your imaginary file is safe :)', 'error')
+			}
+		});
+	},
 	
 	//显示提示
 	showTip: function(text) {
@@ -322,15 +342,18 @@ jQuery.common = {
 	/**
 	 * 将空字符串转换为""
 	 * @param value
+	 * @param defaultValue 默认值
 	 * @returns ""
 	 */
-	convertBlank: function(value) {
-		if (value == undefined) {
-			return "";
-		} else if (value == null) {
-			return "";
+	convertBlank: function(value, defaultValue) {
+		if($.common.isBlank(defaultValue)){
+			defaultValue = "";
 		}
-		return value;
+		if($.common.isBlank(value)){
+			return defaultValue;
+		} else {
+			return value;
+		}
 	},
 
 	/**
@@ -361,12 +384,10 @@ jQuery.common = {
 	    d = d < 10 ? ('0' + d) : d;  
 	    var h = date.getHours();  
 	    var minute = date.getMinutes();  
-	    minute = minute < 10 ? ('0' + minute) : minute;  
-	    return y + '-' + m + '-' + d+' '+h+':'+minute;    
-	},
-	
-	openQQ: function(){
-		window.open("http://wpa.qq.com/msgrd?v=3&uin=3566877072&site=qq&menu=yes");
+	    minute = minute < 10 ? ('0' + minute) : minute;
+	    var sec = date.getSeconds();  
+	    sec = sec < 10 ? ('0' + sec) : sec;
+	    return y + '-' + m + '-' + d+' '+h+':'+minute+':'+sec;    
 	},
 	
 	doDelete: function(deleteParm, deleteUrl, callback){

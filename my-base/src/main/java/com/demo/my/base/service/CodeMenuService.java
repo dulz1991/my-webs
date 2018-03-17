@@ -50,4 +50,13 @@ public class CodeMenuService extends AbstractBaseService {
 	public List<Map<String, Object>> getListForZtree() {
 		return codeMenuMapper.getListForZtree();
 	}
+	
+	public Map<Object, Object> getListForSelect() {
+		List<CodeMenu> list = codeMenuMapper.getBeanListByParm(new HashMap<String, Object>());
+		Map<Object, Object> map = new HashMap<Object, Object>();
+		for(CodeMenu codeMenu : list){
+			map.put(codeMenu.getId(), codeMenu.getName());
+		}
+		return map;
+	}
 }

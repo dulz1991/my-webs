@@ -9,7 +9,7 @@ public class CodeMenu implements Serializable {
 	private Long id;
 	private String name;
 	private Integer orderBy;
-	private Integer remark;
+	private String remark;
 	private String status;
 	
 	/**
@@ -48,11 +48,11 @@ public class CodeMenu implements Serializable {
 		this.id = id;
 	}
 
-	public Integer getRemark() {
+	public String getRemark() {
 		return remark;
 	}
 
-	public void setRemark(Integer remark) {
+	public void setRemark(String remark) {
 		this.remark = remark;
 	}
 

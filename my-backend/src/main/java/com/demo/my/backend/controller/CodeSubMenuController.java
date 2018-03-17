@@ -19,9 +19,11 @@ import org.springframework.web.servlet.ModelAndView;
 import com.demo.my.backend.common.BaseBackendController;
 import com.demo.my.base.service.CodeMenuService;
 import com.demo.my.base.service.CodeSubMenuService;
+import com.demo.my.base.enums.EnumCodeMenuStatus;
 import com.demo.my.base.enums.EnumCodeSubMenuStatus;
 import com.demo.my.base.model.CodeMenu;
 import com.demo.my.base.model.CodeSubMenu;
+import com.demo.my.base.util.HtmlUtil;
 import com.demo.my.base.util.Page;
 
 @Controller
@@ -54,12 +56,21 @@ public class CodeSubMenuController extends BaseBackendController {
 		ModelAndView model = new ModelAndView("code/code_sub_menu_edit");
 		List<CodeMenu> codeMenuList = codeMenuService.excute("CodeMenuMapper.getBeanListByParm", null);
 		model.addObject("codeMenuList", codeMenuList);
+		
+		String statusValue = "";
+		String codeMenuValue = "";
 		if(id!=null){
 			CodeSubMenu entity = codeSubMenuService.getById(id);
 			model.addObject("entity", entity);
+			statusValue = entity.getStatus()+"";
+			codeMenuValue = entity.getFatherId()+"";
 		} else {
 			model.addObject("entity", new CodeSubMenu());
 		}
+		
+		model.addObject("statusSelectHtml", HtmlUtil.SelectHtml("status", statusValue, "", EnumCodeSubMenuStatus.getListForSelect()));
+		model.addObject("codeMenuSelectHtml", HtmlUtil.SelectHtml("fatherId", codeMenuValue, "", codeMenuService.getListForSelect()));
+		
 		return model;
 	}
 	
@@ -73,6 +84,13 @@ public class CodeSubMenuController extends BaseBackendController {
 		Page<Map<String, Object>> page = codeSubMenuService.getPage("CodeSubMenuMapper.getMapListByParm", parmMap);
 		for(Map<String, Object> m : page.getList()){
 			m.put("statusStr", EnumCodeSubMenuStatus.getValueByKey(Integer.valueOf(m.get("menuStatus")+"")));
+			if((m.get("menuStatus")+"").equals(EnumCodeSubMenuStatus.STOP.getKey()+"")){
+				m.put("hideEnable", false);
+				m.put("hideBan", true);
+			} else {
+				m.put("hideEnable", true);
+				m.put("hideBan", false);
+			}
 		}
 		
 		Map<String, Object> resMap = new HashMap<String, Object>();

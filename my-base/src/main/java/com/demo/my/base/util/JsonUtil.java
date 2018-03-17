@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.codehaus.jackson.map.ObjectMapper;
-import com.demo.my.base.model.User;
 
 public class JsonUtil {
 	/**
