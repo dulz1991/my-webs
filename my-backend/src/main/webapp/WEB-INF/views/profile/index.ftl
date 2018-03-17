@@ -28,6 +28,9 @@
 						<li>
 							<i class="fa fa-envelope-o fa-fw"></i> ${user.email!''}
 						</li>
+						<li>
+							<i class="fa fa-eye"></i> ${roleName!''} <a href="#" onclick="changeRole()"><b>【修改权限】</b></a>
+						</li>
 					</ul>	
 					
 					<#if !isSelf && user.status==1>
@@ -57,6 +60,7 @@
 	</section>
 	
 	<script>
+		//屏蔽或者启用用户操作
 		function changeUserStatus(status, userId){
 			changeUserStatusCallback(status, userId, function(data){
 				if(data.errorNo==200){
@@ -68,9 +72,28 @@
 			});
 		}
 		
+		//查看头像大图
 		function showBigImg(imgUrl){
 			var html = '<img src="'+imgUrl+'">';
 			$.common.info(html);
+		}
+		
+		//修改用户权限
+		function changeRole(){
+			var html = '<form id="roleHtml"><i class="fa fa-spinner fa-pulse"></i>数据加载中...</form>';
+			$.common.dialog('修改用户权限', html, function(data){
+				var formData = $.common.getFormJson(roleHtml);
+				formData.id = ${user.id};
+				$.common.postRequest(formData, '/backend/user/doSave', function(data){
+					if(data.errorNo==200){
+						$.common.tip('保存成功');
+						location.reload();
+					} else {
+						$.common.error(data.errorInfo);
+					}
+				});
+			});
+			$('#roleHtml').load('/backend/profile/getRoleSelect?roleId='+${user.role});
 		}
 	</script>
 	<style>
@@ -78,14 +101,16 @@
 		.modal-content{z-index:2}
 	</style>
 	
+	<#-- 头像上传弹框 -->
 	<div class="modal fade" id="avatar-modal" aria-hidden="true" aria-labelledby="avatar-modal-label" role="dialog" tabindex="-1">
 			<div class="modal-dialog modal-lg">
 				<div class="modal-content">
 					<!--<form class="avatar-form" action="upload-logo.php" enctype="multipart/form-data" method="post">-->
 					<form class="avatar-form" action="/backend/profile/doUploadAvatar" enctype="multipart/form-data" method="post">
-						<div class="modal-header">
+						<div class="modal-header" style="padding-bottom:0px;">
 							<button class="close" data-dismiss="modal" type="button">&times;</button>
-							<h4 class="modal-title" id="avatar-modal-label">上传图片</h4>
+							<!--<h4 class="modal-title" id="avatar-modal-label">上传图片</h4>-->
+							<button class="btn btn-danger"  type="button" style="height: 35px;" onclick="$('input[id=avatarInput]').click();">请选择图片</button>
 						</div>
 						<div class="modal-body">
 							<div class="avatar-body">
@@ -93,8 +118,8 @@
 									<input class="avatar-src" name="avatar_src" type="hidden">
 									<input class="avatar-data" name="avatar_data" type="hidden">
 									<input name="hideUserId" type="hidden" value="${user.id}">
-									<label for="avatarInput" style="line-height: 35px;">图片上传</label>
-									<button class="btn btn-danger"  type="button" style="height: 35px;" onclick="$('input[id=avatarInput]').click();">请选择图片</button>
+									<!--<label for="avatarInput" style="line-height: 35px;">图片上传</label>-->
+									<!--<button class="btn btn-danger"  type="button" style="height: 35px;" onclick="$('input[id=avatarInput]').click();">请选择图片</button>-->
 									<span id="avatar-name"></span>
 									<input class="avatar-input hide" id="avatarInput" name="avatar_file" type="file"></div>
 								<div class="row">

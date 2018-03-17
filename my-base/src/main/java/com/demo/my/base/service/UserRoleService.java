@@ -1,11 +1,15 @@
 package com.demo.my.base.service;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.demo.my.base.model.UserRole;
 import com.demo.my.base.mybatis.mapper.ds1mapper.UserRoleMapper;
+import com.demo.my.base.util.HtmlUtil;
 
 @Component  
 public class UserRoleService extends AbstractBaseService {
@@ -37,4 +41,20 @@ public class UserRoleService extends AbstractBaseService {
 		return userRoleMapper.getById(id);
 	}
 	
+	public List<UserRole> getBeanListByParm(Map<String, Object> parm) {
+		if(parm==null){
+			parm = new HashMap<String, Object>();
+		}
+		return userRoleMapper.getBeanListByParm(parm);
+	}
+	
+	public String getForSelect(String roleId) {
+		List<UserRole> userRoles = this.getBeanListByParm(null);
+		Map<Object, Object> map = new HashMap<Object, Object>();
+		for(UserRole role :userRoles){
+			map.put(role.getId(), role.getRoleName());
+		}
+		String selectHtml = HtmlUtil.SelectHtml("role", roleId, "", map);
+		return selectHtml;
+	}
 }

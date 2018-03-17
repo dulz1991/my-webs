@@ -16,6 +16,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.demo.my.backend.common.BaseBackendController;
 import com.demo.my.base.common.ErrorConstant;
 import com.demo.my.base.model.User;
+import com.demo.my.base.model.UserRole;
+import com.demo.my.base.service.UserRoleService;
 import com.demo.my.base.service.UserService;
 import com.demo.my.base.service.file.ImageFileService;
 import com.demo.my.base.util.ImageUtil;
@@ -30,6 +32,8 @@ public class ProfileController extends BaseBackendController {
 	@Autowired
 	private UserService userService;
 	@Autowired
+	private UserRoleService userRoleService;
+	@Autowired
 	private ImageFileService imageFileService;
 
 	//用户信息首页
@@ -37,15 +41,18 @@ public class ProfileController extends BaseBackendController {
 	public ModelAndView index(String userId) {
 		ModelAndView mv = new ModelAndView("profile/index");
 		
+		User user = null;
 		if(StringUtils.isBlank(userId)){
-			User user = this.getCurrentUser();
-			mv.addObject("user", user);
+			user = this.getCurrentUser();
 			mv.addObject("isSelf", true);
 		} else {
-			User user = userService.getById(Long.valueOf(userId));
-			mv.addObject("user", user);
+			user = userService.getById(Long.valueOf(userId));
 			mv.addObject("isSelf", false);
 		}
+
+		mv.addObject("user", user);
+		UserRole userRole = userRoleService.getById(user.getRole());
+		mv.addObject("roleName", userRole.getRoleName());
 		
 		return mv;
 	}
@@ -95,6 +102,12 @@ public class ProfileController extends BaseBackendController {
 		}
 		
 		return responseOK();
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/getRoleSelect")
+	public String getRoleSelect(String roleId){
+		return userRoleService.getForSelect(roleId);
 	}
 	
 }
