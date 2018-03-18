@@ -114,7 +114,8 @@
 	bl.ID as id,
 	DATE_FORMAT(bl.CREATE_TIME,'%Y-%m-%d %H:%s:%i') as createTime,
 	bl.REMARK as remark,
-	u.USERNAME as username
+	u.USERNAME as username,
+	u.ID userId
 	from blog_log bl 
 	LEFT JOIN blog b on b.ID=bl.BLOG_ID
 	LEFT JOIN `user` u on u.ID = bl.USER_ID 
@@ -122,24 +123,13 @@
 		<if test="parm.blogTitle != null and parm.blogTitle != ''">
 	     	and b.TITLE LIKE CONCAT(CONCAT('%', #{parm.blogTitle,jdbcType=VARCHAR}),'%')
 	   	</if>
-	
-		<if test="parm.orderby != null">
-	   		order by ${parm.orderby}
+	   	<if test="parm.username != null and parm.username != ''">
+	     	and u.USERNAME LIKE CONCAT(CONCAT('%', #{parm.username,jdbcType=VARCHAR}),'%')
 	   	</if>
+		order by bl.CREATE_TIME desc 
 		<if test="parm.start != null">
 			limit #{parm.start},#{parm.limit}
 		</if>
-</select>
-<select id="getMapListByParm_count"  resultType="integer">
-	select count(*)
-	from blog_log bl 
-	LEFT JOIN blog b on b.ID=bl.BLOG_ID
-	LEFT JOIN `user` u on u.ID = bl.USER_ID 
-	where 1=1
-		<if test="parm.blogTitle != null and parm.blogTitle != ''">
-	     	and b.TITLE = #{parm.blogTitle}
-	   	</if>
-		
 </select>
 
 </mapper>

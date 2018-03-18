@@ -18,7 +18,7 @@
 		<@dataTable tableId="datatable" pageId="pageDiv">
 			<th width="60" field="index_no">编号</th>
 			<th field="title" my-attrs='{textFun:"viewDetail",args:"id",clazz:"table-a"}'>标题</th>
-			<th field="username">用户</th>
+			<th field="username" my-attrs='{textFun:"viewUser",args:"userId",clazz:"table-a"}'>用户</th>
 			<th field="menuName" my-attrs='{textFun:"getByMenu",args:"menuId",clazz:"table-a"}'>分类</th>
 			<th field="click">点击</th>
 			<th field="createTime">创建时间</th>
@@ -47,6 +47,10 @@
 	
 	function viewDetail(id){
 		window.open('/backend/blog/getDetail?id='+id);
+	}
+	
+	function viewUser(id){
+		window.open("/backend/profile/index?userId="+id);
 	}
 	
 	function getByMenu(menuId){

@@ -51,7 +51,6 @@ public class BlogLogController extends BaseBackendController {
 			@RequestParam(name="pageNo", defaultValue="1") int pageNo,  
 			@RequestParam(name="pageSize", defaultValue="10") int pageSize) {
 		Map<String, Object> parmMap = this.getParmMap();
-		parmMap.put("orderBy", "bl.id desc");
 		Page<Map<String, Object>> page = blogLogService.getPage("BlogLogMapper.getMapListByParm", parmMap);
 
 		//返回参数

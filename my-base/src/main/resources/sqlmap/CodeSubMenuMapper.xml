@@ -71,7 +71,7 @@
 
 <select id="getMapListByParm" parameterType="HashMap" resultType="HashMap">
 	SELECT csm.ID as id,
-	csm.`NAME` as menuName,
+	csm.`NAME` as `name`,
 	csm.FATHER_ID as fatherId,
 	csm.`STATUS` as menuStatus,
 	csm.ORDER_BY orderBy,

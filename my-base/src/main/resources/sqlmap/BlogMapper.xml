@@ -164,6 +164,7 @@
 	DATE_FORMAT(b.UPDATE_TIME,"%Y-%m-%d %H:%s:%i") as updateTime,
 	b.CLICK as click,
 	u.USERNAME as username,
+	u.ID userId,
 	bm.`NAME` as menuName
 	from blog b 
 	LEFT JOIN `user` u on b.USER_ID = u.ID
