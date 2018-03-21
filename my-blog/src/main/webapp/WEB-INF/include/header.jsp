@@ -24,13 +24,13 @@
 		    	</span>
 		  	</form>
 		</li>
-		<li><a href="/index" class="nav-link"><i class="fa fa-home"></i> 首页</a></li>
+		<li><a href="/" class="nav-link"><i class="fa fa-home"></i> 首页</a></li>
 		<li><a href="/blog" class="nav-link">Blog文档</a></li>
 		<li><a href="/code" class="nav-link">Code笔记</a></li>
 		<li><a href="/code" class="nav-link">Demo前端</a></li>
 		<c:if test="${isLogin}">
     		<!-- <li><a href="/user" class="nav-link"><i class="fa fa-user"></i>个人中心</a></li> -->
-    		<li><a href="/logout"><i class="fa fa-sign-out"></i> 退出</a></li>
+    		<li><a href="/logout" class="nav-link"><i class="fa fa-sign-out"></i> 退出</a></li>
         </c:if>
         <c:if test="${!isLogin}">	
         	<li><a href="/login" class="nav-link"><i class="fa fa-sign-in"></i>登陆</a></li>
