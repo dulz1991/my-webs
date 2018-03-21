@@ -31,9 +31,7 @@
 			<if test="item != null">  
 	        	ITEM=#{item},
 	    	</if>
-			<if test="codeId != null">  
-	        	CODE_ID=#{codeId},
-	    	</if>
+			CODE_ID=#{codeId},
 			<if test="itemOrder != null">  
 	        	ITEM_ORDER=#{itemOrder},
 	    	</if>

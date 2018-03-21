@@ -1,4 +1,4 @@
-package com.demo.my.blog.controller.common;
+package com.demo.my.blog.controller;
 
 import java.util.Map;
 
@@ -14,8 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.demo.my.base.model.User;
 import com.demo.my.base.service.login.LoginService;
-import com.demo.my.blog.controller.common.BaseController;
-
+import com.demo.my.blog.controller.BaseController;
 
 @Controller
 public class LoginController extends BaseController {
@@ -28,19 +27,19 @@ public class LoginController extends BaseController {
 	public ModelAndView login() {
 		ModelAndView modelAndView = new ModelAndView();
 		if(this.getCurrentUser()==null){
-			modelAndView.setViewName("account/login");
+			modelAndView.setViewName("login");
 			return modelAndView;
 		} 
 		SavedRequest savedRequest = getSavedRequest();
 		if(savedRequest==null){
-			modelAndView.setViewName("account/login");
+			modelAndView.setViewName("login");
 			return modelAndView;
 		}
 		String url = savedRequest.getRequestUrl();
 		if(url.indexOf("login")<=0){
 			return new ModelAndView("redirect:"+url);
 		} else {
-			modelAndView.setViewName("account/login");
+			modelAndView.setViewName("login");
 			return modelAndView;
 		}
 	}

@@ -5,25 +5,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<jsp:include page="include/meta.jsp"></jsp:include>
-    <link href="/code/css/hover.css" rel="stylesheet" media="all">
+	<jsp:include page="../include/meta.jsp"></jsp:include>
 	<title>代码笔记</title>
 </head>
 
-<body data-spy="scroll docs" class="docs">
+<body data-spy="scroll docs" class="docs" id="top">
 
 	<!-- 导航栏 -->
-	<div>
-	<jsp:include page="include/header.jsp"></jsp:include>
-	</div>
+	<jsp:include page="../include/header.jsp"></jsp:include>
 	<!-- 导航栏结束 -->
 
-	<div id="top"></div>
-    <!-- Preloader -->
-    <div id="preloader">
-        <div id="status"></div>
-    </div>
-	
     <div id="main-wrapper">
         
         <div id="menu">
@@ -38,17 +29,6 @@
 					</ul>
 	        	</div>
 	        </div>
-            <%-- <nav class="navbar navbar-default" role="navigation">
-			
-                <div class="collapse navbar-collapse" id="bs-navbar-collapse">
-                    <ul class="nav navbar-nav">
-                        <c:forEach items="${codeMenuList}" var="item" varStatus="status">
-        					<li <c:if test='${status.index==0}'>class="active"</c:if>><a class="sscroll" href="index#link_${item.id}">${item.name }</a></li>
-        				</c:forEach>
-                    </ul>
-                </div>
-                <!-- /.navbar-collapse -->
-            </nav> --%>
         </div>
         
         <div id="container">
@@ -77,12 +57,10 @@
 	                </div>
 	            </section>
         	</c:forEach>
-          
         </div>
+        
     </div>
 
-    <jsp:include page="../include/right_bottom.jsp"></jsp:include> 
-    
 <script type="text/javascript">
 $(function(){
 	$('#side-menu li a').click(function(){

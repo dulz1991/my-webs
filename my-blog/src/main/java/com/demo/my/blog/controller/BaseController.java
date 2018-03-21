@@ -1,4 +1,4 @@
-package com.demo.my.blog.controller.common;
+package com.demo.my.blog.controller;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
@@ -44,7 +44,7 @@ public class BaseController extends BaseCommon {
 			request.setAttribute("isLogin", false);
 		}
         
-        //vue post����
+        //vue pos
         response.setHeader("Access-Control-Allow-Origin", "*");
         response.setHeader("Access-Control-Allow-Credentials", "true"); // ������� cookie
         // Request methods you wish to allow
@@ -74,7 +74,6 @@ public class BaseController extends BaseCommon {
     
     public Map<String, Object> getParmMap() {
 		Map<String, Object> parmMap = new HashMap<String, Object>();
-		
 		//遍历 request
 		Enumeration paramNames = request.getParameterNames();  
 		while (paramNames.hasMoreElements()) {
@@ -91,7 +90,6 @@ public class BaseController extends BaseCommon {
 				}  
 			}  
 		}
-		
 		return parmMap;
 	}
 

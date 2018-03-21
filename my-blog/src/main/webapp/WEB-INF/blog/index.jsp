@@ -1,24 +1,21 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %> 
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<jsp:include page="include/meta.jsp"></jsp:include>
-<title>技术文档</title>
+	<jsp:include page="../include/meta.jsp"></jsp:include>
+	<title>技术文档</title>
 </head>
 
-<body>
-	<div id="top"></div>
-	
+<body data-spy="scroll docs" class="docs" id="top">
 	<!-- head -->
-	<jsp:include page="include/header.jsp"></jsp:include>
+	<jsp:include page="../include/header.jsp"></jsp:include>
 
 	<div class="container">
 		
-		<!-- 左侧导航 -->
+		<!-- 左侧折叠菜单 -->        
 		<div class="menu">
 			<c:forEach items="${menuList}" var="menu" varStatus="st">
 				<h3 class="<c:if test="${not empty blogMenu and blogMenu.id == menu.id}">active</c:if>">
@@ -31,15 +28,15 @@
 				</h3>
 				<ul class="">
 					<c:forEach items="${menuBlogMap[menu.id]}" var="item" varStatus="indx">
-						<li><a class="<c:if test="${not empty blogId and blogId == item.id}">selected</c:if>" href="/blog?blogId=${item.id}">${item.title}</a></li>	
+						<li title="${item.title}"><a class="<c:if test="${not empty blogId and blogId == item.id}">selected</c:if>" href="/blog?blogId=${item.id}">${item.title}</a></li>	
 					</c:forEach>		
 				</ul>
 			</c:forEach>
 		</div>
+		<!-- 左侧折叠菜单 结束 -->
 		
-		<!-- 内容 -->
+		<!-- 右侧内容 -->
 		<div class="content">
-		
 			<!-- 内容头部 -->
 			<c:if test="${not empty entity }">
 				<div class="get-menu">
@@ -71,27 +68,97 @@
 				</div>
 			</div>
 			<!-- 内容结束 -->
-
 		</div>
-		<!-- 内容区结束 -->
+		<!-- 右侧内容 结束 -->
 		
 	</div>
 	
-	<jsp:include page="../include/right_bottom.jsp"></jsp:include> 
-	
-<script>
-$(function(){
-	var menuId = '${entity.menuId}';
-	if(menuId!=''){
-		$('.menu h3').each(function (i){
-			if($(this).hasClass('active')){
-				$(".menu > ul").eq(i).show();			
-			}
-		});
-	} else {
-		$(".menu > ul").eq(0).show();
-	}
-})
-</script>
+	<script>
+	$(function(){
+		var menuId = '${entity.menuId}';
+		if(menuId!=''){
+			$('.menu h3').each(function (i){
+				if($(this).hasClass('active')){
+					$(".menu > ul").eq(i).show();			
+				}
+			});
+		} else {
+			$(".menu > ul").eq(0).show();
+		}
+	})
+	</script>
+	<style>
+		.container{
+			font-family: 微软雅黑;
+			background: #fff;
+			padding: 30px;
+			margin:20px auto;
+	        overflow: hidden;
+		}
+		.container .menu{
+			width: 22%;
+			margin-left: 30px;
+			float: left;
+			border-right: 1px solid #aaa;
+		}
+		.container .menu h3{
+			font-size: 14px;
+			cursor: pointer;
+		}
+	    .container .menu ul{
+	        display: none;
+	        padding-left:20px;
+	    }
+		.container .menu ul li{
+			height: 28px;
+			line-height: 28px;
+			overflow: hidden;
+			white-space: nowrap;
+			text-overflow: ellipsis;
+		}
+		.container .menu ul li a:hover{
+			padding:5px 10px;
+			background: #9FB6CD;
+			border-radius: 14px;
+			-webkit-border-radius: 14px;
+			-moz-border-radius: 14px;
+			-moz-border-radius:14px;
+			color:#fff;
+		}
+		ul{
+			list-style: none;
+		}
+		.container .menu .selected{
+			background: #ccc;
+			border-radius: 14px;
+			padding:5px 10px;
+		}
+		.container .content{
+			margin-top:-30px;
+			width: 100%;
+			margin-left: 26%;
+		}
+		.container .content .get-menu{
+			margin-left: -10px;
+		}
+		.container .content .get-menu a{
+			display: inline-block;
+			font-size: 15px;
+		    height: 20px;
+		}
+		.container .content .get-menu a:last-child{
+			margin-left: -8px;
+			color: #7D9EC0;
+		}
+		.container .content .get-menu span{
+			display: inline-block;
+		    height: 40px;
+		    margin-left: -110px;
+		}
+		.fa-edit-icon{
+			margin-left:20px;
+			cursor: pointer;
+		}
+	</style>
 </body>
 </html>

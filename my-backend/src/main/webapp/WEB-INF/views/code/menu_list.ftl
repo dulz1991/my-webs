@@ -21,7 +21,7 @@
 			
 			<!-- 二级菜单 -->
 			<#if level==2>
-				<th field="name" my-attrs='{textFun:"viewCodeList",args:"id",clazz:"table-a"}'>分类名称</th>
+				<th field="menuName" my-attrs='{textFun:"viewCodeList",args:"id",clazz:"table-a"}'>分类名称</th>
 				<th field="fatherName">父级分类</th>
 				<th field="statusStr">状态</th>
 			</#if>

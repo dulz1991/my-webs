@@ -1,4 +1,4 @@
-package com.demo.my.blog.controller.common;
+package com.demo.my.blog.controller;
 
 import java.util.Map;
 
@@ -16,7 +16,7 @@ import com.demo.my.base.common.ErrorConstant;
 import com.demo.my.base.common.KeyConstant;
 import com.demo.my.base.model.User;
 import com.demo.my.base.service.UserService;
-import com.demo.my.blog.controller.common.BaseController;
+import com.demo.my.blog.controller.BaseController;
 
 @Controller
 public class HomeController extends BaseController {

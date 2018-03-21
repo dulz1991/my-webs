@@ -9,7 +9,7 @@
       <meta name="author" content="">
       <link rel="icon" type="image/png" href="/img/favicon.png" />
       <title>个人网站首页</title>
-      <link type="text/css" href="/home/style.css" rel="stylesheet"/>
+      <link type="text/css" href="/js/home/style.css" rel="stylesheet"/>
       <script type="text/javascript" src="/js/lib/jquery-1.10.2.min.js"></script>
    </head>
 <body class="no-js">
@@ -18,18 +18,19 @@
             <div class="wrap">
                 <div class="logo">
                     <a href="#">
-                        <img src="/home/images/logo.png" width="341" height="68" alt="MY Journey | SIMPLE WAY to do it today">
+                        <img src="/img/home/logo.png" width="341" height="68" alt="MY Journey | SIMPLE WAY to do it today">
                     </a>
                 </div><!-- logo -->
                 <div class="social">
                     <ul class="clearfix">
-                        <li><a class="social-facebook" href="/blog" >技术文档</a></li>
-                        <li><a class="social-twitter" href="/code" title="twitter">代码笔记</a></li>
+                        <li><a class="social-blog" href="/blog" >Blog文档</a></li>
+                        <li><a class="social-code" href="/code">Code笔记</a></li>
+                        <li><a class="social-demo" href="/demo">Demo前端</a></li>
                         <c:if test="${isLogin}">
-				    		<li><a class="social-googleplus" href="/logout" title="google plus">退出</a></li>
+				    		<li><a class="social-sign" href="/logout" title="google plus">退出</a></li>
 				        </c:if>
 				        <c:if test="${!isLogin}">
-				        	<li><a class="social-googleplus" href="/login" title="google plus">登录</a></li>	
+				        	<li><a class="social-sign" href="/login" title="google plus">登录</a></li>	
 				        </c:if>
                         
                     </ul>
@@ -47,13 +48,13 @@
                 <div class="swiper-container">
                     <div class="swiper-wrapper">
                         <div class="swiper-slide">
-                        	<img src="/home/images/slide3.jpg" width="940" height="360" alt="">    
+                        	<img src="/img/home/slide3.jpg" width="940" height="360" alt="">    
                         </div><!-- swiper-slide -->
                         <div class="swiper-slide">
-                            <img src="/home/images/slide1.jpg" width="940" height="360" alt="">
+                            <img src="/img/home/slide1.jpg" width="940" height="360" alt="">
                         </div><!-- swiper-slide -->
                         <div class="swiper-slide">
-                            <img src="/home/images/slide2.jpg" width="940" height="360" alt="">
+                            <img src="/img/home/slide2.jpg" width="940" height="360" alt="">
                         </div><!-- swiper-slide -->
                     </div>
                     <div class="swiper-pagination-wrapper">
@@ -87,7 +88,7 @@
         <div class="copyrights">Collect from <a href="http://www.cssmoban.com/" >手机网站模板</a></div>
         <section class="textblock">
             <div class="wrap">
-                <img src="/home/images/image3.jpg" width="320" height="280" alt="">
+                <img src="/img/home/image3.jpg" width="320" height="280" alt="">
                 <div class="text-column">
                     <h2>So simple, so beautiful</h2>
                     <p>What will matter is not how many people you knew, but how many will feel a lasting
@@ -100,7 +101,7 @@
         </section><!-- textblock -->
         <section class="textblock textblock-last">
             <div class="wrap">
-                <img src="/home/images/image4.jpg" width="320" height="280" class="align-right" alt="">
+                <img src="/img/home/image4.jpg" width="320" height="280" class="align-right" alt="">
                 <div class="text-column">
                     <h2>Right here, right now</h2>
                     <p>Happiness is not about being immortal nor having food or rights in one's hand. It’s about having each tiny wish come true, or having something to eat when you are hungry or having someone's love when you need love.</p>
@@ -112,8 +113,8 @@
     <footer>
         <div class="footer-image"></div>
     </footer>
-    <script src="/home/js/library.js"></script>
-    <script src="/home/js/script.js"></script>
-    <script src="/home/js/retina.js"></script>
+    <script src="/js/home/library.js"></script>
+    <script src="/js/home/script.js"></script>
+    <script src="/js/home/retina.js"></script>
 </body>
 </html>

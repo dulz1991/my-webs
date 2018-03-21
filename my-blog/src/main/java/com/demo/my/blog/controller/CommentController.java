@@ -1,4 +1,4 @@
-package com.demo.my.blog.controller.common;
+package com.demo.my.blog.controller;
 
 import java.util.Collections;
 import java.util.Comparator;

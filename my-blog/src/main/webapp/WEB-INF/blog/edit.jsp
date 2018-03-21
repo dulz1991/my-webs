@@ -4,10 +4,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<jsp:include page="include/meta.jsp"></jsp:include>
-	<title>编辑技术文档</title>
 	<link href="/css/lib/bootstrap.min.css" rel="stylesheet">
-	
+	<jsp:include page="../include/meta.jsp"></jsp:include>
+	<title>编辑技术文档</title>
 	<script src="/ue/ueditor.config.js"></script>
 	<script src="/ue/ueditor.all.js"></script>
 	<link href="/ue/themes/default/css/ueditor.css" rel="stylesheet">
@@ -15,7 +14,7 @@
 <body>
 
 	<!-- head -->
-	<jsp:include page="include/header.jsp"></jsp:include>
+	<jsp:include page="../include/header.jsp"></jsp:include>
 	
        <div id="container">
 		<div class="col-xs-10 mg-top-20">

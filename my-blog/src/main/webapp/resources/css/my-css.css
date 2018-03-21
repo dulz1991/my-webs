@@ -1,0 +1,197 @@
+/* 右下角方块按钮 */
+.right-bottom-btns{
+	border:0px solid #aaa;
+	width: 40px;
+    height: 160px;
+   	position: fixed;
+	display: block;
+	right: 15px;
+	bottom: 15px;
+	text-align: center;
+}
+.right-bottom-btns .to-btn{
+	background: rgba(0,250,0,0.3);
+    border-radius: 0;
+    color: #fff;
+    font-size: 18px;
+    line-height: 38px;
+    /* padding-right: 10px;
+    padding-top:10px; */
+    width: 40px;
+    height: 40px;
+	display: block;
+	right: 15px;
+}
+.right-bottom-btns .to-btn:hover{color: #FF5F3E;background-color:rgba(0,250,0,0.6);}	
+.right-bottom-btns .to-top-btn {}
+.right-bottom-btns .to-top-btn:hover{}
+/* 右下角方块按钮 */
+
+/* 页面预加载动画 */
+#preloader {
+	background: #FFF;
+	bottom: 0;
+	left: 0;
+	position: fixed;
+	right: 0;
+	top: 0;
+	z-index: 9999;
+}
+#status {
+	background-image: url(/img/preloader.gif);
+	background-position: center;
+	background-repeat: no-repeat;
+	height: 200px;
+	left: 50%;
+	margin: -100px 0 0 -100px;
+	position: absolute;
+	top: 50%;
+	width: 200px;
+}
+/* 页面预加载动画 */
+
+/* 一般样式定义 */
+ a {
+    /* -webkit-transition: all .3s ease-in-out;
+    -moz-transition: all .3s ease-in-out;
+    -ms-transition: all .3s ease-in-out;
+    -o-transition: all .3s ease-in-out;
+    transition: all .3s ease-in-out; */
+    color: #0000ff;
+    font-family:Arial;
+}
+a:hover {color: #232a2f;text-decoration: none;}
+
+.mg-bt-20 {margin-bottom: 20px;}
+.mg-bt-40 {margin-bottom: 40px;}
+.mg-bt-60 {margin-bottom: 60px;}
+.mg-bt-80 {margin-bottom: 80px;}
+.mg-top-20 {margin-top: 20px;}
+.mg-top-40 {margin-top: 40px;}
+.mg-top-60 {margin-top: 60px;}
+.mg-top-80 {margin-top: 80px;}
+.mg-left-10 {margin-left: 10px;}
+.mg-left-20 {margin-left: 20px;}
+.mg-left-40 {margin-left: 40px;}
+.mg-left-60 {margin-left: 60px;}
+.mg-left-80 {margin-left: 80px;}
+.mg-right-10 {margin-right: 10px;}
+.mg-right-20 {margin-right: 20px;}
+.mg-right-40 {margin-right: 40px;}
+.mg-right-60 {margin-right: 60px;}
+.mg-right-80 {margin-right: 80px;}
+
+/*内边距*/
+.pd-5{padding:5px;}
+.pd-10{padding:10px;}
+.pd-top-10{padding-top:10px;}
+/*内边距*/
+
+.display-none{display:none;}
+.float-right{float:right}
+.float-left{float:left}
+.white{color:#fff;}
+#main-wrapper {width: 100%; position: relative;}
+
+/* *****左侧菜单***** */
+#menu {
+    position: fixed;
+    width: 260px;
+    background: #fff;
+    height: 100%;
+    left: 0;
+    font-family:'Raleway', sans-serif;
+}
+#menu .navbar-toggle {
+    margin-top: 11px;
+}
+#menu .navbar-brand {
+    padding-top: 10px;
+    padding-left: 30px;
+}
+#menu .navbar {
+    border-radius: 0;
+    background: transparent;
+    border: none;
+    padding-top: 10%;
+}
+#menu .navbar-collapse {
+    padding-left: 20px;
+}
+#menu .navbar-header, #menu .navbar-nav, #menu .navbar-nav li {
+    float: none;
+    margin-left: -10px;
+}
+#menu .navbar-default .navbar-nav>li>a {
+    color: #232a2f;
+    font-size: 13px;
+    font-weight: 300;
+    letter-spacing:0.5px;
+    padding-left: 30px;
+}
+#menu .navbar-default .navbar-nav>li>a:hover {
+    background: rgba(135, 206, 250, .2);
+}
+#menu .navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.active>a:hover, .navbar-default .navbar-nav>.active>a:focus {
+    background: transparent;
+    color: #ff0000;
+}
+#menu .navbar-nav {
+    margin: 7.5px -15px;
+}
+#menu .navbar-nav .opens .dropdown-menu {
+    position: static;
+    float: none;
+    width: auto;
+    margin-top: 0;
+    border: 0;
+    box-shadow: none;
+    background-color: transparent;
+}
+#menu .navbar-default .navbar-nav .opens .dropdown-menu>li>a {
+    color: #777;
+}
+#menu .navbar-nav .opens .dropdown-menu>li>a {
+    line-height: 20px;
+}
+/* *****左侧菜单***** */
+
+/* *****右侧内容***** */
+#container {
+    position: relative;
+    margin-left: 250px;
+}
+#container section {
+    padding: 60px;
+    margin-left:10px;
+}
+#container section {
+    background: #f7f8f9;
+}
+/* *****右侧内容***** */
+
+/*滚动条样式*/
+::-webkit-scrollbar {
+    width: 8px;
+}
+::-webkit-scrollbar-button {
+    width: 8px;
+    height:5px;
+}
+::-webkit-scrollbar-track {
+    background:#eee;
+    border: thin solid lightgray;
+    box-shadow: 0px 0px 3px #dfdfdf inset;
+    border-radius:10px;
+}
+::-webkit-scrollbar-thumb {
+    background:#999;
+    border: thin solid gray;
+    border-radius:10px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background:#7d7d7d;
+}
+
+.item {cursor: pointer;}
+.bold {font-weight: bold;}

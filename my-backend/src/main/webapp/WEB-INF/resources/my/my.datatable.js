@@ -50,7 +50,7 @@
 	/* 翻页 */
 	$.fn.nextPage = function(_pageNo) {
 		if(_pageNo==-1){
-			_pageNo = $(_args.pageNoInput).val();
+			_pageNo = 1;
 		} 
 		_args.parm.pageNo = _pageNo;
 		_args.parm.pageSize = $(_args.pageSizeInput).val();
