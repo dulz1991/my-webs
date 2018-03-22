@@ -41,7 +41,7 @@
 			<c:if test="${not empty entity }">
 				<div class="get-menu">
 					<i class="fa fa-location-arrow"></i> 
-					<a href="#">${blogMenu.name }</a>  > <a href="/blog?blogId=${entity.id }">${entity.title }</a> 
+					<a href="#"><b>${blogMenu.name }</b></a>  > <a href="/blog?blogId=${entity.id }"><b>${entity.title }</b></a> 
 					<c:if test="${isLogin }">
 						<a href="/auth/blog/edit?blogId=${entity.id }&menuId=${entity.menuId}"><i class="fa fa-edit fa-lg fa-edit-icon" title="编辑" style="color:#00f"></i></a>
 						<a href="/auth/blog/edit?menuId=${entity.menuId}"><i class="fa fa-plus fa-lg fa-edit-icon" title="创建" style="color:#00f"></i></a>

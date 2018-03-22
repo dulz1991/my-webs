@@ -2,15 +2,14 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <!-- 页面预加载动画 -->
-<div id="preloader">
+<!-- <div id="preloader">
     <div id="status"></div>
-</div>
+</div> -->
 
 <!-- 页面头部导航栏 -->
 <div id="header">
-	<a id="logo" href="/" style="color:#42b983;">
-		<i class="fa fa-leaf"></i>
-		<span><b>My Site Blog</b></span>
+	<a class="logo" href="/" style="color:#42b983;">
+		<img src="/img/home/logo.png" height="40" alt="MY Journey | SIMPLE WAY to do it today">
 	</a>
 	<ul id="nav">
 		<li>
@@ -27,25 +26,20 @@
 		<li><a href="/" class="nav-link"><i class="fa fa-home"></i> 首页</a></li>
 		<li><a href="/blog" class="nav-link">Blog文档</a></li>
 		<li><a href="/code" class="nav-link">Code笔记</a></li>
-		<li><a href="/code" class="nav-link">Demo前端</a></li>
+		<li><a href="/demo" class="nav-link">Demo前端</a></li>
 		<c:if test="${isLogin}">
     		<!-- <li><a href="/user" class="nav-link"><i class="fa fa-user"></i>个人中心</a></li> -->
-    		<li><a href="/logout" class="nav-link"><i class="fa fa-sign-out"></i> 退出</a></li>
+    		<li><a href="#" onclick="$.common.toLogout()" class="nav-link"><i class="fa fa-sign-out"></i> 退出</a></li>
         </c:if>
         <c:if test="${!isLogin}">	
-        	<li><a href="/login" class="nav-link"><i class="fa fa-sign-in"></i>登陆</a></li>
+        	<li><a href="#" onclick="$.common.toLogin()" class="nav-link"><i class="fa fa-sign-in"></i>登陆</a></li>
         </c:if>
 	</ul>
 </div>
 
 <!-- 右下角 -->
-<div class="right-bottom-btns" style="z-index:10"> 
-     <a class="to-btn to-top-btn sscroll" href="#top" id="backtotop" title="置顶"><i class="fa fa-angle-up"></i></a>
-     <c:if test="${isLogin}">
-     	<!-- <a class="to-btn" href="/logout" title="退出"><i class="fa fa-sign-out"></i></a> -->
- 		<!-- <a class="to-btn" href="/auth/userCenter/index" title="个人中心"><i class="fa fa-user"></i></a> -->
-     </c:if>
-     <c:if test="${!isLogin}">	
-		<!-- <a class="to-btn" href="/login" title="登陆"><i class="fa fa-sign-in"></i></a> -->        
-     </c:if>
+<div style="display:none;" id="rocket-to-top">
+	<div style="opacity:0;display:block;" class="level-2"></div>
+	<div class="level-3"></div>
 </div>
+

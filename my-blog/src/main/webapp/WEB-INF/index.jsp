@@ -20,17 +20,17 @@
                     <a href="#">
                         <img src="/img/home/logo.png" width="341" height="68" alt="MY Journey | SIMPLE WAY to do it today">
                     </a>
-                </div><!-- logo -->
+                </div>
                 <div class="social">
                     <ul class="clearfix">
                         <li><a class="social-blog" href="/blog" >Blog文档</a></li>
                         <li><a class="social-code" href="/code">Code笔记</a></li>
                         <li><a class="social-demo" href="/demo">Demo前端</a></li>
                         <c:if test="${isLogin}">
-				    		<li><a class="social-sign" href="/logout" title="google plus">退出</a></li>
+				    		<li><a class="social-sign" href="/logout" title="退出">退出</a></li>
 				        </c:if>
 				        <c:if test="${!isLogin}">
-				        	<li><a class="social-sign" href="/login" title="google plus">登录</a></li>	
+				        	<li><a class="social-sign" href="/loginPage" title="登录">登录</a></li>	
 				        </c:if>
                         
                     </ul>

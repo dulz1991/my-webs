@@ -13,8 +13,12 @@
 <!-- jq -->
 <script src="/js/lib/jquery-1.10.2.min.js"></script>
 <script src="/js/my-js.js"></script>
+<script src="/js/my.common.js"></script>
 <!-- vue -->
 <script src="/js/vue.js"></script>
 <!-- ue -->
 <script type="text/javascript" src="/ue/third-party/SyntaxHighlighter/shCore.js"></script>
 <link rel="stylesheet" type="text/css" href="/ue/third-party/SyntaxHighlighter/shCoreDefault.css">
+<!-- sweetalert -->
+<script type="text/javascript" src="/js/sweetalert2/sweetalert2.js"></script>
+<link rel="stylesheet" type="text/css" href="/js/sweetalert2/sweetalert2.css">

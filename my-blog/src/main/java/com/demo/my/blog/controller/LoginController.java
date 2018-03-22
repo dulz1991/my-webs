@@ -23,6 +23,13 @@ public class LoginController extends BaseController {
 	private LoginService loginService;
 	
 
+	@RequestMapping(value = "/loginPage", method=RequestMethod.GET)
+	public ModelAndView loginPage() {
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("loginPage");
+		return modelAndView;
+		
+	}
 	@RequestMapping(value = "/login", method=RequestMethod.GET)
 	public ModelAndView login() {
 		ModelAndView modelAndView = new ModelAndView();
