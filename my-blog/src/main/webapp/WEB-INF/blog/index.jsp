@@ -22,7 +22,7 @@
 					<!-- <i class="fa fa-sitemap"></i> -->
 					<span style="background-color:#ff0055;color:#fff;padding:2px 8px;border-radius:30px;"> ${fn:substring(fn:toUpperCase(menu.name), 0, 1)}</span> ${menu.name}(${menuCountMap[menu.id]})
 					<c:if test="${isLogin }">
-						<i class="fa fa-plus fa-lg fa-edit-icon" title="创建" 
+						<i class="fa fa-plus fa-lg fa-edit-icon toolBtn" title="创建" 
 						onclick="javascript:self.location='/auth/blog/edit?menuId=${menu.id}'" style="color:#00f"></i>
 					</c:if>
 				</h3>
@@ -43,9 +43,9 @@
 					<i class="fa fa-location-arrow"></i> 
 					<a href="#"><b>${blogMenu.name }</b></a>  > <a href="/blog?blogId=${entity.id }"><b>${entity.title }</b></a> 
 					<c:if test="${isLogin }">
-						<a href="/auth/blog/edit?blogId=${entity.id }&menuId=${entity.menuId}"><i class="fa fa-edit fa-lg fa-edit-icon" title="编辑" style="color:#00f"></i></a>
-						<a href="/auth/blog/edit?menuId=${entity.menuId}"><i class="fa fa-plus fa-lg fa-edit-icon" title="创建" style="color:#00f"></i></a>
-						<a href="javascript:if(confirm('确实要删除吗?'))location='/auth/blog/delete?id=${entity.id }'"><i class="fa fa-trash-o fa-lg fa-edit-icon" title="删除" style="color:#f00"></i></a>
+						<a href="/auth/blog/edit?blogId=${entity.id }&menuId=${entity.menuId}"><i class="toolBtn fa fa-edit fa-lg fa-edit-icon" title="编辑" style="color:#00f"></i></a>
+						<a href="/auth/blog/edit?menuId=${entity.menuId}"><i class="toolBtn fa fa-plus fa-lg fa-edit-icon" title="创建" style="color:#00f"></i></a>
+						<a href="javascript:if(confirm('确实要删除吗?'))location='/auth/blog/delete?id=${entity.id }'"><i class="toolBtn fa fa-trash-o fa-lg fa-edit-icon" title="删除" style="color:#f00"></i></a>
 					</c:if>
 				</div>
 			</c:if>
@@ -111,13 +111,14 @@
 	    }
 		.container .menu ul li{
 			height: 28px;
+			padding-right: 20px;
 			line-height: 28px;
 			overflow: hidden;
 			white-space: nowrap;
 			text-overflow: ellipsis;
 		}
 		.container .menu ul li a:hover{
-			padding:5px 10px;
+			padding:5px 5px;
 			background: #9FB6CD;
 			border-radius: 14px;
 			-webkit-border-radius: 14px;
@@ -131,7 +132,7 @@
 		.container .menu .selected{
 			background: #ccc;
 			border-radius: 14px;
-			padding:5px 10px;
+			padding:5px 5px;
 		}
 		.container .content{
 			margin-top:-30px;
@@ -140,14 +141,23 @@
 		}
 		.container .content .get-menu{
 			margin-left: -10px;
+			padding-bottom:5px;
+			border-bottom: 1px solid #ddd;
 		}
 		.container .content .get-menu a{
 			display: inline-block;
 			font-size: 15px;
 		    height: 20px;
 		}
+		i.toolBtn{
+			padding:5px;
+		}
+		i.toolBtn:hover{
+			padding:5px;
+			border-radius:4px;
+			background-color:#ddd;
+		}
 		.container .content .get-menu a:last-child{
-			margin-left: -8px;
 			color: #7D9EC0;
 		}
 		.container .content .get-menu span{
@@ -156,7 +166,7 @@
 		    margin-left: -110px;
 		}
 		.fa-edit-icon{
-			margin-left:20px;
+			margin-left:10px;
 			cursor: pointer;
 		}
 	</style>

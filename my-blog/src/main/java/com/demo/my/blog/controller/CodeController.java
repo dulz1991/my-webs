@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.codehaus.jackson.JsonGenerationException;
@@ -42,20 +43,20 @@ public class CodeController extends BaseController {
 	public ModelAndView index() {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("code/index");
+		
+		//一级分类
 		List<CodeMenu> codeMenuList = codeService.excute("CodeMenuMapper.getBeanListByParm", null);
 		mv.addObject("codeMenuList", codeMenuList);
-		Map<String, Object> subMenuList = new HashMap<String, Object>();
+		
+		//二级菜单
+		Map<String, Object> subMenuList = new TreeMap<String, Object>();
 		for(CodeMenu menu : codeMenuList){
 			List<CodeSubMenu> codeSubMenus = getSubMenuList(menu.getId());
-			subMenuList.put(menu.getId().toString() +","+ menu.getName(), codeSubMenus);	
+			menu.setSubMenuCount(codeSubMenus.size());
+			subMenuList.put(menu.getId().toString() +","+ menu.getName()+","+codeSubMenus.size(), codeSubMenus);	
 		}
 		mv.addObject("subMenuList", subMenuList);
-		User user = getCurrentUser();
-		if (user != null) {
-			mv.addObject("isLogin", true);
-		} else {
-			mv.addObject("isLogin", false);
-		}
+		
 		return mv;
 	}
 	

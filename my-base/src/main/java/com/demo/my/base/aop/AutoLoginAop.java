@@ -15,9 +15,11 @@ import org.springframework.stereotype.Component;
 
 import com.demo.my.base.model.User;
 import com.demo.my.base.model.UserLog;
+import com.demo.my.base.model.UserRole;
 import com.demo.my.base.common.KeyConstant;
 import com.demo.my.base.enums.EnumUserLogType;
 import com.demo.my.base.service.UserLogService;
+import com.demo.my.base.service.UserRoleService;
 import com.demo.my.base.service.UserService;
 
 @Aspect
@@ -28,6 +30,8 @@ public class AutoLoginAop {
 	private UserService userService;
 	@Autowired
 	private UserLogService userLogService;
+	@Autowired
+	private UserRoleService userRoleService;
 
 	@Pointcut("execution (* com.demo.my..*.*Controller.*(..))")
 	public void autoLoginAop() { }
@@ -49,6 +53,11 @@ public class AutoLoginAop {
 	                token.setRememberMe(true);
 	                subject.login(token);//登录
 	                user.setPassword(null);
+	                
+	                //权限
+	                UserRole userRole = userRoleService.getById(user.getRole());
+	                user.setRoleName(userRole.getRoleName());
+	                
 	                subject.getSession().setAttribute(KeyConstant.USER_INFO, user);
 	                //记录用户自动登录日志
 	                autoLoginResult(user.getId(), "自动登录成功");

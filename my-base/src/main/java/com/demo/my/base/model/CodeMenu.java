@@ -12,6 +12,9 @@ public class CodeMenu implements Serializable {
 	private String remark;
 	private String status;
 	
+	//扩展属性
+	private int subMenuCount;
+	
 	/**
 	 * @return the name
 	 */
@@ -62,6 +65,14 @@ public class CodeMenu implements Serializable {
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	public int getSubMenuCount() {
+		return subMenuCount;
+	}
+
+	public void setSubMenuCount(int subMenuCount) {
+		this.subMenuCount = subMenuCount;
 	}
 	
 }

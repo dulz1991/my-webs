@@ -12,7 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.demo.my.base.model.User;
+import com.demo.my.base.model.UserRole;
 import com.demo.my.base.common.KeyConstant;
+import com.demo.my.base.service.UserRoleService;
 import com.demo.my.base.service.UserService;
 
 @Aspect
@@ -21,6 +23,8 @@ public class AutoLoginForVue {
 
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private UserRoleService userRoleService;
 
 	@Pointcut("execution (* com.demo.my.*.controller.*Controller.loginResult(..))")
 	public void autoLoginAopForVue() { }
@@ -42,6 +46,11 @@ public class AutoLoginForVue {
 	                token.setRememberMe(true);
 	                subject.login(token);//登录
 	                user.setPassword(null);
+	                
+	                //权限
+	                UserRole userRole = userRoleService.getById(user.getRole());
+	                user.setRoleName(userRole.getRoleName());
+					
 	                subject.getSession().setAttribute(KeyConstant.USER_INFO, user);
 	            }
 	        }

@@ -18,12 +18,12 @@
     <div id="main-wrapper">
         
         <div id="menu">
-	        <div class="sidebar" style="margin:0px;top:30px;">
+	        <div class="sidebar" style="margin:0px;top:10px;">
 	        	<div class="list">
 	        		<ul id="side-menu" class="menu-root">
 	        			<c:forEach items="${subMenuList}" var="item" varStatus="status">
 	       					<li>
-	       						<a class='sscroll sidebar-link <c:if test='${status.index==0}'>current</c:if>' href="#link_${fn:split(item.key, ',')[0]}">${fn:split(item.key, ',')[1]}</a>
+	       						<a class='sscroll sidebar-link <c:if test='${status.index==0}'>current</c:if>' href="#link_${fn:split(item.key, ',')[0]}">${fn:split(item.key, ',')[1]} (${fn:split(item.key, ',')[2]})</a>
 	       					</li>
 	       				</c:forEach>
 					</ul>
