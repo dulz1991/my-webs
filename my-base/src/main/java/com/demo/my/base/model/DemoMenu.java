@@ -11,6 +11,8 @@ public class DemoMenu implements Serializable  {
 	
 	private String name;
 	private Long id;
+	private int orderNum;
+	private String icon;
 	
 	/**
 	 * @return the id
@@ -37,6 +39,18 @@ public class DemoMenu implements Serializable  {
 	 */
 	public void setName(String name) {
 		this.name = name;
+	}
+	public int getOrderNum() {
+		return orderNum;
+	}
+	public void setOrderNum(int orderNum) {
+		this.orderNum = orderNum;
+	}
+	public String getIcon() {
+		return icon;
+	}
+	public void setIcon(String icon) {
+		this.icon = icon;
 	}
 
 	

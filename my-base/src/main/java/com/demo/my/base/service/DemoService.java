@@ -2,6 +2,7 @@ package com.demo.my.base.service;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,11 +45,11 @@ public class DemoService extends AbstractBaseService {
 		return demoMapper.getById(id);
 	}
 	
-	public int countByParm(Map<String, Object> parm) {
+	public List<Demo> getList(Map<String, Object> parm) {
 		if(parm==null){
 			parm = new HashMap<String, Object>();
 		}
-		return demoMapper.countByParm(parm);
+		return demoMapper.getBeanListByParm(parm);
 	}
 	
 }

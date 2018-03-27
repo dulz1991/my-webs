@@ -77,8 +77,8 @@
                         <p>记录所有项目中或者平时学习过程中接触过的技术和遇到的问题解决方案等文档，由后台编辑，这里只做展示.</p>
                     </div><!-- features-column -->
                     <div class="features-column">
-                        <a href="http://116.62.205.176:83/" target="_blank"><span class="ico-flag"></span></a>
-                        <a href="http://116.62.205.176:83/" target="_blank"><h3>前端demo</h3></a>
+                        <a href="/demo" target="_blank"><span class="ico-flag"></span></a>
+                        <a href="/demo" target="_blank"><h3>前端demo</h3></a>
                         <p>前端代码demo，或摘自于网上，或自己写的前端demo或者js插件. 基于Nodejs开发，可下载和预览.</p>
                     </div><!-- features-column -->
                 </div><!-- features-columns -->

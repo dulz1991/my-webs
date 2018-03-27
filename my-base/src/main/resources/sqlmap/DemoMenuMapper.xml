@@ -5,6 +5,8 @@
 <resultMap type="com.demo.my.base.model.DemoMenu" id="DemoMenuBaseMapper">
 	<id property="name" column="name" />
 	<id property="id" column="id" />
+	<id property="icon" column="icon" />
+	<id property="orderNum" column="order_num" />
 </resultMap>  
 
 <insert id="insert">
@@ -12,9 +14,9 @@
    		select LAST_INSERT_ID()
    	</selectKey>
 	insert into demo_menu
-	(name)
+	(name,icon,order_num)
 	values
-	(#{name})
+	(#{name},#{icon},#{orderNum})
 </insert>
 
 <update id="update">
@@ -22,6 +24,12 @@
 	<set>
 			<if test="name != null">  
 	        	name=#{name},
+	    	</if>
+	    	<if test="icon != null">  
+	        	icon=#{icon},
+	    	</if>
+	    	<if test="orderNum != null">  
+	        	order_num=#{orderNum},
 	    	</if>
 	</set>   
     WHERE id=#{id}

@@ -50,7 +50,7 @@ var defaultParams = {
   imageHeight: null,
   imageClass: null,
   timer: null,
-  width: 500,
+  width: 'auto',
   padding: 20,
   background: '#fff',
   input: null,

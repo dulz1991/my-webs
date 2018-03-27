@@ -1,5 +1,9 @@
 package com.demo.my.base.service;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -34,6 +38,13 @@ public class DemoMenuService extends AbstractBaseService {
 
 	public DemoMenu getById(Long id) {
 		return demoMenuMapper.getById(id);
+	}
+	
+	public List<DemoMenu> getList(Map<String, Object> parm) {
+		if(parm==null){
+			parm = new HashMap<String, Object>();
+		}
+		return demoMenuMapper.getBeanListByParm(parm);
 	}
 	
 }
