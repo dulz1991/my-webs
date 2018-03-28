@@ -51,7 +51,7 @@
 				<div class="desc" title="${item.description }">【${item.title }】${item.description }</div>
 				<div class="btns">
 					<a href="#" class="viewBtn" demoId="${item.id }"><i class="fa fa-search"></i> 预览</a>
-					<a href="/api_img/${item.resourcePath }" target="_blank" class="downloadBtn"><i class="fa fa-download"></i> 下载</a>
+					<a href="javascript:;" onclick="downloadResource('${item.id }')" class="downloadBtn"><i class="fa fa-download"></i> 下载</a>
 				</div>
 			</div>
 		</c:forEach>
@@ -68,6 +68,15 @@
 			$('#viewDetail').load('/demo/viewDetail?id='+$(this).attr('demoId'));
 		});
 	})
+	function downloadResource(id){
+		window.open('/demo/downloadResource?id='+id);
+		/* $.common.getRequest({id:id},'/demo/downloadResource',function(data){
+			debugger
+			if(data.errorNo!=200){
+				$.common.error(data.errorInfo);
+			}
+		}); */
+	}
 	</script>
 	<style>
 		.demo-item{

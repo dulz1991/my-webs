@@ -5,19 +5,23 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.demo.my.base.model.Demo;
 import com.demo.my.base.model.DemoMenu;
 import com.demo.my.base.service.DemoMenuService;
 import com.demo.my.base.service.DemoService;
+import com.demo.my.base.service.file.BaseService;
+import com.ibm.db2.jcc.b.de;
 
 @Controller
 @RequestMapping("/demo")
-public class DemoController {
+public class DemoController extends BaseController{
 
 	@Autowired
 	private DemoService demoService;
@@ -35,7 +39,7 @@ public class DemoController {
 		
 		//demo 列表
 		Map<String, Object> parmMap = new HashMap<String, Object>();
-		if(menuId==null){
+		if(menuId!=null){
 			parmMap.put("menuId", menuId);
 		}
 		List<Demo> demos = demoService.getList(parmMap);
@@ -55,4 +59,30 @@ public class DemoController {
 		
 		return modelAndView;
 	}
+	
+	@ResponseBody
+	@RequestMapping("/downloadResource")
+	public void downloadResource(Long id){
+		if(id==null){
+			return;
+			/*return responseGeneralError("下载失败:参数异常");*/
+		}
+		Demo demo = demoService.getById(id);
+		if(demo==null || StringUtils.isBlank(demo.getResourcePath())){
+			/*return responseGeneralError("下载失败:资源不存在");*/
+			return;
+		}
+		try {
+			BaseService.downloadFile(response, demo.getResourcePath());
+			demo.setDownloadTimes(demo.getDownloadTimes()+1);
+			demoService.update(demo);
+			/*return responseOK();*/
+			return;
+		} catch (Exception e) {
+			/*return responseGeneralError("下载失败:文件异常");*/
+			return;
+		}
+	}
+	
+	
 }

@@ -6,7 +6,7 @@
 	<div class="img"><img alt="" src="/api_img${demo.picPath }" width="100%"></div>
 	<div class="desc">${demo.description }</div>
 	<div class="btns">
-		<a href="/api_img/${demo.resourcePath }" target="_blank" style="color:#5aba1f" class="downloadBtn"><i class="fa fa-download"></i> 下载</a>
+		<a href="javascript:;" onclick="downloadResource('${demo.id }')" style="color:#5aba1f" class="downloadBtn"><i class="fa fa-download"></i> 下载</a>
 	</div>
 </div>
 

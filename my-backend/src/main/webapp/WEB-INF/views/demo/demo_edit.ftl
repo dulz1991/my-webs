@@ -10,26 +10,54 @@
 			<div class="panel-body">
 				<form class="form-horizontal form" method="post" action="javascript:;" enctype="multipart/form-data">
 					<input type="hidden" value="${entity.id!''}" name="id" />
+			        
 			        <div class="form-group">
-			          	<div class="col-sm-6">
-			          		标题
+			          	<div class="col-sm-4">
+			          		<span>标题</span>
 			            	<input class="form-control" type="text" name="title" value="${entity.title!''}" placeholder="输入标题">
 			          	</div>
+			          	<#if !entity.id??>
+			        		<div class="col-sm-3">
+				          		<span>资源名称</span>
+			            		<input class="form-control" type="text" name="resourceName" value="" placeholder="如：demo.zip">
+				          	</div>
+				        </#if>
 			        	<div class="col-sm-3">
-			        		选择菜单
+			        		<span>选择菜单</span>
 							<@select id="menuId" class="form-control select" datas=demoMenuList key="id" text="name" value="${entity.menuId!''}" defaultValue="--请选择--" />
 			    		</div>
 			        </div>
+			        
+			        <#if entity.id??>
+			        	<div class="form-group">
+				        	<div class="col-sm-8">
+				          		<span>访问的文件名</span>
+				            	<input class="form-control" type="text" name="url" value="${entity.url!''}" placeholder="如：index.html">
+				          	</div>
+				          	<div class="col-sm-8">
+				          		<span>图片名称</span>
+				            	<input class="form-control" type="text" name="picPath" value="${entity.picPath!''}" placeholder="如：demo.png">
+				          	</div>
+				          	<div class="col-sm-8">
+				          		<span>资源名称</span>
+				            	<input class="form-control" type="text" name="resourcePath" value="${entity.resourcePath!''}" placeholder="如：demo.zip">
+				          	</div>
+				        </div>
+			        </#if>
+			        
+			        <#--
 			        <div class="form-group">
 			        	<div class="col-sm-12">
-			        		选择demo包：
+			        		<p>选择demo包</p>
 			        		<input type="file" name="attachFile" id="attachFile" accept=".zip" />
 			        	</div> 	
 			        </div>
+			        -->
+			        
 			        <div class="form-group">
 			        	<div class="col-sm-12">
-			        		demo描述：
-							<textarea id="description" cols="120" rows="18" name="">${entity.description!''}</textarea>
+			        		<p>demo描述</p>
+							<textarea id="description" cols="120" rows="18" name="description">${entity.description!''}</textarea>
 			        	</div> 	
 			        </div>
 			        <div class="form-group">
@@ -48,35 +76,13 @@
 <script type="text/javascript">
 $(function(){
 	$('#demoSubmit').click(function(){
-		$.common.ajaxFileSubmit('.form', '/backend/demo/save', function(data){
+		$.common.ajaxFileSubmit('.form', '/backend/demo/save1', function(data){
 			if(data.errorNo==200){
         		self.location='/backend/demo/list';
 			} else {
-				$.commonUtil.showTip(data.errorInfo);
+				$.common.tip(data.errorInfo);
 			}
 		})
-		
-		<!--
-			$(".form").ajaxSubmit({  
-	            type:'post',  
-	            url:'/backend/demo/save',  
-	            dataType : 'json', //返回值类型 一般设置为json  
-		        data:{
-					description: $('#description').val()
-				},
-	            success : function(data, status) {  
-	            	debugger;
-		        	if(data.errorNo==200){
-		        		self.location='/backend/demo/list';
-					} else {
-						$.commonUtil.showTip(data.errorInfo);
-					}
-		        },  
-		        error : function(data, status, e) {  
-		        	$.commonUtil.showTip(data.errorInfo); 
-		        }   
-	        }); 
-		-->
 	});
 });
 </script>

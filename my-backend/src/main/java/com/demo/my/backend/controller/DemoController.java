@@ -1,5 +1,6 @@
 package com.demo.my.backend.controller;
 
+import java.io.File;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -137,6 +138,70 @@ public class DemoController extends BaseBackendController {
 				File f = new File(delPath);
 				f.delete();	
 			}*/
+			demoService.update(demo);
+		} else {
+			demoService.insert(demo);
+		}
+		
+		Map<String, Object> resMap =  responseOK("");
+		resMap.put("id", demo.getId());
+		return resMap;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/save1")
+	public Map<String, Object> saveDemo(Demo demo) throws Exception {
+		if(StringUtils.isBlank(demo.getTitle())){
+			return responseGeneralError(ErrorConstant.ERROR_EMPTY_TITLE);
+		}
+		if(StringUtils.isBlank(demo.getDescription())){
+			return responseGeneralError(ErrorConstant.ERROR_EMPTY_DESCRIPTIPN);
+		}
+		if(demo.getMenuId() == null||demo.getMenuId()<0L){
+			return responseGeneralError(ErrorConstant.ERROR_EMPTY_MENU_NAME);
+		}
+		
+		if(demo.getId()==null){
+			String resourceName = request.getParameter("resourceName");
+			if(StringUtils.isBlank(resourceName)){
+				return responseGeneralError("资源文件名不能为空");
+			}
+			String resourceNameOnly = resourceName.substring(0, resourceName.lastIndexOf("."));
+			
+			String dateStr = DateUtil.dateToString(new Date(), DateUtil.DATE_FORMATE_1);
+	    	String uploadPath = PropertiesUtil.get("file_demo_path"); 
+	    	uploadPath=uploadPath.replace("{{yyyymmdd}}", dateStr);
+	    	File dir = new File(uploadPath);
+	        if(!dir.exists()){  
+	        	dir.mkdirs();  
+	        }
+	        
+		    //图片地址
+		    String picPath = PropertiesUtil.get("file_demo_pic_path"); 
+		    picPath=picPath.replace("{{name}}", resourceNameOnly).replace("{{yyyymmdd}}", dateStr);
+		    demo.setPicPath(picPath);
+		    //资源路径
+		    String resourcePath = PropertiesUtil.get("file_demo_resource_path");
+		    resourcePath=resourcePath.replace("{{yyyymmdd}}", dateStr).replace("{{name}}", resourceName);
+		    demo.setResourcePath(resourcePath);
+		    //在线预览路径
+		    String urlPath = PropertiesUtil.get("file_demo_url_path");
+		    urlPath=urlPath.replace("{{name}}", resourceNameOnly).replace("{{yyyymmdd}}", dateStr);
+		    demo.setUrl(urlPath);
+		}else {
+			if(StringUtils.isBlank(demo.getUrl())){
+				return responseGeneralError("访问的文件名不能为空");
+			}
+			if(StringUtils.isBlank(demo.getPicPath())){
+				return responseGeneralError("图片文件名不能为空");
+			}
+			if(StringUtils.isBlank(demo.getResourcePath())){
+				return responseGeneralError("资源文件名不能为空");
+			}
+			
+		}
+		
+		if (demo.getId() != null) {
 			demoService.update(demo);
 		} else {
 			demoService.insert(demo);

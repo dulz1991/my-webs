@@ -171,9 +171,7 @@
 		     	and url = #{parm.url}
 		   	</if>
 		   	
-		<if test="parm.orderby != null">
-	   		order by ${parm.orderby}
-	   	</if>
+	   		order by d.createTime desc
 		<if test="parm.start != null">
 			limit #{parm.start},#{parm.limit}
 		</if>

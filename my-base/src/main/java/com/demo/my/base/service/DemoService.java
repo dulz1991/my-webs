@@ -45,6 +45,13 @@ public class DemoService extends AbstractBaseService {
 		return demoMapper.getById(id);
 	}
 	
+	public int countByParm(Map<String, Object> parm) {
+		if(parm==null){
+			parm = new HashMap<String, Object>();
+		}
+		return demoMapper.countByParm(parm);
+	}
+	
 	public List<Demo> getList(Map<String, Object> parm) {
 		if(parm==null){
 			parm = new HashMap<String, Object>();
