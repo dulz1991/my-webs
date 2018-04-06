@@ -315,7 +315,7 @@ jQuery.common = {
 			showConfirmButton: false
 		});
 		$("#loginDialog").load("/login");
-		$("#loginDialog").parents(".swal2-show").css("padding","0");
+		$("#loginDialog").parents(".swal2-show").css("padding","0").css("width","400px");
 	},
 	/**
 	 * 登录
