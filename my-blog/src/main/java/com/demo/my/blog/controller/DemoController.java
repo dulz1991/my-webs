@@ -17,7 +17,6 @@ import com.demo.my.base.model.DemoMenu;
 import com.demo.my.base.service.DemoMenuService;
 import com.demo.my.base.service.DemoService;
 import com.demo.my.base.service.file.BaseService;
-import com.ibm.db2.jcc.b.de;
 
 @Controller
 @RequestMapping("/demo")
@@ -42,6 +41,7 @@ public class DemoController extends BaseController{
 		if(menuId!=null){
 			parmMap.put("menuId", menuId);
 		}
+		parmMap.put("orderby", "updateTime desc");
 		List<Demo> demos = demoService.getList(parmMap);
 		modelAndView.addObject("demos", demos);
 		

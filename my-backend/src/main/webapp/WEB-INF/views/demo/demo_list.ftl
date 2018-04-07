@@ -17,7 +17,7 @@
 		</@dataHeader>
 		<@dataTable tableId="datatable" pageId="pageDiv">
 			<th width="60" field="index_no">编号</th>
-			<th field="title">标题</th>
+			<th field="title" my-attrs='{textFun:"viewDetail",args:"url",clazz:"table-a"}'>标题</th>
 			<th field="name">所属分类</th>
 			<th field="downloadTimes">下载次数</th>
 			<th field="createTimeStr">创建时间</th>
@@ -45,6 +45,10 @@ $(function(){
 		}
 	}); 
 });
+
+function viewDetail(url){
+	window.open('/api_img'+url)
+}
 
 function edit(id){
 	window.open('/backend/demo/edit?id='+id);

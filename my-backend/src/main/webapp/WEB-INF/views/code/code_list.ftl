@@ -30,7 +30,7 @@
 		</@dataHeader>
 		<@dataTable tableId="datatable" pageId="pageDiv">
 			<th width="60" field="index_no">编号</th>
-			<th field="item" my-attrs='{textFun:"viewDetail",args:"id",style:"color:rgb(0,155,219);cursor:pointer;text-decoration:underline"}'>标题</th>
+			<th field="item" my-attrs='{textFun:"viewDetail",args:"id",clazz:"table-a"}'>标题</th>
 			<th field="codeSubType">类别</th>
 			<th field="orderBy">排序</th>
 			<th field="createTimeStr">创建时间</th>

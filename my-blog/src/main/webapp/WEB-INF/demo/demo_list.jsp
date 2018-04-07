@@ -16,6 +16,12 @@
 	<nav class="demo-menu">
       	<div class="settings"></div>
        	<ul>
+       		<li>
+              	<a href="/demo/index">
+           		<i class="fa fa-demo fa-lg fa-home"></i>
+           		<span class="nav-text">全部</span>
+           		</a>
+			</li>
        		<c:forEach var="item" items="${demoMenus }">
        			<li>
                   	<a href="/demo/index?menuId=${item.id }">
