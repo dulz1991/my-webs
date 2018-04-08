@@ -56,8 +56,8 @@
 				<img alt="" src="/api_img${item.picPath }">
 				<div class="desc" title="${item.description }">【${item.title }】${item.description }</div>
 				<div class="btns">
-					<a href="#" class="viewBtn" demoId="${item.id }"><i class="fa fa-search"></i> 预览</a>
-					<a href="/api_img${item.url }" target="_blank" class="runBtn"><i class="fa fa-toggle-on"></i> 运行</a>
+					<a href="#" class="viewBtn" demoId="${item.id }"><i class="fa fa-search"></i> 详情</a>
+					<a href="/api_img${item.url }" target="_blank" class="runBtn"><i class="fa fa-toggle-on"></i> 预览</a>
 					<a href="javascript:;" onclick="downloadResource('${item.id }')" class="downloadBtn"><i class="fa fa-download"></i> 下载</a>
 				</div>
 			</div>
