@@ -1,5 +1,8 @@
 package com.demo.my.base.common;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class ErrorConstant {
 
 	public static String ERROR_NO = "errorNo";
@@ -49,5 +52,25 @@ public class ErrorConstant {
 	public static String NOT_LOGIN = "未登录";
 	public static String FAILED_REFRESH = "刷新失败";
 	
-	
+	public static Map<String, Object> responseOK(){
+		return responseError(ErrorConstant.ERROR_200, "");
+	}
+	public static Map<String, Object> responseNoLogin(){
+		return responseError(ErrorConstant.ERROR_400, "未登录");
+	}
+	public static Map<String, Object> response404(){
+		return responseError(ErrorConstant.ERROR_404, "未找到资源");
+	}
+	public static Map<String, Object> responseOK(String result){
+		return responseError(ErrorConstant.ERROR_200, result);
+	}
+	public static Map<String, Object> responseGeneralError(String errorInfo){
+		return responseError(ErrorConstant.ERROR_GENERAL, errorInfo);
+	}
+	public static Map<String, Object> responseError(Integer errorNo, String errorInfo){
+		Map<String, Object> resMap = new HashMap<String, Object>();
+		resMap.put(ErrorConstant.ERROR_NO, errorNo);
+		resMap.put(ErrorConstant.ERROR_INFO, errorInfo);
+		return resMap;
+	}
 }

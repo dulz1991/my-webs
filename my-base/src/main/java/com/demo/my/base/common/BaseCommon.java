@@ -14,7 +14,7 @@ import org.apache.shiro.web.util.SavedRequest;
 
 import com.demo.my.base.model.User;
 
-public class BaseCommon {
+public class BaseCommon extends ErrorConstant {
 	
 	public User getCurrentUser() {
 		try {
@@ -24,7 +24,6 @@ public class BaseCommon {
 		} catch (Exception e) {
 			return null;
 		}
-		
 	}
 	
 	public Long getCurrentUserId() {
@@ -44,7 +43,7 @@ public class BaseCommon {
 		}
 	}
 	
-	public static Map<String, Object> responseOK(){
+	/*public static Map<String, Object> responseOK(){
 		return responseError(ErrorConstant.ERROR_200, "");
 	}
 	public static Map<String, Object> responseNoLogin(){
@@ -64,8 +63,7 @@ public class BaseCommon {
 		resMap.put(ErrorConstant.ERROR_NO, errorNo);
 		resMap.put(ErrorConstant.ERROR_INFO, errorInfo);
 		return resMap;
-	}
-	
+	}*/
 	
 	public SavedRequest getSavedRequest() {
         SavedRequest savedRequest = null;
@@ -77,14 +75,15 @@ public class BaseCommon {
         return savedRequest;
     }
 
-	//����ĸתСд
+	/*首字母小写*/
 	public static String toLowerCaseFirstOne(String s){
 	  if(Character.isLowerCase(s.charAt(0)))
 	    return s;
 	  else
 	    return (new StringBuilder()).append(Character.toLowerCase(s.charAt(0))).append(s.substring(1)).toString();
 	}
-	//����ĸת��д
+	
+	/*首字母大写*/
 	public static String toUpperCaseFirstOne(String s){
 	  if(Character.isUpperCase(s.charAt(0)))
 	    return s;
@@ -92,13 +91,12 @@ public class BaseCommon {
 	    return (new StringBuilder()).append(Character.toUpperCase(s.charAt(0))).append(s.substring(1)).toString();
 	}
 	
+	/*对象转map*/
 	public static Map<String, Object> obj2Map(Object obj) {
 		Map<String, Object> parmMap = new HashMap<String, Object>();
 		
-		// �õ������
 		if(obj!=null){
 			Class clazz = (Class) obj.getClass();
-	        /* �õ����е��������Լ��� */
 	        Field[] fs = clazz.getDeclaredFields();
 	        for(int i = 0 ; i < fs.length; i++){
 	        	Field f = fs[i];
@@ -119,7 +117,6 @@ public class BaseCommon {
 	        	}
 	        }
 		}
-       
        return parmMap;
 	}
 	
