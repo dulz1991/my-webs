@@ -15,7 +15,7 @@
 			<value>
 				<!-- anon:不验证；authc：验证 -->
 				/index = authc
-				/backend/** = authc
+				/backend/** = authc, roles["ROLE001"]
 			</value>
 		</property>
 	</bean>
