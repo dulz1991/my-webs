@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>   
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="com.demo.my.base.mybatis.mapper.ds1mapper.SysMenuRoleMapper">
+
+<resultMap type="com.demo.my.base.model.SysMenuRole" id="SysMenuRoleBaseMapper">
+	<id property="sysRoleId" column="SYS_ROLE_ID" />
+	<id property="id" column="ID" />
+	<id property="sysMenuId" column="SYS_MENU_ID" />
+</resultMap>  
+
+<insert id="insert">
+	<selectKey resultType="long" keyProperty="id">  
+   		select LAST_INSERT_ID()
+   	</selectKey>
+	insert into sys_menu_role
+	(SYS_ROLE_ID,SYS_MENU_ID)
+	values
+	(#{sysRoleId},#{sysMenuId})
+</insert>
+
+<update id="update">
+	UPDATE sys_menu_role 
+	<set>
+			<if test="sysRoleId != null">  
+	        	SYS_ROLE_ID=#{sysRoleId},
+	    	</if>
+			<if test="sysMenuId != null">  
+	        	SYS_MENU_ID=#{sysMenuId},
+	    	</if>
+	</set>   
+    WHERE id=#{id}
+</update>
+
+<delete id="delete">
+	delete from sys_menu_role where id=#{id}
+</delete>
+<delete id="deleteByRoleId">
+	delete from sys_menu_role where SYS_ROLE_ID=#{roleId}
+</delete>
+
+<select id="getById" resultMap="SysMenuRoleBaseMapper">
+	SELECT * FROM sys_menu_role WHERE id=#{id} 
+</select>
+
+<select id="countByParm" resultType="integer">
+	select count(*) from sys_menu_role  where 1=1 
+			<if test="parm.sysRoleId != null">
+		     	and SYS_ROLE_ID = #{parm.sysRoleId}
+		   	</if>
+			<if test="parm.sysMenuId != null">
+		     	and SYS_MENU_ID = #{parm.sysMenuId}
+		   	</if>
+</select>
+
+<select id="getBeanListByParm" resultMap="SysMenuRoleBaseMapper">
+	select * from sys_menu_role where 1=1 
+			<if test="parm.sysRoleId != null">
+		     	and SYS_ROLE_ID = #{parm.sysRoleId}
+		   	</if>
+			<if test="parm.sysMenuId != null">
+		     	and SYS_MENU_ID = #{parm.sysMenuId}
+		   	</if>
+		<if test="parm.orderby != null">
+	   		order by ${parm.orderby}
+	   	</if>
+		<if test="parm.start != null">
+			limit #{parm.start},#{parm.limit}
+		</if>
+</select>
+
+
+<select id="getMapListByParm" parameterType="HashMap" resultType="HashMap">
+	select * from sys_menu_role where 1=1
+		<if test="parm.orderby != null">
+	   		order by ${parm.orderby}
+	   	</if>
+		<if test="parm.start != null">
+			limit #{parm.start},#{parm.limit}
+		</if>
+</select>
+
+
+</mapper>

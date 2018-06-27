@@ -62,7 +62,6 @@
 			<if test="parm.status != null">
 		     	and STATUS = #{parm.status}
 		   	</if>
-		order by ORDER_BY asc
 		<if test="parm.start != null">
 			limit #{parm.start},#{parm.limit}
 		</if>

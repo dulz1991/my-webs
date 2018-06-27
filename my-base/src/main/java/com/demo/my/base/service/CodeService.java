@@ -61,4 +61,11 @@ public class CodeService extends AbstractBaseService {
 		return codeMapper.getCodeListForZtree(fatherId);
 	}
 	
+	public List<Map<String, Object>> getMapListByParm(Map<String, Object> paramMap){
+		if(paramMap==null){
+			paramMap = new HashMap<String, Object>();
+		}
+		return codeMapper.getMapListByParm(paramMap);
+	}
+	
 }

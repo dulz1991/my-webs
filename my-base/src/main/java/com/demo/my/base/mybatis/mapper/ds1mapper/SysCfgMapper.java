@@ -17,7 +17,7 @@ public interface SysCfgMapper extends BaseMapper {
 	
 	SysCfg getById(@Param("id") Long id);
 	
-	List<SysCfg> getBeanListByParm(@Param("page") PageUtil page, @Param("parm") Map<String, Object> paramMap);
+	List<SysCfg> getBeanListByParm(@Param("parm") Map<String, Object> paramMap);
 
 	void callProcCount(@Param("parm") Map<String, Object> map);
 	
@@ -25,7 +25,7 @@ public interface SysCfgMapper extends BaseMapper {
 
 	int countByParm(@Param("parm") Map<String, Object> paramMap);
 
-	List<Map<String, Object>> getMapListByParm(@Param("page") PageUtil page, @Param("parm") Map<String, Object> paramMap);
+	List<Map<String, Object>> getMapListByParm(@Param("parm") Map<String, Object> paramMap);
  
 	SysCfg getByKey(@Param("key") String key);
 }

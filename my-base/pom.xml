@@ -19,6 +19,16 @@
       <scope>test</scope>
     </dependency>
     
+    <dependency>
+			<groupId>jstl</groupId>
+			<artifactId>jstl</artifactId>
+	</dependency>
+	
+	<dependency>
+	    <groupId>com.alibaba</groupId>
+	    <artifactId>fastjson</artifactId>
+	</dependency>
+    
     <!-- common -->
     <dependency>
 		<groupId>org.apache.commons</groupId>

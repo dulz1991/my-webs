@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>   
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="com.demo.my.base.mybatis.mapper.ds1mapper.SysRoleMapper">
+
+<resultMap type="com.demo.my.base.model.SysRole" id="SysRoleBaseMapper">
+	<id property="roleName" column="ROLE_NAME" />
+	<id property="id" column="ID" />
+	<id property="roleDescription" column="ROLE_DESCRIPTION" />
+	<id property="roleCode" column="ROLE_CODE" />
+</resultMap>  
+
+<insert id="insert">
+	<selectKey resultType="long" keyProperty="id">  
+   		select LAST_INSERT_ID()
+   	</selectKey>
+	insert into sys_role
+	(ROLE_NAME,ROLE_DESCRIPTION,ROLE_CODE)
+	values
+	(#{roleName},#{roleDescription},#{roleCode})
+</insert>
+
+<update id="update">
+	UPDATE sys_role 
+	<set>
+			<if test="roleName != null">  
+	        	ROLE_NAME=#{roleName},
+	    	</if>
+			<if test="roleDescription != null">  
+	        	ROLE_DESCRIPTION=#{roleDescription},
+	    	</if>
+			<if test="roleCode != null">  
+	        	ROLE_CODE=#{roleCode},
+	    	</if>
+	</set>   
+    WHERE id=#{id}
+</update>
+
+<delete id="delete">
+	delete from sys_role where id=#{id}
+</delete>
+<delete id="deleteByRoleId">
+	delete from sys_role where id=#{id}
+</delete>
+
+<select id="countByParm" resultType="integer">
+	select count(*) from sys_role  where 1=1 
+			<if test="parm.roleName != null">
+		     	and ROLE_NAME = #{parm.roleName}
+		   	</if>
+			<if test="parm.roleDescription != null">
+		     	and ROLE_DESCRIPTION = #{parm.roleDescription}
+		   	</if>
+			<if test="parm.roleCode != null">
+		     	and ROLE_CODE = #{parm.roleCode}
+		   	</if>
+</select>
+
+<select id="getBeanListByParm" resultMap="SysRoleBaseMapper">
+	select * from sys_role where 1=1 
+			<if test="parm.roleName != null">
+		     	and ROLE_NAME = #{parm.roleName}
+		   	</if>
+			<if test="parm.roleDescription != null">
+		     	and ROLE_DESCRIPTION = #{parm.roleDescription}
+		   	</if>
+			<if test="parm.roleCode != null">
+		     	and ROLE_CODE = #{parm.roleCode}
+		   	</if>
+		<if test="parm.orderby != null">
+	   		order by ${parm.orderby}
+	   	</if>
+		<if test="parm.start != null">
+			limit #{parm.start},#{parm.limit}
+		</if>
+</select>
+
+
+<select id="getMapListByParm" parameterType="HashMap" resultType="HashMap">
+	select * from sys_role where 1=1
+		<if test="parm.orderby != null">
+	   		order by ${parm.orderby}
+	   	</if>
+		<if test="parm.start != null">
+			limit #{parm.start},#{parm.limit}
+		</if>
+</select>
+
+<select id="getSysUserByRoleCode" parameterType="HashMap" resultType="HashMap">
+	SELECT 
+		u.USERNAME username,
+		u.AVATAR avatar,
+		u.`STATUS` `status`
+	from user u
+	LEFT JOIN sys_user_role ur on ur.SYS_USER_ID=u.ID
+	where 
+		ur.SYS_ROLE_CODE=#{roleCode}
+</select>
+
+<select id="getListByUserId" resultType="String">
+	SELECT 
+	r.ROLE_NAME roleName,u.USERNAME
+	from sys_role r
+	LEFT JOIN sys_user_role ur on ur.SYS_ROLE_CODE=r.ROLE_CODE
+	LEFT JOIN user u on ur.SYS_USER_ID=u.ID
+	where u.ID=#{userId}
+</select>
+
+</mapper>

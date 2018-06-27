@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>   
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="com.demo.my.base.mybatis.mapper.ds1mapper.SysUserRoleMapper">
+
+<resultMap type="com.demo.my.base.model.SysUserRole" id="SysUserRoleBaseMapper">
+	<id property="sysUserId" column="SYS_USER_ID" />
+	<id property="id" column="ID" />
+	<id property="sysRoleCode" column="SYS_ROLE_CODE" />
+</resultMap>  
+
+<insert id="insert">
+	<selectKey resultType="long" keyProperty="id">  
+   		select LAST_INSERT_ID()
+   	</selectKey>
+	insert into sys_user_role
+	(SYS_USER_ID,SYS_ROLE_CODE)
+	values
+	(#{sysUserId},#{sysRoleCode})
+</insert>
+
+<update id="update">
+	UPDATE sys_user_role 
+	<set>
+			<if test="sysUserId != null">  
+	        	SYS_USER_ID=#{sysUserId},
+	    	</if>
+			<if test="sysRoleCode != null">  
+	        	SYS_ROLE_CODE=#{sysRoleCode},
+	    	</if>
+	</set>   
+    WHERE id=#{id}
+</update>
+
+<delete id="delete">
+	delete from sys_user_role where id=#{id}
+</delete>
+<delete id="deleteByUserId">
+	delete from sys_user_role where SYS_USER_ID=#{userId}
+</delete>
+
+<select id="getById" resultMap="SysUserRoleBaseMapper">
+	SELECT * FROM sys_user_role WHERE id=#{id} 
+</select>
+
+<select id="countByParm" resultType="integer">
+	select count(*) from sys_user_role  where 1=1 
+			<if test="parm.sysUserId != null">
+		     	and SYS_USER_ID = #{parm.sysUserId}
+		   	</if>
+			<if test="parm.sysRoleCode != null">
+		     	and SYS_ROLE_CODE = #{parm.sysRoleCode}
+		   	</if>
+</select>
+
+<select id="getBeanListByParm" resultMap="SysUserRoleBaseMapper">
+	select * from sys_user_role where 1=1 
+			<if test="parm.sysUserId != null">
+		     	and SYS_USER_ID = #{parm.sysUserId}
+		   	</if>
+			<if test="parm.sysRoleCode != null">
+		     	and SYS_ROLE_CODE = #{parm.sysRoleCode}
+		   	</if>
+		<if test="parm.orderby != null">
+	   		order by ${parm.orderby}
+	   	</if>
+		<if test="parm.start != null">
+			limit #{parm.start},#{parm.limit}
+		</if>
+</select>
+
+
+<select id="getMapListByParm" parameterType="HashMap" resultType="HashMap">
+	select * from sys_user_role where 1=1
+		<if test="parm.orderby != null">
+	   		order by ${parm.orderby}
+	   	</if>
+		<if test="parm.start != null">
+			limit #{parm.start},#{parm.limit}
+		</if>
+</select>
+
+
+</mapper>

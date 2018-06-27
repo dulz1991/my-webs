@@ -8,7 +8,7 @@ public class ErrorConstant {
 	public static String ERROR_NO = "errorNo";
 	public static String ERROR_INFO = "errorInfo";
 	
-	public static Integer ERROR_200 = 200; //正确的业务处理结果
+	public static Integer ERROR_OK = 0; //正确的业务处理结果
 	public static Integer ERROR_400 = 400; //未登录
 	public static Integer ERROR_404 = 404; //未找到资源
 	public static Integer ERROR_GENERAL = -1; //ͬ通用错误
@@ -53,7 +53,7 @@ public class ErrorConstant {
 	public static String FAILED_REFRESH = "刷新失败";
 	
 	public static Map<String, Object> responseOK(){
-		return responseError(ErrorConstant.ERROR_200, "");
+		return responseError(ErrorConstant.ERROR_OK, "");
 	}
 	public static Map<String, Object> responseNoLogin(){
 		return responseError(ErrorConstant.ERROR_400, "未登录");
@@ -62,7 +62,7 @@ public class ErrorConstant {
 		return responseError(ErrorConstant.ERROR_404, "未找到资源");
 	}
 	public static Map<String, Object> responseOK(String result){
-		return responseError(ErrorConstant.ERROR_200, result);
+		return responseError(ErrorConstant.ERROR_OK, result);
 	}
 	public static Map<String, Object> responseGeneralError(String errorInfo){
 		return responseError(ErrorConstant.ERROR_GENERAL, errorInfo);

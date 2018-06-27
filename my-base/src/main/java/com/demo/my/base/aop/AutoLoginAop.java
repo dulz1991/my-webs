@@ -1,6 +1,7 @@
 package com.demo.my.base.aop;
 
 import java.util.Date;
+import java.util.List;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
@@ -15,9 +16,9 @@ import org.springframework.stereotype.Component;
 
 import com.demo.my.base.model.User;
 import com.demo.my.base.model.UserLog;
-import com.demo.my.base.model.UserRole;
 import com.demo.my.base.common.KeyConstant;
 import com.demo.my.base.enums.EnumUserLogType;
+import com.demo.my.base.service.SysUserRoleService;
 import com.demo.my.base.service.UserLogService;
 import com.demo.my.base.service.UserRoleService;
 import com.demo.my.base.service.UserService;
@@ -32,6 +33,8 @@ public class AutoLoginAop {
 	private UserLogService userLogService;
 	@Autowired
 	private UserRoleService userRoleService;
+	@Autowired
+	private SysUserRoleService sysUserRoleService;
 
 	@Pointcut("execution (* com.demo.my..*.*Controller.*(..))")
 	public void autoLoginAop() { }
@@ -55,8 +58,10 @@ public class AutoLoginAop {
 	                user.setPassword(null);
 	                
 	                //权限
-	                UserRole userRole = userRoleService.getById(user.getRole());
-	                user.setRoleName(userRole.getRoleName());
+	                List<String> roleCodeList = sysUserRoleService.getRoleCodeByUserId(user.getId());
+					if(!roleCodeList.isEmpty()){
+						user.setRoleCodeList(roleCodeList);
+					}
 	                
 	                subject.getSession().setAttribute(KeyConstant.USER_INFO, user);
 	                //记录用户自动登录日志

@@ -23,7 +23,7 @@ import com.demo.my.base.model.User;
 public class MyRealm extends AuthorizingRealm {
 	
 	/**
-	 * 授权
+	 * 锟斤拷权
 	 */
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
@@ -33,7 +33,9 @@ public class MyRealm extends AuthorizingRealm {
 	    	 Set<String> permissions = new HashSet<String>();
 	    	 Subject subject = SecurityUtils.getSubject();
 	    	 User user = (User) subject.getSession().getAttribute(KeyConstant.USER_INFO);
-	    	 roleNames.add(user.getRoleName());	 
+	    	 if(user.getRoleCodeList()!=null && !user.getRoleCodeList().isEmpty()){
+	    		 roleNames.addAll(user.getRoleCodeList());	 
+	    	 }
 	    	 SimpleAuthorizationInfo authenticationInfo = new SimpleAuthorizationInfo();
 	    	 authenticationInfo.setRoles(roleNames);
 	    	 authenticationInfo.setStringPermissions(permissions);
@@ -43,7 +45,7 @@ public class MyRealm extends AuthorizingRealm {
 	}
 
 	/*
-	 * 认证
+	 * 锟斤拷证
 	 * (non-Javadoc)
 	 * @see org.apache.shiro.realm.AuthenticatingRealm#doGetAuthenticationInfo(org.apache.shiro.authc.AuthenticationToken)
 	 */

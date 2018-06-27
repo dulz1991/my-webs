@@ -1,5 +1,7 @@
 package com.demo.my.base.aop;
 
+import java.util.List;
+
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
@@ -12,8 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.demo.my.base.model.User;
-import com.demo.my.base.model.UserRole;
 import com.demo.my.base.common.KeyConstant;
+import com.demo.my.base.service.SysUserRoleService;
 import com.demo.my.base.service.UserRoleService;
 import com.demo.my.base.service.UserService;
 
@@ -25,6 +27,8 @@ public class AutoLoginForVue {
 	private UserService userService;
 	@Autowired
 	private UserRoleService userRoleService;
+	@Autowired
+	private SysUserRoleService sysUserRoleService;
 
 	@Pointcut("execution (* com.demo.my.*.controller.*Controller.loginResult(..))")
 	public void autoLoginAopForVue() { }
@@ -48,8 +52,10 @@ public class AutoLoginForVue {
 	                user.setPassword(null);
 	                
 	                //权限
-	                UserRole userRole = userRoleService.getById(user.getRole());
-	                user.setRoleName(userRole.getRoleName());
+	                List<String> roleCodeList = sysUserRoleService.getRoleCodeByUserId(user.getId());
+					if(!roleCodeList.isEmpty()){
+						user.setRoleCodeList(roleCodeList);
+					}
 					
 	                subject.getSession().setAttribute(KeyConstant.USER_INFO, user);
 	            }

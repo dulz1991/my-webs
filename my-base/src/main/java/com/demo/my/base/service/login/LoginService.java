@@ -1,6 +1,7 @@
 package com.demo.my.base.service.login;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
@@ -14,7 +15,6 @@ import org.apache.shiro.web.util.SavedRequest;
 
 import com.demo.my.base.model.User;
 import com.demo.my.base.model.UserLog;
-import com.demo.my.base.model.UserRole;
 import com.demo.my.base.common.BaseCommon;
 import com.demo.my.base.common.ErrorConstant;
 import com.demo.my.base.common.KeyConstant;
@@ -22,6 +22,7 @@ import com.demo.my.base.enums.EnumUserLogType;
 import com.demo.my.base.mybatis.mapper.ds1mapper.UserLogMapper;
 import com.demo.my.base.mybatis.mapper.ds1mapper.UserMapper;
 import com.demo.my.base.mybatis.mapper.ds1mapper.UserRoleMapper;
+import com.demo.my.base.service.SysUserRoleService;
 import com.demo.my.base.util.MD5Util;
 import com.demo.my.base.util.RegularUtil;
 
@@ -34,7 +35,9 @@ public class LoginService extends BaseCommon {
 	private UserRoleMapper userRoleMapper;
 	@Autowired
 	private UserLogMapper userLogMapper;
-
+	@Autowired
+	private SysUserRoleService sysUserRoleService;
+	
 	public Map<String, Object> login(User user) {
 		Map<String, Object> resMap = responseOK();
 		if(StringUtils.isBlank(user.getUsername())){
@@ -53,8 +56,10 @@ public class LoginService extends BaseCommon {
 			UsernamePasswordToken token = new UsernamePasswordToken(u.getUsername(), user.getPassword());
 			token.setRememberMe(true);	
 			try {
-				UserRole userRole = userRoleMapper.getById(u.getRole());
-				u.setRoleName(userRole.getRoleName());
+				List<String> roleCodeList = sysUserRoleService.getRoleCodeByUserId(u.getId());
+				if(!roleCodeList.isEmpty()){
+					u.setRoleCodeList(roleCodeList);
+				}
 				currentUser.login(token);
 			} catch (AuthenticationException e) {
 				return loginResult(u.getId(), ErrorConstant.ERROR_GENERAL, "系统异常："+e.getMessage());
@@ -62,7 +67,7 @@ public class LoginService extends BaseCommon {
 			if (currentUser.isAuthenticated()) {
 				currentUser.getSession().setAttribute(KeyConstant.USER_INFO, u);
 				SavedRequest savedRequest = getSavedRequest();
-				resMap = loginResult(u.getId(), ErrorConstant.ERROR_200, "");
+				resMap = loginResult(u.getId(), ErrorConstant.ERROR_OK, "");
 				if (savedRequest != null){
 					String requestUrl = savedRequest.getRequestUrl();
 					resMap.put("url", requestUrl);
@@ -80,7 +85,7 @@ public class LoginService extends BaseCommon {
 	
 	private Map<String, Object> loginResult(Long userId, Integer errorNo,  String errorInfo) {
 		String logRemark = ""; 
-		if(errorNo.equals(ErrorConstant.ERROR_200)){
+		if(errorNo.equals(ErrorConstant.ERROR_OK)){
 			logRemark = "密码登录成功";
 		} else {
 			logRemark = "密码登录失败";

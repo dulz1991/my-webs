@@ -13,9 +13,11 @@ import com.demo.my.base.mybatis.mapper.base.BaseMapper;
 import com.demo.my.base.util.Page;
 import com.demo.my.base.util.SpringContextUtil;
 
-public class AdapterService extends BaseCommon {
+public abstract class AdapterService extends BaseCommon {
 	
 	private static String BASE_MAPPER_PATH = "com.demo.my.base.mybatis.mapper.";
+	
+	protected abstract <T> List<T> preExcute(String mapperNameAndXmlId, Map<String, Object> paramMap);
 
 	/*public <T> int insert(T t) {
 		// TODO Auto-generated method stub
@@ -33,7 +35,7 @@ public class AdapterService extends BaseCommon {
 	}*/
 
 	/**
-	 * ·ÖÒ³²éÑ¯·½·¨
+	 * ï¿½ï¿½Ò³ï¿½ï¿½Ñ¯ï¿½ï¿½ï¿½ï¿½
 	 * @param mapperNameAndXmlId
 	 * @param parm
 	 * @return
@@ -45,7 +47,7 @@ public class AdapterService extends BaseCommon {
 		Page<T> page = new Page<T>(pageNo, pageSize);
 		
 		PagePlugin.startPage(page);
-		List<T> list = this.excute(mapperNameAndXmlId, parm);
+		List<T> list = this.preExcute(mapperNameAndXmlId, parm);
 		page = PagePlugin.getPage();
 		page.setList(list);
 		
@@ -73,7 +75,6 @@ public class AdapterService extends BaseCommon {
 		return  (T) invokeMapper(arr[0]+"."+arr[1], arr[2], paramMap);
 	}
 	
-	@SuppressWarnings("unchecked")
 	private Object invokeMapper(String mapperName, String sqlId, Object... args){
 		try {
 			Class<?> mapperClass = Class.forName(BASE_MAPPER_PATH+mapperName); 

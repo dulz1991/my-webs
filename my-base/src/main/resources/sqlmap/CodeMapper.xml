@@ -178,7 +178,7 @@
 		     	and c.STATUS = #{parm.status}
 		   	</if>
 		   	<if test="parm.codeLevel != null">
-		     	and CODE_LEVEL = #{parm.codeLevel}
+		     	and c.CODE_LEVEL = #{parm.codeLevel}
 		   	</if>
 		<if test="parm.orderby != null">
 	   		order by ${parm.orderby}

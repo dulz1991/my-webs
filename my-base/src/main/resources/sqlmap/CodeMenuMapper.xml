@@ -86,18 +86,23 @@
 	ID codeMenuId,
 	concat("menu",ID) id,
 	`NAME` `name`,
-	`STATUS` `status`,
-	1 menuLevel
+	 2 status,
+	1 menuLevel,
+	0 fatherId,
+	ORDER_BY orderBy
 	from code_menu 
 	union
 	SELECT
 	concat("menu",FATHER_ID)  pId,
-	FATHER_ID codeMenuId,
+	ID codeMenuId,
 	ID id,
 	`NAME` `name`,
 	`STATUS` `status`,
-	2 menuLevel
+	2 menuLevel,
+	FATHER_ID fatherId,
+	ORDER_BY orderBy
 	from code_sub_menu
+	ORDER BY orderBy asc
 </select>
 
 </mapper>

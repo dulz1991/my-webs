@@ -157,31 +157,23 @@
 	DATE_FORMAT(u.UPDATE_TIME,'%Y-%m-%d %H:%m:%i') as updateTimeStr,
 	r.ROLE_NAME as roleName
 	from  `user` u 
-	LEFT JOIN user_role r on u.ROLE = r.ID
+	LEFT JOIN sys_user_role sur on sur.SYS_USER_ID=u.ID
+	LEFT JOIN sys_role r on r.ROLE_CODE=sur.SYS_ROLE_CODE
 	where 1=1
 		<if test="parm.password != null">
-	     	and PASSWORD = #{parm.password}
+	     	and u.PASSWORD = #{parm.password}
 	   	</if>
-		<if test="parm.role != null">
-	     	and ROLE = #{parm.role}
+		<if test="parm.roleCode != null">
+	     	and r.ROLE_CODE= #{parm.roleCode}
 	   	</if>
 		<if test="parm.phone != null">
-	     	and PHONE = #{parm.phone}
-	   	</if>
-		<if test="parm.createTime != null">
-	     	and CREATE_TIME = #{parm.createTime}
+	     	and u.PHONE like "%"#{parm.phone}"%"
 	   	</if>
 		<if test="parm.description != null">
-	     	and DESCRIPTION = #{parm.description}
-	   	</if>
-		<if test="parm.updateTime != null">
-	     	and UPDATE_TIME = #{parm.updateTime}
-	   	</if>
-		<if test="parm.avatar != null">
-	     	and AVATAR = #{parm.avatar}
+	     	and DESCRIPTION like "%"#{parm.description}"%"
 	   	</if>
 		<if test="parm.email != null">
-	     	and EMAIL = #{parm.email}
+	     	and EMAIL like "%"#{parm.email}"%" 
 	   	</if>
 		<if test="parm.status != null">
 	     	and STATUS = #{parm.status}
@@ -199,9 +191,6 @@
 
 <select id="findUserByUsernameAndPassword" resultMap="UserBaseMapper">
 	select * from user where (USERNAME=#{user.username} or PHONE=#{user.username}) and PASSWORD=#{user.password} and STATUS=1
-	<if test="user.role != null">
-    	and ROLE = #{user.role}
-  	</if>
 </select>
 
 <select id="getByUsername" resultMap="UserBaseMapper">

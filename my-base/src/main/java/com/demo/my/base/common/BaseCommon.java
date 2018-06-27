@@ -3,6 +3,7 @@ package com.demo.my.base.common;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Field;
 import java.net.URLDecoder;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -43,38 +44,10 @@ public class BaseCommon extends ErrorConstant {
 		}
 	}
 	
-	/*public static Map<String, Object> responseOK(){
-		return responseError(ErrorConstant.ERROR_200, "");
+	public Map<String, Object> parmMap() {
+		return new HashMap<String, Object>();
 	}
-	public static Map<String, Object> responseNoLogin(){
-		return responseError(ErrorConstant.ERROR_400, "未登录");
-	}
-	public static Map<String, Object> response404(){
-		return responseError(ErrorConstant.ERROR_404, "未找到资源");
-	}
-	public static Map<String, Object> responseOK(String result){
-		return responseError(ErrorConstant.ERROR_200, result);
-	}
-	public static Map<String, Object> responseGeneralError(String errorInfo){
-		return responseError(ErrorConstant.ERROR_GENERAL, errorInfo);
-	}
-	public static Map<String, Object> responseError(Integer errorNo, String errorInfo){
-		Map<String, Object> resMap = new HashMap<String, Object>();
-		resMap.put(ErrorConstant.ERROR_NO, errorNo);
-		resMap.put(ErrorConstant.ERROR_INFO, errorInfo);
-		return resMap;
-	}*/
 	
-	public SavedRequest getSavedRequest() {
-        SavedRequest savedRequest = null;
-        Subject subject = SecurityUtils.getSubject();
-        Session session = subject.getSession(false);
-        if (session != null) {
-            savedRequest = (SavedRequest) session.getAttribute("shiroSavedRequest");
-        }
-        return savedRequest;
-    }
-
 	/*首字母小写*/
 	public static String toLowerCaseFirstOne(String s){
 	  if(Character.isLowerCase(s.charAt(0)))
@@ -90,7 +63,16 @@ public class BaseCommon extends ErrorConstant {
 	  else
 	    return (new StringBuilder()).append(Character.toUpperCase(s.charAt(0))).append(s.substring(1)).toString();
 	}
-	
+	public SavedRequest getSavedRequest() {
+        SavedRequest savedRequest = null;
+        Subject subject = SecurityUtils.getSubject();
+        Session session = subject.getSession(false);
+        if (session != null) {
+            savedRequest = (SavedRequest) session.getAttribute("shiroSavedRequest");
+        }
+        return savedRequest;
+    }
+
 	/*对象转map*/
 	public static Map<String, Object> obj2Map(Object obj) {
 		Map<String, Object> parmMap = new HashMap<String, Object>();
@@ -118,6 +100,88 @@ public class BaseCommon extends ErrorConstant {
 	        }
 		}
        return parmMap;
+	}
+	
+	/**
+	 * 对象转字符串
+	 * @param obj
+	 * @param defaultValue
+	 * @return
+	 */
+	public String toString(Object obj) {
+		if(obj!=null){
+			return obj.toString();
+		} else {
+			return "";
+		}
+	}
+	public String toString(Object obj, String defaultValue) {
+		if(obj!=null){
+			return obj.toString();
+		} else {
+			return defaultValue;
+		}
+	}
+	public Long toLong(Object obj) {
+		if(obj!=null){
+			return Long.valueOf(obj+"");
+		} else {
+			return null;
+		}
+	}
+	public Long toLong(Object obj, long defaultValue) {
+		if(obj!=null){
+			return Long.valueOf(obj+"");
+		} else {
+			return defaultValue;
+		}
+	}
+	public Integer toInt(Object obj) {
+		if(obj!=null){
+			return Integer.valueOf(obj+"");
+		} else {
+			return null;
+		}
+	}
+	public Integer toInt(Object obj, int defaultValue) {
+		if(obj!=null){
+			return Integer.valueOf(obj+"");
+		} else {
+			return defaultValue;
+		}
+	}
+	
+	/**
+	 * 时分转换 1位转2位
+	 * @param time
+	 * @return
+	 */
+	public static String timeConvert(String time) {
+		return time.length() < 2 ? "0" + time : time;
+	}
+	
+	public static Date now() {
+		return new Date();
+	}
+	
+	public static String timeStrConvert(String time) {
+		if(StringUtils.isBlank(time)){
+			return "";
+		}
+		String[] arr = time.split("-");
+		String newTimeStr = "";
+
+		String[] newStr = arr[0].split(":"); 
+		newTimeStr += timeConvert(newStr[0])+":"+timeConvert(newStr[1]);
+		newTimeStr += "-";
+		newStr = arr[1].split(":");
+		newTimeStr += timeConvert(newStr[0])+":"+timeConvert(newStr[1]);
+			
+		return newTimeStr;
+	}
+	
+	public static void main(String[] args) {
+		System.out.println(timeStrConvert("8:2-9:5"));
 	}
 	
 }

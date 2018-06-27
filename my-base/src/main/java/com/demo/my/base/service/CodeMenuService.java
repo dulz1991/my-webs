@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.demo.my.base.enums.EnumCodeMenuStatus;
 import com.demo.my.base.model.CodeMenu;
 import com.demo.my.base.mybatis.mapper.ds1mapper.CodeMenuMapper;
 
@@ -32,6 +33,7 @@ public class CodeMenuService extends AbstractBaseService {
 		if(codeMenu.getId()!=null){
 			codeMenuMapper.update(codeMenu);
 		} else {
+			codeMenu.setStatus(EnumCodeMenuStatus.EDIT.getKey()+"");
 			codeMenuMapper.insert(codeMenu);
 		}
 	}
@@ -58,5 +60,12 @@ public class CodeMenuService extends AbstractBaseService {
 			map.put(codeMenu.getId(), codeMenu.getName());
 		}
 		return map;
+	}
+	
+	public List<CodeMenu> getBeanListByParm(Map<String, Object> parm) {
+		if(parm==null){
+			parm = new HashMap<String, Object>();
+		}
+		return codeMenuMapper.getBeanListByParm(parm);
 	}
 }
