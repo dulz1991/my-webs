@@ -2,14 +2,12 @@ package com.demo.my.backend.controller;
 
 import java.io.File;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,9 +16,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.alibaba.fastjson.JSONArray;
 import com.demo.my.backend.common.BaseBackendController;
-import com.demo.my.backend.service.file.FileUploadService;
-import com.demo.my.base.service.DemoService;
 import com.demo.my.base.common.ErrorConstant;
 import com.demo.my.base.model.Demo;
 import com.demo.my.base.model.DemoMenu;
@@ -35,18 +32,13 @@ public class DemoController extends BaseBackendController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(DemoController.class);
 	
-	@Autowired
-	private DemoService demoService;
-	@Autowired
-	private FileUploadService fileUploadService;
-	
 	@RequestMapping(value="/list")
 	public ModelAndView index(Long demoMenuId) {
 		ModelAndView model = new ModelAndView("demo/demo_list");
 		
 		//查询菜单
-		List<DemoMenu> demoMenuList = demoService.excute("DemoMenuMapper.getBeanListByParm", null);
-		model.addObject("demoMenuList", demoMenuList);
+		List<DemoMenu> demoMenuList = demoMenuService.getList(null);
+		model.addObject("demoMenuList", JSONArray.toJSON(demoMenuList));
 		
 		if(demoMenuId!=null){
 			model.addObject("demoMenuId", demoMenuId);
@@ -68,7 +60,7 @@ public class DemoController extends BaseBackendController {
 		}
 		
 		//查询菜单
-		List<DemoMenu> demoMenuList = demoService.excute("DemoMenuMapper.getBeanListByParm", null);
+		List<DemoMenu> demoMenuList = demoMenuService.getList(null);
 		model.addObject("demoMenuList", demoMenuList);
 		
 		return model;
@@ -76,13 +68,11 @@ public class DemoController extends BaseBackendController {
 	
 	@ResponseBody
 	@RequestMapping(value="/getList")
-	public Map<String, Object> getList(Demo demo,
-			@RequestParam(name="pageNo", defaultValue="1") int pageNo,  
-			@RequestParam(name="pageSize", defaultValue="10") int pageSize) {
+	public Map<String, Object> getList() {
 		Map<String, Object> parmMap = this.getParmMap();
 		Page<Map<String, Object>> page = demoService.getPage("DemoMapper.getMapListByParm", parmMap);
 
-		Map<String, Object> resMap = new HashMap<String, Object>();
+		Map<String, Object> resMap = responseOK();
 		resMap.put("list", page.getList());
 		resMap.put("page", page);
 		

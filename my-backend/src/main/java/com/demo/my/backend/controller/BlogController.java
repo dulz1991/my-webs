@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.alibaba.fastjson.JSONArray;
 import com.demo.my.backend.common.BaseBackendController;
 import com.demo.my.base.service.BlogMenuService;
 import com.demo.my.base.service.BlogService;
@@ -41,7 +42,7 @@ public class BlogController extends BaseBackendController {
 		ModelAndView model = new ModelAndView("blog/blog_list");
 		
 		List<BlogMenu> menuList = blogMenuService.getBeanListByParm(new HashMap<String, Object>());
-		model.addObject("menuList", menuList);
+		model.addObject("menuList", JSONArray.toJSON(menuList));
 		
 		if(blogMenuId!=null){
 			model.addObject("blogMenuId", blogMenuId);

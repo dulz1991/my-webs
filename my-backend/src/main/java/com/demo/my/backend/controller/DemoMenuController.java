@@ -1,6 +1,5 @@
 package com.demo.my.backend.controller;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -9,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -47,13 +45,11 @@ public class DemoMenuController extends BaseBackendController {
 	
 	@ResponseBody
 	@RequestMapping(value="/getList")
-	public Map<String, Object> getList(DemoMenu demoMenu,
-			@RequestParam(name="pageNo", defaultValue="1") int pageNo,  
-			@RequestParam(name="pageSize", defaultValue="10") int pageSize) {
+	public Map<String, Object> getList() {
 		Map<String, Object> parmMap = this.getParmMap();
 		Page<DemoMenu> page = demoMenuService.getPage("DemoMenuMapper.getBeanListByParm", parmMap);
 
-		Map<String, Object> resMap = new HashMap<String, Object>();
+		Map<String, Object> resMap = responseOK();
 		resMap.put("list", page.getList());
 		resMap.put("page", page);
 		

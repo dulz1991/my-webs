@@ -87,10 +87,10 @@ public class ProfileController extends BaseBackendController {
 			String srcImagePath = uploadMap.get("uploadPath").toString();
 			Map<String, Object> cutMap = JsonUtil.jsonStrToMap(avatar_data);
 			// 用户经过剪辑后的图片的大小  
-			int x = (int) cutMap.get("x");
-			int y = (int) cutMap.get("y");
-			int w =  (int) cutMap.get("width");
-			int h =  (int) cutMap.get("height");
+			int x = (Integer) cutMap.get("x");
+			int y = (Integer) cutMap.get("y");
+			int w =  (Integer) cutMap.get("width");
+			int h =  (Integer) cutMap.get("height");
 			//这里开始截取操作
 			ImageUtil.cut(x,  y, w, h, srcImagePath);
 			

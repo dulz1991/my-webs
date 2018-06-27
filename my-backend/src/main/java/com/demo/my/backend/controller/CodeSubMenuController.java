@@ -19,11 +19,9 @@ import org.springframework.web.servlet.ModelAndView;
 import com.demo.my.backend.common.BaseBackendController;
 import com.demo.my.base.service.CodeMenuService;
 import com.demo.my.base.service.CodeSubMenuService;
-import com.demo.my.base.enums.EnumCodeMenuStatus;
 import com.demo.my.base.enums.EnumCodeSubMenuStatus;
 import com.demo.my.base.model.CodeMenu;
 import com.demo.my.base.model.CodeSubMenu;
-import com.demo.my.base.util.HtmlUtil;
 import com.demo.my.base.util.Page;
 
 @Controller
@@ -52,24 +50,16 @@ public class CodeSubMenuController extends BaseBackendController {
 	}
 	
 	@RequestMapping(value="/edit")
-	public ModelAndView edit(Long id) {
-		ModelAndView model = new ModelAndView("code/code_sub_menu_edit");
-		List<CodeMenu> codeMenuList = codeMenuService.excute("CodeMenuMapper.getBeanListByParm", null);
-		model.addObject("codeMenuList", codeMenuList);
-		
-		String statusValue = "";
-		String codeMenuValue = "";
+	public ModelAndView edit(Long id, Long fatherId) {
+		ModelAndView model = new ModelAndView("code/sub_menu_edit");
 		if(id!=null){
 			CodeSubMenu entity = codeSubMenuService.getById(id);
 			model.addObject("entity", entity);
-			statusValue = entity.getStatus()+"";
-			codeMenuValue = entity.getFatherId()+"";
 		} else {
-			model.addObject("entity", new CodeSubMenu());
+			CodeSubMenu codeSubMenu = new CodeSubMenu();
+			codeSubMenu.setFatherId(fatherId); 
+			model.addObject("entity", codeSubMenu);
 		}
-		
-		model.addObject("statusSelectHtml", HtmlUtil.SelectHtml("status", statusValue, "", EnumCodeSubMenuStatus.getListForSelect()));
-		model.addObject("codeMenuSelectHtml", HtmlUtil.SelectHtml("fatherId", codeMenuValue, "", codeMenuService.getListForSelect()));
 		
 		return model;
 	}
@@ -127,11 +117,9 @@ public class CodeSubMenuController extends BaseBackendController {
 	@ResponseBody
 	@RequestMapping(value = "/getCodeSubMenuListByFatherId", method=RequestMethod.GET)
 	public Map<String, Object> getCodeSubMenuListByFatherId(Long id) {
-		Map<String, Object> resMap = new HashMap<String, Object>();
-		resMap.put("fatherId", id);
-		
-		List<CodeSubMenu> codeSubMenuList = codeSubMenuService.excute("CodeSubMenuMapper.getBeanListByParm", resMap);
-		resMap.put("codeSubMenuList", codeSubMenuList);
+		Map<String, Object> parmMap = new HashMap<String, Object>();
+		parmMap.put("fatherId", id);
+		List<CodeSubMenu> codeSubMenuList = codeSubMenuService.getBeanListByParm(parmMap);
 		
 		List<Map<String, Object>> listMap = new ArrayList<Map<String,Object>>();
 		for(CodeSubMenu codeSubMenu : codeSubMenuList){
@@ -140,10 +128,10 @@ public class CodeSubMenuController extends BaseBackendController {
 			map.put("value", codeSubMenu.getName());
 			listMap.add(map);
 		}
-		resMap.put("list", listMap);
 		
-		resMap.put("errorNo", 200);
-		return resMap; 
+		Map<String, Object> resMap = responseOK(); 
+		resMap.put("selectList", listMap);
+		return resMap;
 	}
 	
 }

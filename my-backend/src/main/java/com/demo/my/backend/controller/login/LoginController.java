@@ -52,17 +52,9 @@ public class LoginController extends BaseBackendController {
 	}
 	
 	@RequestMapping(value = "/logout")
-	public ModelAndView logout(HttpServletRequest request, User user) {
-		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("redirect:/login");
-		loginService.logout();
-		/*if ((Integer) resMap.get("role") == 1) {
-			String url = (String) resMap.get("url");
-			modelAndView.setViewName("redirect:/login");
-		} else {
-			modelAndView.setViewName("redirect:/login");
-		}*/
-		return modelAndView;
+	@ResponseBody
+	public Map<String, Object> logout(HttpServletRequest request, User user) {
+		return loginService.logout();
 	}
 	
 }

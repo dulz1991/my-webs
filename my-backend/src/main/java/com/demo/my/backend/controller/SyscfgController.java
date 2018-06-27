@@ -10,10 +10,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.demo.my.backend.common.BaseBackendController;
-import com.demo.my.base.common.KeyConstant;
-import com.demo.my.base.enums.EnumSysCfgFlag;
 import com.demo.my.base.model.SysCfg;
 import com.demo.my.base.service.SysCfgService;
+import com.demo.my.base.util.Page;
 
 @Controller
 @RequestMapping("/backend/sys")
@@ -23,29 +22,41 @@ public class SyscfgController extends BaseBackendController {
 	private SysCfgService sysCfgService;
 	
 	@RequestMapping(value = "/index")
-	public ModelAndView index(String active) {
-		if(StringUtils.isBlank(active)){
-			active = "0";
-		}
+	public ModelAndView index() {
 		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("syscfg/index");
-		
-		if(active.equals(EnumSysCfgFlag.BLOG_SITE.getKey()+"")){
-			SysCfg sysCfg = sysCfgService.getByKey(KeyConstant.BLOG_SLOGAN);
-			if(sysCfg!=null){
-				modelAndView.addObject(KeyConstant.BLOG_SLOGAN, sysCfg.getValue());	
-			}
-		} else if(active.equals(EnumSysCfgFlag.PUBLIC.getKey()+"")){
-			
-		} else if(active.equals(EnumSysCfgFlag.BACKEND.getKey()+"")){
-			SysCfg sysCfg = sysCfgService.getByKey(KeyConstant.DEFAULT_CODE_SUB_MENU_ID);
-			if(sysCfg!=null){
-				modelAndView.addObject(KeyConstant.DEFAULT_CODE_SUB_MENU_ID, sysCfg.getValue());	
-			}
-		}
-		
-		modelAndView.addObject("active", active);
+		modelAndView.setViewName("syscfg/sysCfg_list");
 		return modelAndView;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/getList")
+	public Map<String, Object> getList() {
+		//查询参数
+		Map<String, Object> parmMap =  getParmMap();
+		//查询
+		Page<SysCfg> page = sysCfgService.getPage("SysCfgMapper.getBeanListByParm", parmMap);
+		//返回参数
+		Map<String, Object> resMap = responseOK();
+		resMap.put("list", page.getList());
+		resMap.put("page", page);
+		
+		return resMap;
+	}
+	
+	@RequestMapping(value="/edit")
+	public ModelAndView edit(Long id) {
+		ModelAndView model = new ModelAndView("syscfg/sysCfg_edit");
+		if(id!=null){
+			SysCfg entity = sysCfgService.getById(id);
+			model.addObject("entity", entity);
+			model.addObject("isUpdate", true);
+			model.addObject("title", "修改系统参数");
+		} else {
+			model.addObject("entity", new SysCfg());
+			model.addObject("title", "新增系统参数");
+			model.addObject("isNew", true);
+		}
+		return model;
 	}
 	
 	@ResponseBody
@@ -71,5 +82,17 @@ public class SyscfgController extends BaseBackendController {
 		}
 	}
 	
+	@ResponseBody
+	@RequestMapping(value="/doDelete")
+	public Map<String, Object> doDelete(Long id) {
+		if(id==null){
+			return responseGeneralError("删除的记录不存在");
+		}
+		if(sysCfgService.delete(id)>0){
+			return responseOK();
+		}
+		return responseGeneralError("删除失败");
+	}
 
+	
 }

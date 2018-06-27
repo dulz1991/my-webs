@@ -25,10 +25,7 @@ import com.demo.my.base.service.CodeMenuService;
 import com.demo.my.base.service.CodeService;
 import com.demo.my.base.service.CodeSubMenuService;
 import com.demo.my.base.service.SysCfgService;
-import com.demo.my.base.common.BaseCommon;
-import com.demo.my.base.common.ErrorConstant;
 import com.demo.my.base.common.KeyConstant;
-import com.demo.my.base.enums.EnumCodeMenuStatus;
 import com.demo.my.base.enums.EnumCodeSubMenuStatus;
 import com.demo.my.base.model.Code;
 import com.demo.my.base.model.CodeMenu;
@@ -73,14 +70,15 @@ public class CodeController extends BaseBackendController {
 	public ModelAndView edit(Long id, Long codeFatherId) {
 		ModelAndView model = new ModelAndView("code/code_edit");
 		
-		List<CodeMenu> codeMenuList = codeMenuService.excute("CodeMenuMapper.getBeanListByParm", null);
+		/*一级菜单*/
+		List<CodeMenu> codeMenuList = codeMenuService.getBeanListByParm(null);
 		model.addObject("codeMenuList", codeMenuList);
 		
 		if(id!=null){
 			Code entity = codeService.getById(id);
 			model.addObject("entity", entity);
 			
-			//一级菜单
+			//已选择的一级菜单 
 			CodeSubMenu codeSubMenu = codeSubMenuService.getById(entity.getFatherId());
 			model.addObject("codeMenuId", codeSubMenu.getFatherId());
 			
@@ -94,13 +92,13 @@ public class CodeController extends BaseBackendController {
 			parmMap = new HashMap<String, Object>();
 			parmMap.put("codeLevel", 1);
 			parmMap.put("fatherId", codeSubMenu.getId());
-			List<Code> codeIdList = codeService.excute("CodeMapper.getBeanListByParm", parmMap);
+			List<Map<String, Object>> codeIdList = codeService.getMapListByParm(parmMap);
 			model.addObject("codeIdList", codeIdList);
 		} else {
 			Code newCode = new Code();
 			if(codeFatherId!=null){
 				newCode.setFatherId(codeFatherId);
-				//一级菜单
+				//已选择的一级菜单
 				CodeSubMenu codeSubMenu = codeSubMenuService.getById(codeFatherId);
 				model.addObject("codeMenuId", codeSubMenu.getFatherId());
 				
@@ -114,7 +112,7 @@ public class CodeController extends BaseBackendController {
 				parmMap = new HashMap<String, Object>();
 				parmMap.put("codeLevel", 1);
 				parmMap.put("fatherId", codeSubMenu.getId());
-				List<Code> codeIdList = codeService.excute("CodeMapper.getBeanListByParm", parmMap);
+				List<Map<String, Object>> codeIdList = codeService.getMapListByParm(parmMap);
 				model.addObject("codeIdList", codeIdList);
 			} else {
 				model.addObject("codeMenuId", "");
@@ -147,11 +145,11 @@ public class CodeController extends BaseBackendController {
 	@RequestMapping(value="/doSave", method = RequestMethod.POST)
 	public Map<String, Object> save(Code code) {
 		if (StringUtils.isBlank(code.getItem())) {
-			return BaseCommon.responseError(ErrorConstant.ERROR_GENERAL, ErrorConstant.ERROR_EMPTY_TITLE);
+			return responseGeneralError("标题不能为空");
 		} else if (StringUtils.isBlank(code.getContent())) {
-			return responseGeneralError(ErrorConstant.ERROR_EMPTY_CONTENT);
+			return responseGeneralError("内容不能为空");
 		} else if (null == code.getFatherId() || code.getFatherId()==0) {
-			return responseGeneralError(ErrorConstant.ERROR_EMPTY_SUB_MENU);
+			return responseGeneralError("请选择菜单");
 		}
 		
 		if(code.getCodeId()==null || code.getCodeId()<=0){
@@ -200,21 +198,13 @@ public class CodeController extends BaseBackendController {
 	@ResponseBody
 	@RequestMapping(value="/getCodeListByFatherId",  method = RequestMethod.GET)
 	public Map<String, Object> getCodeListByFatherId(Long id) {
+		Map<String, Object> parmMap = responseOK();
+		parmMap.put("fatherId", id);
+		parmMap.put("codeLevel", 1);
+		
+		List<Map<String, Object>> codeList = codeService.getMapListByParm(parmMap);
 		Map<String, Object> resMap = responseOK();
-		resMap.put("fatherId", id);
-		resMap.put("codeLevel", 1);
-		
-		List<Code> codeList = codeService.excute("CodeMapper.getBeanListByParm", resMap);
-		resMap.put("codeList", codeList);
-		
-		List<Map<String, Object>> listMap = new ArrayList<Map<String,Object>>();
-		for(Code code : codeList){
-			Map<String, Object>  map = new HashMap<String, Object>();
-			map.put("key", code.getId());
-			map.put("value", code.getItem());
-			listMap.add(map);
-		}
-		resMap.put("list", listMap);
+		resMap.put("selectList", codeList);
 		return resMap; 
 	}
 	
@@ -244,8 +234,8 @@ public class CodeController extends BaseBackendController {
 		for(Map<String, Object> map : codeMenuList){
 			name=map.get("name").toString();
 			if(map.get("menuLevel").toString().equals("1")){
-				name += "("+EnumCodeMenuStatus.getValueByKey(Integer.valueOf(map.get("status").toString()))+")";
-				map.put("name", name);
+				/*name += "("+EnumCodeMenuStatus.getValueByKey(Integer.valueOf(map.get("status").toString()))+")";
+				map.put("name", name);*/
 			} else {
 				name += "("+EnumCodeSubMenuStatus.getValueByKey(Integer.valueOf(map.get("status").toString()))+")";
 				map.put("name", name);	
