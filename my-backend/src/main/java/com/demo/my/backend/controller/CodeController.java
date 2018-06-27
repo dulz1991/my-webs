@@ -9,7 +9,6 @@ import java.util.Map;
 import org.apache.commons.lang3.StringUtils;
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.map.JsonMappingException;
-import org.codehaus.jackson.map.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +30,7 @@ import com.demo.my.base.model.Code;
 import com.demo.my.base.model.CodeMenu;
 import com.demo.my.base.model.CodeSubMenu;
 import com.demo.my.base.model.SysCfg;
+import com.demo.my.base.util.JsonUtil;
 import com.demo.my.base.util.Page;
 
 @Controller
@@ -214,6 +214,11 @@ public class CodeController extends BaseBackendController {
 		Code entity = codeService.getById(id);
 		entity.setContent(entity.getContent().replace("http://my.demo", "/api_img"));
 		model.addObject("entity", entity);
+		
+		/*code title树菜单*/
+		
+		List<Map<String, Object>> codeList = codeService.getCodeListForZtree(entity.getFatherId());
+		model.addObject("codeTitleTree", JsonUtil.objectToJsonStr(codeList));
 		return model;
 	}
 	@ResponseBody
@@ -242,8 +247,7 @@ public class CodeController extends BaseBackendController {
 			}
 		}
 		
-		ObjectMapper mapper = new ObjectMapper();  
-		model.addObject("codeMenuList", mapper.writeValueAsString(codeMenuList));
+		model.addObject("codeMenuList", JsonUtil.objectToJsonStr(codeMenuList));
 		
 		if(codeSubMenuId==null){
 			SysCfg sysCfg = sysCfgService.getByKey(KeyConstant.DEFAULT_CODE_SUB_MENU_ID);
@@ -265,8 +269,7 @@ public class CodeController extends BaseBackendController {
 			Map<String, Object> resMap = responseOK();
 			List<Map<String, Object>> codeList = codeService.getCodeListForZtree(faltherId);
 			
-			ObjectMapper mapper = new ObjectMapper();  
-			resMap.put("codeList", mapper.writeValueAsString(codeList));
+			resMap.put("codeList", JsonUtil.objectToJsonStr(codeList));
 			resMap.put("count", codeList.size());
 			return resMap;
 		} catch (Exception e) {

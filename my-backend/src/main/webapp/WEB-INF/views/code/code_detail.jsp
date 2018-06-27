@@ -2,6 +2,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 	
+	<div class="col-sm-2 widget-header">
+		<div id="zTree" class="ztree"></div>
+	</div>
+		
+	<div class="col-sm-10">
     	<div class="widget">
            	<div class="widget-header">
                	<i class="widget-icon fa fa-code"></i>
@@ -34,14 +39,38 @@
                	${entity.content}
            	</div>
        	</div>
+	</div>
                                 
 	<script>
+	/* 左侧树形菜单 */
+	var setting = {
+		view: {
+			selectedMulti: false,
+			showIcon: false
+		},
+		data: {
+			title:"name",
+			simpleData: {
+				enable: true
+			}
+		},
+		callback: {
+		 	onClick : zTreeOnClick
+		}
+	};
 	$(function(data){
 		var title = '${entity.item}';
 		if("${entity.status}"==0){
 			title += '(已删除)';
 		}
 		$.common.pageTitle(title);
+		
+		//菜单zTree
+		var zTree = $.fn.zTree.init($("#zTree"), setting, ${codeTitleTree});
+		var node = zTree.getNodeByParam("id", '${entity.id}');
+		zTree.selectNode(node);
+		
+		$.common.sidebarSmall();
 	})
 	
 	//重新加载
@@ -57,6 +86,11 @@
 				$.pop.error(data.errorInfo);
 			}
 		});
+	}
+	
+	//左侧点击菜单
+	function zTreeOnClick(event, treeId, treeNode){
+		gotoUrl('/backend/code/viewDetail?id='+treeNode.id, '_self');
 	}
 	</script>
 	
