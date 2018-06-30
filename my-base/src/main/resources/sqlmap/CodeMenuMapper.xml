@@ -102,7 +102,7 @@
 	FATHER_ID fatherId,
 	ORDER_BY orderBy
 	from code_sub_menu
-	ORDER BY orderBy asc
+	ORDER BY `NAME` asc
 </select>
 
 </mapper>

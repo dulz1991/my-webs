@@ -28,7 +28,7 @@
             	<!-- 一级菜单 -->
 	    		<li class="levelOneMenu">
 	    			<a href="javascript:;" 
-	    				<c:if test="${empty item.menus }">onclick="gotoUrl('${item.url }')" toUrl="${item.url }"</c:if>
+	    				<c:if test="${empty item.menus }">onclick="gotoUrl('${item.url }','_self')" toUrl="${item.url }"</c:if>
 	    				<c:if test="${not empty item.menus }">class="menu-dropdown"</c:if> 
 	    				>
 	    				<i class="menu-icon ${item.icon}"></i>
@@ -40,7 +40,7 @@
 							<c:forEach var="subItem" items="${item.menus}">
 								<li  class="levelTwoMenu">
 									<a href="javascript:;" 
-										<c:if test="${empty subItem.menus }">onclick="gotoUrl('${subItem.url }')" toUrl="${subItem.url }"</c:if>
+										<c:if test="${empty subItem.menus }">onclick="gotoUrl('${subItem.url }','_self')" toUrl="${subItem.url }"</c:if>
 	    								<c:if test="${not empty subItem.menus }">class="menu-dropdown"</c:if> 
 									>
 			                        	<span class="menu-text"> ${subItem.name }</span>
@@ -51,7 +51,7 @@
 									<ul class="submenu" style="display: none;">
 										<c:forEach var="lastItem" items="${subItem.menus}">
 											<li  class="levelThreeMenu">
-												<a href="javascript:;" onclick="gotoUrl('${lastItem.url }')" toUrl="${lastItem.url }" >
+												<a href="javascript:;" onclick="gotoUrl('${lastItem.url }','_self')" toUrl="${lastItem.url }" >
 						                        	<span class="menu-text"> ${lastItem.name }</span>
 						                        </a>
 						                    </li>			

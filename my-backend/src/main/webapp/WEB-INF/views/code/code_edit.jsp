@@ -99,7 +99,7 @@ function refreshCodeId(){
 function doSave(){
 	var parm = $.common.getFormJson('.form');
 	$.common.post(parm, '/backend/code/doSave', function(data){
-		gotoUrl('/backend/code/viewDetail?id='+data.id, 'self');
+		gotoUrl('/backend/code/viewDetail?id='+data.id, '_self');
 	});
 }
 </script>

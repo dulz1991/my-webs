@@ -3,12 +3,12 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
 	
-	<div class="col-sm-2">
+	<div class="col-sm-3 widget-header">
 		<div id="zTree" class="ztree"></div>
 	</div>
 	
-	<div class="col-sm-10">
-		<div class="panel-body">
+	<div class="col-sm-9">
+		<div class="panel-body" style="margin-top:-15px;">
 			<div id="codezTree" class="ztree"></div>			
 		</div>
 	</div>

@@ -11,7 +11,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<link href="/assets/img/logo.png" title="" rel="shortcut icon" type="image/x-icon">
+<link href="/img/logo.png" title="" rel="shortcut icon" type="image/x-icon">
 
 <!--Basic Styles-->
 <link href="/assets/css/bootstrap.min.css"  title="" rel="stylesheet" />

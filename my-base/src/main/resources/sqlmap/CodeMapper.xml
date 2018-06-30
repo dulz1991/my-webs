@@ -200,7 +200,7 @@
 	CODE_LEVEL codeLevel
 	from `code`
 where FATHER_ID=#{fatherId}
-order by ITEM_ORDER asc 
+order by ITEM asc 
 </select>
 
 

@@ -2,11 +2,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 	
-	<div class="col-sm-2 widget-header">
+	<div class="col-sm-3 widget-header">
 		<div id="zTree" class="ztree"></div>
 	</div>
 		
-	<div class="col-sm-10">
+	<div class="col-sm-9">
     	<div class="widget">
            	<div class="widget-header">
                	<i class="widget-icon fa fa-code"></i>
@@ -15,7 +15,7 @@
                		<c:if test="${entity.status==0}"><span class="text-red">(已删除)</span></c:if>
                </span>
                <div class="widget-buttons">
-                   <a href="javascript:gotoUrl('/backend/code/edit?id=${entity.id}')" title="编辑">
+                   <a href="javascript:gotoUrl('/backend/code/edit?id=${entity.id}','_self')" title="编辑">
 						<i class="fa fa-edit"></i>
 					</a>
 					<a href="javascript:reload('${entity.id}');" title="刷新">

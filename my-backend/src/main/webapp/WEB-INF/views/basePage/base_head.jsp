@@ -41,7 +41,7 @@
                 <!-- 左上角logo -->
                 <div class="navbar-header pull-left">
                     <a href="#" class="navbar-brand" style="margin-top:8px;">
-                    	个人后台系统
+                    	<img alt="" src="/img/logo.png" style="width:24px;margin-top:-5px"> 个人后台系统
                         <!-- <small>
                             <img src="assets/img/logo_white.png" alt="" width="50" />
                         </small> -->
