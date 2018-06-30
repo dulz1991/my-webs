@@ -70,9 +70,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <script src="/assets/js/jquery.table2excel.js"></script>
 
 <!-- ueditor -->
-<script src="/ue/ueditor.config.js"></script>
-<script src="/ue/ueditor.all.js"></script>
-<link href="/ue/themes/default/css/ueditor.css" title='' rel="stylesheet">
+<script src="/js/plugins/ue/ueditor.config.js"></script>
+<script src="/js/plugins/ue/ueditor.all.min.js"></script>
+<link href="/js/plugins/ue/themes/default/css/ueditor.css" title='' rel="stylesheet">
 
 <!--Beyond Scripts-->
 <script src="/assets/js/beyond.min.js" defer async="true"></script>

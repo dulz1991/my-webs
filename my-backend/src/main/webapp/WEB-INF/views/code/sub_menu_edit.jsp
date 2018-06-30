@@ -11,5 +11,10 @@
 					code二级菜单名称
 					<input type="text" class="form-control input" name="name" value="${entity.name}">
 				</div>
+				
+				<div class="col-sm-11">
+					排序号
+					<input type="text" class="form-control input" name="orderBy" value="${entity.orderBy}">
+				</div>
 			</div>
 		</form>
