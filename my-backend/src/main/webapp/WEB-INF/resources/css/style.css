@@ -26,81 +26,6 @@
 table thead tr th{text-align:center}
 .table-a{cursor:pointer;color:blue}
 
-/*左侧导航栏*/
-/* .down-main{position: absolute;width: 100%;top: 50px;bottom: 0px;z-index: 100;}
-.left-full{ width:160px; display:block;overflow-y:auto;}
-.right-full{ left:160px;}
-.left-off{ width:48px; display:block;}
-.right-off{ left:48px;}
-.right-product{position: absolute;top: 0px;bottom: 0px;right: 0px;background: #FFF;}
-.sidebar-fold{ height: 30px;width: 100%;background: #394555;color: #aeb9c2;text-align: center; height:30px; font-size: 12px;cursor: pointer;}
-.sidebar-fold span{ line-height:30px;}
-.left-main{ bottom: 0px; top:0px; position:absolute; background-color:#293038;}
-.left-main{ bottom: 0px; top:50px; z-index:100; position:fixed; background-color:#293038;}
-.sBox ul li{ list-style-type:none; position:relative;}
-.sBox ul{ padding:0px; position: relative; margin:0px;}
-.sBox ul li a{display: block;width: 100%;height: 40px;line-height: 40px;overflow: hidden; text-decoration:none; color:#FFF;}
-.sBox .sublist-icon{ width:48px; text-align:center;}
-.subNavBox .subNav{ height:40px; line-height:40px; color: #fff;}
-.subNavBox .subNav .title-icon{ width:48px; text-align:center;}
-.sBox .sublist-down{ background-color:#22282e;}
-.sBox .sublist-up{ background-color:#37424f;}
-.sBox .sublist-up ul{ display:none;}
-.sBox .sublist-title{ cursor:pointer; font-size: 12px;}
-.sBox .subNav:hover,.sBox ul li:hover{ background-color:#42515f;}
-.sBox span{ line-height:36px;}
-.sBox ul li .showtitle{ text-align:center; line-height:40px; position:absolute; z-index:100; background-color:#545f71; left:55px; padding:0px 10px 0px 10px; color:#FFF; min-width:100px; display:none;}
-.sBox ul li .showtitle img {position: absolute;left: -6px; top: 14px;}
-.left-off .sBox ul li .sub-title{ display:none;}
-.left-off .sBox .sublist-title{ display:none;} */
-
-/*数据统计分析下拉内容*/
-/* .navbar-nav .dropdown .topbar-nav-list{ color:#000; font-size:12px;padding:10px; width:auto; white-space: nowrap;}
-.topbar-nav-col{vertical-align: top;padding: 0 10px; display:inline-block;}
-.topbar-nav-col .topbar-nav-item-title{margin: 3px 0px;color: #999;font-weight: 600; font-size:13px;}
-.topbar-nav-col ul li{ list-style:none; min-width: 160px;height: 28px;line-height: 28px;margin-bottom: 2px;}
-.dropdown-menu .topbar-nav-col ul{ padding-top:5px; padding-left:0px;}
-.topbar-nav-col ul li a{display: block;height: 100%;padding: 0 10px;text-decoration: none;color: #333;}
-.topbar-nav-col ul li a:hover{ background-color:#f2f2f2;}
-.topbar-nav-col .topbar-nav-item{ border-bottom:solid 1px #f2f2f2;} 
-.dropdown-menu{ min-width:10px;} */
-
-/*======内容页标题=====*/
-/* .info-center .page-header{ width:100%;margin:0px 0px 0px 0px; padding:0px; height:57px; line-height:57px;}
-.info-center .page-header h4{margin-top:20px; padding-left:8px;color: #363636;border-left: 2px solid #0098cd;font-size: 16px;} */
-/*======消息列表=====*/
-/* .info-center-title{ margin-top:0px;}
-.info-center-title .padding-large-right{ padding-right:30px;}
-.info-center-title span a{height: 30px;cursor: pointer;line-height: 30px;color: #656565;display: block;font-weight: 600;float: left; text-decoration:none;}
-.info-center-title span .active{ color:#098cba; border-bottom:solid 2px #098cba;}
-.info-center-title span a:hover{color:#098cba; border-bottom:solid 2px #098cba;} */
-
-
-/*=========后台首页=========*/
-/* .my-index{ background-color:#eceff3;}
-.info-center .info-title{ margin-top:30px; margin-bottom:10px;padding-left: 15px;padding-right: 15px;}
-.info-center .info-title h4{ margin-bottom:0px;}
-.info-center .time-title { height:70px;}
-.time-title .hour-minute strong{ font-size:34px;}
-.year-month p{ margin-bottom:0px;}
-.year-month p span{ font-size:24px;}
-.content-list{ margin-top:30px;}
-.content-list .row{ margin-left:0px; margin-right:0px;}
-.content-list .row .content{ background-color:#FFF;}
-.content-list .row .content .left-icon{ text-align:center;}
-.content-list .row .content .right-title{ color:#666666; text-align:center; padding-top:10px;	 padding-bottom:10px;}
-.content-list .row .content .left-icon span{margin-top: 50px;margin-bottom: 50px;width: 40px;line-height: 40px;color: #FFF;border-radius: 50%;}
-.content .left-icon .blue{background-color: #2abbeb;}
-.content .left-icon .violet{background-color: #675499;}
-.content .left-icon .orange{background-color: #eac553;}
-.content .left-icon .green{background-color: #1cbba7;}
-.content .right-title .number{ font-size:46px; margin-top:0px;}
-.content .right-title p{ margin-bottom:5px;}
-.content .right-title .title-content{ width:130px;}
-.content .right-title .title-content .btn-default{ background-color:#f5f8f9;} */
-
-@charset "utf-8";
-
 /* 学生信息 教师信息详情页 */
 .accound-bund i{font-size: 16px;margin-right: 5px;margin-top: 2px;color: #44b333;}
 .accound-bund{ padding:0px;}
@@ -122,7 +47,7 @@ table thead tr th{text-align:center}
 .bund-class{margin-right:25px;}
 .indentify_now{color:#40b2da;margin-left: 10px;}
 .indentify_now:hover{color:#40b2da;/*text-decoration: underline;*/}
-.modify-identity{padding: 20px; display: none;}
+/* .modify-identity{padding: 20px; display: none;}
 .modify-identity.show{display: block;}
 .modify-identity dt{width: 522px;height: 30px;}
 .modify-identity dt.step1{background: url(../images/icon_modify1.png) no-repeat;}
@@ -155,7 +80,7 @@ table thead tr th{text-align:center}
 .revise-grey{background:#aaa;}
 .modify-identity .revise-grey:hover{background:#aaa;border-color:#aaa;}
 .identify-code{width:75px;height:30px;border-radius: 3px;font-size: 10px;}
-.accound-bund .icon{ width: 20px;height: 18px;margin-top: 2px;margin-right: 10px;}
+.accound-bund .icon{ width: 20px;height: 18px;margin-top: 2px;margin-right: 10px;} */
 
 .height-main{height: 35px;}
 .height-large{height:60px;}
@@ -178,12 +103,6 @@ a.submit-order:hover{background:#40b2da;color:#fff}
 .icon-hook-big{background-position: -250px 8px;}
 .icon-jump{background-position: -322px 0px;}
 
-/*=================layout=====================*/
-/*自定义链接颜色(可自由更换)*/
-/* a{color:#333;text-decoration:none;} 链接-颜色
-a:hover{color:#098cba;} 链接-悬浮颜色
-a.hover-color-white:hover{color:#fff;}
-.text-underline:hover {text-decoration:underline;} */
 
 /*段落*/
 p,.p{line-height:25px;}
@@ -484,3 +403,70 @@ ol{padding-left: 24px;}
 .text-green-deep{color:#44b333;}
 .text-yellow-deep{color:#ffa200;}
 .text-blue-normal{color: #2a94de;}
+
+/* ztree 开始 */
+	/*按钮*/
+    .icon_div {
+        display: inline-block;
+        height: 25px;
+        width: 35px;
+    }
+    .icon_div a {
+        display: inline-block;
+        width: 27px;
+        height: 20px;
+        cursor: pointer;
+    }
+    /*ztree表格*/
+    .ztree li a {
+        vertical-align: middle;
+        height: 30px;
+    }
+    .ztree li > a {
+        width: 100%;
+    }
+    .ztree li > a,
+    .ztree li a.curSelectedNode {
+        padding-top: 0px;
+        height: auto;
+        border: none;
+        cursor: default;
+        opacity: 1;
+    }
+    .ztree li ul {
+        padding-left: 0px
+    }
+    .ztree div.diy span {
+        line-height: 30px;
+        vertical-align: middle;
+    }
+    .ztree div.diy {
+        line-height: 30px;
+        border-top: 1px dotted #ccc;
+        border-left: 1px solid #eeeeee;
+        text-align: center;
+        display: inline-block;
+        box-sizing: border-box;
+        color: #6c6c6c;
+        font-family: "SimSun";
+        font-size: 12px;
+    }
+    .ztree div.diy:first-child {
+        text-align: left;
+        text-indent: 10px;
+        border-left: none;
+    }
+    .ztree .head {
+        background: #5787EB;
+    }
+    .ztree .head div.diy {
+        border-top: none;
+        border-right: 1px solid #CDD2D4;
+        color: #fff;
+        font-family: "Microsoft YaHei";
+        font-size: 14px;
+    }
+    /*end--ztree表格*/
+    .ztree li span.button.ico_docu{margin-top:5px;}
+    .ztree li span.button.ico_open{margin-top:5px;}
+/* ztree 结束 */

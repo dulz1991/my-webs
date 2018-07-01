@@ -40,36 +40,28 @@
            	</div>
        	</div>
 	</div>
-                                
+           
+    <script type="text/javascript" src="/js/custom/my.tree.js"></script>                     
 	<script>
-	/* 左侧树形菜单 */
-	var setting = {
-		view: {
-			selectedMulti: false,
-			showIcon: false
-		},
-		data: {
-			title:"name",
-			simpleData: {
-				enable: true
-			}
-		},
-		callback: {
-		 	onClick : zTreeOnClick
-		}
-	};
-	$(function(data){
+	var ztree;
+	$(function(){
 		var title = '${entity.item}';
 		if("${entity.status}"==0){
 			title += '(已删除)';
 		}
-		$.common.pageTitle(title);
 		
 		//菜单zTree
-		var zTree = $.fn.zTree.init($("#zTree"), setting, ${codeTitleTree});
-		var node = zTree.getNodeByParam("id", '${entity.id}');
-		zTree.selectNode(node);
+		ztree = $('#zTree').mytree({
+			data : ${codeTitleTree},
+			showIcon: false,
+			onClick : zTreeOnClick,
+			backFn : function(res){
+			}
+		});
+		var node = ztree.treeObj.getNodeByParam("id", '${entity.id}');
+		ztree.treeObj.selectNode(node);
 		
+		$.common.pageTitle(title);
 		$.common.sidebarSmall();
 	})
 	

@@ -22,7 +22,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <!-- <link href="/assets/css/typicons.min.css" title="" rel="stylesheet" /> -->
 <link href="/assets/css/animate.min.css" title="" rel="stylesheet" />
 <link href="/assets/css/dataTables.bootstrap.css" title="" rel="stylesheet" />
-<link href="/css/style.css" title="" rel="stylesheet" />
 <!-- skins -->
 <link href="" id="skin-link"  title="" rel="stylesheet" type="text/css" />
 <script src="/assets/js/skins.min.js"></script>
@@ -47,6 +46,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <script type="text/javascript" src="/js/custom/my.biz.js"></script>
 <script type="text/javascript" src="/js/custom/my.formRender.js"></script>
 <script type="text/javascript" src="/js/custom/my.datatable.js"></script>
+<!-- <script type="text/javascript" src="/js/custom/my.tree.js"></script> -->
 <script type="text/javascript" src="/js/custom/global.js"></script>
 <!-- 拖动排序 -->
 <!-- <script type="text/javascript" src="/js/custom/tablednd.js"></script> -->
@@ -73,6 +73,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <script src="/js/plugins/ue/ueditor.config.js"></script>
 <script src="/js/plugins/ue/ueditor.all.min.js"></script>
 <link href="/js/plugins/ue/themes/default/css/ueditor.css" title='' rel="stylesheet">
+
+<link href="/css/style.css" title="" rel="stylesheet" />
 
 <!--Beyond Scripts-->
 <script src="/assets/js/beyond.min.js" defer async="true"></script>
