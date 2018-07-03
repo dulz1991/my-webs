@@ -12,7 +12,11 @@ public class DemoMenu implements Serializable  {
 	private String name;
 	private Long id;
 	private int orderNum;
+	private int enable;
 	private String icon;
+	private String pathWindows;
+	private String pathLinux;
+	private Long parentId;
 	
 	/**
 	 * @return the id
@@ -51,6 +55,30 @@ public class DemoMenu implements Serializable  {
 	}
 	public void setIcon(String icon) {
 		this.icon = icon;
+	}
+	public String getPathWindows() {
+		return pathWindows;
+	}
+	public void setPathWindows(String pathWindows) {
+		this.pathWindows = pathWindows;
+	}
+	public String getPathLinux() {
+		return pathLinux;
+	}
+	public void setPathLinux(String pathLinux) {
+		this.pathLinux = pathLinux;
+	}
+	public int getEnable() {
+		return enable;
+	}
+	public void setEnable(int enable) {
+		this.enable = enable;
+	}
+	public Long getParentId() {
+		return parentId;
+	}
+	public void setParentId(Long parentId) {
+		this.parentId = parentId;
 	}
 
 	

@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.baidu.ueditor.ActionEnter;
 import com.demo.my.backend.common.BaseBackendController;
 import com.demo.my.base.common.KeyConstant;
 import com.demo.my.base.model.User;
+import com.demo.my.base.ueditor.UeditorActionEnter;
 import com.demo.my.base.util.MD5Util;
 import com.demo.my.base.util.PropertiesUtil;
 
@@ -59,7 +59,7 @@ public class HomeController extends BaseBackendController {
 		response.setHeader("Content-Type" , "text/html");
 		
 		String rootPath = request.getRealPath("/");
-		response.getWriter().write(new ActionEnter( request, rootPath ).exec());
+		response.getWriter().write(new UeditorActionEnter( request, rootPath ).exec());
 	}
 	
 	/**

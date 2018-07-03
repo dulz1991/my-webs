@@ -24,4 +24,6 @@ public interface DemoMenuMapper extends BaseMapper {
 
 	List<Map<String, Object>> getMapListByParm( @Param("parm") Map<String, Object> paramMap);
 
+	List<Map<String, Object>> getForTree();
+
 }

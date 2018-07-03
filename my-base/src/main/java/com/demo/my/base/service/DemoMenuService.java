@@ -32,6 +32,9 @@ public class DemoMenuService extends AbstractBaseService {
 		if(demoMenu.getId()!=null){
 			demoMenuMapper.update(demoMenu);
 		} else {
+			if(demoMenu.getParentId()==null){
+				demoMenu.setParentId(0L);
+			}
 			demoMenuMapper.insert(demoMenu);
 		}
 	}
@@ -45,6 +48,10 @@ public class DemoMenuService extends AbstractBaseService {
 			parm = new HashMap<String, Object>();
 		}
 		return demoMenuMapper.getBeanListByParm(parm);
+	}
+	
+	public List<Map<String, Object>> getForTree(){
+		return demoMenuMapper.getForTree();
 	}
 	
 }

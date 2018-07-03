@@ -266,3 +266,20 @@ function changePwdVerify(){
 }
 
 
+/*ztree下拉选择*/
+function showZtreeMenu(obj){
+	var obj = $(obj);
+	var offset = obj.offset();
+	$("#menuContent").css({left:offset.left + "px", top:offset.top + "px"}).slideDown();
+	$("body").bind("mousedown", onBodyDown);
+}
+function hideZtreeMenu() {
+	$("#menuContent").fadeOut("fast");
+	$("body").unbind("mousedown", onBodyDown);
+}
+function onBodyDown(event) {
+	if (!(event.target.id == "menuBtn" || event.target.id == "menuContent" || $(event.target).parents("#menuContent").length>0)) {
+		hideZtreeMenu();
+	}
+}
+

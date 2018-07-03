@@ -6,7 +6,11 @@
 	<id property="name" column="name" />
 	<id property="id" column="id" />
 	<id property="icon" column="icon" />
-	<id property="orderNum" column="order_num" />
+	<id property="orderNum" column="orderNum" />
+	<id property="enable" column="enable" />
+	<id property="pathWindows" column="path_windows" />
+	<id property="pathLinux" column="path_linux" />
+	<id property="parentId" column="parent_id" />
 </resultMap>  
 
 <insert id="insert">
@@ -14,9 +18,9 @@
    		select LAST_INSERT_ID()
    	</selectKey>
 	insert into demo_menu
-	(name,icon,order_num)
+	(name,icon,order_num,enable,path_windows,path_linux,parent_id)
 	values
-	(#{name},#{icon},#{orderNum})
+	(#{name},#{icon},#{orderNum},#{enable},#{pathWindows},#{pathLinux},#{parentId})
 </insert>
 
 <update id="update">
@@ -30,6 +34,18 @@
 	    	</if>
 	    	<if test="orderNum != null">  
 	        	order_num=#{orderNum},
+	    	</if>
+	    	<if test="enable != null">  
+	        	enable=#{enable},
+	    	</if>
+	    	<if test="pathWindows != null">  
+	        	path_windows=#{pathWindows},
+	    	</if>
+	    	<if test="parentId != null">  
+	        	parent_id=#{parentId},
+	    	</if>
+	    	<if test="pathLinux != null">  
+	        	path_linux=#{pathLinux},
 	    	</if>
 	</set>   
     WHERE id=#{id}
@@ -53,7 +69,10 @@
 <select id="getBeanListByParm" resultMap="DemoMenuBaseMapper">
 	select * from demo_menu where 1=1 
 			<if test="parm.name != null">
-		     	and name = #{parm.name}
+		     	and name LIKE CONCAT(CONCAT('%', #{parm.name,jdbcType=VARCHAR}),'%') 
+		   	</if>
+		   	<if test="parm.parentId != null">
+		     	and parent_id = #{parm.parentId}
 		   	</if>
 		<if test="parm.orderby != null">
 	   		order by ${parm.orderby}
@@ -74,5 +93,13 @@
 		</if>
 </select>
 
+<select id="getForTree" resultType="HashMap">
+	SELECT 
+	t.id id,
+	t.`name` `name`,
+	t.parent_id pId
+	FROM
+	demo_menu t
+</select>
 
 </mapper>

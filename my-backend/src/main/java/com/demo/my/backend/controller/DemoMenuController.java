@@ -1,5 +1,6 @@
 package com.demo.my.backend.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.alibaba.fastjson.JSONArray;
 import com.demo.my.backend.common.BaseBackendController;
 import com.demo.my.base.service.DemoMenuService;
 import com.demo.my.base.model.DemoMenu;
@@ -28,6 +30,9 @@ public class DemoMenuController extends BaseBackendController {
 	@RequestMapping(value="/list")
 	public ModelAndView index() {
 		ModelAndView model = new ModelAndView("demo/demo_menu_list");
+		/*List<DemoMenu> demoMenuList = demoMenuService.getList(null);*/
+		/*model.addObject("demoMenuList", JSONArray.toJSON(demoMenuList));*/
+		model.addObject("demoMenuList", JSONArray.toJSON(demoMenuService.getForTree()));
 		return model;
 	}
 	
@@ -40,6 +45,7 @@ public class DemoMenuController extends BaseBackendController {
 		} else {
 			model.addObject("entity", new DemoMenu());
 		}
+		model.addObject("demoMenuList", JSONArray.toJSON(demoMenuService.getForTree()));
 		return model;
 	}
 	

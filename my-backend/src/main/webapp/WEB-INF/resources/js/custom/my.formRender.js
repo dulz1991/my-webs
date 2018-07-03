@@ -181,8 +181,12 @@ emptyOption : false; 是否不显示<option value="">--</option>
 		renderText: function(item, args) {
 			var div = '';
 			div += '<div class="form-group" style="'+args.formGroupStyle+'">';
-			div += '	<label class="" style="'+args.formLabelStyle+'">'+item.label+' </label>';
-	        div += '	<input type="text" style="'+args.formInputStyle+'" class="form-control" name="'+item.name+'" id="'+$.common.convertBlank(item.id)+'" value="'+$.common.convertBlank(item.value)+'">';
+			if(item.ztree){
+				div += '	<label class="" style="'+args.formLabelStyle+'"><a href="javascript:;" onclick="showZtreeMenu(this)">'+item.label+' </a></label>';
+			} else {
+				div += '	<label class="" style="'+args.formLabelStyle+'">'+item.label+' </label>';
+			}
+			div += '	<input type="text" style="'+args.formInputStyle+'" class="form-control" name="'+item.name+'" id="'+$.common.convertBlank(item.id)+'" value="'+$.common.convertBlank(item.value)+'">';
 	        div += '</div>';
 	        return div;
 		},
@@ -274,6 +278,7 @@ emptyOption : false; 是否不显示<option value="">--</option>
 	        div += '</div>';
 	        return div;
 		},
+		/*复选框*/
 		renderCheckbox: function(item, args) {
 			var div = '';
 			div += '<div class="" style="'+args.formGroupStyle+'">';

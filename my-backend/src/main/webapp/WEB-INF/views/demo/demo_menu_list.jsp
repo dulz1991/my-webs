@@ -2,12 +2,16 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
+			<div id="formArea"></div>
+			
    			<div id="datatable">
 				<table>
 					<thead>
 						<tr>
 							<th field="index_no">编号</th>
 							<th field="name">菜单名称</th>
+							<th field="pathLinux">linux目录</th>
+							<th field="pathWindows">windows目录</th>
 							<th field="button"
 								btn_list='[
 				                {fnName:"edit",args:"id",name:"修改",icon:"fa fa-edit"},
@@ -18,9 +22,28 @@
 					</thead>
 				</table>
    			</div>
+   			
+   			<div id="menuContent" class="menuContent">
+				<ul id="menuTreeDemo" class="ztree" style="width:160px;"></ul>
+				<div class="menuContentClean"><span onclick="cleanDemoMenu()">清除</span></div>
+			</div>
 	
+	<script type="text/javascript" src="/js/custom/my.tree.js"></script>
 	<script type="text/javascript">
+		var ztree;
 		$(function(){
+			$('#formArea').formRender({
+			    formItemList : [
+								{type:'hidden',name:'parentId', label:'demo分类' },
+			                    {type:'text',name:'name', label:'分类名称' },
+			                    {type:'text',name:'parentName', label:'demo分类', ztree:true  }
+			                    ]
+			});
+			
+			ztree = $('#menuTreeDemo').mytree({
+				data : ${demoMenuList},
+				onClick : zTreeOnClick
+			});
 			
 			$('#datatable').datatable({
 				url_load : '/backend/demoMenu/getList',
@@ -42,7 +65,7 @@
 				parm.loadUrl = '/backend/demoMenu/edit';
 				parm.title = '新增菜单';
 			}
-			parm.height='200px';
+			parm.height='400px';
 			$.pop.dialog(parm, editVerify, function(data){
 				$.pop.success("保存成功");
 				$.fn.reload();
@@ -57,6 +80,15 @@
 				}
 			});
 			return rst;
+		}
+		
+		function zTreeOnClick(e, treeId, treeNode) {
+			$('input[name="parentId"]').val(treeNode.id);
+			$('input[name="parentName"]').val(treeNode.name);
+		}
+		function cleanDemoMenu(){
+			$('input[name="parentId"]').val('');
+			$('input[name="parentName"]').val('');
 		}
 		
 	</script>

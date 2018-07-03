@@ -347,7 +347,7 @@
 					if(textArr[1]=='datetime'){
 						text = $.common.dateConvert(text);	
 					} else if(textArr[1]=='img'){
-						text = '<img src="/admin_img'+text+'!120!60" />';
+						text = '<img width="120" src="/api_img'+text+'" />';
 					}
 				} else {
 					text = item[field]; //列数据	

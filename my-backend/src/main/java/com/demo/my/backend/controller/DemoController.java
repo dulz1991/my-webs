@@ -2,7 +2,6 @@ package com.demo.my.backend.controller;
 
 import java.io.File;
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
@@ -37,8 +36,7 @@ public class DemoController extends BaseBackendController {
 		ModelAndView model = new ModelAndView("demo/demo_list");
 		
 		//查询菜单
-		List<DemoMenu> demoMenuList = demoMenuService.getList(null);
-		model.addObject("demoMenuList", JSONArray.toJSON(demoMenuList));
+		model.addObject("demoMenuList", JSONArray.toJSON(demoMenuService.getForTree()));
 		
 		if(demoMenuId!=null){
 			model.addObject("demoMenuId", demoMenuId);
@@ -60,8 +58,10 @@ public class DemoController extends BaseBackendController {
 		}
 		
 		//查询菜单
-		List<DemoMenu> demoMenuList = demoMenuService.getList(null);
-		model.addObject("demoMenuList", demoMenuList);
+		/*List<DemoMenu> demoMenuList = demoMenuService.getList(null);
+		model.addObject("demoMenuList", demoMenuList);*/
+		
+		model.addObject("demoMenuList", JSONArray.toJSON(demoMenuService.getForTree()));
 		
 		return model;
 	}
@@ -84,13 +84,25 @@ public class DemoController extends BaseBackendController {
 	public Map<String, Object> saveDemo(Demo demo, 
 			@RequestParam(value = "attachFile", required = false) MultipartFile attachFile) throws Exception {
 		if(StringUtils.isBlank(demo.getTitle())){
-			return responseGeneralError(ErrorConstant.ERROR_EMPTY_TITLE);
+			return responseGeneralError("请输入标题");
 		}
+		if(demo.getMenuId()==null){
+			return responseGeneralError("请选择菜单");
+		}
+		if(demo.getId()==null && attachFile==null){
+			return responseGeneralError("请上传demo包");
+		}
+		if(StringUtils.isBlank(demo.getUrl())){
+			return responseGeneralError("请输入访问的文件名");
+		}
+		if(StringUtils.isBlank(demo.getPicPath())){
+			return responseGeneralError("请输入预览的图片");
+		}
+		/*if(StringUtils.isBlank(demo.getResourcePath())){
+			return responseGeneralError("请输入资源包名称");
+		}*/
 		if(StringUtils.isBlank(demo.getDescription())){
-			return responseGeneralError(ErrorConstant.ERROR_EMPTY_DESCRIPTIPN);
-		}
-		if(demo.getMenuId() == null||demo.getMenuId()<0L){
-			return responseGeneralError(ErrorConstant.ERROR_EMPTY_MENU_NAME);
+			return responseGeneralError("请输入描述");
 		}
 		
 		/*MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
@@ -98,10 +110,13 @@ public class DemoController extends BaseBackendController {
 	    file = multipartRequest.getFile("attachFile");// ��ȡ�ϴ��ļ���
 		 */	    
 		if(attachFile!=null){
+			//保存路径
+		    DemoMenu demoMenu = demoMenuService.getById(demo.getMenuId());
+		    String basePath = demoMenu.getName();
+			String folder = attachFile.getOriginalFilename().substring(0, attachFile.getOriginalFilename().length()-4);
 			//上传路径
 	    	String uploadPath = PropertiesUtil.get("file_demo_path"); 
-	    	String dateStr = DateUtil.dateToString(new Date(), DateUtil.DATE_FORMATE_1);
-	    	uploadPath=uploadPath.replace("{{yyyymmdd}}", dateStr);
+	    	uploadPath=uploadPath.replace("{{basePath}}", basePath).replace("{{folder}}", folder);
 	    	//上传
 		    fileUploadService.uploadAttachFile(attachFile, uploadPath);
 		    //解压
@@ -109,15 +124,15 @@ public class DemoController extends BaseBackendController {
 		    ZipUtil.unZip(zipFilePath, uploadPath);
 		    //图片地址
 		    String picPath = PropertiesUtil.get("file_demo_pic_path"); 
-		    picPath=picPath.replace("{{name}}", attachFile.getOriginalFilename().substring(0, attachFile.getOriginalFilename().length()-4)).replace("{{yyyymmdd}}", dateStr);
+		    picPath=picPath.replace("{{basePath}}", basePath).replace("{{folder}}", folder).replace("{{name}}", folder).replace("{{img}}", demo.getPicPath());
 		    demo.setPicPath(picPath);
 		    //资源路径
 		    String resourcePath = PropertiesUtil.get("file_demo_resource_path");
-		    resourcePath=resourcePath.replace("{{yyyymmdd}}", dateStr).replace("{{name}}", attachFile.getOriginalFilename());
+		    resourcePath=uploadPath+attachFile.getOriginalFilename();
 		    demo.setResourcePath(resourcePath);
 		    //在线预览路径
 		    String urlPath = PropertiesUtil.get("file_demo_url_path");
-		    urlPath=urlPath.replace("{{name}}", attachFile.getOriginalFilename().substring(0, attachFile.getOriginalFilename().length()-4)).replace("{{yyyymmdd}}", dateStr);
+		    urlPath=urlPath.replace("{{basePath}}", basePath).replace("{{folder}}", folder).replace("{{name}}", folder).replace("{{html}}", demo.getUrl());
 		    demo.setUrl(urlPath);
 	    }
 	    
