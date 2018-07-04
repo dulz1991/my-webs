@@ -465,5 +465,22 @@ jQuery.common = {
 	pageTitle: function(title){
 		document.title=title;
 		$('.header-title h1').text(title);
+	},
+	
+	openImg : function(imgUrl){
+		layer.photos({
+            shade: [0.3, '#000'],
+            success:function(){
+                $('.layui-layer-imgsee').css('display','none');
+            },
+            photos: {
+                "title": "", //相册标题
+                "data": [ //相册包含的图片，数组格式
+                    {"src": imgUrl}
+                ]
+            },
+            anim: 5 //0-6的选择，指定弹出图片动画类型，默认随机（请注意，3.0之前的版本用shift参数）
+        });
 	}
+	
 }

@@ -264,7 +264,9 @@
 					});
 				} else {
 					//清空分页栏
-					$.common.cleanPage(args,data.page.pageSize);
+					if(args.showPage){
+						$.common.cleanPage(args,data.page.pageSize);	
+					}
 				}
 			})
 		},
@@ -275,7 +277,7 @@
 			var widgetStyle='';
 			/*是否有分页 没有分页 显示滚动条*/
 			if(!args.showPage){
-				widgetStyle= "style=\'overflow:auto;height:400px;\'";
+				widgetStyle= "style=\'overflow:auto;min-height:400px;\'";
 			}
 			
 			div += '<div class="widget" '+widgetStyle+'>';
