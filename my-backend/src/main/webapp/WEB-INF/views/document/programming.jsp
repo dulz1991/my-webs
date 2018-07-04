@@ -35,7 +35,7 @@
 					parentFolder = p.parentFolder;
 					$('#backFolder').show();
 				}
-				$('.widget-header .widget-caption').text(displayName);
+				$('.widget-header .widget-caption').text(displayName||'');
 			}
 		}); 
  	});
